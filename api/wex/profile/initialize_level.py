@@ -178,9 +178,9 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
         },
         "heroInfo": []
     }
-    # for i in range(3, 55):
-    #     level_notification["level"]["rooms"].append(await room_generator(
-    #         request.json.get("levelId"), i, level_info))
+    for i in range(1, level_info.get("NumExpectedRooms", 1) + 1):
+        level_notification["level"]["rooms"].append(await room_generator(
+            request.json.get("levelId"), i, level_info))
     account_info = {
         "level": await request.ctx.profile.get_stat("level"),
         "perks": []
