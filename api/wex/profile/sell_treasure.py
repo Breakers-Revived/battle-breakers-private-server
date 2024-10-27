@@ -33,7 +33,7 @@ async def sell_treasure(request: types.BBProfileRequest, accountId: str) -> sani
     item_path = (await get_path_from_template_id(request.json.get("itemTemplateId")))
     try:
         value = (await load_datatable(
-            item_path.replace("res/Game/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
+            item_path.replace("res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
             "Properties"]["GoldValue"]
     except KeyError:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="This item cannot be sold.")

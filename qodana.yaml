@@ -34,4 +34,5 @@ exclude:
     paths:
       - res/wex/api/game/v2/manifests
       - res/Game
+      - res/battle-breakers-data
       - docs

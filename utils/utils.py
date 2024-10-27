@@ -46,11 +46,11 @@ with open('utils/crypto/bb_public_key.pem', 'rb') as f:
 
 # Cache game files
 game_files_list = []
-for root, dirs, files in os.walk('res/Game/WorldExplorers/Content/'):
+for root, dirs, files in os.walk('res/battle-breakers-data/WorldExplorers/Content/'):
     for file in files:
         game_files_list.append(os.path.join(root, file))
 character_files_list = []
-for root, dirs, files in os.walk('res/Game/WorldExplorers/Content/Characters'):
+for root, dirs, files in os.walk('res/battle-breakers-data/WorldExplorers/Content/Characters'):
     for file in files:
         character_files_list.append(os.path.join(root, file))
 
@@ -696,7 +696,7 @@ async def load_datatable(datatable: Optional[str]) -> Optional[dict]:
     :return: The datatable
     """
     if datatable is not None:
-        return await read_file(f"res/Game/WorldExplorers/{datatable}.json")
+        return await read_file(f"res/battle-breakers-data/WorldExplorers/{datatable}.json")
     return None
 
 
@@ -739,7 +739,7 @@ async def get_template_id_from_path(path: Optional[str]) -> Optional[str]:
         elif path == '/Game/Loot/AccountItems/Ore/Ore_CrystalShard.Ore_CrystalShard':
             path = '/Game/Loot/AccountItems/Ore/Ore_Magicite.Ore_Magicite'
         path = path.replace("/Game", "WorldExplorers/Content").split(".")[0].replace("WorldExplorers/",
-                                                                                     "res/Game/WorldExplorers/")
+                                                                                     "res/battle-breakers-data/WorldExplorers/")
         data = await read_file(f"{path}.json")
         match data[0].get('Type'):
             case "WExpGenericAccountItemDefinition":
@@ -946,74 +946,14 @@ async def room_generator(level_id: str, room_number: int, level_info: dict) -> d
         "discoveryGoldMult": room_info["GoldDropMult"],
         "occupants": [{
             "isFriendly": False,
-            "characterTemplateId": "Character:Assassin_C1_Dark_ImpStab_T01",
-            "spawnGroup": [],
-            "killXp": 1,
-            "spawnClass": "Normal",
-            "lootQuantity": 0
+            "killXp": 50,
+            "lootTemplateId": "Currency:Gold",
+            "lootQuantity": 15000000
         }, {
             "isFriendly": False,
-            "characterTemplateId": "Character:Mage_Basic_Fire_Sprite_T01",
-            "spawnGroup": [],
-            "killXp": 1,
-            "spawnClass": "Normal",
-            "lootQuantity": 0
-        }, {
-            "isFriendly": False,
-            "characterTemplateId": "Character:Mage_Basic_Nature_Sprite_T01",
-            "spawnGroup": [],
-            "killXp": 1,
-            "spawnClass": "Normal",
-            "lootQuantity": 0
-        }, {
-            "isFriendly": False,
-            "characterTemplateId": "Character:Mage_Basic_Water_Sprite_T01",
-            "spawnGroup": [],
-            "killXp": 1,
-            "spawnClass": "Normal",
-            "lootQuantity": 0
-        }, {
-            "isFriendly": False,
-            "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T02",
-            "spawnGroup": [],
             "killXp": 2,
-            "spawnClass": "Normal",
-            "lootQuantity": 0
-        }, {
-            "isFriendly": False,
-            "characterTemplateId": "Character:AI_PoisonTank_Nature_Tutorial",
-            "spawnGroup": [{
-                "isFriendly": False,
-                "characterTemplateId": "Character:Warrior_UC1_Nature_LesserDemon_T03",
-                "killXp": 12,
-                "spawnClass": "BossMedium",
-                "lootTemplateId": "Currency:HeroXp_Basic",
-                "lootQuantity": 2249
-            }],
-            "killXp": 24,
-            "spawnClass": "BossMedium",
-            "lootTemplateId": "Currency:Gold",
-            "lootQuantity": 58
-        }, {
-            "isFriendly": False,
-            "killXp": 0,
-            "lootTemplateId": "Currency:Gold",
-            "lootQuantity": 15
-        }, {
-            "isFriendly": False,
-            "killXp": 0,
-            "lootTemplateId": "Currency:Gold",
-            "lootQuantity": 11
-        }, {
-            "isFriendly": False,
-            "killXp": 0,
-            "lootTemplateId": "Item:HealthVial",
-            "lootQuantity": 1
-        }, {
-            "isFriendly": False,
-            "killXp": 0,
             "lootTemplateId": "Container:Chest_Water_Low",
-            "lootQuantity": 1
+            "lootQuantity": 5
         }]
     }
     return room
@@ -1031,7 +971,7 @@ async def load_character_data(character_id: str) -> dict:
     character_id = character_id.replace("Character:", "CD_")
     best_match = await find_best_match(character_id, character_files_list, True)
     return await load_datatable(
-        best_match.replace("res/Game/WorldExplorers/", "").replace(".json", "").replace("\\", "/"))
+        best_match.replace("res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/"))
 
 
 @alru_cache(maxsize=64)

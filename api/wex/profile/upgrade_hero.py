@@ -79,7 +79,7 @@ async def upgrade_hero(request: types.BBProfileRequest, accountId: str) -> sanic
                 errorMessage=f"Not enough {potion_upgrade.get('templateId')}")
         potion_cost = (await load_datatable(
             (await get_path_from_template_id(potion_upgrade.get("templateId"))).replace(
-                "res/Game/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"][
+                "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"][
             "ConsumptionCostGold"]
         for _ in range(potion_upgrade.get("quantity")):
             if current_gold < potion_cost:

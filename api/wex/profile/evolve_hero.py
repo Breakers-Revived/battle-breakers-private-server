@@ -40,7 +40,7 @@ async def evolve_hero(request: types.BBProfileRequest, accountId: str) -> sanic.
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid hero item id")
     evolution_recipe = (await load_datatable(
         (await get_path_from_template_id(request.json.get("evoPathName"))).replace(
-            "res/Game/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"]
+            "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"]
     if old_hero["attributes"]["level"] < evolution_recipe.get("RequiredCharacterLevel", 0):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Hero level is too low")
     cost_recipe = (await load_datatable(

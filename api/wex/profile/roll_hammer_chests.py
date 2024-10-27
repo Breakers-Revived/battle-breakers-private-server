@@ -35,7 +35,7 @@ async def roll_hammer_chests(request: types.BBProfileRequest, accountId: str) ->
     if (await request.ctx.profile.get_stat("active_hammer_chest")) != "":
         raise errors.com.epicgames.world_explorers.bad_request(
             errorMessage="Unable to roll hammer chests while a chest is active")
-    hammer_chest_pool = await aiofiles.os.listdir("res/Game/WorldExplorers/Content/Loot/AccountItems/HammerChests")
+    hammer_chest_pool = await aiofiles.os.listdir("res/battle-breakers-data/WorldExplorers/Content/Loot/AccountItems/HammerChests")
     hammer_chest_pool.remove("HC_Tutorial.json")
     hammer_chest_pool = [chest[:-5] for chest in hammer_chest_pool]
     streakbreaker_id = await request.ctx.profile.find_item_by_template_id("Currency:SB_Hammer")

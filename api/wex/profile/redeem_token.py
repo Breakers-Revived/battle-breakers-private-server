@@ -37,7 +37,7 @@ async def redeem_token(request: types.BBProfileRequest, accountId: str) -> sanic
     token_item = await request.ctx.profile.get_item_by_guid(token_id[0])
     try:
         reward_item = (await load_datatable(
-            item_path.replace("res/Game/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
+            item_path.replace("res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
             "Properties"]
         reward_item["RewardItem"]
     except KeyError:

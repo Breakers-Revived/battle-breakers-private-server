@@ -48,7 +48,7 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
     tier_group_name = request.json.get("itemId")
     giftbox_data = (await load_datatable(
         (await get_path_from_template_id(opened_gift_box["templateId"])).replace(
-            "res/Game/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"]
+            "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"]
     if giftbox_data.get("Loot") is not None:
         if giftbox_data["Loot"].get("Items") is not None:
             for item in giftbox_data["Loot"]["Items"]:

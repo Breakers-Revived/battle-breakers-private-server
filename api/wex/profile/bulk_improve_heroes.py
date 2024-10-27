@@ -64,7 +64,7 @@ async def bulk_improve_heroes(request: types.BBProfileRequest, accountId: str) -
         for potion_upgrade in upgrade["potionItems"]:
             potion_cost = (await load_datatable(
                 (await get_path_from_template_id(potion_upgrade.get("templateId"))).replace(
-                    "res/Game/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"][
+                    "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"][
                 "ConsumptionCostGold"]
             match potion_upgrade.get("templateId"):
                 case "UpgradePotion:UpgradeStrengthMinor":
