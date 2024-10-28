@@ -55,7 +55,7 @@ for root, dirs, files in os.walk('res/battle-breakers-data/WorldExplorers/Conten
         character_files_list.append(os.path.join(root, file))
 
 
-async def read_file(filename: str, json: bool = True, raw: bool = True) -> dict | bytes | str:
+async def read_file(filename: str, json: bool = True, raw: bool = True) -> dict[str, Any] | bytes | str:
     """
     Reads a file and returns the contents
     :param filename: The file to read
@@ -928,35 +928,29 @@ async def extract_version_info(user_agent: str) -> Tuple[int, int, int]:
     return 88, 244, 17036752  # Default values if no match is found
 
 
-async def room_generator(level_id: str, room_number: int, level_info: dict) -> dict:
+async def room_generator(level_id: str, level_info: dict) -> list:
     """
-    Generates a room based on the level info
-    :param level_id: The level id to generate the room for
-    :param room_number: The room number to generate
+    Generates rooms for a level for levels where data is unavailable
+    :param level_id: The level id to generate the rooms for
     :param level_info: The level info from the datatable
-    :return: The generated room as a dict to append to level notification
+    :return: The generated rooms as a list to include in the level notification response
     """
-    room_name = "Room.Unique.ForestOfMixedEmotions.Map1.R01"
-    room_info = (await load_datatable("Content/World/Datatables/LevelRooms"))[0]["Rows"].get(room_name)
+    rooms_count = level_info.get("NumExpectedRooms", 1)
+    room_info = (await load_datatable("Content/World/Datatables/LevelRooms"))[0]["Rows"]
     room = {
-        "roomName": room_name,
+        "roomName": "",
         "regionName": level_id,
-        "depth": room_number,
+        "depth": 0,
         "worldLevel": level_info["BaseWorldLevel"],
-        "discoveryGoldMult": room_info["GoldDropMult"],
+        "discoveryGoldMult": 1.0,
         "occupants": [{
             "isFriendly": False,
-            "killXp": 50,
+            "killXp": 0,
             "lootTemplateId": "Currency:Gold",
-            "lootQuantity": 15000000
-        }, {
-            "isFriendly": False,
-            "killXp": 2,
-            "lootTemplateId": "Container:Chest_Water_Low",
-            "lootQuantity": 5
+            "lootQuantity": 150
         }]
     }
-    return room
+    return [room]
 
 
 @alru_cache(maxsize=256)
@@ -1039,3 +1033,20 @@ async def replace_nth_occurrence(input_string: str, target_string: str, occurren
                 new_string = input_string[:i] + replacement_string + input_string[i + len(target_string):]
                 break
     return new_string
+
+
+async def process_choices(input_data: str | int | float | list[str | int | float | dict[str, str | int | float | list[int | float]] | list]) -> str | int | float | dict[str, str | int | float | list[int | float]] | list[str | int | float | dict[str, str | int | float | list[int | float]]]:
+    """
+    Depending on the input data, this function will return either a random choice from a list, a random choice from a list, or the input data.
+    
+    If the input data is a list of two ints or floats, it will return a random int or float between the two values.
+    If the input data is a list of any other type or length, it will return a random choice from the list.
+    If the input data is any other type, it will return the input data.
+    :param input_data: The input to process
+    :return: The processed input
+    """
+    if isinstance(input_data, list):
+        if len(input_data) == 2 and all(isinstance(x, (int, float)) for x in input_data):
+            return random.uniform(input_data[0], input_data[1])
+        return random.choice(input_data)
+    return input_data
