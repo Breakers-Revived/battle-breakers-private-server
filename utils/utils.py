@@ -941,7 +941,10 @@ async def room_generator(level_id: str, level_info: dict) -> list:
         "roomName": "",
         "regionName": level_id,
         "depth": 0,
-        "worldLevel": level_info["BaseWorldLevel"],
+        "worldLevel": int(random.randint(
+            int(level_info["BaseWorldLevel"] * 0.92),
+            int(level_info["BaseWorldLevel"] * 1.09)
+        )),
         "discoveryGoldMult": 1.0,
         "occupants": [{
             "isFriendly": False,

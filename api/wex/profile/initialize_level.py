@@ -6,6 +6,7 @@ This code is licensed under the Breakers Revived License (BRL).
 
 Handles initializing a level for a profile.
 """
+import random
 import re
 import uuid
 
@@ -78,10 +79,19 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
     if level_data is not None:
         level_notification["level"]["potentialBattlepassXp"] = await process_choices(level_data["level"].get("potentialBattlepassXp", 0))
         level_notification["level"]["rooms"] = []
+        depth = 0
         for room_data in level_data["level"].get("rooms", []):
+            room_name = await process_choices(room_data.get("roomName", ""))
+            room_info = (await load_datatable("Content/World/Datatables/LevelRooms"))[0]["Rows"].get(room_name, {})
             room = {
-                "roomName": await process_choices(room_data.get("roomName", "")),
-                "discoveryGoldMult": await process_choices(room_data.get("discoveryGoldMult", 1.0)),
+                "roomName": room_name,
+                "regionName": level_id,
+                "depth": depth,
+                "worldLevel": int(random.randint(
+                    int(level_info["BaseWorldLevel"] * 0.92),
+                    int(level_info["BaseWorldLevel"] * 1.09)
+                )),
+                "discoveryGoldMult": await process_choices(room_data.get("discoveryGoldMult", 1.0)) * room_info.get("GoldDropMult", 1.0),
                 "occupants": []
             }
             for occupant_data in room_data.get("occupants", []):
@@ -117,6 +127,7 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
                     occupant["spawnGroup"].append(spawn)
                 room["occupants"].append(occupant)
             level_notification["level"]["rooms"].append(room)
+            depth += 1
     else:
         level_notification["level"]["rooms"] = await room_generator(level_id, level_info)
     account_info = {
