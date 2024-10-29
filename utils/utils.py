@@ -938,9 +938,9 @@ async def room_generator(level_id: str, level_info: dict) -> list:
     rooms_count = level_info.get("NumExpectedRooms", 1)
     room_info = (await load_datatable("Content/World/Datatables/LevelRooms"))[0]["Rows"]
     room = {
-        "roomName": "",
+        "roomName": "Room.Unique.Onboarding1",
         "regionName": level_id,
-        "depth": 0,
+        "depth": 1,
         "worldLevel": int(random.randint(
             int(level_info["BaseWorldLevel"] * 0.92),
             int(level_info["BaseWorldLevel"] * 1.09)
@@ -1040,7 +1040,7 @@ async def replace_nth_occurrence(input_string: str, target_string: str, occurren
 
 async def process_choices(input_data: str | int | float | list[str | int | float | dict[str, str | int | float | list[int | float]] | list]) -> str | int | float | dict[str, str | int | float | list[int | float]] | list[str | int | float | dict[str, str | int | float | list[int | float]]]:
     """
-    Depending on the input data, this function will return either a random choice from a list, a random choice from a list, or the input data.
+    Depending on the input data, this function will return either a random range between two values, a random choice from a list, or the input data.
     
     If the input data is a list of two ints or floats, it will return a random int or float between the two values.
     If the input data is a list of any other type or length, it will return a random choice from the list.
@@ -1050,6 +1050,8 @@ async def process_choices(input_data: str | int | float | list[str | int | float
     """
     if isinstance(input_data, list):
         if len(input_data) == 2 and all(isinstance(x, (int, float)) for x in input_data):
+            if all(isinstance(x, int) for x in input_data):
+                return random.randint(input_data[0], input_data[1])
             return random.uniform(input_data[0], input_data[1])
         return random.choice(input_data)
     return input_data

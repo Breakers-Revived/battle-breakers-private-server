@@ -58,7 +58,7 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
         "type": "WExpLevelCreated",
         "primary": False,
         "level": {
-            "potentialBattlepassXp": 0,  # TODO: calculate battlepass xp
+            "potentialBattlepassXp": 0,
             "levelItemId": level_item_id,
             "rooms": [],
             "levelId": level_id
@@ -69,23 +69,32 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
     if re.match(r".*\.D\d", level_id):
         target_difficulty = int(level_id.split(".")[-1][1:])
         for difficulty in range(target_difficulty, 0, -1):
-            level_data = await read_file(f"level_data/{level_id[:-3]}.D{difficulty}.json")
+            try:
+                level_data = await read_file(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.D{difficulty}.json")
+            except FileNotFoundError:
+                pass
             if level_data is not None:
                 break
         else:
-            level_data = await read_file(f"level_data/{level_id[:-3]}.json")
+            try:
+                level_data = await read_file(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.json")
+            except FileNotFoundError:
+                pass
     else:
-        level_data = await read_file(f"level_data/{level_id}.json")
+        try:
+            level_data = await read_file(f"res/wex/api/game/v2/level_data/{level_id}.json")
+        except FileNotFoundError:
+            pass
     if level_data is not None:
         level_notification["level"]["potentialBattlepassXp"] = await process_choices(level_data["level"].get("potentialBattlepassXp", 0))
         level_notification["level"]["rooms"] = []
-        depth = 0
+        depth = 1
         for room_data in level_data["level"].get("rooms", []):
             room_name = await process_choices(room_data.get("roomName", ""))
             room_info = (await load_datatable("Content/World/Datatables/LevelRooms"))[0]["Rows"].get(room_name, {})
             room = {
                 "roomName": room_name,
-                "regionName": level_id,
+                "regionName": await process_choices(room_data.get("regionName", level_id)),
                 "depth": depth,
                 "worldLevel": int(random.randint(
                     int(level_info["BaseWorldLevel"] * 0.92),
@@ -95,35 +104,70 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
                 "occupants": []
             }
             for occupant_data in room_data.get("occupants", []):
+                if random.randint(1, 100) > await process_choices(occupant_data.get("spawnChance", 100)):
+                    continue
                 occupant = {
                     "isFriendly": occupant_data.get("isFriendly", False),
-                    "characterTemplateId": await process_choices(occupant_data.get("characterTemplateId", "")),
                     "killXp": await process_choices(occupant_data.get("killXp", 0)),
-                    "spawnClass": await process_choices(occupant_data.get("spawnClass", "Normal")),
-                    "lootTemplateId": []
                 }
-                for loot_data in occupant_data.get("lootTemplateId", []):
-                    loot = {
-                        "templateId": loot_data.get("templateId", ""),
-                        "quantity": await process_choices(loot_data.get("quantity", 1))
-                    }
-                    occupant["lootTemplateId"].append(loot)
+                if occupant_data.get("characterTemplateId", None):
+                    occupant["characterTemplateId"] = await process_choices(occupant_data.get("characterTemplateId", ""))
+                    occupant["spawnClass"] = await process_choices(occupant_data.get("spawnClass", "Normal"))
+                occupant_data_loot = occupant_data.get("lootTemplateId", [])
+                if occupant_data_loot:
+                    if isinstance(occupant_data_loot, dict):
+                        if occupant_data_loot.get("templateId", "") == "":
+                            occupant["lootQuantity"] = 0
+                        else:
+                            occupant["lootTemplateId"] = await process_choices(occupant_data_loot.get("templateId", ""))
+                            occupant["lootQuantity"] = await process_choices(occupant_data_loot.get("quantity", 1))
+                    elif isinstance(occupant_data_loot, list):
+                        picked_loot = random.choice(occupant_data_loot)
+                        if picked_loot:
+                            occupant["lootTemplateId"] = await process_choices(picked_loot.get("templateId", ""))
+                            occupant["lootQuantity"] = await process_choices(picked_loot.get("quantity", 1))
+                        else:
+                            occupant["lootQuantity"] = 0
+                    elif isinstance(occupant_data_loot, str) and occupant_data_loot != "":
+                        occupant["lootTemplateId"] = occupant_data_loot
+                        occupant["lootQuantity"] = await process_choices(occupant_data.get("quantity", 1))
+                    else:
+                        occupant["lootQuantity"] = 0
+                else:
+                    occupant["lootQuantity"] = 0
                 spawn_group_data = occupant_data.get("spawnGroup", [])
                 occupant["spawnGroup"] = []
                 for spawn_data in spawn_group_data:
+                    if random.randint(1, 100) > await process_choices(spawn_data.get("spawnChance", 100)):
+                        continue
                     spawn = {
                         "isFriendly": spawn_data.get("isFriendly", False),
                         "characterTemplateId": await process_choices(spawn_data.get("characterTemplateId", "")),
                         "killXp": await process_choices(spawn_data.get("killXp", 0)),
                         "spawnClass": await process_choices(spawn_data.get("spawnClass", "Normal")),
-                        "lootTemplateId": []
                     }
-                    for loot_data in spawn_data.get("lootTemplateId", []):
-                        loot = {
-                            "templateId": loot_data.get("templateId", ""),
-                            "quantity": await process_choices(loot_data.get("quantity", 1))
-                        }
-                        spawn["lootTemplateId"].append(loot)
+                    spawn_loot_data = spawn_data.get("lootTemplateId", [])
+                    if spawn_loot_data:
+                        if isinstance(spawn_loot_data, dict):
+                            if spawn_loot_data.get("templateId", "") == "":
+                                spawn["lootQuantity"] = 0
+                            else:
+                                spawn["lootTemplateId"] = await process_choices(spawn_loot_data.get("templateId", ""))
+                                spawn["lootQuantity"] = await process_choices(spawn_loot_data.get("quantity", 1))
+                        elif isinstance(spawn_loot_data, list):
+                            picked_loot = random.choice(spawn_loot_data)
+                            if picked_loot:
+                                spawn["lootTemplateId"] = await process_choices(picked_loot.get("templateId", ""))
+                                spawn["lootQuantity"] = await process_choices(picked_loot.get("quantity", 1))
+                            else:
+                                spawn["lootQuantity"] = 0
+                        elif isinstance(spawn_loot_data, str) and spawn_loot_data != "":
+                            spawn["lootTemplateId"] = spawn_loot_data
+                            spawn["lootQuantity"] = await process_choices(spawn_data.get("quantity", 1))
+                        else:
+                            spawn["lootQuantity"] = 0
+                    else:
+                        spawn["lootQuantity"] = 0
                     occupant["spawnGroup"].append(spawn)
                 room["occupants"].append(occupant)
             level_notification["level"]["rooms"].append(room)
