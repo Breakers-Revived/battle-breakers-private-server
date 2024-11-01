@@ -1,0 +1,96 @@
+{
+  "level": {
+    "potentialBattlepassXp": [50, 125],
+    "rooms": [
+      {
+        "roomName": "Room.Unique.ForestOfMixedEmotions.Map1.R01",
+        "discoveryGoldMult": 1,
+        "occupants": [{
+          "isFriendly": false,
+          "characterTemplateId": "Character:Assassin_C1_Dark_ImpStab_T01",
+          "spawnGroup": [],
+          "killXp": 1,
+          "spawnClass": "Normal",
+          "lootQuantity": 0
+        }, {
+          "isFriendly": false,
+          "characterTemplateId": "Character:Mage_Basic_Fire_Sprite_T01",
+          "spawnGroup": [{
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Basic_Fire_T01",
+            "killXp": 1,
+            "spawnClass": "Normal",
+            "lootQuantity": 0
+          }],
+          "killXp": 1,
+          "spawnClass": "Normal",
+          "lootQuantity": 0
+        }, {
+          "isFriendly": false,
+          "characterTemplateId": "Character:Mage_Basic_Nature_Sprite_T01",
+          "spawnGroup": [{
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Basic_Water_T01",
+            "killXp": 1,
+            "spawnClass": "Normal",
+            "lootQuantity": 0
+          }],
+          "killXp": 1,
+          "spawnClass": "Normal",
+          "lootTemplateId": [{"templateId": "Currency:HeroXp_Basic", "quantity": [200, 600]}, null, null]
+        }, {
+          "isFriendly": false,
+          "characterTemplateId": "Character:Mage_Basic_Water_Sprite_T01",
+          "spawnGroup": [],
+          "killXp": 1,
+          "spawnClass": "Normal",
+          "lootQuantity": 0
+        }, {
+          "isFriendly": false,
+          "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T02",
+          "spawnGroup": [],
+          "killXp": 2,
+          "spawnClass": "Normal",
+          "lootQuantity": 0
+        }, {
+          "isFriendly": false,
+          "characterTemplateId": "Character:AI_PoisonTank_Nature_Tutorial",
+          "spawnGroup": [{
+            "spawnChance": 35,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_UC1_Nature_LesserDemon_T03",
+            "killXp": 12,
+            "spawnClass": "BossMedium",
+            "lootTemplateId": "Currency:HeroXp_Basic",
+            "lootQuantity": [2000, 2500]
+          }],
+          "killXp": 24,
+          "spawnClass": "BossMedium",
+          "lootTemplateId": "Currency:Gold",
+          "lootQuantity": [50, 75]
+        }, {
+          "isFriendly": false,
+          "killXp": 0,
+          "lootTemplateId": "Currency:Gold",
+          "lootQuantity": [10, 20]
+        }, {
+          "isFriendly": false,
+          "killXp": 0,
+          "lootTemplateId": "Currency:Gold",
+          "lootQuantity": [10, 20]
+        }, {
+          "isFriendly": false,
+          "killXp": 0,
+          "lootTemplateId": [{"templateId": "Item:HealthVial", "quantity": 1}, {"templateId": "Currency:Gold", "quantity": [10, 20]}, {"templateId": "Item:HealthVial", "quantity": 1}]
+        }, {
+          "isFriendly": false,
+          "killXp": 0,
+          "lootTemplateId": [{"templateId": "Container:Chest_Water_Low", "quantity": 1}, {"templateId": "Currency:Gold", "quantity": [10, 20]}, {"templateId": "Container:Chest_Nature_Low", "quantity": 1}, {"templateId": "Container:Chest_Nature_Low", "quantity": 1}],
+          "lootQuantity": 1
+        }]
+      }
+    ]
+  }
+}

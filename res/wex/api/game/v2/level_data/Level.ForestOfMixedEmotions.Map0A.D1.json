@@ -1,0 +1,19 @@
+{
+  "level": {
+    "potentialBattlepassXp": 0,
+    "rooms": [
+      {
+        "roomName": "Room.Unique.Onboarding1",
+        "regionName": "LPKG.RandomLevel7",
+        "discoveryGoldMult": 1,
+        "occupants": []
+      },
+      {
+        "roomName": "Room.Unique.Onboarding2",
+        "regionName": "LPKG.RandomLevel7",
+        "discoveryGoldMult": 1,
+        "occupants": []
+      }
+    ]
+  }
+}

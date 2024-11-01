@@ -239,8 +239,10 @@ fabric.properties
 /utils/crypto/bb_private_key.pem
 /utils/crypto/bb_public_key.pem
 
-# Exclude json account data (TODO: move to database)
+# Exclude old json account data
 /res/**/*.json
+# But include level data
+!/res/wex/api/game/v2/level_data/*.json
 
 # Log uploads
 /res/wex/api/feedback/log-upload/*
