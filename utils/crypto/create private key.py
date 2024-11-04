@@ -6,9 +6,15 @@ This code is licensed under the Breakers Revived License (BRL).
 
 Utility script to generate a private key for the Battle Breakers Private Server.
 """
+from os import getcwd, path
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
+
+__location__ = path.realpath(path.join(getcwd(), path.dirname(__file__)))
+PRIVATE_KEY_PEM_PATH = path.join(__location__, "bb_private_key.pem")
+PUBLIC_KEY_PEM_PATH = path.join(__location__, "bb_public_key.pem")
+
 
 # Generate the private key
 private_key = rsa.generate_private_key(
@@ -28,5 +34,5 @@ private_key_pem = private_key.private_bytes(
 )
 
 # Save the private key to a file
-with open('bb_private_key.pem', 'wb') as f:
+with open(PRIVATE_KEY_PEM_PATH, 'wb') as f:
     f.write(private_key_pem)
