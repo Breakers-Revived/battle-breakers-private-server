@@ -1,6 +1,6 @@
 [submodule "docs"]
 	path = docs
-	url = https://github.com/dippyshere/battle-breakers-documentation
+	url = https://github.com/Breakers-Revived/battle-breakers-documentation.git
 [submodule "res/battle-breakers-data"]
 	path = res/battle-breakers-data
-	url = https://github.com/dippyshere/battle-breakers-data.git
+	url = https://github.com/Breakers-Revived/battle-breakers-data.git
