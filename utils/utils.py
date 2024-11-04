@@ -38,7 +38,17 @@ from utils.exceptions import errors
 # Load the private key
 with open('utils/crypto/bb_private_key.pem', 'rb') as f:
     private_key_data = f.read()
-    private_key = load_pem_private_key(private_key_data, password=b'wex_dippy_server', backend=default_backend())
+    try:
+        private_key = load_pem_private_key(private_key_data, password=b'wex_dippy_server', backend=default_backend())
+    except ValueError as e:
+        print("Error happened while trying to load private key PEM file.")
+        if len(e.args) == 2 and isinstance(e.args[1], list):
+            print(f"{e.args[0]}")
+            for arg in e.args[1]:
+                print(f"{arg}")
+        else:
+            print(e)
+        exit(1)
 
 with open('utils/crypto/bb_public_key.pem', 'rb') as f:
     public_key_data = f.read()
