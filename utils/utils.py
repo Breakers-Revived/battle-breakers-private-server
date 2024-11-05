@@ -30,29 +30,47 @@ import aiofiles
 
 from async_lru import alru_cache
 
+from utils.crypto.key_config import PRIVATE_KEY_PEM_PATH, PUBLIC_KEY_PEM_PATH, PRIVATE_KEY_PASSWORD
 from cryptography.hazmat.primitives.serialization import load_pem_private_key, load_pem_public_key
 from cryptography.hazmat.backends import default_backend
 
 from utils.exceptions import errors
 
-# Load the private key
-with open('utils/crypto/bb_private_key.pem', 'rb') as f:
-    private_key_data = f.read()
-    try:
-        private_key = load_pem_private_key(private_key_data, password=b'wex_dippy_server', backend=default_backend())
-    except ValueError as e:
-        print("Error happened while trying to load private key PEM file.")
-        if len(e.args) == 2 and isinstance(e.args[1], list):
-            print(f"{e.args[0]}")
-            for arg in e.args[1]:
-                print(f"{arg}")
-        else:
-            print(e)
-        exit(1)
 
-with open('utils/crypto/bb_public_key.pem', 'rb') as f:
-    public_key_data = f.read()
-    public_key = load_pem_public_key(public_key_data, backend=default_backend())
+# SSL keys
+private_key = None
+public_key = None
+
+# Load the private key
+if os.path.isfile(PRIVATE_KEY_PEM_PATH):
+    with open(PRIVATE_KEY_PEM_PATH, 'rb') as f:
+        private_key_data = f.read()
+        try:
+            private_key = load_pem_private_key(private_key_data, password=PRIVATE_KEY_PASSWORD,
+                                                backend=default_backend())
+        except ValueError as e:
+            print("Error happened while trying to load private key PEM file.")
+            if len(e.args) == 2 and isinstance(e.args[1], list):
+                print(f"{e.args[0]}")
+                for arg in e.args[1]:
+                    print(f"{arg}")
+            else:
+                print(e)
+            exit(1)
+else:
+    print(f"Error: no private key PEM file at: {PRIVATE_KEY_PEM_PATH}")
+    exit(1)
+
+
+# Load the public key
+if os.path.isfile(PUBLIC_KEY_PEM_PATH):
+    with open(PUBLIC_KEY_PEM_PATH, 'rb') as f:
+        public_key_data = f.read()
+        public_key = load_pem_public_key(public_key_data, backend=default_backend())
+else:
+    print(f"Error: no public key PEM file at: {PUBLIC_KEY_PEM_PATH}")
+    exit(1)
+
 
 # Cache game files
 game_files_list = []

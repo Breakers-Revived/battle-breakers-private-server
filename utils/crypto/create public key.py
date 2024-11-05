@@ -6,13 +6,11 @@ This code is licensed under the Breakers Revived License (BRL).
 
 Utility script to generate a public key from a private key for the Battle Breakers Private Server.
 """
-from os import getcwd, path
+from os import path
+from key_config import PRIVATE_KEY_PEM_PATH, PUBLIC_KEY_PEM_PATH, PRIVATE_KEY_PASSWORD
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
 
-__location__ = path.realpath(path.join(getcwd(), path.dirname(__file__)))
-PRIVATE_KEY_PEM_PATH = path.join(__location__, "bb_private_key.pem")
-PUBLIC_KEY_PEM_PATH = path.join(__location__, "bb_public_key.pem")
 
 # Safety check
 if not path.isfile(PRIVATE_KEY_PEM_PATH):
@@ -25,7 +23,7 @@ if not path.isfile(PRIVATE_KEY_PEM_PATH):
 with open(PRIVATE_KEY_PEM_PATH, "rb") as key_file:
     private_key = serialization.load_pem_private_key(
         key_file.read(),
-        password=b'pw',  # Replace with your password if applicable
+        password=PRIVATE_KEY_PASSWORD,  # Replace with your password if applicable
         backend=default_backend()
     )
 
