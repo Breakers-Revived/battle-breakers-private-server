@@ -37,12 +37,15 @@ async def cloudstorage_system(request: types.BBRequest) -> sanic.response.JSONRe
         with open(f"res/wex/api/cloudstorage/system/{file}", "rb") as f:
             data = f.read()
         # best solution tbh
-        if file == "DefaultEngine.ini":
-            unique_filename = "a6b5e5b09d0b426db3616c919b2af9b0"
-        elif file == "DefaultGame.ini":
-            unique_filename = "b91b0a42b48740bfaaf0acae1df48cb1"
-        else:
-            unique_filename = file
+        match file:
+            case "DefaultEngine.ini":
+                unique_filename = "a6b5e5b09d0b426db3616c919b2af9b0"
+                if "IOS" in request.headers.get("User-Agent"):
+                    data += b"\n[Audio]\nAudioDeviceModuleName=IOSAudio\nAudioMixerModuleName=IOSAudio\n"
+            case "DefaultGame.ini":
+                unique_filename = "b91b0a42b48740bfaaf0acae1df48cb1"
+            case _:
+                unique_filename = file
         files.append({
             "uniqueFilename": unique_filename,
             "filename": file,
@@ -120,13 +123,16 @@ async def cloudstorage_system_get_file(request: sanic.request.Request, filename:
     :param filename: The filename
     :return: The response object
     """
-    if filename == "a6b5e5b09d0b426db3616c919b2af9b0":
-        filename = "DefaultEngine.ini"
-    elif filename == "b91b0a42b48740bfaaf0acae1df48cb1":
-        filename = "DefaultGame.ini"
+    match filename:
+        case "a6b5e5b09d0b426db3616c919b2af9b0":
+            filename = "DefaultEngine.ini"
+        case "b91b0a42b48740bfaaf0acae1df48cb1":
+            filename = "DefaultGame.ini"
     if not os.path.exists(f"res/wex/api/cloudstorage/system/{filename}"):
         raise errors.com.epicgames.cloudstorage.file_not_found(filename)
     data = await read_file(f"res/wex/api/cloudstorage/system/{filename}", False)
+    if "IOS" in request.headers.get("User-Agent") and filename == "DefaultEngine.ini":
+        data += b"\n[Audio]\nAudioDeviceModuleName=IOSAudio\nAudioMixerModuleName=IOSAudio\n"
     return sanic.response.raw(data, content_type="application/octet-stream")
 
 
