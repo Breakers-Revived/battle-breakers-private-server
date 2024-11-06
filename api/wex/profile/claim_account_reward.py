@@ -35,7 +35,13 @@ async def claim_account_reward(request: types.BBProfileRequest, accountId: str) 
     account_perks = await request.ctx.profile.get_stat("account_perks")
     rewards_claimed = await request.ctx.profile.get_stat("rewards_claimed")
     perk_quantities = {}
-    for perk in request.json.get("perks"):
+    perks = request.json.get("perks")
+    if perks is None:
+        perks = [{
+            "itemId": request.json.get("rewardItemId"),
+            "perkChoice": request.json.get("choiceIdx")
+        }]
+    for perk in perks:
         perk_item = await request.ctx.profile.get_item_by_guid(perk.get("itemId"))
         if perk_item is None or not perk_item["templateId"].startswith("AccountReward:"):
             raise errors.com.epicgames.world_explorers.bad_request(errorMessage=f"Invalid perk {perk.get('templateId', perk.get('itemId'))}")
