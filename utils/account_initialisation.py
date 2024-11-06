@@ -68,7 +68,7 @@ async def initialise_account(database: motor.core.AgnosticDatabase, account_id: 
     # initialise entitlement service
     await database["entitlements"].insert_one({
         "_id": account_id,
-        "entitlements": {}
+        "entitlements": []
     })
     # initialise friends service
     await database["friends"].insert_one({

@@ -27,7 +27,7 @@ async def entitlement_check(request: types.BBRequest) -> sanic.response.HTTPResp
     """
     if await request.app.ctx.db["entitlements"].count_documents({"_id": request.ctx.owner, "entitlements": {
         "$elemMatch": {"catalogItemId": "e458e71024404176addca212860f9ef2"}}}) == 0:
-        raise errors.com.epicgames.common.missing_action("PLAY")
+        raise errors.com.epicgames.common.missing_action("PLAY", "{1}")
     return sanic.response.empty()
 
 
@@ -43,6 +43,10 @@ async def request_access(request: types.BBRequest, accountId: str) -> sanic.resp
     if await request.app.ctx.db["entitlements"].count_documents({"_id": request.ctx.owner, "entitlements": {
             "$elemMatch": {"catalogItemId": "e458e71024404176addca212860f9ef2"}}}):
         raise errors.com.epicgames.bad_request(errorMessage="Already have access to this game.")
+    await request.app.ctx.db["entitlements"].update_one(
+        {"_id": accountId, "entitlements": {"$exists": False}},
+        {"$set": {"entitlements": []}}
+    )
     await request.app.ctx.db["entitlements"].update_one({"_id": accountId}, {
         "$push": {
             "entitlements": {
