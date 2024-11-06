@@ -43,6 +43,7 @@ async def remove_from_monster_pit(request: types.BBProfileRequest, accountId: st
     await request.ctx.profile.add_item(character, character_item_id)
     # This isnt done on the original server, but imo it should be
     await request.ctx.profile.change_item_attribute(character_item_id, "is_new", True)
+    await request.ctx.profile.modify_stat("pit_power_dirty", True, request.ctx.profile_id)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions)

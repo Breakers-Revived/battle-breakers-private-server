@@ -37,6 +37,7 @@ async def add_to_monster_pit(request: types.BBProfileRequest, accountId: str) ->
     # TODO: un-equip sidekicks and gear
     await request.ctx.profile.remove_item(character_item_id)
     await request.ctx.profile.add_item(character, character_item_id, request.ctx.profile_id)
+    await request.ctx.profile.modify_stat("pit_power_dirty", True, request.ctx.profile_id)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions)

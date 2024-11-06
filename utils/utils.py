@@ -717,7 +717,7 @@ async def normalise_string(input_string: Optional[str]) -> Optional[str]:
 
 
 @alru_cache()
-async def load_datatable(datatable: Optional[str]) -> Optional[dict]:
+async def load_datatable(datatable: Optional[str]) -> Optional[dict | list]:
     """
     Loads a datatable. As datatables are both static and large, this could be cached
     :param datatable: The datatable path to load
@@ -999,8 +999,7 @@ async def load_character_data(character_id: str) -> dict:
         best_match.replace("res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/"))
 
 
-@alru_cache(maxsize=64)
-async def get_curvetable_value(data_table: dict, row: str, time_input: float = 0) -> float:
+async def get_curvetable_value(data_table: list[dict], row: str, time_input: float = 0) -> float:
     """
     Gets a value from a curvetable
     :param data_table: The curvetable to get the value from
@@ -1083,3 +1082,25 @@ async def process_choices(input_data: str | int | float | list[str | int | float
             return random.uniform(input_data[0], input_data[1])
         return random.choice(input_data)
     return input_data
+
+
+async def calculate_hero_power(hero_data: dict, add_pit_bonus: bool = False) -> float:
+    """
+    Calculates the hero power
+    :param hero_data: The hero data to calculate the power for
+    :param add_pit_bonus: Whether to add the pit bonus to the power
+    :return: The hero power
+    """
+    power = 0
+    character_stats_handle = (await load_character_data(hero_data["templateId"]))[0]["Properties"]["CharacterStatsHandle"]["RowName"]
+    character_stats = (await load_datatable("Content/Characters/Datatables/CharacterStats"))[0]["Rows"][character_stats_handle]
+    power_budget_mult = await get_curvetable_value((await load_datatable("Content/Characters/Datatables/StatScaling")),
+                                                   "PowerBudgetMult", hero_data["attributes"]["level"])
+    power += power_budget_mult * character_stats["BudgetPoints"]
+    for i in range(len(hero_data["attributes"]["upgrades"])):
+        power += hero_data["attributes"]["upgrades"][i] * [50, 25, 50, 25, 9, 25, 500, 25, 500][i]
+    if add_pit_bonus:
+        power += character_stats["MonsterPitBonusPower"]
+        if hero_data["attributes"]["foil_lvl"] > 0:
+            power += character_stats["MonsterPitFoilBonusPower"]
+    return power
