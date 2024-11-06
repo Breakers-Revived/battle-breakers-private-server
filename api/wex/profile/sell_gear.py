@@ -38,7 +38,7 @@ async def sell_gear(request: types.BBProfileRequest, accountId: str) -> sanic.re
     gear_guid = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_Shard_Gear")
     # TODO: validate the item to sell
     item_to_sell = await request.ctx.profile.get_item_by_guid(request.json.get("itemId"))
-    if not item_to_sell:
+    if item_to_sell is None:
         raise errors.com.epicgames.world_explorers.not_found(
             errorMessage="We're sorry, but we were unable to sell your item as it was not found in your inventory.")
     match item_to_sell["attributes"]["rarity"]:

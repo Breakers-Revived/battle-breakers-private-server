@@ -42,7 +42,7 @@ async def sell_multiple_gear(request: types.BBProfileRequest, accountId: str) ->
     if not request.json.get("itemIds"):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="No items to sell")
     if len(request.json.get("itemIds")) == 1:
-        if not await request.ctx.profile.get_item_by_guid(request.json.get("itemIds")[0]):
+        if (await request.ctx.profile.get_item_by_guid(request.json.get("itemIds")[0])) is None:
             raise errors.com.epicgames.world_explorers.not_found(
                 errorMessage="We're sorry, but we were unable to sell your item as it was not found in your inventory.")
     for item_guid in request.json.get("itemIds"):

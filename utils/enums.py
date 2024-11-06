@@ -231,4 +231,4 @@ class AccountPerk(enum.Enum):
         :param s: The string to get the account perk from
         :return: The account perk
         """
-        return cls[s]
+        return cls[s.split("::")[1]]

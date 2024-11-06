@@ -34,12 +34,12 @@ async def upgrade_hero(request: types.BBProfileRequest, accountId: str) -> sanic
     # TODO: validation
     gold_id = (await request.ctx.profile.find_item_by_template_id("Currency:Gold"))[0]
     current_gold = (await request.ctx.profile.get_item_by_guid(gold_id))["quantity"]
-    silver_id = (await request.ctx.profile.find_item_by_template_id("Ore:Ore_Silver"))[0]
-    current_silver = (await request.ctx.profile.get_item_by_guid(silver_id))["quantity"]
-    magicite_id = (await request.ctx.profile.find_item_by_template_id("Ore:Ore_Magicite"))[0]
-    current_magicite = (await request.ctx.profile.get_item_by_guid(magicite_id))["quantity"]
-    iron_id = (await request.ctx.profile.find_item_by_template_id("Ore:Ore_Iron"))[0]
-    current_iron = (await request.ctx.profile.get_item_by_guid(iron_id))["quantity"]
+    silver_id = await request.ctx.profile.find_item_by_template_id("Ore:Ore_Silver")
+    current_silver = (await request.ctx.profile.get_item_by_guid(silver_id[0])).get("quantity", 0)
+    magicite_id = await request.ctx.profile.find_item_by_template_id("Ore:Ore_Magicite")
+    current_magicite = (await request.ctx.profile.get_item_by_guid(magicite_id[0])).get("quantity", 0)
+    iron_id = await request.ctx.profile.find_item_by_template_id("Ore:Ore_Iron")
+    current_iron = (await request.ctx.profile.get_item_by_guid(iron_id[0])).get("quantity", 0)
     if request.json.get("bIsInPit"):
         hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT)
     else:
@@ -124,19 +124,19 @@ async def upgrade_hero(request: types.BBProfileRequest, accountId: str) -> sanic
                 case "WExpGenericAccountItemDefinition'Ore_Silver'":
                     if current_silver < consumed_item["Count"]:
                         break
-                    await request.ctx.profile.change_item_quantity(silver_id,
+                    await request.ctx.profile.change_item_quantity(silver_id[0],
                                                                    current_silver - consumed_item["Count"])
                     current_silver -= consumed_item["Count"]
                 case "WExpGenericAccountItemDefinition'Ore_Magicite'":
                     if current_magicite < consumed_item["Count"]:
                         break
-                    await request.ctx.profile.change_item_quantity(magicite_id,
+                    await request.ctx.profile.change_item_quantity(magicite_id[0],
                                                                    current_magicite - consumed_item["Count"])
                     current_magicite -= consumed_item["Count"]
                 case "WExpGenericAccountItemDefinition'Ore_Iron'":
                     if current_iron < consumed_item["Count"]:
                         break
-                    await request.ctx.profile.change_item_quantity(iron_id, current_iron - consumed_item["Count"])
+                    await request.ctx.profile.change_item_quantity(iron_id[0], current_iron - consumed_item["Count"])
                     current_iron -= consumed_item["Count"]
                 case _:
                     raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid item to consume")

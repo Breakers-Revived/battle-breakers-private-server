@@ -43,7 +43,7 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
     for member in request.json.get("partyMembers"):
         if member.get("heroType") in ["LocalHero", "LocalCommander"]:
             hero_item = await request.ctx.profile.get_item_by_guid(member.get("heroItemId"))
-            if not hero_item:
+            if hero_item is None:
                 raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid hero item id")
             if not hero_item.get("templateId").startswith("Character:"):
                 raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid character item id")

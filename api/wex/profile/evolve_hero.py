@@ -36,7 +36,7 @@ async def evolve_hero(request: types.BBProfileRequest, accountId: str) -> sanic.
         old_hero = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT)
     else:
         old_hero = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"))
-    if not old_hero:
+    if old_hero is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid hero item id")
     evolution_recipe = (await load_datatable(
         (await get_path_from_template_id(request.json.get("evoPathName"))).replace(

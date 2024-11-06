@@ -31,16 +31,16 @@ async def open_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
     :return: The modified profile
     """
     tower_data = await request.ctx.profile.get_item_by_guid(request.json.get("towerId"))
-    if not tower_data:
+    if tower_data is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid tower id")
-    if not tower_data["attributes"]["active_chest"]:
+    if not tower_data["attributes"].get("active_chest"):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Tower has no active chest. Call PickHeroChest")
     active_chest = tower_data["attributes"]["active_chest"]
     currency_id = await request.ctx.profile.find_item_by_template_id(tower_data["attributes"][f"{active_chest['heroChestType']}_static_currency_template_id"])
     if not currency_id:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Required reagent not found")
     currency = await request.ctx.profile.get_item_by_guid(currency_id[0])
-    if not currency:
+    if currency is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Required reagent not found")
     if currency["quantity"] < tower_data["attributes"][f"{active_chest['heroChestType']}_static_currency_amount"]:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Not enough reagents")

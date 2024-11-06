@@ -33,7 +33,7 @@ async def remove_hero_parties(request: types.BBProfileRequest, accountId: str) -
     # TODO: validation
     # TODO: determine when original game calls this and what data it sends
     hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"))
-    if not hero_item:
+    if hero_item is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid hero item id")
     if not hero_item.get("templateId").startswith("Character:"):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid character item id")

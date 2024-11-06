@@ -32,7 +32,7 @@ async def claim_quest_reward(request: types.BBProfileRequest, accountId: str) ->
     """
     # TODO: validation
     quest_item = await request.ctx.profile.get_item_by_guid(request.json.get("questMcpId"))
-    if not quest_item:
+    if quest_item is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid quest item id")
     if not quest_item["attributes"]["bIsCompleted"]:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="You have not completed this quest")

@@ -37,7 +37,7 @@ async def sell_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="How did you do this?")
     else:
         hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"))
-    if not hero_item:
+    if hero_item is None:
         raise errors.com.epicgames.world_explorers.not_found(
             errorMessage="We're sorry, but we were unable to sell your item as it was not found in your inventory.")
     if not hero_item.get("templateId").startswith("Character:"):

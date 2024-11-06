@@ -31,7 +31,7 @@ async def pick_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
     :return: The modified profile
     """
     tower_data = await request.ctx.profile.get_item_by_guid(request.json.get("towerId"))
-    if not tower_data:
+    if tower_data is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid tower id")
     active_chest = tower_data["attributes"]["chest_options"][0]
     active_chest["heroChestType"] = request.json.get("heroChestType")

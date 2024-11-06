@@ -39,7 +39,7 @@ async def promote_hero(request: types.BBProfileRequest, accountId: str) -> sanic
         hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT)
     else:
         hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"))
-    if not hero_item:
+    if hero_item is None:
         raise errors.com.epicgames.modules.gameplayutils.recipe_failed(errorMessage="Invalid hero item id")
     hero_data = await load_character_data(hero_item["templateId"])
     promotion_table = await load_datatable(
