@@ -6,10 +6,12 @@ This code is licensed under the Breakers Revived License (BRL).
 
 Handles the sac code api
 """
+import urllib.parse
 
 import sanic
 
 from utils import types
+from utils.exceptions import errors
 from utils.utils import authorized as auth, get_account_id_from_display_name
 
 from utils.sanic_gzip import Compress
@@ -30,7 +32,7 @@ async def sac_code_info(request: types.BBRequest, sacSlug: str) -> sanic.respons
     :param sacSlug: The sac slug
     :return: The response object
     """
-    search_dn = await get_account_id_from_display_name(request.app.ctx.db, sacSlug)
+    search_dn = await get_account_id_from_display_name(request.app.ctx.db, urllib.parse.unquote(sacSlug))
     if search_dn is not None:
         return sanic.response.json({
             "id": search_dn,
@@ -39,8 +41,4 @@ async def sac_code_info(request: types.BBRequest, sacSlug: str) -> sanic.respons
             "status": "ACTIVE",
             "verified": True
         })
-    raise sanic.exceptions.NotFound(sacSlug, context={
-        "errorCode": "errors.com.epicgames.affiliate.slug_not_found",
-        "errorMessage": "The creator code was not found.",
-        "numericErrorCode": 16004
-    })
+    raise errors.com.epicgames.affiliate.slug_not_found(sacSlug)

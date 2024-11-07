@@ -9,8 +9,8 @@ Handles setting a sac code
 
 import sanic
 
+import utils.utils
 from utils import types
-from utils.exceptions import errors
 from utils.utils import authorized as auth
 
 from utils.sanic_gzip import Compress
@@ -30,4 +30,9 @@ async def set_sac(request: types.BBProfileRequest, accountId: str) -> sanic.resp
     :param accountId: The account id
     :return: The modified profile
     """
-    raise errors.com.epicgames.not_implemented()
+    await request.ctx.profile.modify_stat("affiliate_id", request.json.get("affiliateId"))
+    await request.ctx.profile.modify_stat("affiliate_set_time", await utils.utils.format_time())
+    return sanic.response.json(
+        await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
+                                                     request.ctx.profile_revisions)
+    )

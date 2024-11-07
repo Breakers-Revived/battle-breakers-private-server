@@ -1557,6 +1557,21 @@ class errors:
                         originatingService: str = "com.epicgames.account.public"
                         statusCode: int = 400
 
+            class affiliate:
+                """
+                Parent class for all affiliate errors
+                """
+
+                class slug_not_found(EpicException):
+                    """
+                    This error is thrown when a support a creator code is not found
+                    *errors.com.epicgames.affiliate.slug_not_found*
+                    """
+                    errorMessage: str = "The creator code was not found."
+                    numericErrorCode: int = 16004
+                    originatingService: str = "WEX"
+                    statusCode: int = 404
+
             class bad_request(EpicException):
                 """
                 This error is thrown when a bad request is made
