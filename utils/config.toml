@@ -10,6 +10,22 @@ KEEP_ALIVE_TIMEOUT = 300
 host = "127.0.0.1"
 port = 80
 
+[content]
+# The file path location to serve cooked game PAKs/built chunks from
+# The build manifest path should contain all PAK files from a build manifest under the folder /{version}/{platform}/{pak}
+# Version being e.g. 1.88.244-r17036752
+# Platform being the client platform & texture format e.g. Android_ASTC/IOS/Windows
+# Pak being the pak file e.g. pakchunk1_pak1.pak
+build-manifest = "D:/Battle Breakers/"
+# The ChunkV3 path should contain all the built chunks included within the pak & master manifests under the folder /{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}
+# Changelist being the version CL e.g. CL_3296092
+# Platform being the client platform & texture format e.g. Android_ASTC/IOS/WindowsNoEditor
+# DataGroupList being a two digit number 00-99, from the manifest
+# ChunkHashGUID being comprised of two parts - HEX_GUID.chunk e.g. 8BEE6A9E10AC85D7_251136F44E4DAE61C3A650B5472D389A.chunk
+# Hex being derived from reversing the hash blob after converting to hex
+# GUID simply being the GUID of the chunk
+chunk-v3 = "D:/Battle Breakers/ChunkV3/"
+
 [database]
 uri = "mongodb://localhost:27017"
 database = "dippy_battle_breakers"

@@ -10,6 +10,7 @@ import aiofiles
 import sanic
 
 from utils import types
+from utils.exceptions import errors
 from utils.sanic_gzip import Compress
 
 compress = Compress()
@@ -33,8 +34,7 @@ async def build_manifest_request(request: types.BBRequest, version: str,
                                  "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:
-        # raise sanic.exceptions.FileNotFound("BuildManifest not found")
-        raise sanic.exceptions.BadRequest("BuildManifest not found")
+        raise errors.com.epicgames.bad_request(errorMessage="This Build Manifest does not exist, or Build Manifests are unavailable on this server.")
 
 
 # undocumented
@@ -51,7 +51,7 @@ async def build_manifest_pak(request: types.BBRequest, version: str, platform: s
     :return: The response object (204)
     """
     try:
-        async with aiofiles.open(f"D:/Battle Breakers/{version}/{platform}/{pak}", "rb") as file:
+        async with aiofiles.open(f"{request.app.config.CONTENT['BUILD-MANIFEST']}{version}/{platform}/{pak}", "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:
-        raise sanic.exceptions.FileNotFound("chunk was not found")
+        raise errors.com.epicgames.not_found(errorMessage="Build Manifest PAKs are unavailable on this server.")

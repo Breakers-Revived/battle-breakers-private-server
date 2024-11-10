@@ -10,6 +10,7 @@ import aiofiles
 import sanic
 
 from utils import types
+from utils.exceptions import errors
 from utils.sanic_gzip import Compress
 
 compress = Compress()
@@ -36,7 +37,7 @@ async def chunk_manifest_request(request: types.BBRequest, environment: str, cha
         async with aiofiles.open(f"res/wex/api/game/v2/manifests/{changelist}/{platform}/{file}", "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:
-        raise sanic.exceptions.FileNotFound("Chunk manifest not found")
+        raise errors.com.epicgames.not_found(errorMessage="This ChunkV3 PAK manifest does not exist, or ChunkV3 PAK manifests are unavailable on this server.")
 
 
 # undocumented
@@ -58,8 +59,8 @@ async def chunk_manifest_serve_chunks(request: types.BBRequest, environment: str
     """
     try:
         async with aiofiles.open(
-                f"D:/Battle Breakers/ChunkV3/{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}",
+                f"{request.app.config.CONTENT['CHUNK-V3']}{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}",
                 "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:
-        raise sanic.exceptions.FileNotFound("chunk was not found")
+        raise errors.com.epicgames.not_found(errorMessage="ChunkV3 PAK chunks are unavailable on this server.")
