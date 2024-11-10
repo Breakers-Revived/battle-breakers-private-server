@@ -28,8 +28,6 @@ async def update_party(request: types.BBProfileRequest, accountId: str) -> sanic
     :param accountId: The account id
     :return: The modified profile
     """
-    # print(await request.ctx.profile.get_profile(request.ctx.profile_id))
-    # TODO: Fix this for earlier versions that seem to expect a different response / change the party id at will
     party_item_id = request.json.get("partyItemId")
     current_party_instance = (await request.ctx.profile.get_item_by_guid(party_item_id, request.ctx.profile_id)).get(
         "attributes"

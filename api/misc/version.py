@@ -15,6 +15,7 @@ import jwt
 import orjson
 import sanic
 import git
+import distro
 
 from utils import types
 from utils.sanic_gzip import Compress
@@ -77,7 +78,7 @@ async def version_route(request: types.BBRequest) -> sanic.response.JSONResponse
                 "Platform": f"{platform.python_implementation()} {platform.python_version()}",
                 "OS": f"{re.sub(r'-', ' ', platform.platform(aliased=True))}"
                       f" {platform.win32_edition() if platform.system() == 'Windows' else ''}",
-                "Distribution": f"{platform.linux_distribution() if platform.system() == 'Linux' else ''}",
+                "Distribution": f"{distro.name() + ' ' + distro.version() if platform.system() == 'Linux' else ''}",
                 "CPU": f"{cpu_info}",
                 "Architecture": f"{platform.machine()}",
                 "System": f"{platform.system()}",
