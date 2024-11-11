@@ -9,7 +9,7 @@ Handles the chunkv3 manifest cdn downloads
 import aiofiles
 import sanic
 
-from utils import types
+from utils import types, utils
 from utils.exceptions import errors
 from utils.sanic_gzip import Compress
 
@@ -34,7 +34,9 @@ async def chunk_manifest_request(request: types.BBRequest, environment: str, cha
     :return: The response object (204)
     """
     try:
-        async with aiofiles.open(f"res/wex/api/game/v2/manifests/{changelist}/{platform}/{file}", "rb") as file:
+        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests/", 
+                                               f"{changelist}/{platform}/{file}")
+        async with aiofiles.open(safe_file, "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:
         raise errors.com.epicgames.not_found(errorMessage="This ChunkV3 PAK manifest does not exist, or ChunkV3 PAK manifests are unavailable on this server.")
@@ -58,9 +60,9 @@ async def chunk_manifest_serve_chunks(request: types.BBRequest, environment: str
     :return: The response object (204)
     """
     try:
-        async with aiofiles.open(
-                f"{request.app.config.CONTENT['CHUNK-V3']}{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}",
-                "rb") as file:
+        safe_file = await utils.safe_path_join(request.app.config.CONTENT['CHUNK-V3'], 
+                                               f"{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}")
+        async with aiofiles.open(safe_file, "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:
         raise errors.com.epicgames.not_found(errorMessage="ChunkV3 PAK chunks are unavailable on this server.")

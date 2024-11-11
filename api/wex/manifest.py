@@ -11,7 +11,8 @@ import hashlib
 import aiofiles
 import sanic
 
-from utils import types
+import urllib.parse
+from utils import types, utils
 from utils.exceptions import errors
 from utils.sanic_gzip import Compress
 
@@ -32,11 +33,6 @@ async def wex_cloudv3_manifests(request: types.BBRequest, manifest: str) -> sani
     # yes, this is more ugly than the regex in utils, however its roughly 2-8x faster
     try:
         changelist = request.headers.get("User-Agent").split('version=')[1].split(",")[0].split("-")[1].split("+")[0]
-        
-        # DO NOT REMOVE
-        # This is user input SANITIZATION
-        # It prevents directory traversal vulnerability
-        changelist = str(int(changelist))
     except:
         changelist = None
     if changelist is None:
@@ -59,8 +55,10 @@ async def wex_cloudv3_manifests(request: types.BBRequest, manifest: str) -> sani
 
     # ~ 1.5ms
     try:
+        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests", 
+                                               f"CL_{changelist}/{urllib.parse.unquote(manifest).lower()}")
         manifest_file: bytes = await (
-            await aiofiles.open(f"res/wex/api/game/v2/manifests/CL_{changelist}/{manifest.lower()}", "rb")).read()
+            await aiofiles.open(safe_file, "rb")).read()
         md5_hash: str = hashlib.md5(manifest_file).hexdigest().upper()
         if request.headers.get("If-None-Match") == f'"{md5_hash}"':
             return sanic.response.text("", status=304, headers={"ETag": f'"{md5_hash}"'})

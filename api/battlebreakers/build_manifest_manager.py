@@ -9,7 +9,7 @@ Handles the manifest cdn downloads
 import aiofiles
 import sanic
 
-from utils import types
+from utils import types, utils
 from utils.exceptions import errors
 from utils.sanic_gzip import Compress
 
@@ -30,8 +30,8 @@ async def build_manifest_request(request: types.BBRequest, version: str,
     :return: The response object (204)
     """
     try:
-        async with aiofiles.open(f"res/wex/api/game/v2/manifests/{file.replace('.txt', '')} {version}.txt",
-                                 "rb") as file:
+        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests/", f"{file.replace('.txt', '')} {version}.txt")
+        async with aiofiles.open(safe_file,"rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:
         raise errors.com.epicgames.bad_request(errorMessage="This Build Manifest does not exist, or Build Manifests are unavailable on this server.")
@@ -51,7 +51,8 @@ async def build_manifest_pak(request: types.BBRequest, version: str, platform: s
     :return: The response object (204)
     """
     try:
-        async with aiofiles.open(f"{request.app.config.CONTENT['BUILD-MANIFEST']}{version}/{platform}/{pak}", "rb") as file:
+        safe_file = await utils.safe_path_join(request.app.config.CONTENT['BUILD-MANIFEST'], f"{version}/{platform}/{pak}")
+        async with aiofiles.open(safe_file, "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:
         raise errors.com.epicgames.not_found(errorMessage="Build Manifest PAKs are unavailable on this server.")
