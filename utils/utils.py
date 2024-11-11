@@ -1104,3 +1104,28 @@ async def calculate_hero_power(hero_data: dict, add_pit_bonus: bool = False) -> 
         if hero_data["attributes"]["foil_lvl"] > 0:
             power += character_stats["MonsterPitFoilBonusPower"]
     return power
+
+
+async def safe_path_join(base_path: str, unsafe_path: str, verbose: bool = False) -> str:
+    """
+    Joins two paths safely and ensures the resulting path is within the base path.
+    :param base_path: The base path
+    :param unsafe_path: The path to be joined to the base one
+    :param verbose: Whether to include paths in the ValueError or not
+    :return: The joined output path
+    """
+    # Join the base path with the unsafe path
+    combined_path = os.path.join(base_path, unsafe_path)
+    
+    # Get the real (absolute) path, resolving symbolic links and relative paths
+    real_path = os.path.realpath(combined_path)
+
+    # Ensure the real path is within the base path
+    if not real_path.startswith(os.path.realpath(base_path)):
+        # If the final path is outside the base path, raise an error
+        if verbose:
+            raise ValueError(f"Path traversal attempt detected! The unsafe path '{unsafe_path}' leads outside of the base path '{base_path}'")
+        else:
+            raise ValueError("Path traversal attempt detected!")
+    
+    return real_path

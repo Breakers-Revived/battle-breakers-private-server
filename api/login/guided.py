@@ -92,15 +92,19 @@ async def login_page_files(request: types.BBRequest, file: str) -> sanic.respons
             else:
                 return sanic.response.redirect("/id/login/guided")
         case _:
-            if urllib.parse.unquote(file).split(".")[-1] == "woff2":
+            unquoted_file = urllib.parse.unquote(file)
+            safe_file = await utils.safe_path_join("res/site-meta", unquoted_file)
+
+            if unquoted_file.split(".")[-1] == "woff2":
                 content_type = "font/woff2"
             else:
-                content_type = mimetypes.guess_type(f"res/site-meta/{urllib.parse.unquote(file)}", False)[0] or "text/plain"
-            if request.headers.get("save-data") == "on" and urllib.parse.unquote(file) in ["bb-extended-blur-hd.jpg",
-                                                                                           "bb-extended-blur-hd.webp"]:
+                content_type = mimetypes.guess_type(safe_file, False)[0] or "text/plain"
+
+            if request.headers.get("save-data") == "on" and unquoted_file in ["bb-extended-blur-hd.jpg",
+                                                                              "bb-extended-blur-hd.webp"]:
                 return sanic.response.redirect(
-                    f"/id/login/guided/bb-extended-blur.{urllib.parse.unquote(file).split('.')[-1]}")
-            return await sanic.response.file(f"res/site-meta/{urllib.parse.unquote(file)}", max_age=604800,
+                    f"/id/login/guided/bb-extended-blur.{unquoted_file.split('.')[-1]}")
+            return await sanic.response.file(safe_file, max_age=604800,
                                              request_headers=request.headers, mime_type=content_type)
 
 
