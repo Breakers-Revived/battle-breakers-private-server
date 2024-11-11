@@ -13,7 +13,7 @@ import sanic
 
 import urllib.parse
 
-from utils import types
+from utils import types, utils
 from utils.sanic_gzip import Compress
 
 compress = Compress()
@@ -53,9 +53,12 @@ async def purchase_flow_files(request: types.BBRequest, file: str) -> sanic.resp
             async with aiofiles.open("res/account/login/guided/login-script.js", "rb") as file:
                 return sanic.response.raw(await file.read(), content_type="text/javascript")
     else:
-        if urllib.parse.unquote(file).split(".")[-1] == "woff2":
+        unquoted_file = urllib.parse.unquote(file)
+        safe_file = await utils.safe_path_join("res/site-meta", unquoted_file)
+
+        if unquoted_file.split(".")[-1] == "woff2":
             content_type = "font/woff2"
         else:
-            content_type = mimetypes.guess_type(f"res/site-meta/{urllib.parse.unquote(file)}", False)[0] or "text/plain"
-        async with aiofiles.open(f"res/site-meta/{urllib.parse.unquote(file)}", "rb") as file:
+            content_type = mimetypes.guess_type(safe_file, False)[0] or "text/plain"
+        async with aiofiles.open(safe_file, "rb") as file:
             return sanic.response.raw(await file.read(), content_type=content_type)
