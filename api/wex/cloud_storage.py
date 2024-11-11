@@ -13,7 +13,7 @@ import os
 import sanic
 import aiofiles.os
 
-from utils import types
+from utils import types, utils
 from utils.exceptions import errors
 from utils.sanic_gzip import Compress
 from utils.utils import authorized as auth, read_file, format_time
@@ -128,9 +128,11 @@ async def cloudstorage_system_get_file(request: sanic.request.Request, filename:
             filename = "DefaultEngine.ini"
         case "b91b0a42b48740bfaaf0acae1df48cb1":
             filename = "DefaultGame.ini"
-    if not os.path.exists(f"res/wex/api/cloudstorage/system/{filename}"):
+
+    safe_file = await utils.safe_path_join("res/wex/api/cloudstorage/system", filename)
+    if not os.path.exists(safe_file):
         raise errors.com.epicgames.cloudstorage.file_not_found(filename)
-    data = await read_file(f"res/wex/api/cloudstorage/system/{filename}", False)
+    data = await read_file(safe_file, False)
     if "IOS" in request.headers.get("User-Agent") and filename == "DefaultEngine.ini":
         data += b"\n[Audio]\nAudioDeviceModuleName=IOSAudio\nAudioMixerModuleName=IOSAudio\n"
     return sanic.response.raw(data, content_type="application/octet-stream")
