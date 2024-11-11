@@ -32,6 +32,10 @@ async def wex_cloudv3_manifests(request: types.BBRequest, manifest: str) -> sani
     # yes, this is more ugly than the regex in utils, however its roughly 2-8x faster
     try:
         changelist = request.headers.get("User-Agent").split('version=')[1].split(",")[0].split("-")[1].split("+")[0]
+        
+        # DO NOT REMOVE
+        # This is user input SANITIZATION
+        # It prevents directory traversal vulnerability
         changelist = str(int(changelist))
     except:
         changelist = None
