@@ -30,7 +30,7 @@ async def build_manifest_request(request: types.BBRequest, version: str,
     :return: The response object (204)
     """
     try:
-        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests/", f"{file.replace('.txt', '')} {version}.txt")
+        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests", f"{file.replace('.txt', '')} {version}.txt")
         async with aiofiles.open(safe_file,"rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:

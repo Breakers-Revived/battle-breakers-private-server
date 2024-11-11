@@ -34,7 +34,7 @@ async def chunk_manifest_request(request: types.BBRequest, environment: str, cha
     :return: The response object (204)
     """
     try:
-        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests/", 
+        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests", 
                                                f"{changelist}/{platform}/{file}")
         async with aiofiles.open(safe_file, "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")

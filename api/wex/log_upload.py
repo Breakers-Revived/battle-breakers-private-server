@@ -31,6 +31,6 @@ async def logupload(request: types.BBRequest, file: str) -> sanic.response.HTTPR
     if int(request.headers.get("Content-Length")) > 5242880:
         raise sanic.exceptions.PayloadTooLarge("File is too large, I'm not a free s3 bucket >_<")
     
-    safe_file = utils.safe_path_join("res/wex/api/feedback/log-upload", file)
+    safe_file = await utils.safe_path_join("res/wex/api/feedback/log-upload", file)
     await write_file(safe_file, request.body, False)
     return sanic.response.empty()
