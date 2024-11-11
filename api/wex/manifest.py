@@ -39,7 +39,7 @@ async def wex_cloudv3_manifests(request: types.BBRequest, manifest: str) -> sani
 
     # ~ 2ms
     # try:
-    #     with open(f"res/wex/api/game/v2/manifests/CL_{changelist}/{manifest}", "rb") as f:
+    #     with open(f"res/wex/api/game/v2/manifests/CL_{changelist}/{manifest.lower()}", "rb") as f:
     #         manifest = orjson.dumps(orjson.loads(f.read())).decode("utf-8")
     # except:
     #     raise sanic.exceptions.FileNotFound("Manifest not found")
@@ -47,7 +47,7 @@ async def wex_cloudv3_manifests(request: types.BBRequest, manifest: str) -> sani
 
     # ~ 150ms
     # try:
-    #     return await sanic.response.file(f"res/wex/api/game/v2/manifests/CL_{changelist}/{manifest}",
+    #     return await sanic.response.file(f"res/wex/api/game/v2/manifests/CL_{changelist}/{manifest.lower()}",
     #                                      mime_type="text/plain")
     # except:
     #     raise sanic.exceptions.FileNotFound("Manifest not found")
@@ -55,7 +55,7 @@ async def wex_cloudv3_manifests(request: types.BBRequest, manifest: str) -> sani
     # ~ 1.5ms
     try:
         manifest_file: bytes = await (
-            await aiofiles.open(f"res/wex/api/game/v2/manifests/CL_{changelist}/{manifest}", "rb")).read()
+            await aiofiles.open(f"res/wex/api/game/v2/manifests/CL_{changelist}/{manifest.lower()}", "rb")).read()
         md5_hash: str = hashlib.md5(manifest_file).hexdigest().upper()
         if request.headers.get("If-None-Match") == f'"{md5_hash}"':
             return sanic.response.text("", status=304, headers={"ETag": f'"{md5_hash}"'})
