@@ -8,7 +8,7 @@ Handles the log uploader
 """
 import sanic
 
-from utils import types
+from utils import types, utils
 from utils.utils import authorized as auth, write_file
 
 from utils.sanic_gzip import Compress
@@ -30,5 +30,7 @@ async def logupload(request: types.BBRequest, file: str) -> sanic.response.HTTPR
     """
     if int(request.headers.get("Content-Length")) > 5242880:
         raise sanic.exceptions.PayloadTooLarge("File is too large, I'm not a free s3 bucket >_<")
-    await write_file(f"res/wex/api/feedback/log-upload/{file}", request.body, False)
+    
+    safe_file = utils.safe_path_join("res/wex/api/feedback/log-upload", file)
+    await write_file(safe_file, request.body, False)
     return sanic.response.empty()
