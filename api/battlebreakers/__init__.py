@@ -9,5 +9,6 @@ Handles the cdn for battle breakers
 import sanic
 from .build_manifest_manager import build_manifest
 from .chunkv3_manager import chunk_manifest
+from .motd import bb_motd
 
-bb_cdn = sanic.Blueprint.group(build_manifest, chunk_manifest)
+bb_cdn = sanic.Blueprint.group(build_manifest, chunk_manifest, bb_motd)

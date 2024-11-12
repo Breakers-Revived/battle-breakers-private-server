@@ -42,9 +42,13 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                 client_secret = authorisation.split(':')[1]
             except:
                 raise errors.com.epicgames.common.oauth.invalid_client()
-            auth_client: AuthClient = enums.AuthClient.from_string(client_id)
-            if client_secret != auth_client.value[1]:
+            auth_clients: list[AuthClient] = enums.AuthClient.from_string(client_id)
+            for auth_client in auth_clients:
+                if client_secret == auth_client.value[1]:
+                    break
+            else:
                 raise errors.com.epicgames.account.invalid_client_credentials()
+            auth_client = auth_clients[0]
         elif request.headers.get('Authorization').startswith('bearer'):
             client_id = "3cf78cd3b00b439a8755a878b160c7ad"
         else:

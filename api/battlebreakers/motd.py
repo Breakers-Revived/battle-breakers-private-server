@@ -14,15 +14,16 @@ from utils import types
 from utils.sanic_gzip import Compress
 
 compress = Compress()
-wex_motd = sanic.Blueprint("wex_motd")
+bb_motd = sanic.Blueprint("bb_motd")
 
 
 # undocumented
-@wex_motd.route("/api/game/v2/motd", methods=['GET'])
+@bb_motd.route("/battlebreakers/motd", methods=['GET'])
 @compress.compress()
-async def motd(request: types.BBRequest) -> sanic.response.HTTPResponse:
+async def motd2(request: types.BBRequest) -> sanic.response.HTTPResponse:
     """
-    Handles the motd of 1.0, however this version does not seem to display the news button
+    Handles the motd html of old versions of battle breakers (1.1 - ~1.6)
+    These motd news requests on 1.1 - 1.5 expect an HTML website, and all external content is fetched via webview instead of game client
     :param request: The request object
     :return: The response object
     """

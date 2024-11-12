@@ -160,6 +160,7 @@ class AuthClient(enum.Enum):
         wexAndroidGameClient_GameDev: The Battle Breakers Android game client for GameDev environment
         wexIOSGameClient: The Battle Breakers iOS game client
         wexpClient: The Battle Breakers old mobile client
+        wexpClient_GameDev: The Battle Breakers old mobile client for GameDev environment
         battlebreakers_web: The Battle Breakers website
         launcherAppClient2: The Epic Games Launcher
         googleClientId: The Google client ID
@@ -185,16 +186,20 @@ class AuthClient(enum.Enum):
                           "QSzqBOVSk_OA5zNk6XjIdj6Q"]
 
     @classmethod
-    def from_string(cls, s: str) -> "AuthClient":
+    def from_string(cls, s: str) -> list["AuthClient"]:
         """
         Get the authentication client secret pair from a client string
         :param s: The string to get the authentication client from
         :return: The authentication client secret pair
         """
+        clients = []
         for client in cls:
             if s in client.value[0]:
-                return client
-        raise errors.com.epicgames.common.oauth.invalid_client()
+                clients.append(client)
+        if clients:
+            return clients
+        else:
+            raise errors.com.epicgames.common.oauth.invalid_client()
 
 
 class AccountPerk(enum.Enum):
