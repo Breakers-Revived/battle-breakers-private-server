@@ -17,6 +17,10 @@ port = 80
 # Platform being the client platform & texture format e.g. Android_ASTC/IOS/Windows
 # Pak being the pak file e.g. pakchunk1_pak1.pak
 build-manifest = "D:/Battle Breakers/"
+# If you'd instead like to host the build manifest PAKs on an external server, enter a host address here (exclude trailing slash)
+# The client will be 302 redirected to fetch from here instead
+# To serve files from a local directory above, leave this empty
+external-pak-url = "http://122.107.214.116:8000"
 # The ChunkV3 path should contain all the built chunks included within the pak & master manifests under the folder /{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}
 # Changelist being the version CL e.g. CL_3296092
 # Platform being the client platform & texture format e.g. Android_ASTC/IOS/WindowsNoEditor
@@ -25,6 +29,10 @@ build-manifest = "D:/Battle Breakers/"
 # Hex being derived from reversing the hash blob after converting to hex
 # GUID simply being the GUID of the chunk
 chunk-v3 = "D:/Battle Breakers/ChunkV3/"
+# If you'd instead like to host the ChunkV3 PAK chunks on an external server, enter a host address here (exclude trailing slash)
+# The client will be 302 redirected to fetch from here instead
+# To serve files from a local directory above, leave this empty
+external-chunk-url = "http://122.107.214.116:8000"
 
 [database]
 uri = "mongodb://localhost:27017"

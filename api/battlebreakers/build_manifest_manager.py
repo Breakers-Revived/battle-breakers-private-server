@@ -50,6 +50,8 @@ async def build_manifest_pak(request: types.BBRequest, version: str, platform: s
     :param pak: The pak chunk to download
     :return: The response object (204)
     """
+    if request.app.config.CONTENT['EXTERNAL-PAK-URL'] and isinstance(request.app.config.CONTENT['EXTERNAL-PAK-URL'], str):
+        return sanic.response.redirect(f"{request.app.config.CONTENT['EXTERNAL-PAK-URL']}/{version}/{platform}/{pak}")
     try:
         safe_file = await utils.safe_path_join(request.app.config.CONTENT['BUILD-MANIFEST'], f"{version}/{platform}/{pak}")
         async with aiofiles.open(safe_file, "rb") as file:

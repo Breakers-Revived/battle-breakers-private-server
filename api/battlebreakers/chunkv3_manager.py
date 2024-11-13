@@ -59,6 +59,8 @@ async def chunk_manifest_serve_chunks(request: types.BBRequest, environment: str
     :param ChunkHashGUID: The chunk hash guid (34254574B8C46AC9_DF511A404ABE748CE527B6A264B5389A.chunk); theres a more specific regex i could write for this but im not bothered
     :return: The response object (204)
     """
+    if request.app.config.CONTENT['EXTERNAL-CHUNK-URL'] and isinstance(request.app.config.CONTENT['EXTERNAL-CHUNK-URL'], str):
+        return sanic.response.redirect(f"{request.app.config.CONTENT['EXTERNAL-CHUNK-URL']}/{environment}/{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}")
     try:
         safe_file = await utils.safe_path_join(request.app.config.CONTENT['CHUNK-V3'], 
                                                f"{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}")
