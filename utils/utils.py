@@ -27,6 +27,7 @@ import orjson
 import rapidfuzz.process
 import sanic
 import aiofiles
+import numpy
 
 from async_lru import alru_cache
 
@@ -1129,3 +1130,23 @@ async def safe_path_join(base_path: str, unsafe_path: str, verbose: bool = False
             raise ValueError("Path traversal attempt detected!")
     
     return real_path
+
+
+async def deterministic_shuffle(item_pool: list, item_count: Optional[int] = -1, weights: Optional[list] = None, rng_seed: Optional[int] = None) -> list:
+    """
+    Shuffles a list deterministically, to create storefronts that only change on refresh, and will remain consistent across reboots and instances
+    :param item_pool: The list to shuffle
+    :param item_count: The number of items to shuffle
+    :param weights: The weights for each item in the item pool. By default this is uniform
+    :param rng_seed: The seed to use for the shuffle. By default this will only change output daily at UTC 0
+    :return: The shuffled list
+    """
+    if rng_seed is None:
+        rng_seed = int(datetime.datetime.now(datetime.UTC).strftime("%Y%m%d"))
+    generator = numpy.random.default_rng(rng_seed)
+    if weights is None:
+        weights = [1 / len(item_pool) for _ in item_pool]
+    if item_count == -1:
+        item_count = len(item_pool)
+    selected_items = generator.choice(item_pool, item_count, p=weights, replace=False)
+    return selected_items.tolist()

@@ -1,20 +1,18 @@
 # Required Python Dependencies
 # ----------------------------
 # setup dependencies
-setuptools>=75.3.0
+setuptools>=75.5.0
 wheel>=0.45.0
 # JSON handling
 orjson>=3.10.11
 # Web server
-# for python 3.13
-git+https://github.com/tacaswell/httptools.git@patch-1
 sanic[ext]>=24.6.0
 # Colourful logging
 colorama>=0.4.6
 # TOML backwards compatibility for Python 3.10
-tomli>=2.0.2
+tomli>=2.1.0
 # JSON Web Token handling
-pyjwt>=2.9.0
+pyjwt>=2.10.0
 # Information for /version
 py-cpuinfo>=9.0.0
 gitpython>=3.1.43
@@ -26,23 +24,25 @@ Brotli>=1.1.0
 # Async file handling
 aiofiles>=24.1.0
 # Password hashing
-bcrypt>=4.2.0
+bcrypt>=4.2.1
 # Input validation
-pydantic>=2.9.2
-pydantic_core>=2.23.4
+pydantic>=2.10.0b2
+pydantic_core>=2.27.0
 # Crypto
 cryptography>=43.0.3
 # Characterset detection speedup
 faust-cchardet>=2.1.19
 # Async HTTP client
-aiohttp[speedups]>=3.10.10
+aiohttp[speedups]>=3.11.6
 urllib3>=2.2.3
 # MongoDB driver
 motor>=3.6.0
 # Calendar system
-icalendar>=6.0.0
+icalendar>=6.0.1
 recurring-ical-events>=3.3.3
 # async caching speedup
 async-lru>=2.0.4
 # for fuzzy searching
 rapidfuzz>=3.10.1
+# for randomisation
+numpy>=2.1.3

@@ -708,7 +708,7 @@ class PlayerProfile:
         setattr(self, f"{profile_id.value}_changes", profile_changes)
 
     async def grant_item(self, template_id: str, quantity: int = 1,
-                         attributes: Optional[dict[str, MCPTypes], None] = None, unique = False, profile_id: ProfileType = ProfileType.PROFILE0) -> str:
+                         attributes: Optional[dict[str, MCPTypes]] = None, unique = False, profile_id: ProfileType = ProfileType.PROFILE0) -> str:
         """
         Grant the specified item to the profile
         :param template_id: The template ID of the item to grant
