@@ -396,6 +396,37 @@ async def verify_request_auth(request: sanic.request.Request, strict: bool = Fal
         return False
 
 
+def admin_auth(maybe_func: Any = None) -> Callable:
+    """
+    Decorator to check if a request is authorized to perform an admin function
+    :return: The decorator
+    """
+
+    def decorator(f: Callable) -> Callable:
+        """
+        The decorator
+        :param f: The function to decorate
+        :return: The decorated function
+        """
+
+        @functools.wraps(f)
+        async def decorated_function(request: sanic.request.Request, *args,
+                                     **kwargs) -> sanic.response.HTTPResponse | sanic.response.JSONResponse:
+            """
+            The decorated function
+
+            :param request: The request object
+            :param args: Arguments to pass to the function
+            :param kwargs: Keyword arguments to pass to the function
+            :return: The response
+            """
+            raise errors.com.epicgames.forbidden()
+
+        return decorated_function
+
+    return decorator(maybe_func) if maybe_func else decorator
+
+
 def authorized(maybe_func: Any = None, *, allow_basic: bool = False, strict: bool = False) -> Callable:
     """
     Decorator to check if a request is authorized

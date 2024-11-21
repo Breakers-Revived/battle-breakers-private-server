@@ -23,6 +23,7 @@ from utils.enums import ProfileType
 from utils.friend_system import PlayerFriends
 from utils.profile_system import PlayerProfile
 from utils.services.calendar.calendar import ScheduledEvents
+from utils.services.lightswitch.lightswitch import LightswitchService
 from utils.services.storefront.catalog import StoreCatalogue
 from utils.toml_config import TomlConfig
 
@@ -36,6 +37,7 @@ class Context:
     db: motor.motor_asyncio.AsyncIOMotorClient
     calendar: ScheduledEvents
     storefronts: StoreCatalogue
+    lightswitch: LightswitchService
     accounts: dict[str, Any]
     friends: dict[str, PlayerFriends]
     profiles: dict[str, PlayerProfile]

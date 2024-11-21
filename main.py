@@ -17,6 +17,7 @@ import colorama
 import motor.motor_asyncio
 
 from utils.services.calendar.calendar import ScheduledEvents
+from utils.services.lightswitch.lightswitch import LightswitchService
 from utils.services.storefront.catalog import StoreCatalogue
 from utils.toml_config import TomlConfig
 from utils.custom_serialiser import custom_serialise
@@ -54,10 +55,11 @@ async def attach_db(*_: Any) -> None:
     app.ctx.db.client.serverSelectionTimeoutMS = 1500
     app.ctx.calendar = await ScheduledEvents.init_calendar()
     app.ctx.storefronts = await StoreCatalogue.init_storefront()
+    app.ctx.lightswitch = await LightswitchService.init_lightswitch(app.ctx.db)
 
 
-@app.main_process_stop
-async def main_stop(*_: Any) -> None:
+@app.before_server_stop
+async def server_stop(*_: Any) -> None:
     """
     Called when the server is stopped
     :param _: The loop
@@ -67,6 +69,7 @@ async def main_stop(*_: Any) -> None:
         await profile.save_profile()
     for profile in app.ctx.friends.values():
         await profile.save_friends()
+    await app.ctx.lightswitch.save_lightswitch()
 
 
 if __name__ == "__main__":

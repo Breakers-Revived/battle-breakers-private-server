@@ -237,3 +237,30 @@ class AccountPerk(enum.Enum):
         :return: The account perk
         """
         return cls[s.split("::")[1]]
+
+
+class ServerStatus(enum.Enum):
+    """
+    Enum for the different server statuses
+
+    Attributes:
+        UP: The server is up
+        DOWN: The server is down
+        RESTRICTED: The server has restricted access
+
+    Methods:
+        from_string(cls, s: str) -> "ServerStatus":
+            Get the server status from a string
+    """
+    UP = "UP"
+    DOWN = "DOWN"
+    RESTRICTED = "RESTRICTED"
+
+    @classmethod
+    def from_string(cls, s: str) -> "ServerStatus":
+        """
+        Get the server status from a string
+        :param s: The string to get the server status from
+        :return: The server status
+        """
+        return cls[s.upper()]

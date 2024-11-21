@@ -7,7 +7,8 @@ This code is licensed under the Breakers Revived License (BRL).
 Handles the service status for Battle Breakers
 """
 import sanic
+from .admin import admin
 from .status import status
 from .version import lightswitch_version
 
-lightswitch = sanic.Blueprint.group(status, lightswitch_version, url_prefix="/lightswitch")
+lightswitch = sanic.Blueprint.group(admin, status, lightswitch_version, url_prefix="/lightswitch")

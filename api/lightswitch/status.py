@@ -28,6 +28,7 @@ async def lightswitch_bulk(request: types.BBRequest) -> sanic.response.JSONRespo
     :param request: The request object
     :return: The response object
     """
+    lightswitch = await request.app.ctx.lightswitch.refresh_status()
     service_id = request.args.getlist("serviceId")
     services = []
     if not service_id:
@@ -35,9 +36,9 @@ async def lightswitch_bulk(request: types.BBRequest) -> sanic.response.JSONRespo
     for service in service_id:
         services.append({
             "serviceInstanceId": service.lower(),
-            "status": "UP",  # "UP" for online, "DOWN" for maintenance, "RESTRICTED" for partial access
-            "message": "Battle Breakers is back :D",
-            "maintenanceUri": None,
+            "status": lightswitch["status"],
+            "message": lightswitch["message"],
+            "maintenanceUri": lightswitch["maintenance_uri"],
             "overrideCatalogIds": ["ae402a2cb61b4c5fa199ce5311cca724"],
             "allowedActions": ["PLAY", "DOWNLOAD"],
             "banned": False,
@@ -47,7 +48,7 @@ async def lightswitch_bulk(request: types.BBRequest) -> sanic.response.JSONRespo
                 "catalogItemId": "a53e821fbdc24181877243a8dbb63463",
                 "namespace": "wex"
             },
-            "timeToShutdownInMs": -1
+            "timeToShutdownInMs": lightswitch["timeToShutdownInMs"]
         })
     return sanic.response.json(services)
 
@@ -62,11 +63,12 @@ async def lightswitch_service(request: types.BBRequest, serviceId: str) -> sanic
     :param serviceId: The service id
     :return: The response object
     """
+    lightswitch = await request.app.ctx.lightswitch.refresh_status()
     return sanic.response.json([{
         "serviceInstanceId": serviceId.lower(),
-        "status": "UP",  # "UP" for online, "DOWN" for maintenance, "RESTRICTED" for partial access
-        "message": "Battle Breakers is back :D",
-        "maintenanceUri": None,
+        "status": lightswitch["status"],
+        "message": lightswitch["message"],
+        "maintenanceUri": lightswitch["maintenance_uri"],
         "overrideCatalogIds": ["ae402a2cb61b4c5fa199ce5311cca724"],
         "allowedActions": ["PLAY", "DOWNLOAD"],
         "banned": False,
@@ -75,5 +77,5 @@ async def lightswitch_service(request: types.BBRequest, serviceId: str) -> sanic
             "catalogItemId": "a53e821fbdc24181877243a8dbb63463",
             "namespace": "wex"
         },
-        "timeToShutdownInMs": -1
+        "timeToShutdownInMs": lightswitch["timeToShutdownInMs"]
     }])
