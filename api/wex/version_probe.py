@@ -39,11 +39,11 @@ async def version_probe(request: types.BBRequest) -> sanic.response.HTTPResponse
         request.conn_info.ctx.probe_count = 0
     request.conn_info.ctx.probe_count += 1
     if request.conn_info.ctx.probe_count > 1 or (hasattr(request.ctx, "last_probe_time") and 0.5 >= (datetime.datetime.now(tz=datetime.timezone.utc) - request.ctx.last_probe_time).total_seconds() <= 1.5):
-        if changelist <= 4371600: # 1.7
+        if changelist < 4371600: # 1.7
             return sanic.response.text("DevTesting")
         return sanic.response.text("switch_env:DevTesting")
     request.ctx.last_probe_time = datetime.datetime.now(tz=datetime.timezone.utc)
-    if changelist <= 4371600:
+    if changelist < 4371600:
         return sanic.response.text("\r\nBreakers Revived\r\n\r\nServer Emulator created by Dippyshere\r\n\r\n\r\n\r\n\r\nContacting game service...")
     return sanic.response.text(
         "switch_env:\r\nBreakers Revived\r\n\r\nServer Emulator created by Dippyshere\r\n\r\n\r\n\r\n\r\nContacting game service..."
