@@ -1205,5 +1205,5 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
     })
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions, True)
+                                                     request.ctx.profile_revisions)
     )

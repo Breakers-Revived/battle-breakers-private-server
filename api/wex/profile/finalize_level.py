@@ -32,17 +32,12 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     :return: The modified profile
     """
     try:
-        level_notification = await request.ctx.profile.get_notifications(ProfileType.LEVELS)
-        level_id = level_notification[0]["level"]["levelId"]
+        level_item = await request.ctx.profile.get_item_by_guid(request.json.get("levelItemId"), request.ctx.profile_id)
+        level_id = level_item["attributes"]["debug_name"]
+        print(level_id)
     except:
-        try:
-            level_item = await request.ctx.profile.get_item_by_guid(
-                await request.ctx.profile.find_item_by_template_id("Level:InProgress", request.ctx.profile_id),
-                request.ctx.profile_id)
-            level_id = level_item["attributes"]["debug_name"]
-        except:
-            raise errors.com.epicgames.world_explorers.level_not_found(
-                errorMessage="Sorry, the level you completed could not be found.")
+        raise errors.com.epicgames.world_explorers.level_not_found(
+            errorMessage="Sorry, the level you completed could not be found.")
     stars = await request.ctx.profile.get_stat("num_levels_completed")
     try:
         difficulty = int(level_id[-1])
@@ -52,8 +47,8 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     await request.ctx.profile.remove_item(request.json.get("levelItemId"), request.ctx.profile_id)
     for unlocked_level_guids in (await request.ctx.profile.find_item_by_template_id("WorldUnlock:Level",
                                                                                     request.ctx.profile_id)):
-        level_item = await request.ctx.profile.get_item_by_guid(unlocked_level_guids, request.ctx.profile_id)
-        if level_item["attributes"]["levelId"] == level_id:
+        level_unlock = await request.ctx.profile.get_item_by_guid(unlocked_level_guids, request.ctx.profile_id)
+        if level_unlock["attributes"]["levelId"] == level_id:
             break
     else:
         await request.ctx.profile.add_item({
@@ -76,17 +71,59 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
             "loot": []
         }
     ]
-    # TODO: add level loot to the notification
-    # TODO: determine if the level was completed or only partially completed
+    battlepassxp = 0
+    for item in request.json.get("claimedItems", []):
+        match item["itemTemplateId"].split(":")[0]:
+            case "Currency":
+                item_id = await request.ctx.profile.grant_item(item["itemTemplateId"], item["quantity"])
+                level_complete_notification[0]["loot"].append({
+                    "tierGroupName": "",
+                    "items": [{
+                        "itemType": item["itemTemplateId"],
+                        "itemGuid": item_id,
+                        "itemProfile": "profile0",
+                        "quantity": item["quantity"]
+                    }]
+                })
+            case "StandIn":
+                if item["itemTemplateId"] == "StandIn:AccountXp":
+                    level_complete_notification[0]["accountXp"] += item["quantity"]
+                elif item["itemTemplateId"] == "StandIn:BattlepassXp":
+                    battlepassxp += item["quantity"]
+            case "Container":
+                # TODO: implement ltg for chest containers
+                pass
+    # TODO: implement ltg for level instance loot
+    if request.json.get("claimDepth") < level_item["attributes"]["debug_roomcount"]:
+        level_complete_notification[0]["completed"] = False
     await request.ctx.profile.add_notifications(level_complete_notification, ProfileType.LEVELS)
+    # TODO: implement base account xp level to grant
+    # grant bonus xp for playing breakers revived during launch
+    level_complete_notification[0]["bonusAccountXp"] = int(level_complete_notification[0]["accountXp"] * (1.5 + ((await request.ctx.profile.get_stat("level")) / 100)))
     # TODO: update account level + xp + add perk choice + notification
     # TODO: activity gift box
     # TODO: award level loot
     # TODO: update battle pass xp/currency
     # TODO: update score
-    # TODO: monserpit unlocks if applicable
+    pit_unlocks = await request.ctx.profile.find_item_by_template_id("MonsterPitUnlock:Character",
+                                                                     ProfileType.MONSTERPIT)
+    seen_characters = request.json.get("seenCharacters", [])
+    for character in seen_characters:
+        for pit_unlock_guid in pit_unlocks:
+            pit_unlock = await request.ctx.profile.get_item_by_guid(pit_unlock_guid, ProfileType.MONSTERPIT)
+            if pit_unlock["attributes"]["characterId"] == character:
+                break
+        else:
+            await request.ctx.profile.add_item({
+                "templateId": "MonsterPitUnlock:Character",
+                "attributes": {
+                    "num_sold": 0,
+                    "characterId": character
+                },
+                "quantity": 1
+            }, ProfileType.MONSTERPIT)
     # TODO: LevelRunMarker for limited run rooms
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions, True)
+                                                     request.ctx.profile_revisions)
     )

@@ -718,7 +718,6 @@ class PlayerProfile:
         :param profile_id: The type of profile to modify
         :return: The GUID of the item granted
         """
-        # search for the item
         item_guids: list = await self.find_item_by_template_id(template_id, profile_id)
         if item_guids and not unique:
             item_guid: str = item_guids[0]
@@ -783,14 +782,6 @@ class PlayerProfile:
                 "rank": rank,
                 "sidekick_item_id": sidekick_item_id
             }, True, profile_id)
-
-    async def get_notifications(self, profile_id: ProfileType = ProfileType.PROFILE0) -> list[dict]:
-        """
-        Get the notifications for the current account and profile
-        :param profile_id: The ID of the profile to get
-        :return: The notifications
-        """
-        return getattr(self, f"{profile_id.value}_notifications", [])
 
     async def add_notifications(self, notification: dict, profile_id: ProfileType = ProfileType.PROFILE0) -> list[dict]:
         """
@@ -957,15 +948,12 @@ class PlayerProfile:
                 await self.remove_item(friend_instance_guid, ProfileType.FRIENDS)
 
     async def construct_response(self, profile_id: ProfileType = ProfileType.PROFILE0, rvn: int = -1,
-                                 client_command_revision: Optional[str] = None,
-                                 clear_notification: bool = False, clear_all: bool = False) -> dict:
+                                 client_command_revision: Optional[str] = None) -> dict:
         """
         Construct a response for the specified profile
         :param profile_id: The profile to construct a response for
         :param rvn: The revision number of the profile
         :param client_command_revision: The revision number of the client command
-        :param clear_notification: Whether to clear the notifications after constructing the response
-        :param clear_all: Whether to clear all notifications
         :return: The response
         """
         from utils.utils import format_time
@@ -1045,12 +1033,8 @@ class PlayerProfile:
         if notifications:
             response["notifications"]: list = notifications
 
-        if clear_notification:
-            if clear_all:
-                for profile in ProfileType:
-                    await self.clear_notifications(profile)
-            else:
-                await self.clear_notifications(profile_id)
+        for profile in ProfileType:
+            await self.clear_notifications(profile)
 
         await self.flush_changes()
         await self.save_profile()

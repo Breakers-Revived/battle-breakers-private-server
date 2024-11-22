@@ -638,5 +638,5 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
     await request.ctx.profile.remove_item(request.json["itemId"])
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions, True)
+                                                     request.ctx.profile_revisions)
     )

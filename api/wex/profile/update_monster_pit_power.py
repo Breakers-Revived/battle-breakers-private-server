@@ -105,5 +105,5 @@ async def update_monster_pit_power(request: types.BBProfileRequest, accountId: s
     await request.ctx.profile.modify_stat("pit_power_dirty", False, ProfileType.MONSTERPIT)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions, True)
+                                                     request.ctx.profile_revisions)
     )

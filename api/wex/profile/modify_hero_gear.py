@@ -75,5 +75,5 @@ async def modify_hero_gear(request: types.BBProfileRequest, accountId: str) -> s
                                                             "sidekick_item_id", "")
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions, True)
+                                                     request.ctx.profile_revisions)
     )

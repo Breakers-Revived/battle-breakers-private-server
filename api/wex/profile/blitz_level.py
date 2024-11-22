@@ -1076,5 +1076,5 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
     await request.ctx.profile.add_notifications(blitz_notification, ProfileType.LEVELS)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions, True)
+                                                     request.ctx.profile_revisions)
     )

@@ -58,5 +58,5 @@ async def claim_quest_reward(request: types.BBProfileRequest, accountId: str) ->
     # TODO: account leveling up & rewards
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions, True)
+                                                     request.ctx.profile_revisions)
     )

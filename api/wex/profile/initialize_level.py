@@ -40,13 +40,6 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
     if level_info is None:
         raise errors.com.epicgames.world_explorers.level_not_found()
     level_item_id = str(uuid.uuid4())
-    await request.ctx.profile.add_item({
-        "templateId": "Level:InProgress",
-        "attributes": {
-            "debug_name": level_id
-        },
-        "quantity": 1
-    }, level_item_id, request.ctx.profile_id)
     energy_id = (await request.ctx.profile.find_item_by_template_id("Energy:PvE"))[0]
     energy_quantity = (await request.ctx.profile.get_item_by_guid(energy_id)).get("quantity", 300)
     energy_cost = level_info.get("EntranceEnergy", 0) + (
@@ -326,6 +319,15 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
                 "skillLevel": 0,
                 "foilLevel": 0
             })
+    await request.ctx.profile.add_item({
+        "templateId": "Level:InProgress",
+        "attributes": {
+            "debug_name": level_id,
+            "debug_battlepass_xp": level_notification["level"]["potentialBattlepassXp"],
+            "debug_roomcount": len(level_notification["level"]["rooms"]),
+        },
+        "quantity": 1
+    }, level_item_id, request.ctx.profile_id)
     await request.ctx.profile.clear_notifications(ProfileType.LEVELS)
     await request.ctx.profile.add_notifications(level_notification, ProfileType.LEVELS)
     # TODO: daily_friends if friend commander is used
