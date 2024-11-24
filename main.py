@@ -6,7 +6,7 @@ This code is licensed under the Breakers Revived License (BRL).
 """
 import os
 
-from typing_extensions import Any, Type
+from typing_extensions import Type
 
 from api import api
 from utils import utils, error_handler, types
@@ -66,8 +66,6 @@ async def server_stop(_app: sanic.app.Sanic[TomlConfig, Type[types.Context]], *_
     Called when the server is stopped
     :param _app: The app
     """
-    print("Server stopped")
-    print("Flushing changes and saving profiles...")
     for profile in _app.ctx.profiles.values():
         await profile.flush_changes()
         await profile.save_profile()

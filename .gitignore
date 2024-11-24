@@ -243,6 +243,7 @@ fabric.properties
 /res/**/*.json
 # But include level data
 !/res/wex/api/game/v2/level_data/*.json
+!/res/wex/api/game/v2/skybreaker/*.json
 
 # Log uploads
 /res/wex/api/feedback/log-upload/*

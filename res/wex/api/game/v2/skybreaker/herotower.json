@@ -1,0 +1,122 @@
+{
+  "CoreSuperRare": {
+    "-1": {
+      "0": {
+        "heroChoicesDeprecated": [
+          "Character:Warmage_SR2_Fire_Shadowflame_T05",
+          "Character:MartialArtist_SR1_Dark_ExplodingPalm_T05",
+          "Character:DragonKnight_SR1_Water_JumpStrike_T05"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "1": {
+        "heroChoicesDeprecated": [
+          "Character:Mage_SR1_Fire_GolemMaster_T05",
+          "Character:Archer_SR1_Nature_FlurryOfArrows_T05",
+          "Character:Ninja_SR1_Water_DragonSlash_T05"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "2": {
+        "heroChoicesDeprecated": [
+          "Character:Shadowknight_SR1_Dark_Obliterate_T05",
+          "Character:DragonKnight_SR1_Light_PiercingLance_T05",
+          "Character:HolyKnight_SR1_Light_HolyLance_T05"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "3": {
+        "heroChoicesDeprecated": [
+          "Character:MartialArtist_UR1_Water_HundredFists_T05",
+          "Character:Spellsword_SR1_Fire_Blaze_T05",
+          "Character:Warrior_SR1_Light_AxeToss_T05"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "4": {
+        "heroChoicesDeprecated": [
+          "Character:MartialArtist_SR2_Fire_SeveringBlow_T05",
+          "Character:Knight_SR1_Nature_PerfectShield_T05",
+          "Character:Cleric_SR1_Light_RevitalizingWaters_T05"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "5": {
+        "heroChoicesDeprecated": [
+          "Character:SpiritWarrior_SR1_Light_MirrorImage_T05",
+          "Character:Blademaster_SR1_Nature_HurricaneBlade_T05",
+          "Character:Assassin_SR1_Dark_ShadowStrike_T05"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "6": {
+        "heroChoicesDeprecated": [
+          "Character:DragonKnight_SR1_Nature_StormStrike_T05",
+          "Character:Warmage_SR1_Fire_MeteorShower_T05",
+          "Character:Spellsword_SR1_Dark_BladesOfDecay_T05"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "7": {
+        "heroChoicesDeprecated": [
+          "Character:Archer_Starter_Water_MultiShot_T05",
+          "Character:Warrior_Starter_Nature_PowerStrike_T05",
+          "Character:Mage_Starter_Fire_Fireball_T05"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      }
+    }
+  },
+  "CoreBasic": {
+    "0": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_Starter_Fire_Berserking_T04",
+          "Character:Warrior_R2_Nature_Whirlwind_T04",
+          "Character:MartialArtist_R2_Water_Ironfist_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+          "heroChoicesDeprecated": [],
+          "itemChoices": [
+          "Character:Mage_UC1_Fire_ElementalBlast_T04",
+          "Character:Assassin_R2_Nature_Slasher_T04",
+          "Character:Ninja_UC1_Water_SwiftStrike_T04"
+          ],
+          "itemQuantities": [1, 1, 1]
+      }
+    }
+  },
+  "CoreBronze": {
+    "-1": {
+      "0": {
+        "heroChoicesDeprecated": [
+          "Character:Archer_UC1_Fire_ElementalBreath_T03",
+          "Character:MartialArtist_UC1_Water_ChargedFist_T03",
+          "Character:Knight_UC2_Dark_SpearThrust_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "1": {
+          "heroChoicesDeprecated": [
+          "Character:Assassin_C1_Light_ImpStab_T01",
+          "Character:Warrior_Starter_Water_RoboGuy_T02",
+          "Character:Mage_Basic_Dark_EnergyBlast_T02"
+          ],
+          "itemChoices": [],
+          "itemQuantities": []
+      }
+    }
+  }
+}
