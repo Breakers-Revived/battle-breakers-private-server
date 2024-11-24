@@ -30,17 +30,6 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
     :param accountId: The account id
     :return: The modified profile
     """
-    # gift_id = await request.ctx.profile.add_item({
-    #     "templateId": "Giftbox:CustomGiftbox",
-    #     "attributes": {
-    #         "sealed_days": 0,
-    #         "params": {
-    #             "message": "Hi Discord!\n\nThis is a custom test message.",
-    #         },
-    #         "min_level": 1
-    #     },
-    #     "quantity": 1
-    # })
     opened_gift_box = await request.ctx.profile.get_item_by_guid(request.json.get("itemId"), request.ctx.profile_id)
     if opened_gift_box is None or not opened_gift_box["templateId"].startswith("Giftbox:"):
         raise errors.com.epicgames.world_explorers.not_found(errorMessage="Gift box not found.")
@@ -53,6 +42,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
         if giftbox_data["Loot"].get("Items") is not None:
             for item in giftbox_data["Loot"]["Items"]:
                 item_id = None
+                if item["ItemType"] == "Reagent:Reagent_Hero_Gold":
+                    item["ItemType"] = "Token:TK_HeroMap_Lunar"
                 if item["ItemType"].split(":")[0] not in ["Character", "Giftbox"]:
                     item_id = await request.ctx.profile.find_item_by_template_id(item["ItemType"])
                 if not item_id:
@@ -626,6 +617,24 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                             "itemProfile": "profile0",
                             "quantity": 100
                         })
+    if not items:
+        reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_Shared_T02")
+        if not reward_id:
+            reward_id = await request.ctx.profile.add_item({
+                "templateId": "Reagent:Reagent_Shared_T02",
+                "attributes": {},
+                "quantity": 1
+            })
+        else:
+            reward_id = reward_id[0]
+            reward_data = await request.ctx.profile.get_item_by_guid(reward_id)
+            await request.ctx.profile.change_item_quantity(reward_id, reward_data["quantity"] + 1)
+        items.append({
+            "itemType": "Reagent:Reagent_Shared_T02",
+            "itemGuid": reward_id,
+            "itemProfile": "profile0",
+            "quantity": 1
+        })
     await request.ctx.profile.add_notifications({
         "type": "WExpGiftBoxOpened",
         "primary": True,
