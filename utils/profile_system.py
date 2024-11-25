@@ -722,8 +722,7 @@ class PlayerProfile:
         if item_guids and not unique:
             item_guid: str = item_guids[0]
             item: dict = await self.get_item_by_guid(item_guid, profile_id)
-            item["quantity"]: MCPTypes = item["quantity"] + quantity
-            await self.change_item_quantity(item_guid, item["quantity"], profile_id)
+            await self.change_item_quantity(item_guid, item["quantity"] + quantity, profile_id)
             return item_guid
         else:
             item_data: dict = {

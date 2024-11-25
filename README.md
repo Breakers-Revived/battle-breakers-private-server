@@ -128,7 +128,7 @@ These are the various MCP operations that the game clients use, and their curren
 | ModifyHeroGear                  | Modifies a hero's gear                                                                                                          |   ✅    |                                                                                                                                                                                                              |
 | ModifyHeroWeapon                | Modifies a hero's weapon                                                                                                        |   ✅    |                                                                                                                                                                                                              |
 | OpenGiftBox                     | Opens a gift box                                                                                                                |   ✅    |                                                                                                                                                                                                              |
-| OpenHeroChest                   | Opens a skybreaker pick                                                                                                         |   ⏳    | Data about the next heroes in the skybreaker sequences is yet to be implemented                                                                                                                              |
+| OpenHeroChest                   | Opens a skybreaker pick                                                                                                         |   ✅    |                                                                                                                                                                                                              |
 | PickHeroChest                   | Selects a skybreaker pick to open                                                                                               |   ✅    |                                                                                                                                                                                                              |
 | PromoteHero                     | Promotes a hero                                                                                                                 |   ✅    |                                                                                                                                                                                                              |
 | PurchaseCatalogEntry            | Purchases an item, or redeems an offer                                                                                          |   ❌    |                                                                                                                                                                                                              |
@@ -167,8 +167,8 @@ These are the various MCP operations that the game clients use, and their curren
 | VerifyRealMoneyPurchase         | Verifies a real money transaction, fulfilling purchased rewards                                                                 |   ✅    | It is not possible to make RMT purchases on the server, and so RMT offers will not be fulfilled at this time                                                                                                 |
 
 Totals:
-- ✅: 56 (77%)
-- ⏳: 5 (7%)
+- ✅: 57 (79%)
+- ⏳: 4 (5%)
 - ❌: 11 (15%)
 - Total: 72
 

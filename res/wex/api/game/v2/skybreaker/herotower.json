@@ -94,6 +94,926 @@
           "Character:Ninja_UC1_Water_SwiftStrike_T04"
           ],
           "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Dark_BloodMagic_T04",
+          "Character:Ninja_R2_Dark_TripleStab_T04",
+          "Character:Warrior_R2_Light_Warbear_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warmage_R1_Fire_FuelTheFire_T04",
+          "Character:Archer_R1_Nature_VolleyOfArrows_T04",
+          "Character:TreasureHunter_R2_Water_PowerEfflux_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warmage_VR1_Fire_CleansingLight_T04",
+          "Character:Mage_VR1_Nature_Shatter_T04",
+          "Character:Knight_VR1_Water_ShieldStance_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "1": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Archer_R2_Fire_BurstFire_T04",
+          "Character:Ninja_R2_Nature_TripleStab_T04",
+          "Character:Mage_Starter_Water_CleansingFlood_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Assassin_R1_Dark_SiphonPower_T04",
+          "Character:Assassin_R1_Dark_PrecisionStrike_T04",
+          "Character:Ninja_UC1_Light_SwiftStrike_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_Shard_Fire",
+          "Reagent:Reagent_Shard_Nature",
+          "Reagent:Reagent_Shard_Water"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:TreasureHunter_R2_Fire_PowerEfflux_T04",
+          "Character:Warrior_R2_Nature_Warbear_T04",
+          "Character:Ninja_R2_Water_TripleStab_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Knight_VR1_Fire_Retaliation_T04",
+          "Character:Cleric_VR1_Water_ChainHeal_T04",
+          "Character:Archer_VR1_Fire_InfernoArrows_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "2": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Shadowknight_R2_Fire_Soulslave_T04",
+          "Character:Ninja_UC1_Nature_SwiftStrike_T04",
+          "Character:Archer_R2_Water_BurstFire_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Light_Cloudburst_T04",
+          "Character:Mage_UC1_Dark_ElementalBlast_T04",
+          "Character:Ninja_R2_Light_TripleStab_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_UC1_Fire_LesserDemon_T04",
+          "Character:TreasureHunter_Starter_Nature_Mudslide_T04",
+          "Character:TreasureHunter_Starter_Water_HiddenRiver_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Ninja_R2_Fire_TripleStab_T04",
+          "Character:MageKnight_R1_Nature_Thorns_T04",
+          "Character:Warrior_R2_Water_Warbear_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Archer_VR1_Light_LightningArrows_T04",
+          "Character:Knight_VR1_Dark_DarkEmbrace_T04",
+          "Character:Warmage_VR1_Light_CleansingLight_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "3": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:SpiritWarrior_VR1_Light_PiercingPalm_T04",
+          "Character:Ninja_UC1_Dark_SwiftStrike_T04",
+          "Character:Mage_UC1_Light_ElementalBlast_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_R2_Fire_Warbear_T04",
+          "Character:Archer_R2_Nature_BurstFire_T04",
+          "Character:Warrior_VR1_Water_Bash_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Fire_Firebolt_T04",
+          "Character:TreasureHunter_R2_Nature_PowerEfflux_T04",
+          "Character:Mage_UC1_Water_ElementalBlast_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Dark_Shadowbolt_T04",
+          "Character:Archer_R2_Light_BurstFire_T04",
+          "Character:Warrior_R2_Dark_Warbear_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warmage_VR1_Fire_BurningRain_T04",
+          "Character:Ninja_VR1_Nature_GreatWoodBarrier_T04",
+          "Character:Assassin_VR1_Fire_HiddenStrike_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "4": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Ninja_UC1_Fire_SwiftStrike_T04",
+          "Character:Mage_UC1_Nature_ElementalBlast_T04",
+          "Character:Cleric_R1_Water_RejuvenatingBreeze_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_Starter_Fire_BurningSwordCombo_T04",
+          "Character:Warrior_UC1_Nature_LesserDemon_T04",
+          "Character:Knight_R2_Water_Shieldwall_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Assassin_R2_Dark_Slasher_T04",
+          "Character:Warrior_R2_Dark_Whirlwind_T04",
+          "Character:Archer_R2_Dark_BurstFire_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Currency:Hammer",
+          "Ore:Ore_Magicite",
+          "TreasureMap:TM_MapResource"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_VR1_Dark_SoulLance_T04",
+          "Character:Knight_VR1_Light_Sentinel_T04",
+          "Character:Warrior_VR1_Dark_Impale_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "5": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Knight_R1_Fire_LeadTheCharge_T04",
+          "Character:MartialArtist_R2_Nature_Ironfist_T04",
+          "Character:Ninja_R1_Water_CrossCut_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Shadowknight_R2_Dark_Soulslave_T04",
+          "Character:TreasureHunter_R2_Dark_HarvestTerrain_T04",
+          "Character:TreasureHunter_R1_Light_Sunlight_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_Starter_Fire_Berserking_T04",
+          "Character:Warrior_R2_Nature_Whirlwind_T04",
+          "Character:MartialArtist_R2_Water_Ironfist_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_SupplyPoints_BuildingUpgrade",
+          "Reagent:Reagent_Shard_Dark",
+          "Reagent:Reagent_Shard_Light"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warmage_VR2_Fire_StarBlast_T04",
+          "Character:MartialArtist_VR1_Nature_EarthenWall_T04",
+          "Character:TreasureHunter_VR1_Water_FlashFreeze_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "6": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_UC1_Fire_ElementalBlast_T04",
+          "Character:Assassin_R2_Nature_Slasher_T04",
+          "Character:Ninja_UC1_Water_SwiftStrike_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_UC1_Dark_LesserDemon_T04",
+          "Character:Ninja_R2_Dark_TripleStab_T04",
+          "Character:Warrior_R2_Light_Warbear_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_Foil",
+          "Reagent:Reagent_SupplyPoints_Elite",
+          "Currency:SkillXP"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warmage_R1_Fire_FuelTheFire_T04",
+          "Character:Archer_R1_Nature_VolleyOfArrows_T04",
+          "Character:TreasureHunter_R2_Water_PowerEfflux_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:MageKnight_VR1_Dark_ManaSteal_T04",
+          "Character:Spellsword_VR1_Light_EnergyBolt_T04",
+          "Character:Mage_VR1_Dark_GravityWell_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "7": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Archer_R2_Fire_BurstFire_T04",
+          "Character:Ninja_R2_Nature_TripleStab_T04",
+          "Character:Mage_Starter_Water_CleansingFlood_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Shadowknight_R2_Dark_Soulslave_T04",
+          "Character:Assassin_R1_Dark_PrecisionStrike_T04",
+          "Character:Ninja_UC1_Light_SwiftStrike_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "TreasureMap:TM_Special_EasterEggDesert",
+          "TreasureMap:TM_Special_GhostShip",
+          "UpgradePotion:UpgradeMana"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:TreasureHunter_R2_Fire_PowerEfflux_T04",
+          "Character:Warrior_R2_Nature_Warbear_T04",
+          "Character:Ninja_R2_Water_TripleStab_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Knight_VR2_Fire_ElementalTouch_T04",
+          "Character:Mage_VR1_Water_Hailstorm_T04",
+          "Character:Knight_VR1_Nature_LastManStanding_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "8": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_Shard_Fire",
+          "Reagent:Reagent_Shard_Nature",
+          "Reagent:Reagent_Shard_Water"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Shadowknight_R2_Fire_Soulslave_T04",
+          "Character:Ninja_UC1_Nature_SwiftStrike_T04",
+          "Character:Archer_R2_Water_BurstFire_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Light_Cloudburst_T04",
+          "Character:Mage_UC1_Dark_ElementalBlast_T04",
+          "Character:Ninja_R2_Light_TripleStab_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_UC1_Fire_LesserDemon_T04",
+          "Character:TreasureHunter_Starter_Nature_Mudslide_T04",
+          "Character:TreasureHunter_Starter_Water_HiddenRiver_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Assassin_VR1_Dark_CripplingStrike_T04",
+          "Character:Knight_VR2_Light_ElementalTouch_T04",
+          "Character:Archer_VR1_Dark_BarbedArrows_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "9": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Ninja_R2_Fire_TripleStab_T04",
+          "Character:MageKnight_R1_Nature_Thorns_T04",
+          "Character:Warrior_R2_Water_Warbear_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_Shared_MysteryGoo",
+          "Reagent:Reagent_Misc_CeremonialSword",
+          "Reagent:Reagent_Misc_CeremonialShield"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:SpiritWarrior_VR1_Light_PiercingPalm_T04",
+          "Character:Ninja_UC1_Dark_SwiftStrike_T04",
+          "Character:Mage_UC1_Light_ElementalBlast_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_R2_Fire_Warbear_T04",
+          "Character:Archer_R2_Nature_BurstFire_T04",
+          "Character:Warrior_VR1_Water_Bash_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:MartialArtist_VR1_Fire_BleedingPalm_T04",
+          "Character:Assassin_VR1_Nature_PoisonDart_T04",
+          "Character:Warrior_VR2_Water_Rampage_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "10": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Fire_Firebolt_T04",
+          "Character:TreasureHunter_R2_Nature_PowerEfflux_T04",
+          "Character:Mage_UC1_Water_ElementalBlast_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Dark_Shadowbolt_T04",
+          "Character:Archer_R2_Light_BurstFire_T04",
+          "Character:Warrior_R2_Dark_Warbear_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "TreasureMap:TM_MapResource",
+          "Reagent:Reagent_Shared_T02",
+          "Currency:SkillXP"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Ninja_UC1_Fire_SwiftStrike_T04",
+          "Character:Mage_UC1_Nature_ElementalBlast_T04",
+          "Character:Cleric_R1_Water_RejuvenatingBreeze_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:MartialArtist_VR1_Dark_ShatteringFist_T04",
+          "Character:Mage_VR1_Light_LightningBolt_T04",
+          "Character:Warmage_VR1_Dark_ShadowBreak_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "11": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Currency:Hammer",
+          "Reagent:Reagent_Shard_Dark",
+          "Reagent:Reagent_Shard_Light"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_Starter_Fire_BurningSwordCombo_T04",
+          "Character:Warrior_UC1_Nature_LesserDemon_T04",
+          "Character:Knight_R2_Water_Shieldwall_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Assassin_R2_Dark_Slasher_T04",
+          "Character:Warrior_R2_Dark_Whirlwind_T04",
+          "Character:Archer_R2_Dark_BurstFire_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Knight_R1_Fire_LeadTheCharge_T04",
+          "Character:MartialArtist_R2_Nature_Ironfist_T04",
+          "Character:Ninja_R1_Water_CrossCut_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Ninja_VR1_Fire_Shuriken_T04",
+          "Character:Warrior_VR2_Water_FreezingTouch_T04",
+          "Character:MageKnight_VR1_Water_RevitalizingLash_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "12": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Shadowknight_R2_Dark_Soulslave_T04",
+          "Character:TreasureHunter_R2_Dark_HarvestTerrain_T04",
+          "Character:TreasureHunter_R1_Light_Sunlight_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_Starter_Fire_Berserking_T04",
+          "Character:Warrior_R2_Nature_Whirlwind_T04",
+          "Character:MartialArtist_R2_Water_Ironfist_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_UC1_Fire_ElementalBlast_T04",
+          "Character:Assassin_R2_Nature_Slasher_T04",
+          "Character:Ninja_UC1_Water_SwiftStrike_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "TreasureMap:TM_WaterfallValley_Map7",
+          "TreasureMap:TM_Special_UnderwaterTunnel",
+          "TreasureMap:TM_Special_Cloud5"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Knight_VR2_Dark_ElementalTouch_T04",
+          "Character:TreasureHunter_VR1_Light_SunStrike_T04",
+          "Character:Blademaster_VR1_Dark_SinisterStrike_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "13": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_UC1_Dark_LesserDemon_T04",
+          "Character:Ninja_R2_Dark_TripleStab_T04",
+          "Character:Warrior_R2_Light_Warbear_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warmage_R1_Fire_FuelTheFire_T04",
+          "Character:Archer_R1_Nature_VolleyOfArrows_T04",
+          "Character:TreasureHunter_R2_Water_PowerEfflux_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "TreasureMap:TM_Special_MeegCity",
+          "TreasureMap:TM_Special_PlanetCore",
+          "TreasureMap:TM_Special_UnderwaterForest"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Archer_R2_Fire_BurstFire_T04",
+          "Character:Ninja_R2_Nature_TripleStab_T04",
+          "Character:Mage_Starter_Water_CleansingFlood_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:TreasureHunter_VR1_Fire_TrailBlaze_T04",
+          "Character:Warrior_VR2_Nature_Rampage_T04",
+          "Character:MartialArtist_VR1_Water_MentalFocus_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "14": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Assassin_R1_Dark_SiphonPower_T04",
+          "Character:Assassin_R1_Dark_PrecisionStrike_T04",
+          "Character:Ninja_UC1_Light_SwiftStrike_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:TreasureHunter_R2_Fire_PowerEfflux_T04",
+          "Character:Warrior_R2_Nature_Warbear_T04",
+          "Character:Ninja_R2_Water_TripleStab_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_SupplyPoints_BuildingUpgrade",
+          "Reagent:Reagent_Shard_Dark",
+          "Reagent:Reagent_Shard_Light"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Shadowknight_R2_Fire_Soulslave_T04",
+          "Character:Ninja_UC1_Nature_SwiftStrike_T04",
+          "Character:Archer_R2_Water_BurstFire_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_VR1_Light_Deflect_T04",
+          "Character:Cleric_VR2_Dark_TerraRifle_T04",
+          "Character:Cleric_VR1_Light_Protect_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "15": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Light_Cloudburst_T04",
+          "Character:Mage_UC1_Dark_ElementalBlast_T04",
+          "Character:Ninja_R2_Light_TripleStab_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_UC1_Fire_LesserDemon_T04",
+          "Character:TreasureHunter_Starter_Nature_Mudslide_T04",
+          "Character:TreasureHunter_Starter_Water_HiddenRiver_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Ninja_R2_Fire_TripleStab_T04",
+          "Character:MageKnight_R1_Nature_Thorns_T04",
+          "Character:Warrior_R2_Water_Warbear_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_Misc_CeremonialShield",
+          "Reagent:Reagent_Shared_MysteryGoo",
+          "Reagent:Reagent_SupplyPoints_Elite"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Spellsword_VR1_Fire_TargetAll_T04",
+          "Character:Knight_VR2_Nature_ElementalTouch_T04",
+          "Character:Archer_VR1_Water_RelentlessTide_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "16": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:SpiritWarrior_VR1_Light_PiercingPalm_T04",
+          "Character:Ninja_UC1_Dark_SwiftStrike_T04",
+          "Character:Mage_UC1_Light_ElementalBlast_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_R2_Fire_Warbear_T04",
+          "Character:Archer_R2_Nature_BurstFire_T04",
+          "Character:Warrior_VR1_Water_Bash_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_Shard_Fire",
+          "Reagent:Reagent_Shard_Nature",
+          "Reagent:Reagent_Shard_Water"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Fire_Firebolt_T04",
+          "Character:TreasureHunter_R2_Nature_PowerEfflux_T04",
+          "Character:Mage_UC1_Water_ElementalBlast_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Warrior_VR1_Fire_HeatBlast_T04",
+          "Character:Shadowknight_VR1_Nature_VampiricBlade_T04",
+          "Character:MageKnight_VR1_Water_IceBolt_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "17": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_R2_Dark_Shadowbolt_T04",
+          "Character:Archer_R2_Light_BurstFire_T04",
+          "Character:Warrior_R2_Dark_Warbear_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Currency:Hammer",
+          "Reagent:Reagent_Shard_Dark",
+          "Reagent:Reagent_Shard_Light"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Mage_Starter_Fire_BurningSwordCombo_T04",
+          "Character:Warrior_UC1_Nature_LesserDemon_T04",
+          "Character:Knight_R2_Water_Shieldwall_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Ninja_UC1_Fire_SwiftStrike_T04",
+          "Character:Mage_UC1_Nature_ElementalBlast_T04",
+          "Character:Cleric_R1_Water_RejuvenatingBreeze_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Ninja_VR1_Dark_ShadowStance_T04",
+          "Character:Ninja_VR1_Light_CrystalDaggers_T04",
+          "Character:HolyKnight_VR1_Light_HolyRay_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "18": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Assassin_R2_Dark_Slasher_T04",
+          "Character:Warrior_R2_Dark_Whirlwind_T04",
+          "Character:Archer_R2_Dark_BurstFire_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Knight_R1_Fire_LeadTheCharge_T04",
+          "Character:MartialArtist_R2_Nature_Ironfist_T04",
+          "Character:Ninja_R1_Water_CrossCut_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:Shadowknight_R2_Dark_Soulslave_T04",
+          "Character:TreasureHunter_R2_Dark_HarvestTerrain_T04",
+          "Character:TreasureHunter_R1_Light_Sunlight_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_Shard_Fire",
+          "Reagent:Reagent_Shard_Nature",
+          "Reagent:Reagent_Shard_Water"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Character:HolyKnight_VR1_Fire_FireSword_T04",
+          "Character:MageKnight_VR1_Nature_StoneSkin_T04",
+          "Character:Blademaster_VR1_Water_BladeStorm_T04"
+        ],
+        "itemQuantities": [1, 1, 1]
+      }
+    },
+    "19": {
+      "0": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_SupplyPoints_Elite",
+          "Reagent:Reagent_Foil",
+          "Ore:Ore_Magicite"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "1": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_Shard_Dark",
+          "Reagent:Reagent_Shard_Light",
+          "Reagent:Reagent_Shared_T02"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "2": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "UpgradePotion:UpgradeStrengthMinor",
+          "UpgradePotion:UpgradeHealthMinor",
+          "TreasureMap:TM_MapResource"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "3": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "UpgradePotion:UpgradeMana",
+          "UpgradePotion:UpgradeStrengthMajor",
+          "UpgradePotion:UpgradeHealthMajor"
+        ],
+        "itemQuantities": [2, 2, 2]
+      },
+      "4": {
+        "heroChoicesDeprecated": [],
+        "itemChoices": [
+          "Reagent:Reagent_Misc_CeremonialArmor",
+          "Reagent:Reagent_Shared_MysteryGoo",
+          "Reagent:Reagent_RXT_Parts_Large"
+        ],
+        "itemQuantities": [2, 2, 2]
       }
     }
   },
@@ -116,6 +1036,240 @@
           ],
           "itemChoices": [],
           "itemQuantities": []
+      },
+      "2": {
+        "heroChoicesDeprecated": [
+          "Character:Cleric_UC1_Nature_Heal_T03",
+          "Character:Knight_UC1_Light_Reconstruction_T03",
+          "Character:Mage_UC1_Dark_ElementalPhantom_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "3": {
+        "heroChoicesDeprecated": [
+          "Character:MartialArtist_UC1_Water_ChargedFist_T03",
+          "Character:Ninja_Basic_Fire_Flurry_T02",
+          "Character:Mage_UC1_Light_ElementalPhantom_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "4": {
+        "heroChoicesDeprecated": [
+          "Character:Archer_Basic_Fire_AimedShot_T02",
+          "Character:Knight_Basic_Nature_GuardianStance_T02",
+          "Character:Cleric_C1_Water_Pixie_T01"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "5": {
+        "heroChoicesDeprecated": [
+          "Character:Knight_UC1_Dark_Reconstruction_T03",
+          "Character:Warrior_UC1_Nature_LesserDemon_T03",
+          "Character:Warrior_UC1_Fire_Pummel_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "6": {
+        "heroChoicesDeprecated": [
+          "Character:Shadowknight_UC2_Light_Ghoul_T03",
+          "Character:Archer_UC1_Water_ElementalBreath_T03",
+          "Character:Ninja_Basic_Dark_Flurry_T02"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "7": {
+        "heroChoicesDeprecated": [
+          "Character:Warrior_Basic_Fire_T01",
+          "Character:Mage_Basic_Light_EnergyBlast_T02",
+          "Character:Warrior_Starter_Nature_RoboGuy_T02"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "8": {
+        "heroChoicesDeprecated": [
+          "Character:Ninja_Basic_Nature_Flurry_T02",
+          "Character:Shadowknight_UC2_Fire_Ghoul_T03",
+          "Character:Warrior_UC1_Dark_Pummel_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "9": {
+        "heroChoicesDeprecated": [
+          "Character:Knight_UC1_Fire_Reconstruction_T03",
+          "Character:Warrior_UC1_Water_LesserDemon_T03",
+          "Character:Knight_UC2_Light_SpearThrust_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "10": {
+        "heroChoicesDeprecated": [
+          "Character:Warrior_Basic_Dark_T01",
+          "Character:Knight_Basic_Water_GuardianStance_T02",
+          "Character:Cleric_C1_Nature_Pixie_T01"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "11": {
+        "heroChoicesDeprecated": [
+          "Character:Knight_UC2_Nature_SpearThrust_T03",
+          "Character:Ninja_Basic_Light_Flurry_T02",
+          "Character:Archer_UC1_Dark_ElementalBreath_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "12": {
+        "heroChoicesDeprecated": [
+          "Character:MartialArtist_UC1_Fire_ChargedFist_T03",
+          "Character:Mage_UC1_Nature_ElementalPhantom_T03",
+          "Character:Warrior_UC1_Water_Pummel_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "13": {
+        "heroChoicesDeprecated": [
+          "Character:Warrior_Starter_Light_RoboGuy_T02",
+          "Character:Mage_Basic_Water_EnergyBlast_T02",
+          "Character:Archer_Basic_Dark_AimedShot_T02"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "14": {
+        "heroChoicesDeprecated": [
+          "Character:Warrior_UC1_Fire_LesserDemon_T03",
+          "Character:Cleric_UC1_Water_Heal_T03",
+          "Character:Shadowknight_UC2_Nature_Ghoul_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "15": {
+        "heroChoicesDeprecated": [
+          "Character:Knight_UC2_Dark_SpearThrust_T03",
+          "Character:Warrior_UC1_Light_Pummel_T03",
+          "Character:Knight_UC1_Water_Reconstruction_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "16": {
+        "heroChoicesDeprecated": [
+          "Character:Warrior_Starter_Dark_RoboGuy_T02",
+          "Character:Assassin_C1_Fire_ImpStab_T01",
+          "Character:Knight_Basic_Light_GuardianStance_T02"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "17": {
+        "heroChoicesDeprecated": [
+          "Character:Ninja_Basic_Water_Flurry_T02",
+          "Character:Warrior_UC1_Dark_LesserDemon_T03",
+          "Character:Archer_UC1_Light_ElementalBreath_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "18": {
+        "heroChoicesDeprecated": [
+          "Character:Shadowknight_UC2_Dark_Ghoul_T03",
+          "Character:Warrior_UC1_Nature_Pummel_T03",
+          "Character:Knight_UC2_Fire_SpearThrust_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "19": {
+        "heroChoicesDeprecated": [
+          "Character:Mage_Basic_Nature_EnergyBlast_T02",
+          "Character:Cleric_C1_Dark_Pixie_T01",
+          "Character:Archer_Basic_Light_AimedShot_T02"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "20": {
+        "heroChoicesDeprecated": [
+          "Character:Archer_UC1_Nature_ElementalBreath_T03",
+          "Character:Ninja_Basic_Light_Flurry_T02",
+          "Character:MartialArtist_UC1_Dark_ChargedFist_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "21": {
+        "heroChoicesDeprecated": [
+          "Character:MartialArtist_UC1_Light_ChargedFist_T03",
+          "Character:Mage_UC1_Fire_ElementalPhantom_T03",
+          "Character:Shadowknight_UC2_Water_Ghoul_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "22": {
+        "heroChoicesDeprecated": [
+          "Character:Assassin_C1_Nature_ImpStab_T01",
+          "Character:Knight_Basic_Fire_GuardianStance_T02",
+          "Character:Archer_Basic_Water_AimedShot_T02"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "23": {
+        "heroChoicesDeprecated": [
+          "Character:Cleric_C1_Light_Pixie_T01",
+          "Character:Warrior_Basic_Nature_T01",
+          "Character:Warrior_Starter_Fire_RoboGuy_T02"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "24": {
+        "heroChoicesDeprecated": [
+          "Character:Warrior_UC1_Light_LesserDemon_T03",
+          "Character:Mage_UC1_Water_ElementalPhantom_T03",
+          "Character:Knight_Basic_Dark_GuardianStance_T02"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "25": {
+        "heroChoicesDeprecated": [
+          "Character:Cleric_C1_Fire_Pixie_T01",
+          "Character:Assassin_C1_Water_ImpStab_T01",
+          "Character:Warrior_Basic_Water_T01"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "26": {
+        "heroChoicesDeprecated": [
+          "Character:Mage_Basic_Dark_EnergyBlast_T02",
+          "Character:Cleric_UC1_Light_Heal_T03",
+          "Character:Archer_Basic_Nature_AimedShot_T02"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
+      },
+      "27": {
+        "heroChoicesDeprecated": [
+          "Character:Warrior_Basic_Light_T01",
+          "Character:Assassin_C1_Dark_ImpStab_T01",
+          "Character:Knight_UC1_Nature_Reconstruction_T03"
+        ],
+        "itemChoices": [],
+        "itemQuantities": []
       }
     }
   }
