@@ -66,9 +66,9 @@
       },
       "7": {
         "heroChoicesDeprecated": [
-          "Character:Archer_Starter_Water_MultiShot_T05",
-          "Character:Warrior_Starter_Nature_PowerStrike_T05",
-          "Character:Mage_Starter_Fire_Fireball_T05"
+          "Character:Archer_Starter_Water_MultiShot_T04",
+          "Character:Warrior_Starter_Nature_PowerStrike_T04",
+          "Character:Mage_Starter_Fire_Fireball_T04"
         ],
         "itemChoices": [],
         "itemQuantities": []
@@ -149,7 +149,7 @@
           "Reagent:Reagent_Shard_Nature",
           "Reagent:Reagent_Shard_Water"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [10, 10, 10]
       },
       "3": {
         "heroChoicesDeprecated": [],
@@ -299,7 +299,7 @@
           "Ore:Ore_Magicite",
           "TreasureMap:TM_MapResource"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [20, 40, 60]
       },
       "4": {
         "heroChoicesDeprecated": [],
@@ -346,7 +346,7 @@
           "Reagent:Reagent_Shard_Dark",
           "Reagent:Reagent_Shard_Light"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [2, 10, 10]
       },
       "4": {
         "heroChoicesDeprecated": [],
@@ -384,7 +384,7 @@
           "Reagent:Reagent_SupplyPoints_Elite",
           "Currency:SkillXP"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [50, 25, 1000]
       },
       "3": {
         "heroChoicesDeprecated": [],
@@ -431,7 +431,7 @@
           "TreasureMap:TM_Special_GhostShip",
           "UpgradePotion:UpgradeMana"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [1, 5, 3]
       },
       "3": {
         "heroChoicesDeprecated": [],
@@ -460,7 +460,7 @@
           "Reagent:Reagent_Shard_Nature",
           "Reagent:Reagent_Shard_Water"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [10, 10, 10]
       },
       "1": {
         "heroChoicesDeprecated": [],
@@ -516,7 +516,7 @@
           "Reagent:Reagent_Misc_CeremonialSword",
           "Reagent:Reagent_Misc_CeremonialShield"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [1, 10, 2]
       },
       "2": {
         "heroChoicesDeprecated": [],
@@ -572,7 +572,7 @@
           "Reagent:Reagent_Shared_T02",
           "Currency:SkillXP"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [50, 400, 1200]
       },
       "3": {
         "heroChoicesDeprecated": [],
@@ -601,7 +601,7 @@
           "Reagent:Reagent_Shard_Dark",
           "Reagent:Reagent_Shard_Light"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [2, 10, 10]
       },
       "1": {
         "heroChoicesDeprecated": [],
@@ -675,7 +675,7 @@
           "TreasureMap:TM_Special_UnderwaterTunnel",
           "TreasureMap:TM_Special_Cloud5"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [1, 1, 2]
       },
       "4": {
         "heroChoicesDeprecated": [],
@@ -713,7 +713,7 @@
           "TreasureMap:TM_Special_PlanetCore",
           "TreasureMap:TM_Special_UnderwaterForest"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [2, 1, 1]
       },
       "3": {
         "heroChoicesDeprecated": [],
@@ -760,7 +760,7 @@
           "Reagent:Reagent_Shard_Dark",
           "Reagent:Reagent_Shard_Light"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [2, 10, 10]
       },
       "3": {
         "heroChoicesDeprecated": [],
@@ -816,7 +816,7 @@
           "Reagent:Reagent_Shared_MysteryGoo",
           "Reagent:Reagent_SupplyPoints_Elite"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [1, 5, 100]
       },
       "4": {
         "heroChoicesDeprecated": [],
@@ -854,7 +854,7 @@
           "Reagent:Reagent_Shard_Nature",
           "Reagent:Reagent_Shard_Water"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [10, 10, 10]
       },
       "3": {
         "heroChoicesDeprecated": [],
@@ -892,7 +892,7 @@
           "Reagent:Reagent_Shard_Dark",
           "Reagent:Reagent_Shard_Light"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [2, 10, 10]
       },
       "2": {
         "heroChoicesDeprecated": [],
@@ -957,7 +957,7 @@
           "Reagent:Reagent_Shard_Nature",
           "Reagent:Reagent_Shard_Water"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [10, 10, 10]
       },
       "4": {
         "heroChoicesDeprecated": [],
@@ -977,7 +977,7 @@
           "Reagent:Reagent_Foil",
           "Ore:Ore_Magicite"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [100, 100, 100]
       },
       "1": {
         "heroChoicesDeprecated": [],
@@ -986,7 +986,7 @@
           "Reagent:Reagent_Shard_Light",
           "Reagent:Reagent_Shared_T02"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [10, 10, 1000]
       },
       "2": {
         "heroChoicesDeprecated": [],
@@ -995,7 +995,7 @@
           "UpgradePotion:UpgradeHealthMinor",
           "TreasureMap:TM_MapResource"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [100, 100, 100]
       },
       "3": {
         "heroChoicesDeprecated": [],
@@ -1004,7 +1004,7 @@
           "UpgradePotion:UpgradeStrengthMajor",
           "UpgradePotion:UpgradeHealthMajor"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [10, 75, 75]
       },
       "4": {
         "heroChoicesDeprecated": [],
@@ -1013,7 +1013,7 @@
           "Reagent:Reagent_Shared_MysteryGoo",
           "Reagent:Reagent_RXT_Parts_Large"
         ],
-        "itemQuantities": [2, 2, 2]
+        "itemQuantities": [1, 2, 2]
       }
     }
   },

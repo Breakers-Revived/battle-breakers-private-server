@@ -50,39 +50,10 @@ async def open_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
         await request.ctx.profile.remove_item(currency_id[0])
     else:
         await request.ctx.profile.change_item_quantity(currency_id[0], currency["quantity"])
-    await request.ctx.profile.add_item({
-        "templateId": request.json.get("itemTemplateId"),
-        "attributes": {
-            "gear_weapon_item_id": "",
-            "weapon_unlocked": False,
-            "sidekick_template_id": "",
-            "level": 1,
-            "is_new": True,
-            "num_sold": 0,
-            "skill_level": 1,
-            "sidekick_unlocked": False,
-            "upgrades": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "used_as_sidekick": False,
-            "gear_armor_item_id": "",
-            "skill_xp": 0,
-            "armor_unlocked": False,
-            "foil_lvl": 1 if active_chest["foilLevel"] > 0 else -1,
-            "xp": 0,
-            "rank": 0,
-            "sidekick_item_id": ""
-        },
-        "quantity": 1
-    })
+    if request.json.get("itemTemplateId").split(":")[0] != "Character":
+        await request.ctx.profile.grant_item(request.json.get("itemTemplateId"), request.json.get("itemQuantity", 1))
+    else:
+        await request.ctx.profile.grant_hero(request.json.get("itemTemplateId"), foil_lvl=1 if active_chest["foilLevel"] > 0 else -1)
     # TODO: chest activity
     await request.ctx.profile.change_item_attribute(request.json.get("towerId"), "active_chest", None)
     hero_tower_data = (await utils.utils.read_file("res/wex/api/game/v2/skybreaker/herotower.json"))[active_chest['heroTrackId']]
@@ -93,8 +64,10 @@ async def open_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
             track_progress = 0
             if tower_data["attributes"]["page_index"] + 1 > int(list(hero_tower_data.keys())[-1]):
                 new_page_index = int(list(hero_tower_data.keys())[0])
+                await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_SuperRare", 5)
             else:
                 new_page_index = tower_data["attributes"]["page_index"] + 1
+                await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_SuperRare", 1)
         else:
             await request.ctx.profile.change_item_attribute(request.json.get("towerId"), f"{active_chest['heroTrackId']}_progress", tower_data["attributes"][f"{active_chest['heroTrackId']}_progress"] + 1)
             track_progress = tower_data["attributes"][f"{active_chest['heroTrackId']}_progress"] + 1
