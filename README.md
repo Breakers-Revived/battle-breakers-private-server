@@ -193,7 +193,7 @@ Totals:
 2. Install the required packages
 
     ```sh
-    pip install -r requirements.txt
+    pip install --upgrade -r requirements.txt
     ```
 
 3. Start the MongoDB server

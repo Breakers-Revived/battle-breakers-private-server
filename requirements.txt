@@ -1,10 +1,10 @@
 # Required Python Dependencies
 # ----------------------------
 # setup dependencies
-setuptools>=75.5.0
-wheel>=0.45.0
+setuptools>=75.6.0
+wheel>=0.45.1
 # JSON handling
-orjson>=3.10.11
+orjson>=3.10.12
 # Web server
 sanic[ext]>=24.6.0
 # Colourful logging
@@ -26,19 +26,20 @@ aiofiles>=24.1.0
 # Password hashing
 bcrypt>=4.2.1
 # Input validation
-pydantic>=2.10.0b2
-pydantic_core>=2.27.0
+pydantic>=2.10.1
+pydantic_core>=2.27.1
 # Crypto
 cryptography>=43.0.3
 # Characterset detection speedup
 faust-cchardet>=2.1.19
 # Async HTTP client
-aiohttp[speedups]>=3.11.6
+aiohttp[speedups]>=3.11.7
 urllib3>=2.2.3
 # MongoDB driver
 motor>=3.6.0
+pymongo>=4.10.1
 # Calendar system
-icalendar>=6.0.1
+icalendar>=6.1.0
 recurring-ical-events>=3.3.3
 # async caching speedup
 async-lru>=2.0.4

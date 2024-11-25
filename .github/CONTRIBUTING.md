@@ -29,7 +29,7 @@ please first discuss the change you wish to make on our
     ```sh
     python -m venv venv
     source venv/bin/activate
-    pip install -r requirements.txt
+    pip install --upgrade -r requirements.txt
     ```
 
 3. Ensure the MongoDB server has been started
