@@ -159,3 +159,18 @@ async def set_item_rating(request: types.BBRequest, accountId: str, templateId: 
             "ratings": ratings
         }
     })
+
+
+# undocumented
+@wex_item_ratings.route("/api/game/v2/item_ratings/<accountId>/", methods=["GET"])
+@auth(strict=True)
+@compress.compress()
+async def get_all_item_ratings(request: types.BBRequest, accountId: str) -> sanic.response.JSONResponse:
+    """
+    This endpoint is used to get all item ratings from the server
+    :param request: The request object
+    :param accountId: The account id
+    :return: The response object (204)
+    """
+    data = await request.app.ctx.db["item_ratings"].find_one({"_id": accountId}, {"_id": 0})
+    return sanic.response.json(data)
