@@ -33,8 +33,8 @@ async def update_party(request: types.BBProfileRequest, accountId: str) -> sanic
         "attributes"
     )
     new_party_instance = request.json.get("partyInstance")
-    for attr, val in current_party_instance.items():
-        if val != new_party_instance.get(attr) and new_party_instance.get(attr) is not None:
+    for attr, val in new_party_instance.items():
+        if val != current_party_instance.get(attr) and new_party_instance.get(attr) is not None:
             await request.ctx.profile.change_item_attribute(party_item_id, attr, new_party_instance.get(attr),
                                                             request.ctx.profile_id)
     return sanic.response.json(
