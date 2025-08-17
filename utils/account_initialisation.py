@@ -10,14 +10,13 @@ import datetime
 import os
 import uuid
 
-import motor.core
-import motor.motor_asyncio
+from pymongo.asynchronous.database import AsyncDatabase
 
 from utils.services.calendar.calendar import ScheduledEvents
 from utils.utils import normalise_string, format_time, uuid_generator
 
 
-async def initialise_account(database: motor.core.AgnosticDatabase, account_id: str = None, display_name: str = None,
+async def initialise_account(database: AsyncDatabase, account_id: str = None, display_name: str = None,
                              password: bytes = None, email: str = None, calendar: ScheduledEvents = None) -> str:
     """
     Initialises an account with the given account ID. If no account ID is given, one will be generated.
@@ -35,9 +34,9 @@ async def initialise_account(database: motor.core.AgnosticDatabase, account_id: 
     await database["accounts"].insert_one({
         "_id": account_id,
         "displayName": display_name,
-        "minorVerified": False,
-        "minorStatus": "NOT_MINOR",
-        "cabinedMode": False,
+        # "minorVerified": False,
+        # "minorStatus": "NOT_MINOR",
+        # "cabinedMode": False,
         "name": None,
         "email": email,
         "failedLoginAttempts": 0,

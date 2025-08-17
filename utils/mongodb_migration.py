@@ -7,17 +7,16 @@ This code is licensed under the Breakers Revived License (BRL).
 Handles MongoDB database migration.
 """
 
-import motor.motor_asyncio
+import pymongo
 import asyncio
 import orjson
-import os
 
 
 async def migrate_to_mongodb():
     """
     Migrates the database to MongoDB.
     """
-    client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
+    client = pymongo.AsyncMongoClient("mongodb://localhost:27017")
     database = client["dippy_battle_breakers"]
     collection = database["profile_friends"]
 

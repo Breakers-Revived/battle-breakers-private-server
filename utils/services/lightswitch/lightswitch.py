@@ -8,7 +8,7 @@ Class based system to handle the lightswitch service
 """
 import datetime
 
-import motor.core
+from pymongo.asynchronous.database import AsyncDatabase
 import sanic
 from typing_extensions import Any, Optional, Self
 
@@ -88,7 +88,7 @@ class LightswitchService:
         delattr(self, key)
 
     @classmethod
-    async def init_lightswitch(cls, database: motor.core.AgnosticDatabase) -> Self:
+    async def init_lightswitch(cls, database: AsyncDatabase) -> Self:
         """
         Initialise the lightswitch class
         :return: The initialised lightswitch class

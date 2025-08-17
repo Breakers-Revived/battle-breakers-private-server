@@ -1,49 +1,48 @@
 # Required Python Dependencies
 # ----------------------------
 # setup dependencies
-setuptools>=75.6.0
-wheel>=0.45.1
+setuptools
+wheel
 # JSON handling
-orjson>=3.10.12
+orjson
 # Web server
-sanic[ext]>=24.6.0
+sanic[ext]>=25.3.0
 # Colourful logging
-colorama>=0.4.6
+colorama
 # TOML backwards compatibility for Python 3.10
-tomli>=2.1.0
+tomli
 # JSON Web Token handling
-pyjwt>=2.10.0
+pyjwt
 # Information for /version
-py-cpuinfo>=9.0.0
-gitpython>=3.1.43
-distro>=1.9.0
+py-cpuinfo
+gitpython
+distro
 # GZIP + Deflate compression (here for credit, implementation is replaced)
-sanic-gzip>=0.4.1
+sanic-gzip
 # Brotli compression
-Brotli>=1.1.0
+Brotli
 # Async file handling
-aiofiles>=24.1.0
+aiofiles
 # Password hashing
-bcrypt>=4.2.1
+bcrypt
 # Input validation
-pydantic>=2.10.1
-pydantic_core>=2.27.1
+pydantic>=2.0
+pydantic_core
 # Crypto
-cryptography>=43.0.3
+cryptography
 # Characterset detection speedup
-faust-cchardet>=2.1.19
+faust-cchardet
 # Async HTTP client
-aiohttp[speedups]>=3.11.7
-urllib3>=2.2.3
+aiohttp[speedups]
+urllib3
 # MongoDB driver
-motor>=3.6.0
-pymongo>=4.10.1
+pymongo>=4.13.0
 # Calendar system
-icalendar>=6.1.0
-recurring-ical-events>=3.3.3
+icalendar
+recurring-ical-events
 # async caching speedup
-async-lru>=2.0.4
+async-lru
 # for fuzzy searching
-rapidfuzz>=3.10.1
+rapidfuzz
 # for randomisation
-numpy>=2.1.3
+numpy

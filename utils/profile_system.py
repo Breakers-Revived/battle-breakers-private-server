@@ -12,8 +12,7 @@ import uuid
 from types import UnionType
 from typing_extensions import Any, Optional, Self
 
-import motor.core
-import motor.motor_asyncio
+from pymongo.asynchronous.database import AsyncDatabase
 import sanic
 
 from utils.enums import ProfileType, FriendStatus
@@ -439,7 +438,7 @@ class MCPProfile:
 
     @classmethod
     async def init_profile(cls, account_id: str, profile_type: ProfileType,
-                           database: motor.core.AgnosticDatabase) -> Self:
+                           database: AsyncDatabase) -> Self:
         """
         Initialise the profile
 
@@ -452,7 +451,7 @@ class MCPProfile:
         await self.load_profile(database)
         return self
 
-    async def load_profile(self, database: motor.core.AgnosticDatabase) -> None:
+    async def load_profile(self, database: AsyncDatabase) -> None:
         """
         Load the profile
 
@@ -474,7 +473,7 @@ class MCPProfile:
         self.stats: dict[str, dict[str, MCPTypes]] = profile.get("stats")
         self.commandRevision: int = profile.get("commandRevision")
 
-    async def save_profile(self, database: motor.core.AgnosticDatabase) -> None:
+    async def save_profile(self, database: AsyncDatabase) -> None:
         """
         Save the profile
 

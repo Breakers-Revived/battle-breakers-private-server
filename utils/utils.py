@@ -21,8 +21,7 @@ from typing_extensions import Any, Tuple, Optional, Callable
 import aiohttp
 import bcrypt
 import jwt
-import motor.core
-import motor.motor_asyncio
+from pymongo.asynchronous.database import AsyncDatabase
 import orjson
 import rapidfuzz.process
 import sanic
@@ -515,7 +514,7 @@ async def bcrypt_check(s: str, hashed: bytes) -> bool:
     return bcrypt.checkpw(s.encode(), hashed)
 
 
-async def get_account_id_from_display_name(database: motor.core.AgnosticDatabase, display_name: str) -> Optional[str]:
+async def get_account_id_from_display_name(database: AsyncDatabase, display_name: str) -> Optional[str]:
     """
     Gets an account id from a display name
     :param database: The database to get the account id from
@@ -529,7 +528,7 @@ async def get_account_id_from_display_name(database: motor.core.AgnosticDatabase
     return existing_account.get("_id") if existing_account else None
 
 
-async def get_account_id_from_email(database: motor.core.AgnosticDatabase, email: str) -> Optional[str]:
+async def get_account_id_from_email(database: AsyncDatabase, email: str) -> Optional[str]:
     """
     Gets an account id from an email
     :param database: The database to get the account id from
@@ -543,7 +542,7 @@ async def get_account_id_from_email(database: motor.core.AgnosticDatabase, email
     return existing_account.get("_id") if existing_account else None
 
 
-async def search_for_display_name(database: motor.core.AgnosticDatabase, display_name: str) -> list[str]:
+async def search_for_display_name(database: AsyncDatabase, display_name: str) -> list[str]:
     """
     Searches for a display name
     :param database: The database to search
@@ -570,7 +569,7 @@ async def search_for_display_name(database: motor.core.AgnosticDatabase, display
     return [account_ids[display_names.index(entry[0])] for entry in ranked_accounts]
 
 
-async def check_if_display_name_exists(database: motor.core.AgnosticDatabase, display_name: str) -> bool:
+async def check_if_display_name_exists(database: AsyncDatabase, display_name: str) -> bool:
     """
     Checks if a display name exists
     :param database: The database to check
@@ -584,7 +583,7 @@ async def check_if_display_name_exists(database: motor.core.AgnosticDatabase, di
     return existing_account is not None
 
 
-async def get_account_data_owner(database: motor.core.AgnosticDatabase, account_id: str) -> Optional[dict]:
+async def get_account_data_owner(database: AsyncDatabase, account_id: str) -> Optional[dict]:
     """
     Gets account data from an account id
     :param database: The database to get the data from
@@ -646,7 +645,7 @@ async def get_account_data_owner(database: motor.core.AgnosticDatabase, account_
     }
 
 
-async def get_account_data(database: motor.core.AgnosticDatabase, account_id: str) -> Optional[dict]:
+async def get_account_data(database: AsyncDatabase, account_id: str) -> Optional[dict]:
     """
     Gets account data from an account id
     :param database: The database to get the data from
@@ -719,7 +718,7 @@ async def oauth_client_response(client_id: str) -> dict:
     }
 
 
-async def create_account(database: motor.core.AgnosticDatabase, displayName: Optional[str] = None,
+async def create_account(database: AsyncDatabase, displayName: Optional[str] = None,
                          password: Optional[bytes] = None, email: Optional[str] = None,
                          calendar=None) -> str:
     """

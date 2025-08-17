@@ -16,7 +16,7 @@ import orjson
 import sanic
 import sanic_ext
 import colorama
-import motor.motor_asyncio
+import pymongo
 
 from utils.services.calendar.calendar import ScheduledEvents
 from utils.services.lightswitch.lightswitch import LightswitchService
@@ -50,7 +50,7 @@ async def attach_db(_app: sanic.app.Sanic[TomlConfig, Type[types.Context]], *_) 
     Called when the server is started
     :param _app: The app
     """
-    _app.ctx.db = motor.motor_asyncio.AsyncIOMotorClient(_app.config.DATABASE["URI"])[_app.config.DATABASE["DATABASE"]]
+    _app.ctx.db = pymongo.AsyncMongoClient(_app.config.DATABASE["URI"])[_app.config.DATABASE["DATABASE"]]
     _app.ctx.db.client.timeoutMS = 1000
     _app.ctx.db.client.socketTimeoutMS = 1000
     _app.ctx.db.client.connectTimeoutMS = 1000

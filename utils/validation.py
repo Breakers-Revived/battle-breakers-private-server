@@ -21,7 +21,7 @@ class UUIDString(str):
     @classmethod
     def __get_pydantic_json_schema__(
             cls, core_schema: pydantic_core.core_schema.JsonSchema, handler: pydantic.GetJsonSchemaHandler
-    ) -> pydantic.json_schema.JsonSchemaValue:
+    ):
         json_schema = handler(core_schema)
         json_schema.update(type="string", format="binary")
         return json_schema
@@ -47,7 +47,7 @@ class UUIDString(str):
     @classmethod
     def __get_pydantic_core_schema__(
             cls, source: type[Any], handler: Callable[[Any], pydantic_core.core_schema.CoreSchema]
-    ) -> pydantic_core.core_schema.CoreSchema:
+    ):
         return pydantic_core.core_schema.with_info_plain_validator_function(cls.validate)
 
 
@@ -59,7 +59,7 @@ class CharacterTemplateId(str):
     @classmethod
     def __get_pydantic_json_schema__(
             cls, core_schema: pydantic_core.core_schema.JsonSchema, handler: pydantic.GetJsonSchemaHandler
-    ) -> pydantic.json_schema.JsonSchemaValue:
+    ):
         json_schema = handler(core_schema)
         json_schema.update(type="string", format="binary")
         return json_schema
@@ -99,7 +99,7 @@ class AccountId(str):
     @classmethod
     def __get_pydantic_json_schema__(
             cls, core_schema: pydantic_core.core_schema.JsonSchema, handler: pydantic.GetJsonSchemaHandler
-    ) -> pydantic.json_schema.JsonSchemaValue:
+    ):
         json_schema = handler(core_schema)
         json_schema.update(type="string", format="binary")
         return json_schema
@@ -148,7 +148,8 @@ class MCPValidation:
             dailyQuestZoneType: The daily quest zone type
         """
         levelItemId: UUIDString
-        depthCompleted: int
+        # These don't get sent when abandoning a level from another device in an old version
+        depthCompleted: Optional[int]
         # These don't get sent by old clients
         levelElement: Optional[str]
         postBattleResults: Optional[dict[str, dict[str, int] | list[UUIDString] | list[CharacterTemplateId]]]

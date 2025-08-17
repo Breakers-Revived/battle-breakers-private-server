@@ -9,7 +9,7 @@ Contains typing information for the server
 import sanic
 from typing_extensions import Any, Type
 
-import motor.motor_asyncio
+from pymongo.asynchronous.database import AsyncDatabase
 from cryptography.hazmat.primitives.asymmetric.dh import DHPublicKey
 from cryptography.hazmat.primitives.asymmetric.dsa import DSAPublicKey
 from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePublicKey
@@ -34,7 +34,7 @@ class Context:
     """
     public_key: (DHPublicKey | DSAPublicKey | RSAPublicKey | EllipticCurvePublicKey | Ed25519PublicKey | Ed448PublicKey
                  | X25519PublicKey | X448PublicKey)
-    db: motor.motor_asyncio.AsyncIOMotorClient
+    db: AsyncDatabase
     calendar: ScheduledEvents
     storefronts: StoreCatalogue
     lightswitch: LightswitchService

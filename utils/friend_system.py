@@ -9,8 +9,7 @@ Class based system to handle the friends service management
 import random
 from typing_extensions import Optional, Self
 
-import motor.core
-import motor.motor_asyncio
+from pymongo.asynchronous.database import AsyncDatabase
 import sanic
 
 from utils.enums import FriendStatus
@@ -59,7 +58,7 @@ class PlayerFriends:
         await self.load_friends(sanic.Sanic.get_app().ctx.db)
         return self
 
-    async def load_friends(self, database: motor.core.AgnosticDatabase) -> None:
+    async def load_friends(self, database: AsyncDatabase) -> None:
         """
         Load the profile based on the account ID and setup the variables
         :return: None
