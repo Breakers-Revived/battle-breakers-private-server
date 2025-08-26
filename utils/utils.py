@@ -280,7 +280,7 @@ async def generate_refresh_eg1(sub: Optional[str] = None, dn: Optional[str] = No
         "t": "r",
         "clid": clid,
         "dn": dn,
-        "exp": datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=672),
+        "exp": datetime.datetime.now(datetime.UTC) + datetime.timedelta(weeks=52),
         "am": "exchange_code",
         "jti": await token_generator()
     }, private_key, "RS256", headers)
@@ -686,8 +686,8 @@ async def oauth_response(client_id: str = "3cf78cd3b00b439a8755a878b160c7ad", dn
                                                                                                    ":%S.000Z"),
         "token_type": "bearer",
         "refresh_token": f"eg1~{await generate_refresh_eg1(sub, dn, client_id, dvid)}",
-        "refresh_expires": 2419200,
-        "refresh_expires_at": await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=672)),
+        "refresh_expires": 31449600,
+        "refresh_expires_at": await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(weeks=52)),
         "account_id": sub,
         "client_id": client_id,
         "internal_client": True,
@@ -1147,7 +1147,7 @@ async def safe_path_join(base_path: str, unsafe_path: str, verbose: bool = False
     """
     # Join the base path with the unsafe path
     combined_path = os.path.join(base_path, unsafe_path)
-    
+
     # Get the real (absolute) path, resolving symbolic links and relative paths
     real_path = os.path.realpath(combined_path)
 
@@ -1158,11 +1158,12 @@ async def safe_path_join(base_path: str, unsafe_path: str, verbose: bool = False
             raise ValueError(f"Path traversal attempt detected! The unsafe path '{unsafe_path}' leads outside of the base path '{base_path}'")
         else:
             raise ValueError("Path traversal attempt detected!")
-    
+
     return real_path
 
 
-async def deterministic_shuffle(item_pool: list, item_count: Optional[int] = -1, weights: Optional[list] = None, rng_seed: Optional[int] = None) -> list:
+async def deterministic_shuffle(item_pool: list, item_count: Optional[int] = -1, weights: Optional[list] = None,
+                                rng_seed: Optional[int] = None) -> list:
     """
     Shuffles a list deterministically, to create storefronts that only change on refresh, and will remain consistent across reboots and instances
     :param item_pool: The list to shuffle
