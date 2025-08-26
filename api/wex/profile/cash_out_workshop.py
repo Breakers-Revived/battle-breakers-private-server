@@ -30,8 +30,12 @@ async def cash_out_workshop(request: types.BBProfileRequest, accountId: str) -> 
     """
     # TODO: validation
     stars = await request.ctx.profile.get_stat("num_levels_completed")
-    if stars > 999:
-        stars = 999
+    # if stars > 999:
+    #     stars = 999
+    labor_force = await request.ctx.profile.get_stat("labor_force")
+    labor_used = labor_force.get("laborUsed", 0)
+    if labor_force["lastInterval"] != await format_time(await get_current_12_hour_interval()):
+        labor_used = 0
     gold_id = (await request.ctx.profile.find_item_by_template_id("Currency:Gold"))[0]
     current_gold = (await request.ctx.profile.get_item_by_guid(gold_id))["quantity"]
     workshop_id = (await request.ctx.profile.find_item_by_template_id("HqBuilding:HQ_AncientFactory"))[0]
@@ -43,10 +47,7 @@ async def cash_out_workshop(request: types.BBProfileRequest, accountId: str) -> 
     await request.ctx.profile.modify_stat("labor_force", {
         "lastInterval": await format_time(await get_current_12_hour_interval()),
         "laborUsed": stars})
-    # await request.ctx.profile.modify_stat("labor_refill_cd",
-    #                                       await format_time(
-    #                                           datetime.datetime.utcnow() + datetime.timedelta(hours=2)))
-    await request.ctx.profile.change_item_quantity(gold_id, current_gold + (stars * exchange_rate))
+    await request.ctx.profile.change_item_quantity(gold_id, current_gold + ((stars - labor_used) * exchange_rate))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions)
