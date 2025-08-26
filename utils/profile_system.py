@@ -653,6 +653,8 @@ class PlayerProfile:
         :return: None
         """
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
+        if isinstance(item_id, list):
+            item_id: str = item_id[0]
         profile_changes.append({"changeType": "itemRemoved", "itemId": item_id})
         setattr(self, f"{profile_id.value}_changes", profile_changes)
 
@@ -668,6 +670,8 @@ class PlayerProfile:
         :return: None
         """
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
+        if isinstance(item_id, list):
+            item_id: str = item_id[0]
         if new_value is None:
             profile_changes.append({"changeType": "itemAttrChanged", "itemId": item_id, "attributeName": attribute_name})
         else:
@@ -687,6 +691,8 @@ class PlayerProfile:
         """
         if item_id is None:
             item_id: str = str(uuid.uuid4())
+        if isinstance(item_id, list):
+            item_id: str = item_id[0]
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
         profile_changes.append({"changeType": "itemAdded", "itemId": item_id, "item": item_data})
         setattr(self, f"{profile_id.value}_changes", profile_changes)
@@ -703,11 +709,14 @@ class PlayerProfile:
         :return: None
         """
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
+        if isinstance(item_id, list):
+            item_id: str = item_id[0]
         profile_changes.append({"changeType": "itemQuantityChanged", "itemId": item_id, "quantity": new_quantity})
         setattr(self, f"{profile_id.value}_changes", profile_changes)
 
     async def grant_item(self, template_id: str, quantity: int = 1,
-                         attributes: Optional[dict[str, MCPTypes]] = None, unique = False, profile_id: ProfileType = ProfileType.PROFILE0) -> str:
+                         attributes: Optional[dict[str, MCPTypes]] = None, unique=False,
+                         profile_id: ProfileType = ProfileType.PROFILE0) -> str:
         """
         Grant the specified item to the profile
         :param template_id: The template ID of the item to grant
@@ -735,51 +744,52 @@ class PlayerProfile:
                          sidekick_template_id: str = "", level: int = 1, is_new: bool = True, num_sold: int = 0,
                          skill_level: int = 1, sidekick_unlocked: bool = False, upgrades: Optional[list[int]] = None,
                          used_as_sidekick: bool = False, gear_armor_item_id: str = "", skill_xp: int = 0, armor_unlocked: bool = False,
-                         foil_lvl: int = -1, xp: int = 0, rank: int = 0, sidekick_item_id: str = "", profile_id: ProfileType = ProfileType.PROFILE0) -> str:
-            """
-            Grant the specified hero to the profile
-            :param template_id: The template ID of the hero to grant
-            :param gear_weapon_item_id: The item ID of the weapon to grant
-            :param weapon_unlocked: Whether the weapon is unlocked
-            :param sidekick_template_id: The template ID of the sidekick to grant
-            :param level: The level of the hero
-            :param is_new: Whether the hero is new
-            :param num_sold: The number of heroes sold
-            :param skill_level: The skill level of the hero
-            :param sidekick_unlocked: Whether the sidekick is unlocked
-            :param upgrades: The upgrades of the hero
-            :param used_as_sidekick: Whether the hero is used as a sidekick
-            :param gear_armor_item_id: The item ID of the armor to grant
-            :param skill_xp: The skill XP of the hero
-            :param armor_unlocked: Whether the armor is unlocked
-            :param foil_lvl: The foil level of the hero
-            :param xp: The XP of the hero
-            :param rank: The rank of the hero
-            :param sidekick_item_id: The item ID of the sidekick to grant
-            :param profile_id: The type of profile to add the hero to
-            :return: The GUID of the hero granted
-            """
-            if upgrades is None:
-                upgrades = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-            return await self.grant_item(template_id, 1, {
-                "gear_weapon_item_id": gear_weapon_item_id,
-                "weapon_unlocked": weapon_unlocked,
-                "sidekick_template_id": sidekick_template_id,
-                "level": level,
-                "is_new": is_new,
-                "num_sold": num_sold,
-                "skill_level": skill_level,
-                "sidekick_unlocked": sidekick_unlocked,
-                "upgrades": upgrades,
-                "used_as_sidekick": used_as_sidekick,
-                "gear_armor_item_id": gear_armor_item_id,
-                "skill_xp": skill_xp,
-                "armor_unlocked": armor_unlocked,
-                "foil_lvl": foil_lvl,
-                "xp": xp,
-                "rank": rank,
-                "sidekick_item_id": sidekick_item_id
-            }, True, profile_id)
+                         foil_lvl: int = -1, xp: int = 0, rank: int = 0, sidekick_item_id: str = "",
+                         profile_id: ProfileType = ProfileType.PROFILE0) -> str:
+        """
+        Grant the specified hero to the profile
+        :param template_id: The template ID of the hero to grant
+        :param gear_weapon_item_id: The item ID of the weapon to grant
+        :param weapon_unlocked: Whether the weapon is unlocked
+        :param sidekick_template_id: The template ID of the sidekick to grant
+        :param level: The level of the hero
+        :param is_new: Whether the hero is new
+        :param num_sold: The number of heroes sold
+        :param skill_level: The skill level of the hero
+        :param sidekick_unlocked: Whether the sidekick is unlocked
+        :param upgrades: The upgrades of the hero
+        :param used_as_sidekick: Whether the hero is used as a sidekick
+        :param gear_armor_item_id: The item ID of the armor to grant
+        :param skill_xp: The skill XP of the hero
+        :param armor_unlocked: Whether the armor is unlocked
+        :param foil_lvl: The foil level of the hero
+        :param xp: The XP of the hero
+        :param rank: The rank of the hero
+        :param sidekick_item_id: The item ID of the sidekick to grant
+        :param profile_id: The type of profile to add the hero to
+        :return: The GUID of the hero granted
+        """
+        if upgrades is None:
+            upgrades = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        return await self.grant_item(template_id, 1, {
+            "gear_weapon_item_id": gear_weapon_item_id,
+            "weapon_unlocked": weapon_unlocked,
+            "sidekick_template_id": sidekick_template_id,
+            "level": level,
+            "is_new": is_new,
+            "num_sold": num_sold,
+            "skill_level": skill_level,
+            "sidekick_unlocked": sidekick_unlocked,
+            "upgrades": upgrades,
+            "used_as_sidekick": used_as_sidekick,
+            "gear_armor_item_id": gear_armor_item_id,
+            "skill_xp": skill_xp,
+            "armor_unlocked": armor_unlocked,
+            "foil_lvl": foil_lvl,
+            "xp": xp,
+            "rank": rank,
+            "sidekick_item_id": sidekick_item_id
+        }, True, profile_id)
 
     async def add_notifications(self, notification: dict, profile_id: ProfileType = ProfileType.PROFILE0) -> list[dict]:
         """
