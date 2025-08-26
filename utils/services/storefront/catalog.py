@@ -166,3 +166,22 @@ class StoreCatalogue:
             await self.workshop.update_storefront()
             await self.loyalty.update_storefront()
         return self.__dict__()
+
+    async def get_offer_by_id(self, offer_id: str) -> Optional[storefronts.Offer]:
+        """
+        Get an offer by its ID from the store catalogue
+        :param offer_id: The ID of the offer to get
+        :return: The offer with the given ID or None if not found
+        """
+        storefronts_list = [
+            self.secret_shop_page_3, self.secret_shop_page_4, self.gem_store, self.secret_shop_page_2,
+            self.weekly_challenge, self.hero_store, self.featured, self.secret_shop, self.magic_ticket,
+            self.services, self.marketplace, self.marketplace_page_3, self.marketplace_page_2, self.events,
+            self.workshop, self.loyalty
+        ]
+        for storefront in storefronts_list:
+            if storefront is not None:
+                offer = await storefront.get_offer_by_id(offer_id)
+                if offer is not None:
+                    return offer
+        return None

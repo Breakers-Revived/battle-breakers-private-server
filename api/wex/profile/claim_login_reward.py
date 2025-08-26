@@ -44,7 +44,7 @@ async def claim_login_reward(request: types.BBProfileRequest, accountId: str) ->
     if current_day >= 1800:
         await request.ctx.profile.modify_stat("login_reward", {
             # Effectively disable future login rewards as beyond this, the game crashes
-            "last_claim_time": "2099-12-31T23:59:59.999Z",
+            "last_claim_time": "9999-12-31T23:59:59.999Z",
             "next_level": 1800
         })
     else:

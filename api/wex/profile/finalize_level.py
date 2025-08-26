@@ -34,7 +34,6 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     try:
         level_item = await request.ctx.profile.get_item_by_guid(request.json.get("levelItemId"), request.ctx.profile_id)
         level_id = level_item["attributes"]["debug_name"]
-        print(level_id)
     except:
         raise errors.com.epicgames.world_explorers.level_not_found(
             errorMessage="Sorry, the level you completed could not be found.")
@@ -104,7 +103,7 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     # TODO: activity gift box
     # TODO: award level loot
     # TODO: update battle pass xp/currency
-    # TODO: update score
+    # TODO: update score for daily quests
     pit_unlocks = await request.ctx.profile.find_item_by_template_id("MonsterPitUnlock:Character",
                                                                      ProfileType.MONSTERPIT)
     seen_characters = request.json.get("seenCharacters", [])

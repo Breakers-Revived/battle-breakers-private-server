@@ -163,6 +163,63 @@ async def get_current_12_hour_interval() -> datetime.datetime:
     return datetime.datetime(current_12hr.year, current_12hr.month, current_12hr.day, current_12hr.hour,
                              tzinfo=datetime.timezone.utc)
 
+async def get_nearest_24_hour_interval() -> datetime.datetime:
+    """
+    Gets the nearest 24 hour interval from the current time
+    :return: The nearest 24 hour interval
+    """
+    next_24hr = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
+        hours=24 - (datetime.datetime.now(datetime.UTC).hour % 24))
+    return datetime.datetime(next_24hr.year, next_24hr.month, next_24hr.day, next_24hr.hour,
+                             tzinfo=datetime.timezone.utc)
+
+async def get_current_24_hour_interval() -> datetime.datetime:
+    """
+    Gets the current 24 hour interval
+    :return: The current 24 hour interval
+    """
+    current_24hr = datetime.datetime.now(datetime.UTC) - datetime.timedelta(
+        hours=datetime.datetime.now(datetime.UTC).hour % 24)
+    return datetime.datetime(current_24hr.year, current_24hr.month, current_24hr.day, current_24hr.hour,
+                             tzinfo=datetime.timezone.utc)
+
+async def get_nearest_weekly_interval() -> datetime.datetime:
+    """
+    Gets the nearest weekly interval from the current time
+    :return: The nearest weekly interval
+    """
+    next_week = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
+        days=(7 - datetime.datetime.now(datetime.UTC).weekday()))
+    return datetime.datetime(next_week.year, next_week.month, next_week.day, tzinfo=datetime.timezone.utc)
+
+async def get_current_weekly_interval() -> datetime.datetime:
+    """
+    Gets the current weekly interval
+    :return: The current weekly interval
+    """
+    current_week = datetime.datetime.now(datetime.UTC) - datetime.timedelta(
+        days=datetime.datetime.now(datetime.UTC).weekday())
+    return datetime.datetime(current_week.year, current_week.month, current_week.day, tzinfo=datetime.timezone.utc)
+
+async def get_nearest_monthly_interval() -> datetime.datetime:
+    """
+    Gets the nearest monthly interval from the current time
+    :return: The nearest monthly interval
+    """
+    next_month = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
+        days=(30 - (datetime.datetime.now(datetime.UTC).day % 30)))
+    return datetime.datetime(next_month.year, next_month.month, 1, tzinfo=datetime.timezone.utc)
+
+async def get_current_monthly_interval() -> datetime.datetime:
+    """
+    Gets the current monthly interval
+    :return: The current monthly interval
+    """
+    current_month = datetime.datetime.now(datetime.UTC) - datetime.timedelta(
+        days=datetime.datetime.now(datetime.UTC).day - 1)
+    return datetime.datetime(current_month.year, current_month.month, 1, 0, 0,
+                             tzinfo=datetime.timezone.utc)
+
 
 async def token_generator() -> str:
     """

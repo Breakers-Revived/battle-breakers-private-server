@@ -60,7 +60,7 @@ class Offer:
         self.short_description: str = short_description or ""
         self.description: str = description or ""
         self.display_asset_path: str = display_asset_path or ""
-        self.item_grants: list[dict[str, str | int]] = item_grants or []
+        self.item_grants: list[dict[str, str | int]] = item_grants or [{}]
 
     def __repr__(self) -> str:
         """
@@ -208,6 +208,17 @@ class Storefront:
         :return: The length of the storefront
         """
         return len(self.__dict__())
+
+    async def get_offer_by_id(self, offer_id: str) -> Optional[Offer]:
+        """
+        Get an offer by its ID from the storefront
+        :param offer_id: The ID of the offer to get
+        :return: The offer with the given ID, or None if not found
+        """
+        for offer in self.catalog_entries:
+            if offer.offer_id == offer_id:
+                return offer
+        return None
 
 
 class SecretShopPage3(Storefront):
@@ -791,14 +802,14 @@ class GemStore(Storefront):
             app_store_id=[
                 "",
                 "00d74de590684ba9adf5e71842edbc7b",
-                "bb_pouchofgems_release",
                 "",
-                "bb_pouchofgems_release",
                 "",
-                "GEM500000000000",
-                "ce7cda06-a032-4026-bc02-49755bc5f950",
                 "",
-                "sam_pouchofgems_release",
+                "",
+                "",
+                "",
+                "",
+                "",
             ],
             meta_info=[{'key': 'bShowInGemStore', 'value': 'true'}],
             catalog_group="PouchOfGems",
@@ -818,14 +829,14 @@ class GemStore(Storefront):
             app_store_id=[
                 "",
                 "b1c1372c9d0a428bacde8161117b1b2c",
-                "bb_bagofgems_release",
                 "",
-                "bb_bagofgems_release",
                 "",
-                "GEM1250000000000",
-                "43484e39-3038-3030-c05a-3957434a2100",
                 "",
-                "sam_bagofgems_release",
+                "",
+                "",
+                "",
+                "",
+                "",
             ],
             meta_info=[{'key': 'bShowInGemStore', 'value': 'true'}],
             catalog_group="BagOfGems",
@@ -848,14 +859,14 @@ class GemStore(Storefront):
             app_store_id=[
                 "",
                 "900ee5f4f4244c00b61ff2a7a3850ab0",
-                "bb_chestofgems_release",
                 "",
-                "bb_chestofgems_release",
                 "",
-                "GEM2700000000000",
-                "760b375b-fe84-4d02-ab85-ccadf6c734d4",
                 "",
-                "sam_chestofgems_release",
+                "",
+                "",
+                "",
+                "",
+                "",
             ],
             meta_info=[{'key': 'bShowInGemStore', 'value': 'true'}],
             catalog_group="ChestOfGems",
@@ -878,14 +889,14 @@ class GemStore(Storefront):
             app_store_id=[
                 "",
                 "7d270c7e78d3439db8afe81bcd0b6b6a",
-                "bb_castletreasury_release",
                 "",
-                "bb_castletreasury_release",
                 "",
-                "GEM4200000000000",
-                "355a4d39-434e-3031-c047-3734384d0e00",
                 "",
-                "sam_castletreasury_release",
+                "",
+                "",
+                "",
+                "",
+                "",
             ],
             meta_info=[{'key': 'bShowInGemStore', 'value': 'true'}],
             catalog_group="CastleTreasury",
@@ -1157,6 +1168,7 @@ class WeeklyChallenge(Storefront):
     async def update_storefront(self) -> None:
         """
         Update the storefront for the WeeklyChallenge storefront class with the latest data
+        This rotation never changed
         :return: None
         """
         # temporary implementation
@@ -5965,6 +5977,7 @@ class SecretShop(Storefront):
     async def update_storefront(self) -> None:
         """
         Update the storefront for the SecretShop storefront class with the latest data
+        This rotation never changed
         :return: None
         """
         return None
@@ -5996,6 +6009,7 @@ class MagicTicket(Storefront):
     async def update_storefront(self) -> None:
         """
         Update the storefront for the MagicTicket storefront class with the latest data
+        This rotation never changed
         :return: None
         """
         return None
@@ -6027,6 +6041,7 @@ class Services(Storefront):
     async def update_storefront(self) -> None:
         """
         Update the storefront for the Services storefront class with the latest data
+        This rotation never changed
         :return: None
         """
         # temporary implementation
@@ -7420,6 +7435,7 @@ class Workshop(Storefront):
     async def update_storefront(self) -> None:
         """
         Update the storefront for the Workshop storefront class with the latest data
+        This rotation never changed
         :return: None
         """
         # temporary implementation
@@ -8656,6 +8672,7 @@ class Loyalty(Storefront):
     async def update_storefront(self) -> None:
         """
         Update the storefront for the Loyalty storefront class with the latest data
+        This rotation never changed
         :return: None
         """
         # temporary implementation
