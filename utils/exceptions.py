@@ -2929,6 +2929,42 @@ class errors:
                         numericErrorCode: int = 28004
                         originatingService: str = "WEX"
 
+                    class invalid_parameter(EpicException):
+                        """
+                        This exception is thrown when the purchase is using an invalid parameter.
+                        *errors.com.epicgames.modules.gamesubcatalog.invalid_parameter*
+                        """
+                        errorMessage: str = "PurchaseCatalogEntry cannot be used for RealMoney prices. Use VerifyRealMoneyPurchase flow instead."
+                        numericErrorCode: int = 28000
+                        originatingService: str = "WEX"
+
+                    class catalog_out_of_date(EpicException):
+                        """
+                        This exception is thrown when the purchase is using an unknown offer id.
+                        *errors.com.epicgames.modules.gamesubcatalog.catalog_out_of_date*
+                        """
+                        errorMessage: str = "Offer {0} is not valid or not for sale currently."
+                        numericErrorCode: int = 28001
+                        originatingService: str = "WEX"
+
+                    class cannot_afford_purchase(EpicException):
+                        """
+                        This exception is thrown when the purchase cannot be afforded.
+                        *errors.com.epicgames.modules.gamesubcatalog.cannot_afford_purchase*
+                        """
+                        errorMessage: str = "Cannot afford purchase {0}"
+                        numericErrorCode: int = 28002
+                        originatingService: str = "WEX"
+
+                    class fulfillment_maximum_use_count_reached(EpicException):
+                        """
+                        This exception is thrown when the purchase fulfillment has been maxxed out.
+                        *errors.com.epicgames.modules.gamesubcatalog.fulfillment_maximum_use_count_reached*
+                        """
+                        errorMessage: str = "Account {0} has already reached the maximum fulfillment count of {1} for fulfillment {2}"
+                        numericErrorCode: int = 28010
+                        originatingService: str = "WEX"
+
                     class validation_info_expired(EpicException):
                         """
                         This exception is thrown when the validation info is expired.
