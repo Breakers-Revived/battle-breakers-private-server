@@ -12,6 +12,7 @@ import sanic
 
 import utils.utils
 from utils import types
+from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth
 
@@ -240,7 +241,6 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
             if vip_level > vip_level_max:
                 raise errors.com.epicgames.modules.gamesubcatalog.purchase_not_allowed(
                     errorMessage="You have exceeded the maximum VIP level requirement.")
-    # TODO: Perform the service from meta_info
     if offer.meta_info:
         for meta in offer.meta_info:
             if meta["key"] == "ServiceName":
@@ -262,7 +262,7 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                     case "MarketRefresh":
                         if meta["value"].split(":")[1] == "0":
                             await request.ctx.profile.modify_stat("market_page", {
-                                "unlock_time": await utils.utils.format_time(datetime.datetime.now(datetime.UTC)),
+                                "unlock_time": await utils.utils.format_time(),
                                 "page": 1
                             })
                         else:
@@ -272,15 +272,40 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                                 "page": 2
                             })
                     case "EnergyRefill":
-                        pass
+                        energy_id = (await request.ctx.profile.find_item_by_template_id("Energy:PvE"))[0]
+                        energy_item = await request.ctx.profile.get_item_by_guid(energy_id)
+                        await request.ctx.profile.change_item_quantity(energy_id,
+                                                                       energy_item["attributes"]["max_value"])
+                        await request.ctx.profile.change_item_attribute(energy_id, "updated",
+                                                                        await utils.utils.format_time())
                     case "GameContinue":
+                        # No action needed, handled client side
                         pass
                     case "SecretShopRefresh":
-                        #0-3
+                        match meta["value"].split(":")[1]:
+                            case "0":
+                                await request.ctx.profile.modify_stat("secret_shop_page", {
+                                    "unlock_time": await utils.utils.format_time(),
+                                    "page": 1
+                                })
+                            case "1":
+                                await request.ctx.profile.modify_stat("secret_shop_page", {
+                                    "unlock_time": await utils.utils.format_time(
+                                        datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)),
+                                    "page": 2
+                                })
+                            case "2":
+                                await request.ctx.profile.modify_stat("secret_shop_page", {
+                                    "unlock_time": await utils.utils.format_time(
+                                        datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2)),
+                                    "page": 3
+                                })
                         pass
                     case "FriendsListIncrease":
-                        pass
+                        max_friends = await request.ctx.profile.get_stat("max_friend_count", ProfileType.FRIENDS)
+                        await request.ctx.profile.modify_stat("max_friend_count", max_friends + 5, ProfileType.FRIENDS)
                     case "InventoryUpgrade":
+                        # Handled via standin item grant
                         pass
                     case _:
                         raise errors.com.epicgames.modules.gamesubcatalog.invalid_parameter(
@@ -289,6 +314,40 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
     if offer.item_grants[0]:
         for item_grant in offer.item_grants:
             if item_grant["templateId"].startswith("StandIn:"):
+                match item_grant["templateId"]:
+                    case "StandIn:InventoryUpgrade":
+                        inventory_limit = await request.ctx.profile.get_stat("hero_limit")
+                        await request.ctx.profile.modify_stat("hero_limit", inventory_limit + item_grant["attributes"]["FakeQuantity"] * request.json.get("purchaseQuantity"))
+                    case "StandIn:RocketUnlock":
+                        await request.ctx.profile.modify_stat("rocket_unlock", 1)
+                    case "StandIn:FreeSecretShopItem":
+                        secret_shop = await request.ctx.profile.get_stat("secret_shop_page")
+                        secret_shop["unlock_time"] = await utils.utils.format_time()
+                        if secret_shop["page"] < 1:
+                            secret_shop["page"] = 1
+                        await request.ctx.profile.modify_stat("secret_shop_page", secret_shop)
+                    case "StandIn:QuestLimit":
+                        pass
+                    case "DailyTreasureHuntChest":
+                        pass
+                    case "StandIn:TeamSlotsUpgrade":
+                        pass
+                    case "StandIn:QuestLimit":
+                        pass
+                    case "StandIn:AdditionalRepHero":
+                        pass
+                    case "StandIn:AdditionalDailyFriendHeroUse":
+                        pass
+                    case "StandIn:AdditionalDailyGiftPoints":
+                        pass
+                    case "StandIn:ExtraFreeMarketplaceItem":
+                        pass
+                    case "StandIn:DailydiscountonMagicChests":
+                        pass
+                    case "StandIn:FreeTwiceDailyLootBox":
+                        pass
+                    case _:
+                        pass
                 items.append({
                     "itemType": item_grant["templateId"],
                     "attributes": item_grant.get("attributes", {}),
@@ -385,10 +444,13 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                     "lastInterval": await utils.utils.format_time(await utils.utils.get_current_12_hour_interval()),
                     "laborUsed": labor_used})
     # Update fulfillments
-    if daily_limit != -1 and weekly_limit != -1 and monthly_limit != -1:
-        if offer_id not in purchase_list.get("fulfillmentCounts", {}):
-            purchase_list["fulfillmentCounts"][offer_id] = 0
-        purchase_list["fulfillmentCounts"][offer_id] += request.json.get("purchaseQuantity")
+    if offer.requirements:
+        for requirement in offer.requirements:
+            if requirement["requirementType"] == "DenyOnFulfillment":
+                deny_id = requirement["requiredId"]
+                if deny_id not in purchase_list.get("fulfillmentCounts", {}):
+                    purchase_list["fulfillmentCounts"][deny_id] = 0
+                purchase_list["fulfillmentCounts"][deny_id] += request.json.get("purchaseQuantity")
     await request.ctx.profile.modify_stat("in_app_purchases", purchase_list)
     await request.ctx.profile.add_notifications({
         "type": "CatalogPurchase",
