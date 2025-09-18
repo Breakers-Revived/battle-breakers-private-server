@@ -51,7 +51,7 @@ async def update_friends(request: types.BBProfileRequest, accountId: str) -> san
         if pending_change.get("changeType") == "itemAdded" and pending_change.get("item", {}).get(
                 "templateId") == "Friend:Instance" and await request.app.ctx.db["accounts"].find_one(
                 {"_id": pending_change.get("item", {}).get("attributes", {}).get("accountId")}, {"_id": 1}) is not None:
-            result.pop(pending_change.get("item", {}).get("attributes", {}).get("accountId"))
+            result.pop(pending_change.get("item", {}).get("attributes", {}).get("accountId"), None)
     for itemId in friend_instances:
         friend_instance = await request.ctx.profile.get_item_by_guid(itemId, request.ctx.profile_id)
         if friend_instance["attributes"]["accountId"] in result:
