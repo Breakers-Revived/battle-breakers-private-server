@@ -649,9 +649,6 @@ async def get_account_data_owner(database: AsyncDatabase, account_id: str) -> Op
     """
     account_data = await database["accounts"].find_one({"_id": account_id}, {
         "displayName": 1,
-        "minorVerified": 1,
-        "minorStatus": 1,
-        "cabinedMode": 1,
         "name": 1,
         "email": 1,
         "failedLoginAttempts": 1,
@@ -677,9 +674,9 @@ async def get_account_data_owner(database: AsyncDatabase, account_id: str) -> Op
     return {
         "id": account_data["_id"],
         "displayName": account_data["displayName"],
-        "minorVerified": account_data["minorVerified"],
-        "minorStatus": account_data["minorStatus"],
-        "cabinedMode": account_data["cabinedMode"],
+        "minorVerified": False,
+        "minorStatus": "NOT_MINOR",
+        "cabinedMode": False,
         "name": account_data["name"],
         "email": account_data["email"],
         "failedLoginAttempts": account_data["failedLoginAttempts"],
@@ -711,17 +708,14 @@ async def get_account_data(database: AsyncDatabase, account_id: str) -> Optional
     """
     account_data = await database["accounts"].find_one({"_id": account_id}, {
         "displayName": 1,
-        "minorVerified": 1,
-        "minorStatus": 1,
-        "cabinedMode": 1,
         "externalAuths": 1
     })
     return {
         "id": account_data["_id"],
         "displayName": account_data["displayName"],
-        "minorVerified": account_data["minorVerified"],
-        "minorStatus": account_data["minorStatus"],
-        "cabinedMode": account_data["cabinedMode"],
+        "minorVerified": False,
+        "minorStatus": "NOT_MINOR",
+        "cabinedMode": False,
         "externalAuths": account_data["externalAuths"]
     }
 

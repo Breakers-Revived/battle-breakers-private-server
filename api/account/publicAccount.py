@@ -38,9 +38,6 @@ async def public_account_info(request: types.BBRequest) -> sanic.response.JSONRe
         {"_id": {"$in": account_ids}},
         {
             "displayName": 1,
-            "minorVerified": 1,
-            "minorStatus": 1,
-            "cabinedMode": 1,
             "externalAuths": 1
         }
     )
