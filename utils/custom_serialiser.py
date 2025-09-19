@@ -8,8 +8,6 @@ Handles serialising custom objects into json for requests and other purposes
 """
 from typing_extensions import Any
 
-from utils.profile_system import MCPProfile, MCPItem
-
 
 def custom_serialise(obj: Any) -> dict[str, Any]:
     """
@@ -17,6 +15,7 @@ def custom_serialise(obj: Any) -> dict[str, Any]:
     :param obj: The object to serialize
     :return: The serialisable object
     """
+    from utils.profile_system import MCPProfile, MCPItem
     if isinstance(obj, MCPProfile):
         return obj.profile
     elif isinstance(obj, MCPItem):

@@ -7,14 +7,18 @@ This code is licensed under the Breakers Revived License (BRL).
 Class based system to handle the profile management for wex mcp service
 """
 import ast
+import copy
 import datetime
 import uuid
 from types import UnionType
+
+import orjson
 from typing_extensions import Any, Optional, Self
 
 from pymongo.asynchronous.database import AsyncDatabase
 import sanic
 
+from utils.custom_serialiser import custom_serialise
 from utils.enums import ProfileType, FriendStatus
 from utils.utils import format_time
 
@@ -480,7 +484,8 @@ class MCPProfile:
         :param database: The database to use
         """
         collection = database[f"profile_{self.profile_type}"]
-        await collection.replace_one({"_id": self.accountId}, self.profile, upsert=True)
+        profile = orjson.loads(orjson.dumps(self.profile, default=custom_serialise))
+        await collection.replace_one({"_id": self.accountId}, profile, upsert=True)
 
 
 class PlayerProfile:
@@ -809,45 +814,51 @@ class PlayerProfile:
         :param profile_id: The ID of the profile to clear
         :return: The notifications
         """
-        profile_types: "ProfileType" | list[ProfileType] = ProfileType if profile_id is None else [profile_id]
+        profile_types: "ProfileType | list[ProfileType]" = ProfileType if profile_id is None else [profile_id]
 
         for p_type in profile_types:
             setattr(self, f"{p_type.value}_notifications", [])
 
     async def flush_changes(self, profile_type: Optional[ProfileType] = None) -> None:
         """
-        Apply all changes to the original profiles.
+        Apply all changes to the original profiles. If an error occurs, revert profiles back to their pre-change state.
 
         :param profile_type: (Optional) Enum of the profile to flush. If None, all profiles will be flushed.
         """
-        profile_types: "ProfileType" | list[ProfileType] = ProfileType if profile_type is None else [profile_type]
+        profile_types: "ProfileType | list[ProfileType]" = ProfileType if profile_type is None else [profile_type]
 
-        for p_type in profile_types:
-            profile = await self.get_profile(p_type)
-            for change in getattr(self, f"{p_type.value}_changes"):
-                change_type = change["changeType"]
-                match change_type:
-                    case "statModified":
-                        profile["stats"]["attributes"][change["name"]]: MCPTypes = change["value"]
-                    case "itemRemoved":
-                        try:
-                            del profile["items"][change["itemId"]]
-                        except KeyError:
-                            pass
-                    case "itemAttrChanged":
-                        if change.get("attributeValue") is None:
-                            del profile["items"][change["itemId"]]["attributes"][change["attributeName"]]
-                        else:
-                            profile["items"][change["itemId"]]["attributes"][change["attributeName"]]: \
-                                MCPTypes = change["attributeValue"]
-                    case "itemAdded":
-                        profile["items"][change["itemId"]]: MCPTypes = change["item"]
-                    case "itemQuantityChanged":
-                        profile["items"][change["itemId"]]["quantity"]: MCPTypes = change["quantity"]
-            setattr(self, f"_{p_type.value}", profile)
+        snapshots = {}
 
-            # Clear the changes list for this profile
-            setattr(self, f"{p_type.value}_changes", [])
+        try:
+            for p_type in profile_types:
+                profile = await self.get_profile(p_type)
+                snapshots[p_type] = copy.deepcopy(profile)
+                for change in getattr(self, f"{p_type.value}_changes"):
+                    change_type = change["changeType"]
+                    match change_type:
+                        case "statModified":
+                            profile["stats"]["attributes"][change["name"]] = change["value"]
+                        case "itemRemoved":
+                            profile["items"].pop(change["itemId"], None)
+                        case "itemAttrChanged":
+                            if change.get("attributeValue") is None:
+                                profile["items"].get(change["itemId"], {}).get("attributes", {}).pop(
+                                    change["attributeName"], None)
+                            else:
+                                profile["items"][change["itemId"]]["attributes"][change["attributeName"]] = change[
+                                    "attributeValue"]
+                        case "itemAdded":
+                            profile["items"][change["itemId"]] = change["item"]
+                        case "itemQuantityChanged":
+                            profile["items"][change["itemId"]]["quantity"] = change["quantity"]
+                setattr(self, f"_{p_type.value}", profile)
+        except Exception as e:
+            print(f"Error flushing changes for account {self.account_id}: {e}, reverting changes.")
+            for p_type, snapshot in snapshots.items():
+                setattr(self, f"_{p_type.value}", snapshot)
+        finally:
+            for p_type in profile_types:
+                setattr(self, f"{p_type.value}_changes", [])
 
     async def add_friend_instance(self, request: sanic.request.Request, friendId: str,
                                   friendStatus: FriendStatus = FriendStatus.FRIEND) -> None:
@@ -1075,8 +1086,6 @@ class PlayerProfile:
         Save the modified profiles to disk
         :return: None
         """
-        save_profile: bool = False
-        if save_profile:
-            for profile_type in ProfileType:
-                profile = await self.get_profile(profile_type)
-                await profile.save_profile(sanic.Sanic.get_app().ctx.db)
+        for profile_type in ProfileType:
+            profile = await self.get_profile(profile_type)
+            await profile.save_profile(sanic.Sanic.get_app().ctx.db)

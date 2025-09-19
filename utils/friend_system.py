@@ -278,10 +278,8 @@ class PlayerFriends:
         Save the new friends data to the res folder
         :return: None
         """
-        save_friends: bool = False
-        if save_friends:
-            collection = sanic.Sanic.get_app().ctx.db["friends"]
-            await collection.replace_one({"_id": self.account_id}, self.friends, upsert=True)
+        collection = sanic.Sanic.get_app().ctx.db["friends"]
+        await collection.replace_one({"_id": self.account_id}, self.friends, upsert=True)
 
     async def suggest_friends(self, request: sanic.request.Request) -> list[str]:
         """
