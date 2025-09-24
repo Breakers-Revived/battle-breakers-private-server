@@ -81,10 +81,6 @@ async def add_external_auth(request: types.BBRequest, accountId: str) -> sanic.r
                         }
                     ]
                 }
-                if data.get("name") is None:
-                    data["name"] = google_token.get("given_name")
-                if data.get("lastName") is None:
-                    data["lastName"] = google_token.get("family_name")
         case _:
             raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
     await request.app.ctx.db["accounts"].update_one({"_id": accountId}, {"$set": data})
@@ -104,20 +100,23 @@ async def manage_external_auth(request: types.BBRequest, accountId: str,
     :param authType: The external auth type
     :return: The response object
     """
-    if request.method == "GET":
-        external_auth_account = await request.app.ctx.db["accounts"].find_one(
-            {"_id": accountId}, {"externalAuths.$": 1, "_id": 0})
-        if external_auth_account and "externalAuths" in external_auth_account:
-            for auth_type, auth_data in external_auth_account["externalAuths"].items():
-                if auth_data.get("type") == authType:
-                    return sanic.response.json(auth_data)
-            raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
-        else:
-            raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
-    elif request.method == "DELETE":
-        result = await request.app.ctx.db["accounts"].update_one({"_id": accountId},
-                                                                 {"$pull": {"externalAuths": {"type": authType}}})
-        if result.matched_count == 1 and result.modified_count == 1:
-            return sanic.response.empty()
-        else:
-            raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
+    match request.method:
+        case "GET":
+            external_auth_account = await request.app.ctx.db["accounts"].find_one(
+                {"_id": accountId}, {"externalAuths.$": 1, "_id": 0})
+            if external_auth_account and "externalAuths" in external_auth_account:
+                for auth_type, auth_data in external_auth_account["externalAuths"].items():
+                    if auth_data.get("type") == authType:
+                        return sanic.response.json(auth_data)
+                raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
+            else:
+                raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
+        case "DELETE":
+            result = await request.app.ctx.db["accounts"].update_one({"_id": accountId},
+                                                                     {"$pull": {"externalAuths": {"type": authType}}})
+            if result.matched_count == 1 and result.modified_count == 1:
+                return sanic.response.empty()
+            else:
+                raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
+        case _:
+            raise errors.com.epicgames.common.method_not_allowed()

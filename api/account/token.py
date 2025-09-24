@@ -101,8 +101,6 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                                                 }
                                             ]
                                         },
-                                        "name": google_token.get("given_name"),
-                                        "lastName": google_token.get("family_name"),
                                         "headless": True
                                     }
                                 }
@@ -156,7 +154,7 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                 # allows email@. to be used as a username login
                 if re.match(r"^[^@]+@[^@]+\.[^@]+$", request.form.get('username')):
                     account_data: dict = await request.app.ctx.db["accounts"].find_one(
-                        {"email": {"$regex": f"^{re.escape(request.form.get('username').split('@')[0].strip())}$",
+                        {"email": {"$regex": f"^{re.escape(request.form.get('username').strip())}$",
                                    "$options": "i"}}, {
                             "_id": 1,
                             "displayName": 1,

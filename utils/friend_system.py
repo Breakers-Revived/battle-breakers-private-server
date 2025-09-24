@@ -64,6 +64,17 @@ class PlayerFriends:
         :return: None
         """
         self.friends = await database["friends"].find_one({"_id": self.account_id})
+        self.friends["limitsReached"] = {
+            "incoming": False,
+            "outgoing": False,
+            "accepted": False
+        }
+        if len(self.friends["friends"]) > 1000:
+            self.friends["limitsReached"]["accepted"] = True
+        if len(self.friends["incoming"]) > 250:
+            self.friends["limitsReached"]["incoming"] = True
+        if len(self.friends["outgoing"]) > 250:
+            self.friends["limitsReached"]["outgoing"] = True
 
     async def get_friends(self) -> dict:
         """

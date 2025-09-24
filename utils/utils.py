@@ -539,19 +539,6 @@ def authorized(maybe_func: Any = None, *, allow_basic: bool = False, strict: boo
     return decorator(maybe_func) if maybe_func else decorator
 
 
-async def to_insecure_hash(s: str) -> int:
-    """
-    Hashes a string
-    :param s: The string to hash
-    :return: The hash of the string as an integer
-    """
-    hash_val = 0
-    for c in s:
-        hash_val = ((hash_val << 5) - hash_val) + ord(c)
-        hash_val &= 0xffffffff  # Convert to 32-bit integer
-    return hash_val
-
-
 async def bcrypt_hash(s: str) -> bytes:
     """
     Hashes a string using bcrypt
@@ -649,24 +636,12 @@ async def get_account_data_owner(database: AsyncDatabase, account_id: str) -> Op
     """
     account_data = await database["accounts"].find_one({"_id": account_id}, {
         "displayName": 1,
-        "name": 1,
         "email": 1,
-        "failedLoginAttempts": 1,
         "lastLogin": 1,
-        "numberOfDisplayNameChanges": 1,
-        "dateOfBirth": 1,
-        "ageGroup": 1,
         "headless": 1,
-        "country": 1,
-        "lastName": 1,
-        "phoneNumber": 1,
         "preferredLanguage": 1,
         "lastDisplayNameChange": 1,
-        "canUpdateDisplayName": 1,
         "tfaEnabled": 1,
-        "emailVerified": 1,
-        "minorExpected": 1,
-        "hasHashedEmail": 1,
         "externalAuths": 1
     })
     if not account_data:
@@ -674,28 +649,30 @@ async def get_account_data_owner(database: AsyncDatabase, account_id: str) -> Op
     return {
         "id": account_data["_id"],
         "displayName": account_data["displayName"],
-        "minorVerified": False,
-        "minorStatus": "NOT_MINOR",
-        "cabinedMode": False,
-        "name": account_data["name"],
         "email": account_data["email"],
-        "failedLoginAttempts": account_data["failedLoginAttempts"],
         "lastLogin": account_data["lastLogin"],
-        "numberOfDisplayNameChanges": account_data["numberOfDisplayNameChanges"],
-        "dateOfBirth": account_data["dateOfBirth"],
-        "ageGroup": account_data["ageGroup"],
         "headless": account_data["headless"],
-        "country": account_data["country"],
-        "lastName": account_data["lastName"],
-        "phoneNumber": account_data["phoneNumber"],
         "preferredLanguage": account_data["preferredLanguage"],
         "lastDisplayNameChange": account_data["lastDisplayNameChange"],
-        "canUpdateDisplayName": account_data["canUpdateDisplayName"],
+        "canUpdateDisplayName": True if (not account_data["lastDisplayNameChange"] or
+                                         (datetime.datetime.now(datetime.UTC) - account_data[
+                                             "lastDisplayNameChange"]).days >= 14) else False,
         "tfaEnabled": account_data["tfaEnabled"],
-        "emailVerified": account_data["emailVerified"],
-        "minorExpected": account_data["minorExpected"],
-        "hasHashedEmail": account_data["hasHashedEmail"],
-        "externalAuths": account_data["externalAuths"]
+        "externalAuths": account_data["externalAuths"],
+        "failedLoginAttempts": 0,
+        "numberOfDisplayNameChanges": 0,
+        "dateOfBirth": "YYYY-MM-DD",
+        "ageGroup": "UNKNOWN",
+        "country": "AU",
+        "name": "",
+        "lastName": "",
+        "phoneNumber": 0,
+        "emailVerified": False,
+        "minorExpected": False,
+        "minorVerified": False,
+        "minorStatus": "UNKNOWN",
+        "cabinedMode": False,
+        "hasHashedEmail": False
     }
 
 
@@ -713,9 +690,6 @@ async def get_account_data(database: AsyncDatabase, account_id: str) -> Optional
     return {
         "id": account_data["_id"],
         "displayName": account_data["displayName"],
-        "minorVerified": False,
-        "minorStatus": "NOT_MINOR",
-        "cabinedMode": False,
         "externalAuths": account_data["externalAuths"]
     }
 

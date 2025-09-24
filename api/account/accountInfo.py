@@ -37,3 +37,4 @@ async def account_route(request: types.BBRequest, accountId: str) -> sanic.respo
     account_data = await get_account_data(request.app.ctx.db, accountId)
     if not account_data:
         raise errors.com.epicgames.account.account_not_found(accountId)
+    return sanic.response.json(account_data)

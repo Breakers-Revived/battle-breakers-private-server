@@ -55,7 +55,7 @@ async def quickstart(request: types.BBRequest) -> sanic.response.HTTPResponse:
             "id": new_account_id,
             "failedLoginAttempts": 0,
             "numberOfDisplayNameChanges": 0,
-            "ageGroup": "ADULT",
+            "ageGroup": "UNKNOWN",
             "headless": True,
             "country": "AU",
             "preferredLanguage": "en",
@@ -64,7 +64,7 @@ async def quickstart(request: types.BBRequest) -> sanic.response.HTTPResponse:
             "emailVerified": False,
             "minorVerified": False,
             "minorExpected": False,
-            "minorStatus": "NOT_MINOR",
+            "minorStatus": "UNKNOWN",
             "cabinedMode": False,
             "hasHashedEmail": False
         },

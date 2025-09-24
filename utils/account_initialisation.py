@@ -6,12 +6,12 @@ This code is licensed under the Breakers Revived License (BRL).
 
 This file creates the base version of all necessary files for an account.
 """
-import datetime
 import os
 import uuid
 
 from pymongo.asynchronous.database import AsyncDatabase
 
+import utils.utils
 from utils.services.calendar.calendar import ScheduledEvents
 from utils.utils import normalise_string, format_time, uuid_generator
 
@@ -34,35 +34,18 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
     await database["accounts"].insert_one({
         "_id": account_id,
         "displayName": display_name,
-        # "minorVerified": False,
-        # "minorStatus": "NOT_MINOR",
-        # "cabinedMode": False,
-        "name": None,
-        "email": email,
-        "failedLoginAttempts": 0,
-        "lastLogin": None,
-        "numberOfDisplayNameChanges": 0,
-        "dateOfBirth": None,
-        "ageGroup": "ADULT",
+        "email": email if email else f"{display_name}@." if display_name else None,
+        "lastLogin": await format_time(),
         "headless": True if display_name is None else False,
-        "country": None,
-        "lastName": None,
-        "phoneNumber": None,
         "preferredLanguage": "en",
         "lastDisplayNameChange": None,
-        "canUpdateDisplayName": True,
         "tfaEnabled": False,
-        "emailVerified": False,
-        "minorExpected": False,
-        "hasHashedEmail": False,
         "externalAuths": {},
         "extra": {
             "pwhash": password.decode() if password is not None else None,
             "deviceAuths": []
         },
-        "metadata": {
-            "FGOnboarded": "true"
-        }
+        "metadata": {}
     })
     # initialise entitlement service
     await database["entitlements"].insert_one({
@@ -80,11 +63,6 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
         "settings": {
             "acceptInvites": "public",
             "mutualPrivacy": "ALL"
-        },
-        "limitsReached": {
-            "incoming": False,
-            "outgoing": False,
-            "accepted": False
         }
     })
     # initialise wex services
@@ -122,7 +100,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                 "portal_level": "",
                 "personal_events": [
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 5,
                         "zoneId": "Zone.Event.PE.MidgamePet.First.Map1",
                         "maxRuns": 1,
@@ -134,7 +112,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                         "dynamicWorldLevel": -1
                     },
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 4,
                         "zoneId": "Zone.Event.PE.MidgamePet.Second.Map1",
                         "maxRuns": 1,
@@ -146,7 +124,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                         "dynamicWorldLevel": -1
                     },
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 3,
                         "zoneId": "Zone.Event.PE.MidgamePet.Third.Map1",
                         "maxRuns": 1,
@@ -158,7 +136,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                         "dynamicWorldLevel": -1
                     },
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 2,
                         "zoneId": "Zone.Event.PE.MidgamePet.Fourth.Map1",
                         "maxRuns": 1,
@@ -170,7 +148,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                         "dynamicWorldLevel": -1
                     },
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 1,
                         "zoneId": "Zone.Event.PE.MidgamePet.Fifth.Map1",
                         "maxRuns": 1,
@@ -182,7 +160,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                         "dynamicWorldLevel": -1
                     },
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 5,
                         "zoneId": "Zone.Event.PE.MidgameChallenge.First.Map1",
                         "maxRuns": 1,
@@ -194,7 +172,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                         "dynamicWorldLevel": -1
                     },
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 4,
                         "zoneId": "Zone.Event.PE.MidgameChallenge.Second.Map1",
                         "maxRuns": 1,
@@ -206,7 +184,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                         "dynamicWorldLevel": -1
                     },
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 3,
                         "zoneId": "Zone.Event.PE.MidgameChallenge.Third.Map1",
                         "maxRuns": 1,
@@ -218,7 +196,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                         "dynamicWorldLevel": -1
                     },
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 2,
                         "zoneId": "Zone.Event.PE.MidgameChallenge.Fourth.Map1",
                         "maxRuns": 1,
@@ -230,7 +208,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                         "dynamicWorldLevel": -1
                     },
                     {
-                        "expiresAt": "2999-12-31T23:59:59.999Z",
+                        "expiresAt": "9999-12-31T23:59:59.999Z",
                         "sortPriority": 1,
                         "zoneId": "Zone.Event.PE.MidgameChallenge.Fifth.Map1",
                         "maxRuns": 1,
@@ -591,7 +569,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                 },
                 "activity": {
                     "a": {
-                        "date": datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT00:00:00.000Z"),
+                        "date": await format_time(await utils.utils.get_current_24_hour_interval()),
                         "claimed": False,
                         "props": {
                             "BaseBonus": 10
@@ -615,7 +593,8 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                     "claim_count": 0
                 },
                 "is_headless": True if display_name is None else False,
-                "current_season_end_date": "2022-12-28T00:00:00.000Z",
+                "current_season_end_date": calendar.battlepass.states[0].state.get("seasonEndDate",
+                                                                                   "9999-12-31T23:59:59.999Z") if calendar is not None else "9999-12-31T23:59:59.999Z",
                 "max_rep_heroes": 1,
                 "armor_limit": 500,
                 "season_regular_claim_level": -1,
