@@ -12,7 +12,7 @@ import sanic
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
-from utils.utils import authorized as auth, load_datatable, get_path_from_template_id, get_template_id_from_path, \
+from utils.utils import authorized as auth, load_datatable, get_template_id_from_path, \
     load_character_data
 
 from utils.sanic_gzip import Compress
@@ -47,7 +47,8 @@ async def promote_hero(request: types.BBProfileRequest, accountId: str) -> sanic
     if len(promotion_table[0]["Properties"]["RankRecipes"]) <= hero_item["attributes"]["rank"]:
         raise errors.com.epicgames.modules.gameplayutils.recipe_failed(errorMessage="Hero is already at max promotion")
     promotion_recipe = (await load_datatable(
-        promotion_table[0]["Properties"]["RankRecipes"][hero_item["attributes"]["rank"]]["AssetPathName"].replace("/Game/", "Content/").split(".")[
+        promotion_table[0]["Properties"]["RankRecipes"][hero_item["attributes"]["rank"]]["AssetPathName"].replace(
+            "/Game/", "Content/").split(".")[
             0]))[0]["Properties"]
     # There is a check for account level, but since it only ever requires above level 0, it is not necessary
     pending_items = []

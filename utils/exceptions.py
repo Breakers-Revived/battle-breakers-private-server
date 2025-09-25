@@ -137,7 +137,6 @@ class EpicException(Exception):
         return self._quiet
 
 
-# noinspection PyPep8Naming
 class errors:
     """
     Parent class for all error classes
@@ -1438,7 +1437,7 @@ class errors:
 
                     class update_failed_due_to_sdn(EpicException):
                         """
-                        This error is thrown when a update is failed due to sdn
+                        This error is thrown when an update is failed due to sdn
                         *errors.com.epicgames.account.sdn.update_failed_due_to_sdn*
                         """
                         errorMessage: str = "Update failed due to SDN"
@@ -1448,7 +1447,7 @@ class errors:
 
                     class update_not_allowed(EpicException):
                         """
-                        This error is thrown when a update is not allowed
+                        This error is thrown when an update is not allowed
                         *errors.com.epicgames.account.sdn.update_not_allowed*
                         """
                         errorMessage: str = "Update not allowed"
@@ -1950,7 +1949,7 @@ class errors:
                      - Permission (fortnite:profile:<account_id>:commands)
                      - Scope (ALL)
                     """
-                    errorMessage: str = "Sorry your login does not posses the permissions '{0} {1}' needed to " \
+                    errorMessage: str = "Sorry your login does not possess the permissions '{0} {1}' needed to " \
                                         "perform the requested operation"
                     numericErrorCode: int = 1023
                     statusCode: int = 403
@@ -1964,7 +1963,7 @@ class errors:
                      - Action (PLAY)
                      - Platform (Windows)
                     """
-                    errorMessage: str = "Login is banned or does not posses the action '{0}' needed to perform the " \
+                    errorMessage: str = "Login is banned or does not possess the action '{0}' needed to perform the " \
                                         "requested operation for platform '{1}'"
                     numericErrorCode: int = 1023
                     statusCode: int = 403
@@ -2698,10 +2697,10 @@ class errors:
 
                         class invalid_nationality(EpicException):
                             """
-                            This exception is thrown when the real id inationality is invalid
+                            This exception is thrown when the real id nationality is invalid
                             *errors.com.epicgames.identity.realid.invalid_nationality*
                             """
-                            errorMessage: str = "Sorry, the real id inationality is invalid."
+                            errorMessage: str = "Sorry, the real id nationality is invalid."
                             numericErrorCode: int = 0
                             originatingService: str = "WEX"
                             statusCode: int = 400
@@ -2734,7 +2733,7 @@ class errors:
                             Message Vars:
                              - Request UUID (31d44b64-4db5-4f1d-8909-b7d5afbb67e3)
                             """
-                            errorMessage: str = "Sorry an error occurred and we were unable to resolve it (tracking " \
+                            errorMessage: str = "Sorry an error occurred, and we were unable to resolve it (tracking " \
                                                 "id: [{0}])"
                             numericErrorCode: int = 1000
                             statusCode: int = 500
@@ -2958,7 +2957,7 @@ class errors:
 
                     class fulfillment_maximum_use_count_reached(EpicException):
                         """
-                        This exception is thrown when the purchase fulfillment has been maxxed out.
+                        This exception is thrown when the purchase fulfillment has been maxed out.
                         *errors.com.epicgames.modules.gamesubcatalog.fulfillment_maximum_use_count_reached*
                         """
                         errorMessage: str = "Account {0} has already reached the maximum fulfillment count of {1} for fulfillment {2}"
@@ -3115,7 +3114,7 @@ class errors:
                         *errors.com.epicgames.modules.profile.profile_not_found*
 
                         Message Vars:
-                         - Proile ID (profile0)
+                         - Profile ID (profile0)
                         """
                         errorMessage: str = "Profile {0} not found"
                         numericErrorCode: int = 0
@@ -4607,7 +4606,7 @@ class errors:
 
                         Message Vars:
                          - User ID (0fc2397a34c1407ca539d39c0921d647)
-                         - Demployment ID (fortnite)
+                         - Deployment ID (fortnite)
                         """
                         errorMessage: str = "User [{0}] is already in a party with deployment id [{1}]."
                         numericErrorCode: int = 0

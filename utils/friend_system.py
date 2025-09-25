@@ -26,7 +26,7 @@ class PlayerFriends:
     def __init__(self, account_id: str) -> None:
         """
         Initialise the friends class.
-        This will load the profile from the res folder and setup the variables
+        This will load the profile from the res folder and set up the variables
         :param account_id: The account ID of the profile
         """
         self.account_id: str = account_id
@@ -60,7 +60,7 @@ class PlayerFriends:
 
     async def load_friends(self, database: AsyncDatabase) -> None:
         """
-        Load the profile based on the account ID and setup the variables
+        Load the profile based on the account ID and set up the variables
         :return: None
         """
         self.friends = await database["friends"].find_one({"_id": self.account_id})

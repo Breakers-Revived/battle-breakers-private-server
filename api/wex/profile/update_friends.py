@@ -50,7 +50,7 @@ async def update_friends(request: types.BBProfileRequest, accountId: str) -> san
     for pending_change in pending_changes:
         if pending_change.get("changeType") == "itemAdded" and pending_change.get("item", {}).get(
                 "templateId") == "Friend:Instance" and await request.app.ctx.db["accounts"].find_one(
-                {"_id": pending_change.get("item", {}).get("attributes", {}).get("accountId")}, {"_id": 1}) is not None:
+            {"_id": pending_change.get("item", {}).get("attributes", {}).get("accountId")}, {"_id": 1}) is not None:
             result.pop(pending_change.get("item", {}).get("attributes", {}).get("accountId"), None)
     for itemId in friend_instances:
         friend_instance = await request.ctx.profile.get_item_by_guid(itemId, request.ctx.profile_id)
@@ -58,7 +58,7 @@ async def update_friends(request: types.BBProfileRequest, accountId: str) -> san
             result.pop(friend_instance["attributes"]["accountId"])
         if datetime.datetime.strptime(friend_instance["attributes"]["snapshot_expires"],
                                       "%Y-%m-%dT%H:%M:%S.%fZ").replace(tzinfo=datetime.UTC) <= datetime.datetime.now(
-                datetime.UTC):
+            datetime.UTC):
             account_data: dict = await request.app.ctx.db["accounts"].find_one(
                 {"_id": friend_instance["attributes"]["accountId"]}, {"displayName": 1, "_id": 0})
             if account_data is None:

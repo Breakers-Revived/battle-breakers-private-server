@@ -30,7 +30,7 @@ async def wex_cloudv3_manifests(request: types.BBRequest, manifest: str) -> sani
     :param manifest: The manifest
     :return: The response object
     """
-    # yes, this is more ugly than the regex in utils, however its roughly 2-8x faster
+    # yes, this is uglier than the regex in utils, however its roughly 2-8x faster
     try:
         changelist = request.headers.get("User-Agent").split('version=')[1].split(",")[0].split("-")[1].split("+")[0]
     except:
@@ -55,7 +55,7 @@ async def wex_cloudv3_manifests(request: types.BBRequest, manifest: str) -> sani
 
     # ~ 1.5ms
     try:
-        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests", 
+        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests",
                                                f"CL_{changelist}/{urllib.parse.unquote(manifest).lower()}")
         manifest_file: bytes = await (
             await aiofiles.open(safe_file, "rb")).read()

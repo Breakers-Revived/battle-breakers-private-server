@@ -79,7 +79,8 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
         except FileNotFoundError:
             pass
     if level_data is not None:
-        level_notification["level"]["potentialBattlepassXp"] = await process_choices(level_data["level"].get("potentialBattlepassXp", 0))
+        level_notification["level"]["potentialBattlepassXp"] = await process_choices(
+            level_data["level"].get("potentialBattlepassXp", 0))
         level_notification["level"]["rooms"] = []
         depth = 1
         for room_data in level_data["level"].get("rooms", []):
@@ -93,7 +94,8 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
                     int(level_info["BaseWorldLevel"] * 0.92),
                     int(level_info["BaseWorldLevel"] * 1.09)
                 )),
-                "discoveryGoldMult": await process_choices(room_data.get("discoveryGoldMult", 1.0)) * room_info.get("GoldDropMult", 1.0),
+                "discoveryGoldMult": await process_choices(room_data.get("discoveryGoldMult", 1.0)) * room_info.get(
+                    "GoldDropMult", 1.0),
                 "occupants": []
             }
             for occupant_data in room_data.get("occupants", []):
@@ -104,7 +106,8 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
                     "killXp": await process_choices(occupant_data.get("killXp", 0)),
                 }
                 if occupant_data.get("characterTemplateId", None):
-                    occupant["characterTemplateId"] = await process_choices(occupant_data.get("characterTemplateId", ""))
+                    occupant["characterTemplateId"] = await process_choices(
+                        occupant_data.get("characterTemplateId", ""))
                     occupant["spawnClass"] = await process_choices(occupant_data.get("spawnClass", "Normal"))
                 occupant_data_loot = occupant_data.get("lootTemplateId", [])
                 if occupant_data_loot:

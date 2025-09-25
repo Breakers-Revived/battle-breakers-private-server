@@ -25,7 +25,7 @@ class State:
     def __init__(self) -> None:
         """
         Initialise the states class.
-        This will setup the variables for the state
+        This will set up the variables for the state
         """
         self.valid_from: str = ""
         self.active_events: list[str] = []
@@ -97,7 +97,7 @@ class Channel:
     def __init__(self) -> None:
         """
         Initialise the channel class.
-        This will setup the variables for the channel
+        This will set up the variables for the channel
         """
         self.states: list[State] = [State()]
         self.cache_expire: str = "0021-01-01T00:00:000Z"
@@ -176,7 +176,7 @@ class News(Channel):
     def __init__(self) -> None:
         """
         Initialise the news channel class.
-        This will setup the variables for the news channel
+        This will set up the variables for the news channel
         """
         super().__init__()
 
@@ -217,7 +217,7 @@ class LimitedTimeMode(Channel):
     def __init__(self) -> None:
         """
         Initialise the limited time mode channel class.
-        This will setup the variables for the limited time mode channel
+        This will set up the variables for the limited time mode channel
         """
         super().__init__()
 
@@ -903,7 +903,7 @@ class Marketing(Channel):
     def __init__(self) -> None:
         """
         Initialise the marketing channel class.
-        This will setup the variables for the marketing channel
+        This will set up the variables for the marketing channel
         """
         super().__init__()
 
@@ -927,7 +927,7 @@ class RotationalContent(Channel):
     def __init__(self) -> None:
         """
         Initialise the rotational content channel class.
-        This will setup the variables for the rotational content channel
+        This will set up the variables for the rotational content channel
         """
         super().__init__()
 
@@ -942,7 +942,8 @@ class RotationalContent(Channel):
             "activeEvents": [],
             "preregRewardZones": [],
             "heroStoreEnd": await format_time(
-                datetime.datetime.now(datetime.UTC).replace(hour=0, minute=0, second=0, microsecond=0) + datetime.timedelta(
+                datetime.datetime.now(datetime.UTC).replace(hour=0, minute=0, second=0,
+                                                            microsecond=0) + datetime.timedelta(
                     days=-datetime.datetime.now(datetime.UTC).weekday(), weeks=1)),
             "purchasingEventId": ""
         }
@@ -1017,7 +1018,9 @@ class RotationalContent(Channel):
             "eventId": event_data[0].get("Properties").get("EventId"),
             "expiresAt": await format_time(end_date)
         }]
-        self.states[0].state["purchaseEventId"] = event_data[0].get("Properties").get("EventCurrency")[0].get("AssetPathName").split(".Reagent_")[-1].split("Event_")[-1].split("_")[0]
+        self.states[0].state["purchaseEventId"] = \
+            event_data[0].get("Properties").get("EventCurrency")[0].get("AssetPathName").split(".Reagent_")[-1].split(
+                "Event_")[-1].split("_")[0]
         self.cache_expire = await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2))
 
 
@@ -1029,7 +1032,7 @@ class FeaturedStoresMcp(Channel):
     def __init__(self) -> None:
         """
         Initialise the featured stores mcp channel class.
-        This will setup the variables for the featured stores mcp channel
+        This will set up the variables for the featured stores mcp channel
         """
         super().__init__()
 
@@ -1055,7 +1058,7 @@ class WeeklyChallenge(Channel):
     def __init__(self) -> None:
         """
         Initialise the weekly challenge mcp channel class.
-        This will setup the variables for the weekly challenge mcp channel
+        This will set up the variables for the weekly challenge mcp channel
         """
         super().__init__()
 
@@ -1221,7 +1224,7 @@ class BattlePass(Channel):
     def __init__(self) -> None:
         """
         Initialise the battle pass channel class.
-        This will setup the variables for the battle pass channel
+        This will set up the variables for the battle pass channel
         """
         super().__init__()
 

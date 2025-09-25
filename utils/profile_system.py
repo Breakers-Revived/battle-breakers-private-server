@@ -678,7 +678,8 @@ class PlayerProfile:
         if isinstance(item_id, list):
             item_id: str = item_id[0]
         if new_value is None:
-            profile_changes.append({"changeType": "itemAttrChanged", "itemId": item_id, "attributeName": attribute_name})
+            profile_changes.append(
+                {"changeType": "itemAttrChanged", "itemId": item_id, "attributeName": attribute_name})
         else:
             profile_changes.append({"changeType": "itemAttrChanged", "itemId": item_id, "attributeName": attribute_name,
                                     "attributeValue": new_value})
@@ -748,9 +749,9 @@ class PlayerProfile:
     async def grant_hero(self, template_id: str, gear_weapon_item_id: str = "", weapon_unlocked: bool = False,
                          sidekick_template_id: str = "", level: int = 1, is_new: bool = True, num_sold: int = 0,
                          skill_level: int = 1, sidekick_unlocked: bool = False, upgrades: Optional[list[int]] = None,
-                         used_as_sidekick: bool = False, gear_armor_item_id: str = "", skill_xp: int = 0, armor_unlocked: bool = False,
-                         foil_lvl: int = -1, xp: int = 0, rank: int = 0, sidekick_item_id: str = "",
-                         profile_id: ProfileType = ProfileType.PROFILE0) -> str:
+                         used_as_sidekick: bool = False, gear_armor_item_id: str = "", skill_xp: int = 0,
+                         armor_unlocked: bool = False, foil_lvl: int = -1, xp: int = 0, rank: int = 0,
+                         sidekick_item_id: str = "", profile_id: ProfileType = ProfileType.PROFILE0) -> str:
         """
         Grant the specified hero to the profile
         :param template_id: The template ID of the hero to grant

@@ -47,6 +47,7 @@ async def sell_multiple_gear(request: types.BBProfileRequest, accountId: str) ->
                 errorMessage="We're sorry, but we were unable to sell your item as it was not found in your inventory.")
     for item_guid in request.json.get("itemIds"):
         # TODO: validate the item to sell
+        value = 0
         match (await request.ctx.profile.get_item_by_guid(item_guid))["attributes"]["rarity"]:
             case "Common":
                 value = 1

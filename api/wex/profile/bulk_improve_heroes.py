@@ -44,13 +44,17 @@ async def bulk_improve_heroes(request: types.BBProfileRequest, accountId: str) -
     xp_datatable = (await load_datatable("Content/Balance/Datatables/XPUnitLevels"))[0]["Rows"][
         "UnitXPTNLNormal"]["Keys"]
     strength_ma_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeStrengthMinor")
-    strength_ma_potion_quantity = (await request.ctx.profile.get_item_by_guid(strength_ma_potion_guid[0])).get("quantity", 0)
+    strength_ma_potion_quantity = (await request.ctx.profile.get_item_by_guid(strength_ma_potion_guid[0])).get(
+        "quantity", 0)
     strength_mi_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeStrengthMajor")
-    strength_mi_potion_quantity = (await request.ctx.profile.get_item_by_guid(strength_mi_potion_guid[0])).get("quantity", 0)
+    strength_mi_potion_quantity = (await request.ctx.profile.get_item_by_guid(strength_mi_potion_guid[0])).get(
+        "quantity", 0)
     health_ma_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeHealthMinor")
-    health_ma_potion_quantity = (await request.ctx.profile.get_item_by_guid(health_ma_potion_guid[0])).get("quantity", 0)
+    health_ma_potion_quantity = (await request.ctx.profile.get_item_by_guid(health_ma_potion_guid[0])).get("quantity",
+                                                                                                           0)
     health_mi_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeHealthMajor")
-    health_mi_potion_quantity = (await request.ctx.profile.get_item_by_guid(health_mi_potion_guid[0])).get("quantity", 0)
+    health_mi_potion_quantity = (await request.ctx.profile.get_item_by_guid(health_mi_potion_guid[0])).get("quantity",
+                                                                                                           0)
     mana_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeMana")
     mana_potion_quantity = (await request.ctx.profile.get_item_by_guid(mana_potion_guid[0])).get("quantity", 0)
     for upgrade in request.json.get("detail"):
@@ -60,7 +64,8 @@ async def bulk_improve_heroes(request: types.BBProfileRequest, accountId: str) -
         for potion_upgrade in upgrade["potionItems"]:
             potion_cost = (await load_datatable(
                 (await get_path_from_template_id(potion_upgrade.get("templateId"))).replace(
-                    "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"][
+                    "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
+                "Properties"][
                 "ConsumptionCostGold"]
             match potion_upgrade.get("templateId"):
                 case "UpgradePotion:UpgradeStrengthMinor":
@@ -176,7 +181,8 @@ async def bulk_improve_heroes(request: types.BBProfileRequest, accountId: str) -
                     case "WExpGenericAccountItemDefinition'Ore_Iron'":
                         if current_iron < consumed_item["Count"]:
                             break
-                        await request.ctx.profile.change_item_quantity(iron_id[0], current_iron - consumed_item["Count"])
+                        await request.ctx.profile.change_item_quantity(iron_id[0],
+                                                                       current_iron - consumed_item["Count"])
                         current_iron -= consumed_item["Count"]
                     case _:
                         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid item to consume")

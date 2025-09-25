@@ -44,10 +44,12 @@ async def claim_account_reward(request: types.BBProfileRequest, accountId: str) 
     for perk in perks:
         perk_item = await request.ctx.profile.get_item_by_guid(perk.get("itemId"))
         if perk_item is None or not perk_item["templateId"].startswith("AccountReward:"):
-            raise errors.com.epicgames.world_explorers.bad_request(errorMessage=f"Invalid perk {perk.get('templateId', perk.get('itemId'))}")
+            raise errors.com.epicgames.world_explorers.bad_request(
+                errorMessage=f"Invalid perk {perk.get('templateId', perk.get('itemId'))}")
         perk_data = (await load_datatable(
             (await get_path_from_template_id(perk_item["templateId"])).replace(
-                "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"]
+                "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
+            "Properties"]
         match perk_item["templateId"]:
             case "AccountReward:AccountPerk_Mana":
                 perk_choice = AccountPerk.MaxMana

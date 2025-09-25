@@ -36,7 +36,6 @@ from cryptography.hazmat.backends import default_backend
 
 from utils.exceptions import errors
 
-
 # SSL keys
 private_key = None
 public_key = None
@@ -47,7 +46,7 @@ if os.path.isfile(PRIVATE_KEY_PEM_PATH):
         private_key_data = f.read()
         try:
             private_key = load_pem_private_key(private_key_data, password=PRIVATE_KEY_PASSWORD,
-                                                backend=default_backend())
+                                               backend=default_backend())
         except ValueError as e:
             print("Error happened while trying to load private key PEM file.")
             if len(e.args) == 2 and isinstance(e.args[1], list):
@@ -61,7 +60,6 @@ else:
     print(f"Error: no private key PEM file at: {PRIVATE_KEY_PEM_PATH}")
     exit(1)
 
-
 # Load the public key
 if os.path.isfile(PUBLIC_KEY_PEM_PATH):
     with open(PUBLIC_KEY_PEM_PATH, 'rb') as f:
@@ -70,7 +68,6 @@ if os.path.isfile(PUBLIC_KEY_PEM_PATH):
 else:
     print(f"Error: no public key PEM file at: {PUBLIC_KEY_PEM_PATH}")
     exit(1)
-
 
 # Cache game files
 game_files_list = []
@@ -97,7 +94,7 @@ async def read_file(filename: str, json: bool = True, raw: bool = True) -> dict[
     if raw:
         async with aiofiles.open(filename, "rb") as file:
             return await file.read()
-    async with aiofiles.open(filename, "r") as file:
+    async with aiofiles.open(filename) as file:
         return await file.read()
 
 
@@ -163,6 +160,7 @@ async def get_current_12_hour_interval() -> datetime.datetime:
     return datetime.datetime(current_12hr.year, current_12hr.month, current_12hr.day, current_12hr.hour,
                              tzinfo=datetime.timezone.utc)
 
+
 async def get_nearest_24_hour_interval() -> datetime.datetime:
     """
     Gets the nearest 24 hour interval from the current time
@@ -172,6 +170,7 @@ async def get_nearest_24_hour_interval() -> datetime.datetime:
         hours=24 - (datetime.datetime.now(datetime.UTC).hour % 24))
     return datetime.datetime(next_24hr.year, next_24hr.month, next_24hr.day, next_24hr.hour,
                              tzinfo=datetime.timezone.utc)
+
 
 async def get_current_24_hour_interval() -> datetime.datetime:
     """
@@ -183,6 +182,7 @@ async def get_current_24_hour_interval() -> datetime.datetime:
     return datetime.datetime(current_24hr.year, current_24hr.month, current_24hr.day, current_24hr.hour,
                              tzinfo=datetime.timezone.utc)
 
+
 async def get_nearest_weekly_interval() -> datetime.datetime:
     """
     Gets the nearest weekly interval from the current time
@@ -191,6 +191,7 @@ async def get_nearest_weekly_interval() -> datetime.datetime:
     next_week = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
         days=(7 - datetime.datetime.now(datetime.UTC).weekday()))
     return datetime.datetime(next_week.year, next_week.month, next_week.day, tzinfo=datetime.timezone.utc)
+
 
 async def get_current_weekly_interval() -> datetime.datetime:
     """
@@ -201,6 +202,7 @@ async def get_current_weekly_interval() -> datetime.datetime:
         days=datetime.datetime.now(datetime.UTC).weekday())
     return datetime.datetime(current_week.year, current_week.month, current_week.day, tzinfo=datetime.timezone.utc)
 
+
 async def get_nearest_monthly_interval() -> datetime.datetime:
     """
     Gets the nearest monthly interval from the current time
@@ -210,6 +212,7 @@ async def get_nearest_monthly_interval() -> datetime.datetime:
         days=(30 - (datetime.datetime.now(datetime.UTC).day % 30)))
     return datetime.datetime(next_month.year, next_month.month, 1, tzinfo=datetime.timezone.utc)
 
+
 async def get_current_monthly_interval() -> datetime.datetime:
     """
     Gets the current monthly interval
@@ -217,8 +220,7 @@ async def get_current_monthly_interval() -> datetime.datetime:
     """
     current_month = datetime.datetime.now(datetime.UTC) - datetime.timedelta(
         days=datetime.datetime.now(datetime.UTC).day - 1)
-    return datetime.datetime(current_month.year, current_month.month, 1, 0, 0,
-                             tzinfo=datetime.timezone.utc)
+    return datetime.datetime(current_month.year, current_month.month, 1, tzinfo=datetime.timezone.utc)
 
 
 async def token_generator() -> str:
@@ -1080,6 +1082,7 @@ async def get_curvetable_value(data_table: list[dict], row: str, time_input: flo
             return row_data['Keys'][i]['Value'] + (time_input - row_data['Keys'][i]['Time']) / (
                     row_data['Keys'][i + 1]['Time'] - row_data['Keys'][i]['Time']) * (
                     row_data['Keys'][i + 1]['Value'] - row_data['Keys'][i]['Value'])
+    return 0
 
 
 async def calculate_streakbreaker(current_streakbreaker: int, max_streakbreaker: int = 100000,
@@ -1121,7 +1124,10 @@ async def replace_nth_occurrence(input_string: str, target_string: str, occurren
     return new_string
 
 
-async def process_choices(input_data: str | int | float | list[str | int | float | dict[str, str | int | float | list[int | float]] | list]) -> str | int | float | dict[str, str | int | float | list[int | float]] | list[str | int | float | dict[str, str | int | float | list[int | float]]]:
+async def process_choices(input_data: str | int | float | list[
+    str | int | float | dict[str, str | int | float | list[int | float]] | list]) -> str | int | float | dict[
+    str, str | int | float | list[int | float]] | list[str | int | float | dict[
+    str, str | int | float | list[int | float]]]:
     """
     Depending on the input data, this function will return either a random range between two values, a random choice from a list, or the input data.
     
@@ -1148,8 +1154,10 @@ async def calculate_hero_power(hero_data: dict, add_pit_bonus: bool = False) -> 
     :return: The hero power
     """
     power = 0
-    character_stats_handle = (await load_character_data(hero_data["templateId"]))[0]["Properties"]["CharacterStatsHandle"]["RowName"]
-    character_stats = (await load_datatable("Content/Characters/Datatables/CharacterStats"))[0]["Rows"][character_stats_handle]
+    character_stats_handle = \
+        (await load_character_data(hero_data["templateId"]))[0]["Properties"]["CharacterStatsHandle"]["RowName"]
+    character_stats = (await load_datatable("Content/Characters/Datatables/CharacterStats"))[0]["Rows"][
+        character_stats_handle]
     power_budget_mult = await get_curvetable_value((await load_datatable("Content/Characters/Datatables/StatScaling")),
                                                    "PowerBudgetMult", hero_data["attributes"]["level"])
     power += power_budget_mult * character_stats["BudgetPoints"]
@@ -1180,7 +1188,8 @@ async def safe_path_join(base_path: str, unsafe_path: str, verbose: bool = False
     if not real_path.startswith(os.path.realpath(base_path)):
         # If the final path is outside the base path, raise an error
         if verbose:
-            raise ValueError(f"Path traversal attempt detected! The unsafe path '{unsafe_path}' leads outside of the base path '{base_path}'")
+            raise ValueError(
+                f"Path traversal attempt detected! The unsafe path '{unsafe_path}' leads outside of the base path '{base_path}'")
         else:
             raise ValueError("Path traversal attempt detected!")
 

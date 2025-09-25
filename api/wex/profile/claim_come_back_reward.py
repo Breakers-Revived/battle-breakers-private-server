@@ -25,7 +25,7 @@ wex_profile_claim_comeback = sanic.Blueprint("wex_profile_claim_comeback")
 @compress.compress()
 async def claim_comeback(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
     """
-    This endpoint is used to claim the come back reward.
+    This endpoint is used to claim the comeback reward.
     :param request: The request object
     :param accountId: The account id
     :return: The modified profile

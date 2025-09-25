@@ -35,9 +35,11 @@ async def open_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
     if tower_data is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid tower id")
     if not tower_data["attributes"].get("active_chest"):
-        raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Tower has no active chest. Call PickHeroChest")
+        raise errors.com.epicgames.world_explorers.bad_request(
+            errorMessage="Tower has no active chest. Call PickHeroChest")
     active_chest = tower_data["attributes"]["active_chest"]
-    currency_id = await request.ctx.profile.find_item_by_template_id(tower_data["attributes"][f"{active_chest['heroChestType']}_static_currency_template_id"])
+    currency_id = await request.ctx.profile.find_item_by_template_id(
+        tower_data["attributes"][f"{active_chest['heroChestType']}_static_currency_template_id"])
     if not currency_id:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Required reagent not found")
     currency = await request.ctx.profile.get_item_by_guid(currency_id[0])
@@ -53,14 +55,18 @@ async def open_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
     if request.json.get("itemTemplateId").split(":")[0] != "Character":
         await request.ctx.profile.grant_item(request.json.get("itemTemplateId"), request.json.get("itemQuantity", 1))
     else:
-        await request.ctx.profile.grant_hero(request.json.get("itemTemplateId"), foil_lvl=1 if active_chest["foilLevel"] > 0 else -1)
+        await request.ctx.profile.grant_hero(request.json.get("itemTemplateId"),
+                                             foil_lvl=1 if active_chest["foilLevel"] > 0 else -1)
     # TODO: chest activity
     await request.ctx.profile.change_item_attribute(request.json.get("towerId"), "active_chest", None)
-    hero_tower_data = (await utils.utils.read_file("res/wex/api/game/v2/skybreaker/herotower.json"))[active_chest['heroTrackId']]
+    hero_tower_data = (await utils.utils.read_file("res/wex/api/game/v2/skybreaker/herotower.json"))[
+        active_chest['heroTrackId']]
     new_page_index = tower_data["attributes"]["page_index"]
     if active_chest["heroTrackId"] == "CoreBasic":
-        if tower_data["attributes"][f"{active_chest['heroTrackId']}_progress"] + 1 > int(list(hero_tower_data[str(new_page_index)].keys())[-1]):
-            await request.ctx.profile.change_item_attribute(request.json.get("towerId"), f"{active_chest['heroTrackId']}_progress", 0)
+        if tower_data["attributes"][f"{active_chest['heroTrackId']}_progress"] + 1 > int(
+                list(hero_tower_data[str(new_page_index)].keys())[-1]):
+            await request.ctx.profile.change_item_attribute(request.json.get("towerId"),
+                                                            f"{active_chest['heroTrackId']}_progress", 0)
             track_progress = 0
             if tower_data["attributes"]["page_index"] + 1 > int(list(hero_tower_data.keys())[-1]):
                 new_page_index = int(list(hero_tower_data.keys())[0])
@@ -69,14 +75,22 @@ async def open_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
                 new_page_index = tower_data["attributes"]["page_index"] + 1
                 await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_SuperRare", 1)
         else:
-            await request.ctx.profile.change_item_attribute(request.json.get("towerId"), f"{active_chest['heroTrackId']}_progress", tower_data["attributes"][f"{active_chest['heroTrackId']}_progress"] + 1)
+            await request.ctx.profile.change_item_attribute(request.json.get("towerId"),
+                                                            f"{active_chest['heroTrackId']}_progress",
+                                                            tower_data["attributes"][
+                                                                f"{active_chest['heroTrackId']}_progress"] + 1)
             track_progress = tower_data["attributes"][f"{active_chest['heroTrackId']}_progress"] + 1
     else:
-        await request.ctx.profile.change_item_attribute(request.json.get("towerId"), f"{active_chest['heroTrackId']}_progress", tower_data["attributes"][f"{active_chest['heroTrackId']}_progress"] + 1)
+        await request.ctx.profile.change_item_attribute(request.json.get("towerId"),
+                                                        f"{active_chest['heroTrackId']}_progress",
+                                                        tower_data["attributes"][
+                                                            f"{active_chest['heroTrackId']}_progress"] + 1)
         track_progress = tower_data["attributes"][f"{active_chest['heroTrackId']}_progress"] + 1
-    await request.ctx.profile.change_item_attribute(request.json.get("towerId"), "level", tower_data["attributes"]["level"] + 1)
+    await request.ctx.profile.change_item_attribute(request.json.get("towerId"), "level",
+                                                    tower_data["attributes"]["level"] + 1)
     await request.ctx.profile.change_item_attribute(request.json.get("towerId"), "page_index", new_page_index)
-    next_hero_track = list(hero_tower_data[str(new_page_index)].keys())[track_progress % len(hero_tower_data[str(new_page_index)])]
+    next_hero_track = list(hero_tower_data[str(new_page_index)].keys())[
+        track_progress % len(hero_tower_data[str(new_page_index)])]
     new_chest_options = hero_tower_data[str(new_page_index)][str(next_hero_track)]
     new_chest_options["heroTrackId"] = active_chest['heroTrackId']
     new_chest_options["foilLevel"] = 1 if utils.utils.random.randint(0, 100) < 7 else 0

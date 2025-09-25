@@ -8,12 +8,10 @@ Handles adding epic friend and fetching their wex specific data
 """
 
 import sanic
-from typing_extensions import Type
 
 from utils import types
 from utils.friend_system import PlayerFriends
 from utils.sanic_gzip import Compress
-from utils.toml_config import TomlConfig
 from utils.utils import authorized as auth
 
 compress = Compress()

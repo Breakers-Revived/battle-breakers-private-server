@@ -38,7 +38,8 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
     # TODO: modify activity chest
     # TODO: proper blitz mine streakbreaker for magicite drops
     if not any(member.get("heroType") == "LocalCommander" for member in request.json.get("partyMembers")):
-        raise errors.com.epicgames.world_explorers.bad_request("SingleCommander", "0", "0", "1", errorMessage="Invalid SingleCommander configuration f=0, d=0, l=1")
+        raise errors.com.epicgames.world_explorers.bad_request("SingleCommander", "0", "0", "1",
+                                                               errorMessage="Invalid SingleCommander configuration f=0, d=0, l=1")
     treasure_hunter_count = 0
     for member in request.json.get("partyMembers"):
         if member.get("heroType") in ["LocalHero", "LocalCommander"]:
@@ -94,13 +95,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(3, 6)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -110,11 +112,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(35, 55)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -126,11 +128,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(35, 55)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -149,13 +151,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(6, 12)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -165,11 +168,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(70, 110)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -181,11 +184,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(70, 110)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -204,13 +207,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(9, 18)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -220,11 +224,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(105, 165)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -236,11 +240,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(105, 165)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -259,13 +263,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(12, 24)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -275,11 +280,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(140, 220)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -291,11 +296,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(140, 220)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -316,13 +321,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(6, 12)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -332,11 +338,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(70, 110)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -348,11 +354,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(70, 110)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -371,13 +377,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(12, 24)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -387,11 +394,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(140, 220)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -403,11 +410,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(140, 220)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -426,13 +433,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(18, 36)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -442,11 +450,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(210, 330)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -458,11 +466,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(210, 330)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -481,13 +489,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(24, 48)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -497,11 +506,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(280, 440)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -513,11 +522,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(280, 440)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -538,13 +547,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(9, 18)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -554,11 +564,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(105, 165)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -570,11 +580,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(105, 165)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -593,13 +603,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(18, 36)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -609,11 +620,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(210, 330)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -625,11 +636,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(210, 330)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -648,13 +659,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(27, 56)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -664,11 +676,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(315, 495)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -680,11 +692,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(315, 495)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -703,13 +715,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(36, 72)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -719,11 +732,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(420, 660)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -735,11 +748,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(420, 660)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -760,13 +773,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(12, 24)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -776,11 +790,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(140, 220)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -792,11 +806,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(140, 220)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -815,13 +829,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(24, 48)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -831,11 +846,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(280, 440)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -847,11 +862,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(280, 440)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -870,13 +885,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(36, 72)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -886,11 +902,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(420, 660)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -902,11 +918,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(420, 660)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -925,13 +941,14 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     if random.randint(1, 100) <= 25:
                         magicite_instance = random.randint(48, 96)
                         rolled_items.append({
-                                    "itemType": "Ore:Ore_Magicite",
-                                    "itemGuid": magicite_id,
-                                    "itemProfile": "profile0",
-                                    "quantity": magicite_instance
-                                })
+                            "itemType": "Ore:Ore_Magicite",
+                            "itemGuid": magicite_id,
+                            "itemProfile": "profile0",
+                            "quantity": magicite_instance
+                        })
                         if current_magicite > 0:
-                            await request.ctx.profile.change_item_quantity(magicite_id, current_magicite + magicite_instance)
+                            await request.ctx.profile.change_item_quantity(magicite_id,
+                                                                           current_magicite + magicite_instance)
                         else:
                             await request.ctx.profile.add_item({
                                 "templateId": "Ore:Ore_Magicite",
@@ -941,11 +958,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                         current_magicite += magicite_instance
                     silver_instance = random.randint(560, 880)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Silver",
-                                "itemGuid": silver_id,
-                                "itemProfile": "profile0",
-                                "quantity": silver_instance
-                            })
+                        "itemType": "Ore:Ore_Silver",
+                        "itemGuid": silver_id,
+                        "itemProfile": "profile0",
+                        "quantity": silver_instance
+                    })
                     if current_silver > 0:
                         await request.ctx.profile.change_item_quantity(silver_id, current_silver + silver_instance)
                     else:
@@ -957,11 +974,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                     current_silver += silver_instance
                     iron_instance = random.randint(560, 880)
                     rolled_items.append({
-                                "itemType": "Ore:Ore_Iron",
-                                "itemGuid": iron_id,
-                                "itemProfile": "profile0",
-                                "quantity": iron_instance
-                            })
+                        "itemType": "Ore:Ore_Iron",
+                        "itemGuid": iron_id,
+                        "itemProfile": "profile0",
+                        "quantity": iron_instance
+                    })
                     if current_iron > 0:
                         await request.ctx.profile.change_item_quantity(iron_id, current_iron + iron_instance)
                     else:
@@ -1004,7 +1021,8 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
         })
         await request.ctx.profile.change_item_quantity(mtx_item_id, mtx_quantity + 20)
     await request.ctx.profile.modify_stat("last_played_level", level_id, profile_id=request.ctx.profile_id)
-    await request.ctx.profile.modify_stat("last_used_friend_id", request.json.get("friendInstanceId"), profile_id=request.ctx.profile_id)
+    await request.ctx.profile.modify_stat("last_used_friend_id", request.json.get("friendInstanceId"),
+                                          profile_id=request.ctx.profile_id)
     iron_instance = random.randint(1, 10)
     loot_items.append({
         "tierGroupName": "Level.Instance",

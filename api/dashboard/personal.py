@@ -25,7 +25,7 @@ personal = sanic.Blueprint("personal")
 @compress.compress()
 async def purchase_flow_route(request: types.BBRequest) -> sanic.response.HTTPResponse:
     """
-    This endpoint is used to get the personal account dasbhoard page
+    This endpoint is used to get the personal account dashboard page
     :param request: The request object
     :return: The response object
     """

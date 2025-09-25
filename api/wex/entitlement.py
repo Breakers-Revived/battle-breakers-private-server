@@ -41,7 +41,7 @@ async def request_access(request: types.BBRequest, accountId: str) -> sanic.resp
     :return: The response object (204)
     """
     if await request.app.ctx.db["entitlements"].count_documents({"_id": request.ctx.owner, "entitlements": {
-            "$elemMatch": {"catalogItemId": "e458e71024404176addca212860f9ef2"}}}):
+        "$elemMatch": {"catalogItemId": "e458e71024404176addca212860f9ef2"}}}):
         raise errors.com.epicgames.bad_request(errorMessage="Already have access to this game.")
     await request.app.ctx.db["entitlements"].update_one(
         {"_id": accountId, "entitlements": {"$exists": False}},
@@ -130,7 +130,7 @@ async def real_game_access(request: types.BBRequest, accountId: str) -> sanic.re
     """
     # TODO: Check for bans
     if await request.app.ctx.db["entitlements"].count_documents({"_id": request.ctx.owner, "entitlements": {
-            "$elemMatch": {"catalogItemId": "e458e71024404176addca212860f9ef2"}}}) == 0:
+        "$elemMatch": {"catalogItemId": "e458e71024404176addca212860f9ef2"}}}) == 0:
         return sanic.response.json({
             "play": False,
             "isBanned": False,

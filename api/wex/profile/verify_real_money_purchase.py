@@ -42,7 +42,8 @@ async def verify_rmt(request: types.BBProfileRequest, accountId: str) -> sanic.r
     iap = await request.ctx.profile.get_stat("in_app_purchases")
     match request.json.get("appStore"):
         case "EpicPurchasingService":
-            if f"EPIC:{request.json.get('receiptId')}" not in iap["receipts"] and f"EPIC:{request.json.get('receiptId')}" not in iap["ignoredReceipts"]:
+            if f"EPIC:{request.json.get('receiptId')}" not in iap[
+                "receipts"] and f"EPIC:{request.json.get('receiptId')}" not in iap["ignoredReceipts"]:
                 iap["receipts"].append(f"EPIC:{request.json.get('receiptId')}")
                 await request.ctx.profile.modify_stat("in_app_purchases", iap)
                 # TODO: fulfill the purchase

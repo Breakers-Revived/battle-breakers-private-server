@@ -317,7 +317,8 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 match item_grant["templateId"]:
                     case "StandIn:InventoryUpgrade":
                         inventory_limit = await request.ctx.profile.get_stat("hero_limit")
-                        await request.ctx.profile.modify_stat("hero_limit", inventory_limit + item_grant["attributes"]["FakeQuantity"] * request.json.get("purchaseQuantity"))
+                        await request.ctx.profile.modify_stat("hero_limit", inventory_limit + item_grant["attributes"][
+                            "FakeQuantity"] * request.json.get("purchaseQuantity"))
                     case "StandIn:RocketUnlock":
                         await request.ctx.profile.modify_stat("rocket_unlock", 1)
                     case "StandIn:FreeSecretShopItem":

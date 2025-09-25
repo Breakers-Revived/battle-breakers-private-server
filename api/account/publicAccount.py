@@ -58,18 +58,18 @@ async def account_displayname(request: types.BBRequest, displayName: str) -> san
     :param displayName: The display name
     :return: The response object
     """
-    displayName = urllib.parse.unquote(displayName)
-    requested_id = await get_account_id_from_display_name(request.app.ctx.db, displayName)
+    display_name = urllib.parse.unquote(displayName)
+    requested_id = await get_account_id_from_display_name(request.app.ctx.db, display_name)
     if requested_id is None:
-        raise errors.com.epicgames.account.account_not_found(displayName)
+        raise errors.com.epicgames.account.account_not_found(display_name)
     if requested_id == request.ctx.owner:
         account_data = await get_account_data_owner(request.app.ctx.db, requested_id)
         if not account_data:
-            raise errors.com.epicgames.account.account_not_found(displayName)
+            raise errors.com.epicgames.account.account_not_found(display_name)
         return sanic.response.json(account_data)
     account_data = await get_account_data(request.app.ctx.db, requested_id)
     if not account_data:
-        raise errors.com.epicgames.account.account_not_found(displayName)
+        raise errors.com.epicgames.account.account_not_found(display_name)
     return sanic.response.json(account_data)
 
 

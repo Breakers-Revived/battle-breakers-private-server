@@ -91,7 +91,7 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                 else:
                     item_id = item_id[0]
                     item_data = await request.ctx.profile.get_item_by_guid(item_id)
-                    await request.ctx.profile.change_item_quantity(item_id, item_data["quantity"] + item["Quantity"]) 
+                    await request.ctx.profile.change_item_quantity(item_id, item_data["quantity"] + item["Quantity"])
                 items.append({
                     "itemType": item["ItemType"],
                     "itemGuid": item_id,
@@ -104,7 +104,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                     stage = giftbox_data["Loot"]["TierGroupName"].split(".")[-1]
                     match stage:
                         case "01":
-                            reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_HeroMap_Elemental")
+                            reward_id = await request.ctx.profile.find_item_by_template_id(
+                                "Reagent:Reagent_HeroMap_Elemental")
                             if not reward_id:
                                 reward_id = await request.ctx.profile.add_item({
                                     "templateId": "Reagent:Reagent_HeroMap_Elemental",
@@ -129,7 +130,7 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                                     "min_level": 20
                                 },
                                 "quantity": 1
-                            })    
+                            })
                             items.append({
                                 "itemType": "Giftbox:GB_AccountLevel_Promo20",
                                 "itemGuid": new_giftbox_id,
@@ -137,7 +138,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                                 "quantity": 1
                             })
                         case "02":
-                            reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_HeroMap_Elemental")
+                            reward_id = await request.ctx.profile.find_item_by_template_id(
+                                "Reagent:Reagent_HeroMap_Elemental")
                             if not reward_id:
                                 reward_id = await request.ctx.profile.add_item({
                                     "templateId": "Reagent:Reagent_HeroMap_Elemental",
@@ -170,7 +172,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                                 "quantity": 1
                             })
                         case "03":
-                            reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_SupplyPoints_Elite")
+                            reward_id = await request.ctx.profile.find_item_by_template_id(
+                                "Reagent:Reagent_SupplyPoints_Elite")
                             if not reward_id:
                                 reward_id = await request.ctx.profile.add_item({
                                     "templateId": "Reagent:Reagent_SupplyPoints_Elite",
@@ -203,7 +206,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                                 "quantity": 1
                             })
                         case "04":
-                            reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_HeroMap_SuperRare")
+                            reward_id = await request.ctx.profile.find_item_by_template_id(
+                                "Reagent:Reagent_HeroMap_SuperRare")
                             if not reward_id:
                                 reward_id = await request.ctx.profile.add_item({
                                     "templateId": "Reagent:Reagent_HeroMap_SuperRare",
@@ -236,7 +240,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                                 "quantity": 1
                             })
                         case "05" | "06" | "07" | "09" | "10" | "11" | "12" | "14" | "15" | "16" | "17" | "18" | "20" | "21" | "22":
-                            reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_HeroMap_Elemental")
+                            reward_id = await request.ctx.profile.find_item_by_template_id(
+                                "Reagent:Reagent_HeroMap_Elemental")
                             if not reward_id:
                                 reward_id = await request.ctx.profile.add_item({
                                     "templateId": "Reagent:Reagent_HeroMap_Elemental",
@@ -280,7 +285,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                                 "quantity": 1
                             })
                         case "08" | "13" | "19":
-                            reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_SupplyPoints_Elite")
+                            reward_id = await request.ctx.profile.find_item_by_template_id(
+                                "Reagent:Reagent_SupplyPoints_Elite")
                             if not reward_id:
                                 reward_id = await request.ctx.profile.add_item({
                                     "templateId": "Reagent:Reagent_SupplyPoints_Elite",
@@ -313,7 +319,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                                 "quantity": 1
                             })
                         case "23":
-                            reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_HeroMap_SuperRare")
+                            reward_id = await request.ctx.profile.find_item_by_template_id(
+                                "Reagent:Reagent_HeroMap_SuperRare")
                             if not reward_id:
                                 reward_id = await request.ctx.profile.add_item({
                                     "templateId": "Reagent:Reagent_HeroMap_SuperRare",
@@ -341,7 +348,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                             else:
                                 reward_id = reward_id[0]
                                 reward_data = await request.ctx.profile.get_item_by_guid(reward_id)
-                                await request.ctx.profile.change_item_quantity(reward_id, reward_data["quantity"] + 150000)
+                                await request.ctx.profile.change_item_quantity(reward_id,
+                                                                               reward_data["quantity"] + 150000)
                             items.append({
                                 "itemType": "Currency:Gold",
                                 "itemGuid": reward_id,
@@ -600,7 +608,8 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                             "quantity": 1
                         })
                     else:
-                        reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_HeroMap_SuperRare")
+                        reward_id = await request.ctx.profile.find_item_by_template_id(
+                            "Reagent:Reagent_HeroMap_SuperRare")
                         if not reward_id:
                             reward_id = await request.ctx.profile.add_item({
                                 "templateId": "Reagent:Reagent_HeroMap_SuperRare",

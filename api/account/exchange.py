@@ -39,7 +39,7 @@ async def exchange_route(request: types.BBRequest) -> sanic.response.JSONRespons
         else:
             raise sanic.exceptions.Unauthorized(context={
                 "errorCode": "errors.com.epicgames.common.oauth.invalid_token",
-                "errorMessage": "Your exchange code has expired. Please login again"})
+                "errorMessage": "Your exchange code has expired. Please log in again"})
     else:
         raise sanic.exceptions.Unauthorized(context={
             "errorCode": "errors.com.epicgames.common.oauth.invalid_token",

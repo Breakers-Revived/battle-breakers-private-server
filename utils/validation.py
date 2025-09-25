@@ -199,7 +199,7 @@ class MCPValidation:
 
     class BuyBackFromMonsterPit(pydantic.BaseModel):
         """
-        Validation class for the buy back from monster pit request
+        Validation class for the buyback from monster pit request
 
         Attributes:
             characterTemplateId: The character template id
@@ -257,7 +257,7 @@ class MCPValidation:
             claimedItems: The claimed items
             seenCharacters: The seen characters
             postBattleResults: The post battle results
-            battleMetaData: The battle meta data AntiCheat report (optional)
+            battleMetaData: The battle metadata AntiCheat report (optional)
             dailyQuestZoneType: The daily quest zone type
             partyItemId: The party UUID
             bShouldGiveBonus: If the player should get a bonus
@@ -435,7 +435,7 @@ class MCPValidation:
             offerId: The offer id
             purchaseQuantity: The purchase quantity
             currency: The currency
-            currencySubType: The currency sub type
+            currencySubType: The currency subtype
             expectedTotalPrice: The expected total price
             gameContext: The game context
         """

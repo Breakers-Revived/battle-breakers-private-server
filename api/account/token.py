@@ -35,6 +35,7 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
     :return: The response object
     """
     if request.headers.get('Authorization'):
+        auth_client = None
         if request.headers.get('Authorization').startswith('basic'):
             try:
                 authorisation = base64.b64decode(request.headers.get('Authorization').split(' ')[1]).decode()
@@ -55,7 +56,7 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
             raise errors.com.epicgames.common.oauth.oauth_error()
         match request.form.get('grant_type'):
             case 'client_credentials':
-                if not request.headers.get('Authorization').startswith('basic'):
+                if not request.headers.get('Authorization').startswith('basic') or auth_client is None:
                     raise errors.com.epicgames.common.oauth.unsupported_grant_type()
                 return sanic.response.json((await oauth_client_response(auth_client.value[0])))
             case 'external_auth':

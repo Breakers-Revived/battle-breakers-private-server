@@ -98,7 +98,8 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     await request.ctx.profile.add_notifications(level_complete_notification, ProfileType.LEVELS)
     # TODO: implement base account xp level to grant
     # grant bonus xp for playing breakers revived during launch
-    level_complete_notification[0]["bonusAccountXp"] = int(level_complete_notification[0]["accountXp"] * (1.5 + ((await request.ctx.profile.get_stat("level")) / 100)))
+    level_complete_notification[0]["bonusAccountXp"] = int(
+        level_complete_notification[0]["accountXp"] * (1.5 + ((await request.ctx.profile.get_stat("level")) / 100)))
     # TODO: update account level + xp + add perk choice + notification
     # TODO: activity gift box
     # TODO: award level loot

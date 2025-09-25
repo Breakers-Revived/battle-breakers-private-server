@@ -20,9 +20,9 @@ class ScheduledEvents:
     def __init__(self) -> None:
         """
         Initialise the scheduled events class.
-        This will setup the variables for the calendar
+        This will set up the variables for the calendar
         """
-        self.updated: datetime = datetime.datetime.now(datetime.UTC)
+        self.updated: datetime.datetime = datetime.datetime.now(datetime.UTC)
         self.news: Optional[channels.News] = None
         self.limited_time_mode: Optional[channels.LimitedTimeMode] = None
         self.marketing: Optional[channels.Marketing] = None
@@ -104,7 +104,7 @@ class ScheduledEvents:
 
     async def setup_calendar(self) -> None:
         """
-        Setup the calendar
+        Set up the calendar
         :return: None
         """
         self.news: channels.News = channels.News()

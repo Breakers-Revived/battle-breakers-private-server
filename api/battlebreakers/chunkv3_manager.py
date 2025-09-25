@@ -34,12 +34,13 @@ async def chunk_manifest_request(request: types.BBRequest, environment: str, cha
     :return: The response object (204)
     """
     try:
-        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests", 
+        safe_file = await utils.safe_path_join("res/wex/api/game/v2/manifests",
                                                f"{changelist}/{platform}/{file}")
         async with aiofiles.open(safe_file, "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")
     except:
-        raise errors.com.epicgames.not_found(errorMessage="This ChunkV3 PAK manifest does not exist, or ChunkV3 PAK manifests are unavailable on this server.")
+        raise errors.com.epicgames.not_found(
+            errorMessage="This ChunkV3 PAK manifest does not exist, or ChunkV3 PAK manifests are unavailable on this server.")
 
 
 # undocumented
@@ -59,10 +60,12 @@ async def chunk_manifest_serve_chunks(request: types.BBRequest, environment: str
     :param ChunkHashGUID: The chunk hash guid (34254574B8C46AC9_DF511A404ABE748CE527B6A264B5389A.chunk); theres a more specific regex i could write for this but im not bothered
     :return: The response object (204)
     """
-    if request.app.config.CONTENT['EXTERNAL-CHUNK-URL'] and isinstance(request.app.config.CONTENT['EXTERNAL-CHUNK-URL'], str):
-        return sanic.response.redirect(f"{request.app.config.CONTENT['EXTERNAL-CHUNK-URL']}/{environment}/{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}")
+    if request.app.config.CONTENT['EXTERNAL-CHUNK-URL'] and isinstance(request.app.config.CONTENT['EXTERNAL-CHUNK-URL'],
+                                                                       str):
+        return sanic.response.redirect(
+            f"{request.app.config.CONTENT['EXTERNAL-CHUNK-URL']}/{environment}/{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}")
     try:
-        safe_file = await utils.safe_path_join(request.app.config.CONTENT['CHUNK-V3'], 
+        safe_file = await utils.safe_path_join(request.app.config.CONTENT['CHUNK-V3'],
                                                f"{changelist}/{platform}/ChunksV3/{DataGroupList}/{ChunkHashGUID}")
         async with aiofiles.open(safe_file, "rb") as file:
             return sanic.response.raw(await file.read(), content_type="application/octet-stream")

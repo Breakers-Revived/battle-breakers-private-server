@@ -24,7 +24,7 @@ wex_profile_add_friend = sanic.Blueprint("wex_profile_add_friend")
 @compress.compress()
 async def add_friend(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
     """
-    This endpoint is used to fetch a new friend's wex data; its called by 1.0-1.71, for the old wex friend system
+    This endpoint is used to fetch a new friend's wex data; it's called by 1.0-1.71, for the old wex friend system
     :param request: The request object
     :param accountId: The account id
     :return: The modified profile

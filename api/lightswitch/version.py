@@ -33,7 +33,7 @@ async def lightswitch_version_route(request: types.BBRequest) -> sanic.response.
         "overridePropertiesVersion": "unknown",
         "cln": "unknown",
         "build": "unknown",
-        "moduleName": "unknwown",
+        "moduleName": "unknown",
         "buildDate": "2023-04-14T06:55:25.238Z",
         "version": "unknown",
         "branch": "unknown",

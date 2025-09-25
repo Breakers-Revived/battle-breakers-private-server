@@ -20,7 +20,7 @@ datarouter_version = sanic.Blueprint("datarouter_ver")
 # undocumented
 @datarouter_version.route("/api/version", methods=["GET"])
 @compress.compress()
-async def daatarouter_version_route(request: types.BBRequest) -> sanic.response.JSONResponse:
+async def datarouter_version_route(request: types.BBRequest) -> sanic.response.JSONResponse:
     """
     Version information
 

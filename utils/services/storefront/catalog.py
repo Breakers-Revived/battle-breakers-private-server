@@ -22,7 +22,7 @@ class StoreCatalogue:
     def __init__(self) -> None:
         """
         Initialise the store catalogue class.
-        This will setup the variables for the store catalogue
+        This will set up the variables for the store catalogue
         """
         self.entity_tag: str = ""
         self.expiration: Optional[datetime.datetime] = None
@@ -68,7 +68,7 @@ class StoreCatalogue:
             "SecretShopPage4": self.secret_shop_page_4.__dict__() if self.secret_shop_page_4 is not None else {},
             "GemStore": self.gem_store.__dict__() if self.gem_store is not None else {},
             "SecretShopPage2": self.secret_shop_page_2.__dict__() if self.secret_shop_page_2 is not None else {},
-            "WeeklyChalllenge": self.weekly_challenge.__dict__() if self.weekly_challenge is not None else {},
+            "WeeklyChallenge": self.weekly_challenge.__dict__() if self.weekly_challenge is not None else {},
             "HeroStore": self.hero_store.__dict__() if self.hero_store is not None else {},
             "Featured": self.featured.__dict__() if self.featured is not None else {},
             "SecretShop": self.secret_shop.__dict__() if self.secret_shop is not None else {},

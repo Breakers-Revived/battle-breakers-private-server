@@ -6,7 +6,6 @@ This code is licensed under the Breakers Revived License (BRL).
 
 Handles the GCM/FCM push notification registration token server sided storage
 """
-import aiohttp
 import sanic
 from sanic import HTTPResponse
 

@@ -10,6 +10,7 @@ Handles MongoDB database migration.
 import pymongo
 import asyncio
 import orjson
+import os
 
 
 async def migrate_to_mongodb():
@@ -18,10 +19,13 @@ async def migrate_to_mongodb():
     """
     client = pymongo.AsyncMongoClient("mongodb://localhost:27017")
     database = client["dippy_battle_breakers"]
-    collection = database["profile_friends"]
+    collection = database["profile_profile0"]
 
-    for files in os.listdir("C:/Users/dippy/PycharmProjects/battle-breakers-private-server/res/wex/api/receipts/v1/account"):
-        with open(f"C:/Users/dippy/PycharmProjects/battle-breakers-private-server/res/wex/api/game/v2/profile/{files.split('.')[0]}/QueryProfile/friends.json", "rb") as file:
+    for files in os.listdir(
+            "/Volumes/SanDisk/PycharmProjects/battle-breakers-private-server/res/wex/api/receipts/v1/account"):
+        with open(
+                f"/Volumes/SanDisk/PycharmProjects/battle-breakers-private-server/res/wex/api/game/v2/profile/{files.split('.')[0]}/QueryProfile/profile0.json",
+                "rb") as file:
             data = orjson.loads(file.read())
 
         # replace id with _id

@@ -45,4 +45,4 @@ async def remove_hero_parties(request: types.BBProfileRequest, accountId: str) -
             await request.ctx.profile.change_item_attribute(party_instance, "members", party["attributes"]["members"])
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                    request.ctx.profile_id))
+                                                     request.ctx.profile_id))

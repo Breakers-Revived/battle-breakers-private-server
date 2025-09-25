@@ -11,13 +11,11 @@ from key_config import PRIVATE_KEY_PEM_PATH, PUBLIC_KEY_PEM_PATH, PRIVATE_KEY_PA
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
 
-
 # Safety check
 if not path.isfile(PRIVATE_KEY_PEM_PATH):
     print("Error: We can't generate the public key without the private key.")
     print(f"Make sure \"{PRIVATE_KEY_PEM_PATH}\" exists.")
     exit(1)
-
 
 # Load the private key from file
 with open(PRIVATE_KEY_PEM_PATH, "rb") as key_file:

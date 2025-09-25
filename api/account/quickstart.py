@@ -68,7 +68,7 @@ async def quickstart(request: types.BBRequest) -> sanic.response.HTTPResponse:
             "cabinedMode": False,
             "hasHashedEmail": False
         },
-        "internalAuthKey": f"eg1~{await generate_eg1(sub=new_account_id, dn=None, clid=None, dvid=device_id)}",
+        "internalAuthKey": f"eg1~{await generate_eg1(sub=new_account_id, dvid=device_id)}",
         "deviceAuth": device_authorisation,
         "oauthSession": await oauth_response(sub=new_account_id, dvid=device_id)
     })

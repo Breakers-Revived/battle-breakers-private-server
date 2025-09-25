@@ -33,7 +33,7 @@ async def claim_login_reward(request: types.BBProfileRequest, accountId: str) ->
     current_day = (await request.ctx.profile.get_stat("login_reward"))["next_level"]
     if datetime.datetime.strptime((await request.ctx.profile.get_stat("login_reward")).get("last_claim_time"),
                                   "%Y-%m-%dT%H:%M:%S.%fZ").replace(tzinfo=datetime.UTC) > datetime.datetime.now(
-            datetime.UTC).replace(hour=0, minute=0, second=0, microsecond=0):
+        datetime.UTC).replace(hour=0, minute=0, second=0, microsecond=0):
         raise errors.com.epicgames.world_explorers.login_reward_not_available(current_day,
                                                                               await format_time(
                                                                                   datetime.datetime.now(
