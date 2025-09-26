@@ -254,6 +254,7 @@ class MCPProfile:
         __delitem__(key): Delete an item from the MCP profile
         __contains__(key): Check if the MCP profile contains the attribute
         __len__(): Get the length of the MCP profile
+        __deepcopy__(): Get a deep copy of the MCP profile
 
     Properties:
         id: The ID of the profile
@@ -374,6 +375,44 @@ class MCPProfile:
         :return: The length of the MCP profile
         """
         return len(self.profile)
+
+    def __deepcopy__(self, memo) -> "MCPProfile":
+        """
+        Get a deep copy of the MCP profile
+        :param memo: The memo to use for the deep copy
+        :return: The deep copy of the MCP profile
+        """
+        profile_copy: MCPProfile = MCPProfile(self.accountId, self._profile_type)
+        profile_copy.profile_set(self._id, self._profile_type, self.created, self.updated, self.rvn, self.wipeNumber,
+                                 self.version, copy.copy(self.items),
+                                 self.stats, self.commandRevision)
+        return profile_copy
+
+    def profile_set(self, _id, _profile_type, created, updated, rvn, wipeNumber, version, items, stats,
+                    commandRevision) -> None:
+        """
+        Set the profile
+        :param _id: The ID of the profile
+        :param _profile_type: The type of the profile
+        :param created: The date and time the profile was created
+        :param updated: The date and time the profile was last updated
+        :param rvn: The revision number of the profile
+        :param wipeNumber: The wipe number of the profile
+        :param version: The version of the profile
+        :param items: The items in the profile
+        :param stats: The stats in the profile
+        :param commandRevision: The command revision of the profile
+        """
+        self._id = _id
+        self._profile_type = _profile_type
+        self.created = created
+        self.updated = updated
+        self.rvn = rvn
+        self.wipeNumber = wipeNumber
+        self.version = version
+        self.items = items
+        self.stats = stats
+        self.commandRevision = commandRevision
 
     @property
     def id(self) -> str:

@@ -81,4 +81,4 @@ if __name__ == "__main__":
         app.run(host=app.config.SERVER["HOST"], port=app.config.SERVER["PORT"], dev=True, debug=True, motd=False,
                 access_log=False)
     else:
-        app.run(host=app.config.SERVER["HOST"], port=app.config.SERVER["PORT"], dev=True, debug=True, motd=False)
+        app.run(host=app.config.SERVER["HOST"], port=app.config.SERVER["PORT"], dev=True, debug=True)

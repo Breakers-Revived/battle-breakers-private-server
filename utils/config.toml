@@ -7,8 +7,9 @@ CORS_ALWAYS_SEND = "True"
 KEEP_ALIVE_TIMEOUT = 300
 
 [server]
-host = "127.0.0.1"
+host = "0.0.0.0"
 port = 8080
+domain = "http://10.16.121.141:8080"
 
 [content]
 # The file path location to serve cooked game PAKs/built chunks from

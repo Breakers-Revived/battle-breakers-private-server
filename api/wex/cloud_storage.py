@@ -40,10 +40,12 @@ async def cloudstorage_system(request: types.BBRequest) -> sanic.response.JSONRe
         match file:
             case "DefaultEngine.ini":
                 unique_filename = "a6b5e5b09d0b426db3616c919b2af9b0"
-                if "IOS" in request.headers.get("User-Agent"):
-                    data += b"\n[Audio]\nAudioDeviceModuleName=IOSAudio\nAudioMixerModuleName=IOSAudio\n"
+                domain = request.app.config.SERVER["DOMAIN"].split("://")[-1]
+                data = data.replace(b"{0}", domain.encode())
             case "DefaultGame.ini":
                 unique_filename = "b91b0a42b48740bfaaf0acae1df48cb1"
+                domain = request.app.config.SERVER["DOMAIN"]
+                data = data.replace(b"{0}", domain.encode())
             case _:
                 unique_filename = file
         files.append({
@@ -132,9 +134,14 @@ async def cloudstorage_system_get_file(request: sanic.request.Request, filename:
     safe_file = await utils.safe_path_join("res/wex/api/cloudstorage/system", filename)
     if not os.path.exists(safe_file):
         raise errors.com.epicgames.cloudstorage.file_not_found(filename)
-    data = await read_file(safe_file, False)
-    if "IOS" in request.headers.get("User-Agent") and filename == "DefaultEngine.ini":
-        data += b"\n[Audio]\nAudioDeviceModuleName=IOSAudio\nAudioMixerModuleName=IOSAudio\n"
+    data: bytes = await read_file(safe_file, False)
+    match filename:
+        case "DefaultEngine.ini":
+            domain = request.app.config.SERVER["DOMAIN"].split("://")[-1]
+            data = data.replace(b"{0}", domain.encode())
+        case "DefaultGame.ini":
+            domain = request.app.config.SERVER["DOMAIN"]
+            data = data.replace(b"{0}", domain.encode())
     return sanic.response.raw(data, content_type="application/octet-stream")
 
 
