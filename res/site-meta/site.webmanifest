@@ -231,8 +231,8 @@
             "purpose": "any"
         }
     ],
-    "theme_color": "#0D8EEA",
-    "background_color": "#0D8EEA",
+    "theme_color": "#1A87E7",
+    "background_color": "#1A87E7",
     "display": "standalone",
     "categories": [
         "games",

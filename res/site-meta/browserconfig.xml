@@ -5,7 +5,7 @@
             <square70x70logo src="/id/login/guided/favicon-70.png"/>
             <square150x150logo src="/id/login/guided/favicon-150.png"/>
             <square310x310logo src="/id/login/guided/favicon-310.png"/>
-            <TileColor>#0D8EEA</TileColor>
+            <TileColor>#1A87E7</TileColor>
         </tile>
     </msapplication>
 </browserconfig>
