@@ -42,7 +42,8 @@ async def claim_quest_reward(request: types.BBProfileRequest, accountId: str) ->
     for reward in quest_item["attributes"]["rewards"]:
         current_reward_id = await request.ctx.profile.find_item_by_template_id(reward["templateId"])
         if not current_reward_id:
-            await request.ctx.profile.add_item(reward["templateId"], reward["quantity"])
+            await request.ctx.profile.add_item({"templateId": reward["templateId"],
+                                                "attributes": {}, "quantity": reward["quantity"]})
         else:
             current_reward_item = await request.ctx.profile.get_item_by_guid(current_reward_id[0])
             await request.ctx.profile.change_item_quantity(current_reward_id[0],

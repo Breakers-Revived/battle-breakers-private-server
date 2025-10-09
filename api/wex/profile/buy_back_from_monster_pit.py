@@ -56,7 +56,7 @@ async def buy_back_from_monster_pit(request: types.BBProfileRequest, accountId: 
                 "characterId": request.json.get("characterTemplateId")
             },
             "quantity": 1
-        }, ProfileType.MONSTERPIT)
+        }, profile_id=ProfileType.MONSTERPIT)
     for sell_reward in sell_rewards:
         reward_template_id = await get_template_id_from_path(
             sell_reward["ItemDefinition"]["ObjectPath"])

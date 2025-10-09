@@ -121,7 +121,7 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                     "characterId": character
                 },
                 "quantity": 1
-            }, ProfileType.MONSTERPIT)
+            }, profile_id=ProfileType.MONSTERPIT)
     # TODO: LevelRunMarker for limited run rooms
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,

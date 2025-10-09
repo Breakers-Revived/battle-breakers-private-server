@@ -14,6 +14,7 @@ import middleware.mcp_middleware
 
 import orjson
 import sanic
+import sanic.log
 import sanic_ext
 import colorama
 import pymongo
@@ -50,6 +51,7 @@ async def attach_db(_app: sanic.app.Sanic[TomlConfig, Type[types.Context]], *_) 
     Called when the server is started
     :param _app: The app
     """
+    sanic.log.logger.info(f"Connecting to database at {_app.config.DATABASE['URI']}")
     _app.ctx.db = pymongo.AsyncMongoClient(_app.config.DATABASE["URI"])[_app.config.DATABASE["DATABASE"]]
     _app.ctx.db.client.timeoutMS = 1000
     _app.ctx.db.client.socketTimeoutMS = 1000
@@ -66,15 +68,21 @@ async def server_stop(_app: sanic.app.Sanic[TomlConfig, Type[types.Context]], *_
     Called when the server is stopped
     :param _app: The app
     """
+    sanic.log.logger.info("Server stopping, saving profiles")
     for profile in _app.ctx.profiles.values():
         await profile.flush_changes()
         await profile.save_profile()
+    sanic.log.logger.debug("Saved profiles. Saving friends")
     for profile in _app.ctx.friends.values():
         await profile.save_friends()
+    sanic.log.logger.debug("Saved friends. Saving lightswitch")
     await _app.ctx.lightswitch.save_lightswitch()
+    sanic.log.logger.debug("Saved lightswitch. Closing database connection")
+    await _app.ctx.db.client.close()
 
 
 if __name__ == "__main__":
+    sanic.log.logger.debug("Starting Breakers Revived")
     # workaround for sanic bug on windows where after_server_stop is not called when running with workers
     if os.name == "nt":
         # app.run(host=app.config.SERVER["HOST"], port=app.config.SERVER["PORT"], single_process=True)

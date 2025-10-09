@@ -88,7 +88,7 @@ async def sell_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
                 "characterId": hero_item["templateId"]
             },
             "quantity": 1
-        }, ProfileType.MONSTERPIT)
+        }, profile_id=ProfileType.MONSTERPIT)
     for sell_reward in sell_rewards:
         reward_template_id = await get_template_id_from_path(
             sell_reward["ItemDefinition"]["ObjectPath"])
