@@ -27,6 +27,7 @@ class CustomErrorHandler(ErrorHandler):
         :param exception: The exception object
         :return: The response
         """
+        # TODO: clear profile changes on operation error
         if isinstance(exception, EpicException):
             exception_dict = exception.as_dict()
             status_code = getattr(exception, "statusCode", 500)

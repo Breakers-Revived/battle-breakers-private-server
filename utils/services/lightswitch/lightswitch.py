@@ -10,6 +10,7 @@ import datetime
 
 from pymongo.asynchronous.database import AsyncDatabase
 import sanic
+import sanic.log
 from typing_extensions import Any, Optional, Self
 
 from utils.enums import ServerStatus
@@ -93,6 +94,7 @@ class LightswitchService:
         Initialise the lightswitch class
         :return: The initialised lightswitch class
         """
+        sanic.log.logger.debug("Setting up the lightswitch service")
         self: LightswitchService = cls()
         lightswitch_db = await database["admin"].find_one({"_id": "lightswitch"})
         if lightswitch_db is not None:
@@ -101,6 +103,9 @@ class LightswitchService:
             self.maintenance_uri = lightswitch_db.get("maintenance_uri")
             self.downtime_start = lightswitch_db.get("downtime_start")
             self.downtime_end = lightswitch_db.get("downtime_end")
+            sanic.log.logger.info(f"Loaded lightswitch data from db: {self}")
+        else:
+            sanic.log.logger.info("No lightswitch data found in db")
         return self
 
     async def refresh_status(self) -> dict[str, Any]:
@@ -108,6 +113,7 @@ class LightswitchService:
         Update the lightswitch server status based on downtime start and end if applicable
         :return: The lightswitch status, message, and time to shutdown in milliseconds
         """
+        sanic.log.logger.debug("Refreshing lightswitch status")
         if self.downtime_start is not None:
             if self.downtime_start > datetime.datetime.now(datetime.UTC):
                 self.status = ServerStatus.UP
@@ -122,6 +128,7 @@ class LightswitchService:
             else:
                 self.status = ServerStatus.DOWN
                 self.message = "Battle Breakers is down for maintenance :("
+        sanic.log.logger.debug(f"Refreshed lightswitch status: {self}")
         return self.__dict__()
 
     async def save_lightswitch(self) -> None:
@@ -129,5 +136,7 @@ class LightswitchService:
         Save the lightswitch server status into the db
         :return: None
         """
+        sanic.log.logger.debug("Saving lightswitch status to db")
         collection = sanic.Sanic.get_app().ctx.db["admin"]
         await collection.update_one({"_id": "lightswitch"}, {"$set": self.__dict__()}, upsert=True)
+        sanic.log.logger.info("Saved lightswitch status to db")

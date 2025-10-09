@@ -17,6 +17,7 @@ from typing_extensions import Any, Optional, Self
 
 from pymongo.asynchronous.database import AsyncDatabase
 import sanic
+import sanic.log
 
 from utils.custom_serialiser import custom_serialise
 from utils.enums import ProfileType, FriendStatus
@@ -500,6 +501,7 @@ class MCPProfile:
 
         :param database: The database to use
         """
+        sanic.log.logger.debug(f"Loading profile {self.accountId} of type {self.profile_type} from database")
         collection = database[f"profile_{self.profile_type}"]
         profile = await collection.find_one({"_id": self.accountId})
         self._id: str = profile.get("_id")
@@ -522,9 +524,14 @@ class MCPProfile:
 
         :param database: The database to use
         """
+        sanic.log.logger.debug(f"Saving profile {self.accountId} of type {self.profile_type}")
         collection = database[f"profile_{self.profile_type}"]
+        sanic.log.logger.debug("Serialising profile")
+        print(self.profile)
         profile = orjson.loads(orjson.dumps(self.profile, default=custom_serialise))
+        sanic.log.logger.debug("Serialised profile, saving to database")
         await collection.replace_one({"_id": self.accountId}, profile, upsert=True)
+        sanic.log.logger.debug("Saved profile to database")
 
 
 class PlayerProfile:
@@ -597,6 +604,7 @@ class PlayerProfile:
         :param account_id: The account ID of the profile to load
         :return: None
         """
+        sanic.log.logger.debug(f"Loading profiles for account {account_id}")
         sanic_app = sanic.Sanic.get_app()
         for profile_type in ProfileType:
             mcp_profile: MCPProfile = await MCPProfile.init_profile(account_id, profile_type, sanic_app.ctx.db)
@@ -621,8 +629,10 @@ class PlayerProfile:
         :param guid: The GUID of the item
         :return: The item
         """
+        sanic.log.logger.debug(f"Getting item {guid} from profile {profile_id.value} for account {self.account_id}")
         if isinstance(guid, list):
             guid: str = guid[0]
+        sanic.log.logger.debug(f"Returning item {(await self.get_profile(profile_id)).get('items').get(guid)}")
         return (await self.get_profile(profile_id)).get("items").get(guid)
 
     async def find_item_by_template_id(self, template_id: str, profile_id: ProfileType = ProfileType.PROFILE0) -> list:
@@ -632,10 +642,15 @@ class PlayerProfile:
         :param profile_id: The profile ID to get
         :return: A list of GUIDs of the items with the specified template ID
         """
+        sanic.log.logger.debug(
+            f"Finding item by template ID {template_id} from profile {profile_id.value} for account {self.account_id}")
         guids: list = []
         for guid, item in (await self.get_profile(profile_id)).get("items").items():
             if item["templateId"] == template_id:
                 guids.append(guid)
+        sanic.log.logger.debug(
+            f"Found {len(guids)} items with template ID {template_id} from profile {profile_id.value} ")
+        sanic.log.logger.debug(f"Returning GUIDs: {guids}")
         return guids
 
     async def fuzzy_find_item_by_template_id(self, template_id: str,
@@ -646,10 +661,15 @@ class PlayerProfile:
         :param profile_id: The profile ID to get
         :return: A list of GUIDs of the items with the specified template ID
         """
+        sanic.log.logger.debug(
+            f"Fuzzy finding item by template ID {template_id} from profile {profile_id.value} for account {self.account_id}")
         guids: list = []
         for guid, item in (await self.get_profile(profile_id)).get("items").items():
             if item["templateId"].split(":")[-1] == template_id:
                 guids.append(guid)
+        sanic.log.logger.debug(
+            f"Fuzzy found {len(guids)} items with template ID {template_id} from profile {profile_id.value} ")
+        sanic.log.logger.debug(f"Returning GUIDs: {guids}")
         return guids
 
     async def find_items_by_type(self, template_id: str, profile_id: ProfileType = ProfileType.PROFILE0) -> list:
@@ -659,10 +679,14 @@ class PlayerProfile:
         :param profile_id: The profile ID to get
         :return: A list of GUIDs of the items with the specified template ID
         """
+        sanic.log.logger.debug(
+            f"Finding items by type {template_id} from profile {profile_id.value} for account {self.account_id}")
         guids: list = []
         for guid, item in (await self.get_profile(profile_id)).get("items").items():
             if item["templateId"].split(":")[0] == template_id:
                 guids.append(guid)
+        sanic.log.logger.debug(f"Found {len(guids)} items with type {template_id} from profile {profile_id.value} ")
+        sanic.log.logger.debug(f"Returning GUIDs: {guids}")
         return guids
 
     async def get_stat(self, stat_name: str, profile_id: ProfileType = ProfileType.PROFILE0) -> MCPTypes:
@@ -672,6 +696,10 @@ class PlayerProfile:
         :param profile_id: The profile ID to get
         :return: The value of the stat
         """
+        sanic.log.logger.debug(
+            f"Getting stat {stat_name} from profile {profile_id.value} for account {self.account_id}")
+        sanic.log.logger.debug(
+            f"Returning value {(await self.get_profile(profile_id)).get('stats').get('attributes').get(stat_name)}")
         return (await self.get_profile(profile_id)).get("stats").get("attributes").get(stat_name)
 
     async def modify_stat(self, stat_name: str, new_value: MCPTypes,
@@ -684,6 +712,8 @@ class PlayerProfile:
         :raise AttributeError: If the profile ID is invalid
         :return: None
         """
+        sanic.log.logger.debug(
+            f"Modifying stat {stat_name} to {new_value} in profile {profile_id.value} for account {self.account_id}")
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
         profile_changes.append({"changeType": "statModified", "name": stat_name, "value": new_value})
         setattr(self, f"{profile_id.value}_changes", profile_changes)
@@ -696,6 +726,8 @@ class PlayerProfile:
         :raise AttributeError: If the profile ID is invalid
         :return: None
         """
+        sanic.log.logger.debug(
+            f"Removing item {item_id} from profile {profile_id.value} for account {self.account_id}")
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
         if isinstance(item_id, list):
             item_id: str = item_id[0]
@@ -713,6 +745,9 @@ class PlayerProfile:
         :raise AttributeError: If the profile ID is invalid
         :return: None
         """
+        sanic.log.logger.debug(
+            f"Changing attribute {attribute_name} of item {item_id} to {new_value} in profile {profile_id.value} "
+            f"for account {self.account_id}")
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
         if isinstance(item_id, list):
             item_id: str = item_id[0]
@@ -738,6 +773,8 @@ class PlayerProfile:
             item_id: str = str(uuid.uuid4())
         if isinstance(item_id, list):
             item_id: str = item_id[0]
+        sanic.log.logger.debug(
+            f"Adding item {item_id} to profile {profile_id.value} for account {self.account_id}")
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
         profile_changes.append({"changeType": "itemAdded", "itemId": item_id, "item": item_data})
         setattr(self, f"{profile_id.value}_changes", profile_changes)
@@ -753,6 +790,9 @@ class PlayerProfile:
         :raise AttributeError: If the profile ID is invalid
         :return: None
         """
+        sanic.log.logger.debug(
+            f"Changing quantity of item {item_id} to {new_quantity} in profile {profile_id.value} for account "
+            f"{self.account_id}")
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
         if isinstance(item_id, list):
             item_id: str = item_id[0]
@@ -771,6 +811,8 @@ class PlayerProfile:
         :param profile_id: The type of profile to modify
         :return: The GUID of the item granted
         """
+        sanic.log.logger.debug(
+            f"Granting item {template_id} x{quantity} to profile {profile_id.value} for account {self.account_id}")
         item_guids: list = await self.find_item_by_template_id(template_id, profile_id)
         if item_guids and not unique:
             item_guid: str = item_guids[0]
@@ -828,6 +870,8 @@ class PlayerProfile:
         :param profile_id: The type of profile to add the hero to
         :return: The GUID of the hero granted
         """
+        sanic.log.logger.debug(
+            f"Granting hero {template_id} to profile {profile_id.value} for account {self.account_id}")
         if upgrades is None:
             upgrades = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         return await self.grant_item(template_id, quantity, {
@@ -857,6 +901,8 @@ class PlayerProfile:
         :param profile_id: The ID of the profile to add to
         :return: The notifications
         """
+        sanic.log.logger.debug(
+            f"Adding notification to profile {profile_id.value} for account {self.account_id}")
         profile_notifications: list = getattr(self, f"{profile_id.value}_notifications", [])
         profile_notifications.append(notification)
         setattr(self, f"{profile_id.value}_notifications", profile_notifications)
@@ -868,26 +914,35 @@ class PlayerProfile:
         :param profile_id: The ID of the profile to clear
         :return: The notifications
         """
+        sanic.log.logger.debug(
+            f"Clearing notifications for profile {profile_id.value if profile_id else 'all profiles'} for account "
+            f"{self.account_id}")
         profile_types: "ProfileType | list[ProfileType]" = ProfileType if profile_id is None else [profile_id]
-
         for p_type in profile_types:
             setattr(self, f"{p_type.value}_notifications", [])
 
-    async def flush_changes(self, profile_type: Optional[ProfileType] = None) -> None:
+    async def flush_changes(self, profile_type: Optional[ProfileType] = None) -> bool:
         """
         Apply all changes to the original profiles. If an error occurs, revert profiles back to their pre-change state.
 
         :param profile_type: (Optional) Enum of the profile to flush. If None, all profiles will be flushed.
+        :return: Whether any changes were flushed
         """
+        sanic.log.logger.debug(
+            f"Flushing changes for account {self.account_id} {'for profile ' + profile_type.value if profile_type else 'for all profiles'}")
         profile_types: "ProfileType | list[ProfileType]" = ProfileType if profile_type is None else [profile_type]
 
         snapshots = {}
+        flushed = False
 
         try:
             for p_type in profile_types:
+                sanic.log.logger.debug(f"Flushing changes for profile {p_type.value}")
                 profile = await self.get_profile(p_type)
                 snapshots[p_type] = copy.deepcopy(profile)
                 for change in getattr(self, f"{p_type.value}_changes"):
+                    flushed = True
+                    sanic.log.logger.debug(f"Applying change: {change}")
                     change_type = change["changeType"]
                     match change_type:
                         case "statModified":
@@ -907,12 +962,26 @@ class PlayerProfile:
                             profile["items"][change["itemId"]]["quantity"] = change["quantity"]
                 setattr(self, f"_{p_type.value}", profile)
         except Exception as e:
-            print(f"Error flushing changes for account {self.account_id}: {e}, reverting changes.")
+            sanic.log.logger.error(f"Error flushing changes for account {self.account_id}: {e}")
+            sanic.log.logger.error("Reverting profiles to pre-change state")
             for p_type, snapshot in snapshots.items():
                 setattr(self, f"_{p_type.value}", snapshot)
         finally:
             for p_type in profile_types:
                 setattr(self, f"{p_type.value}_changes", [])
+        return flushed
+
+    async def clear_changes(self, profile_type: Optional[ProfileType] = None) -> None:
+        """
+        Clears changes for the current account and profile
+        :param profile_type: (Optional) Enum of the profile to clear. If None, all profiles will be cleared.
+        :return: The notifications
+        """
+        sanic.log.logger.debug(
+            f"Clearing changes for account {self.account_id} {'for profile ' + profile_type.value if profile_type else 'for all profiles'}")
+        profile_types: "ProfileType | list[ProfileType]" = ProfileType if profile_type is None else [profile_type]
+        for p_type in profile_types:
+            setattr(self, f"{p_type.value}_changes", [])
 
     async def add_friend_instance(self, request: sanic.request.Request, friendId: str,
                                   friendStatus: FriendStatus = FriendStatus.FRIEND) -> None:
@@ -923,6 +992,7 @@ class PlayerProfile:
         :param friendStatus: The status of the friend to add
         :return: None
         """
+        sanic.log.logger.debug(f"Adding friend instance {friendId} to profile FRIENDS for account {self.account_id}")
         if friendId not in request.app.ctx.profiles:
             request.app.ctx.profiles[friendId]: PlayerProfile = await PlayerProfile.init_profile(friendId)
         wex_data: dict = await request.app.ctx.profiles[friendId].get_profile(ProfileType.PROFILE0)
@@ -1013,6 +1083,8 @@ class PlayerProfile:
         Remove a friend instance from the profile
         :param friendId: The friend ID
         """
+        sanic.log.logger.debug(
+            f"Removing friend instance {friendId} from profile FRIENDS for account {self.account_id}")
         friend_instance_guids: list[str] = await self.find_item_by_template_id("Friend:Instance", ProfileType.FRIENDS)
         for friend_instance_guid in friend_instance_guids:
             friend_instance: dict[str, MCPTypes] = await self.get_item_by_guid(friend_instance_guid,
@@ -1029,6 +1101,8 @@ class PlayerProfile:
         :param client_command_revision: The revision number of the client command
         :return: The response
         """
+        sanic.log.logger.debug(
+            f"Constructing response for profile {profile_id.value} for account {self.account_id} with rvn {rvn}")
         from utils.utils import format_time
         if client_command_revision is None:
             client_command_revision: list[
@@ -1057,6 +1131,8 @@ class PlayerProfile:
         }
 
         if rvn != (await self.get_profile(profile_id))["rvn"]:
+            sanic.log.logger.debug(
+                f"Rvn mismatch for profile {profile_id.value} for account {self.account_id}, flushing changes")
             # Full profile update requested
             await self.flush_changes(profile_id)
             response['profileChanges']: list[dict[str, str | dict | int]] = [
@@ -1067,6 +1143,8 @@ class PlayerProfile:
             ]
         else:
             # Partial profile update requested
+            sanic.log.logger.debug(
+                f"Partial profile update for profile {profile_id.value} for account {self.account_id}")
             profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
             if profile_changes:
                 response['profileChanges']: list = profile_changes
@@ -1079,6 +1157,7 @@ class PlayerProfile:
                 continue
             profile_changes: list = getattr(self, f"{profile.value}_changes", [])
             if profile_changes:
+                sanic.log.logger.debug(f"Other profile {profile.value} has changes for account {self.account_id}")
                 profile_notifications: list = getattr(self, f"{profile.value}_notifications", [])
                 for item in client_command_revision:
                     if item["profileId"] == profile.value:
@@ -1109,8 +1188,9 @@ class PlayerProfile:
         for profile in ProfileType:
             await self.clear_notifications(profile)
 
-        await self.flush_changes()
-        await self.save_profile()
+        if await self.flush_changes():
+            sanic.log.logger.debug(f"Flushed changes for account {self.account_id}, saving profile")
+            await self.save_profile()
 
         return response
 
@@ -1122,6 +1202,7 @@ class PlayerProfile:
         :param response: The response to add the revision to
         :return: None
         """
+        sanic.log.logger.debug(f"Bumping revision for profile {profile_id.value} of account {self.account_id}")
         from utils.utils import format_time
         (await self.get_profile(profile_id))["rvn"] += 1
         (await self.get_profile(profile_id))["updated"] = await format_time()
@@ -1140,6 +1221,7 @@ class PlayerProfile:
         Save the modified profiles to disk
         :return: None
         """
+        sanic.log.logger.debug(f"Saving profiles for account {self.account_id}")
         for profile_type in ProfileType:
             profile = await self.get_profile(profile_type)
             await profile.save_profile(sanic.Sanic.get_app().ctx.db)

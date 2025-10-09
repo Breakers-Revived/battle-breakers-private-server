@@ -9,6 +9,8 @@ Class based system to handle the calendar services
 import datetime
 from typing_extensions import Any, Optional, Self
 
+import sanic.log
+
 import utils.services.calendar.channels as channels
 
 
@@ -98,6 +100,7 @@ class ScheduledEvents:
         Initialise the calendar
         :return: The initialised calendar class
         """
+        sanic.log.logger.debug("Setting up the calendar")
         self: ScheduledEvents = cls()
         await self.setup_calendar()
         return self
@@ -122,6 +125,7 @@ class ScheduledEvents:
         :return: None
         """
         self.updated = datetime.datetime.now(datetime.UTC)
+        sanic.log.logger.info(f"Updating all events in the calendar at {self.updated.isoformat()}")
         await self.news.update_events()
         await self.limited_time_mode.update_events()
         await self.marketing.update_events()
@@ -136,24 +140,31 @@ class ScheduledEvents:
         :return: None
         """
         if self.news.cache_expired():
+            sanic.log.logger.debug("News channel cache expired, updating news")
             await self.news.update_events()
             self.updated = datetime.datetime.now(datetime.UTC)
         if self.limited_time_mode.cache_expired():
+            sanic.log.logger.debug("LTM channel cache expired, updating limited time mode")
             await self.limited_time_mode.update_events()
             self.updated = datetime.datetime.now(datetime.UTC)
         if self.marketing.cache_expired():
+            sanic.log.logger.debug("Marketing channel cache expired, updating marketing")
             await self.marketing.update_events()
             self.updated = datetime.datetime.now(datetime.UTC)
         if self.rotational_content.cache_expired():
+            sanic.log.logger.debug("Rotational content channel cache expired, updating rotational content")
             await self.rotational_content.update_events()
             self.updated = datetime.datetime.now(datetime.UTC)
         if self.featured_stores_mcp.cache_expired():
+            sanic.log.logger.debug("Featured stores MCP channel cache expired, updating featured stores MCP")
             await self.featured_stores_mcp.update_events()
             self.updated = datetime.datetime.now(datetime.UTC)
         if self.weekly_challenge.cache_expired():
+            sanic.log.logger.debug("Weekly challenge cache expired, updating weekly challenge")
             await self.weekly_challenge.update_events()
             self.updated = datetime.datetime.now(datetime.UTC)
         if self.battlepass.cache_expired():
+            sanic.log.logger.debug("Battlepass cache expired, updating battlepass")
             await self.battlepass.update_events()
             self.updated = datetime.datetime.now(datetime.UTC)
         return self.__dict__()

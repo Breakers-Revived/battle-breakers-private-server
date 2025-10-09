@@ -13,6 +13,7 @@ import aiofiles
 import icalendar
 import orjson
 import recurring_ical_events
+import sanic.log
 
 from utils.utils import load_datatable, format_time
 
@@ -185,6 +186,7 @@ class News(Channel):
         Update the events for the news channel
         :return: None
         """
+        sanic.log.logger.debug("Reading news ical file")
         async with aiofiles.open("res/wex/api/calendar/news.ics", "rb") as f:
             events = recurring_ical_events.of(icalendar.Calendar.from_ical(await f.read())).at(
                 datetime.datetime.now(datetime.UTC)
@@ -192,6 +194,7 @@ class News(Channel):
         self.states[0].state["activeNews"] = []
         for event in events:
             news_data = orjson.loads(event.get("DESCRIPTION"))
+            sanic.log.logger.debug(f"Adding news data {news_data} to news channel")
             self.states[0].state["activeNews"].append({
                 "uniqueId": f"{event.get('UID', '0@').split('@')[0]}[0]0",
                 "widget": news_data.get("widget", ""),  # TODO: figure out the format
@@ -207,6 +210,7 @@ class News(Channel):
             })
         self.states[0].valid_from = await format_time()
         self.cache_expire = await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2))
+        sanic.log.logger.debug(f"Finished updating news channel, cache expires at {self.cache_expire}")
 
 
 class LimitedTimeMode(Channel):
@@ -231,6 +235,7 @@ class LimitedTimeMode(Channel):
             datetime.timedelta(days=-datetime.datetime.now(datetime.UTC).weekday() + 2))
         end = await format_time(datetime.datetime.now(datetime.UTC).replace(hour=0, minute=0, second=0, microsecond=0) +
                                 datetime.timedelta(days=7 - datetime.datetime.now(datetime.UTC).weekday() + 2))
+        sanic.log.logger.debug(f"Populating LTM channel with weekly modes from {begin} to {end}")
         self.states[0].valid_from = await format_time()
         self.states[0].state = {
             "activeLTMs": [{
@@ -893,6 +898,7 @@ class LimitedTimeMode(Channel):
             "eventInstanceId": "$EVENT_INSTANCE_ID"
         }
         self.cache_expire = await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2))
+        sanic.log.logger.debug(f"Finished updating LTM channel, cache expires at {self.cache_expire}")
 
 
 class Marketing(Channel):
@@ -914,9 +920,10 @@ class Marketing(Channel):
         """
         self.states[0].valid_from = await format_time()
         self.states[0].state = {
-            "affiliateSelectionEndDate": "2999-12-31T23:59:59.999Z"
+            "affiliateSelectionEndDate": "9999-12-31T23:59:59.999Z"
         }
         self.cache_expire = await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2))
+        sanic.log.logger.debug(f"Finished updating marketing channel, cache expires at {self.cache_expire}")
 
 
 class RotationalContent(Channel):
@@ -937,6 +944,7 @@ class RotationalContent(Channel):
         :return: None
         """
         self.states[0].valid_from = await format_time()
+        # noinspection PyDictCreation
         self.states[0].state = {
             "activeZones": [],
             "activeEvents": [],
@@ -1005,6 +1013,7 @@ class RotationalContent(Channel):
             "expiresAt": "2026-12-31T00:00:00Z",
             "eventKey": "6tojdi2dqvmqbeo0st5bvr919m[0]9999+0"
         }]
+        sanic.log.logger.debug("Reading battle pass ical file")
         async with aiofiles.open("res/wex/api/calendar/battlepass.ics", "rb") as f:
             events = recurring_ical_events.of(icalendar.Calendar.from_ical(await f.read())).at(
                 datetime.datetime.now(datetime.UTC)
@@ -1021,7 +1030,10 @@ class RotationalContent(Channel):
         self.states[0].state["purchaseEventId"] = \
             event_data[0].get("Properties").get("EventCurrency")[0].get("AssetPathName").split(".Reagent_")[-1].split(
                 "Event_")[-1].split("_")[0]
+        sanic.log.logger.info(
+            f"Current battle pass event set to {self.states[0].state['activeEvents'][0]['eventId']} (Currency {self.states[0].state['purchaseEventId']}), ending at {self.states[0].state['activeEvents'][0]['expiresAt']}")
         self.cache_expire = await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2))
+        sanic.log.logger.debug(f"Finished updating rotational content channel, cache expires at {self.cache_expire}")
 
 
 class FeaturedStoresMcp(Channel):
@@ -1048,6 +1060,7 @@ class FeaturedStoresMcp(Channel):
             "storefront": {}
         }
         self.cache_expire = await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2))
+        sanic.log.logger.debug(f"Finished updating featured stores mcp channel, cache expires at {self.cache_expire}")
 
 
 class WeeklyChallenge(Channel):
@@ -1095,6 +1108,7 @@ class WeeklyChallenge(Channel):
         # }
         end_date: datetime.datetime | None = None
         self.states[0].valid_from = await format_time()
+        # noinspection PyDictCreation
         self.states[0].state = {
             "phases": [],
             "activePhases": ["Weekend", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -1106,7 +1120,7 @@ class WeeklyChallenge(Channel):
         self.states[0].state["phases"] = [{
             "zoneId": "Zone.Event.WC.Daily.BossTrio.Map1",
             "availabilityBegin": "2022-12-26T00:00:00.000Z",
-            "availabilityEnd": "2999-12-31T23:59:59.999Z",
+            "availabilityEnd": "9999-12-31T23:59:59.999Z",
             "minAccountLevel": 1,
             "maxAccountLevel": 2147483647,
             "requirements": {
@@ -1123,7 +1137,7 @@ class WeeklyChallenge(Channel):
         }, {
             "zoneId": "Zone.Event.WC.Daily.SuperBoss.Map1",
             "availabilityBegin": "2022-12-26T00:00:00.000Z",
-            "availabilityEnd": "2999-12-31T23:59:59.999Z",
+            "availabilityEnd": "9999-12-31T23:59:59.999Z",
             "minAccountLevel": 1,
             "maxAccountLevel": 2147483647,
             "requirements": {
@@ -1144,7 +1158,7 @@ class WeeklyChallenge(Channel):
         }, {
             "zoneId": "Zone.Event.WC.Daily.BossTrio.Map1",
             "availabilityBegin": "2022-12-26T00:00:00.000Z",
-            "availabilityEnd": "2999-12-31T23:59:59.999Z",
+            "availabilityEnd": "9999-12-31T23:59:59.999Z",
             "minAccountLevel": 1,
             "maxAccountLevel": 2147483647,
             "requirements": {
@@ -1161,7 +1175,7 @@ class WeeklyChallenge(Channel):
         }, {
             "zoneId": "Zone.Event.WC.Daily.BossTrio.Map1",
             "availabilityBegin": "2022-12-26T00:00:00.000Z",
-            "availabilityEnd": "2999-12-31T23:59:59.999Z",
+            "availabilityEnd": "9999-12-31T23:59:59.999Z",
             "minAccountLevel": 1,
             "maxAccountLevel": 2147483647,
             "requirements": {
@@ -1178,7 +1192,7 @@ class WeeklyChallenge(Channel):
         }, {
             "zoneId": "Zone.Event.WC.Daily.SuperBoss.Map1",
             "availabilityBegin": "2022-12-26T00:00:00.000Z",
-            "availabilityEnd": "2999-12-31T23:59:59.999Z",
+            "availabilityEnd": "9999-12-31T23:59:59.999Z",
             "minAccountLevel": 1,
             "maxAccountLevel": 2147483647,
             "requirements": {
@@ -1196,7 +1210,7 @@ class WeeklyChallenge(Channel):
         self.states[0].state["bossZone"] = {
             "zoneId": "Zone.Event.WC.Weekend.BossSuper.1.Blackguard.Map1",
             "availabilityBegin": "2022-12-26T00:00:00.000Z",
-            "availabilityEnd": "2999-12-31T23:59:59.999Z",
+            "availabilityEnd": "9999-12-31T23:59:59.999Z",
             "minAccountLevel": 1,
             "maxAccountLevel": 2147483647,
             "runLimit": 1000
@@ -1207,6 +1221,7 @@ class WeeklyChallenge(Channel):
         else:
             end_date = min(end_date, datetime.datetime.strptime(self.states[0].state["bossZone"]["availabilityEnd"],
                                                                 "%Y-%m-%dT%H:%M:%S.%fZ").replace(tzinfo=datetime.UTC))
+        sanic.log.logger.debug(f"Weekly challenge end date set to {end_date.isoformat()}")
         self.states[0].state["namedWeights"] = "Blackguard=1"
         if end_date is None:
             self.cache_expire = await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2))
@@ -1214,6 +1229,7 @@ class WeeklyChallenge(Channel):
             self.cache_expire = await format_time(
                 min(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2), end_date)
             )
+        sanic.log.logger.debug(f"Finished updating weekly challenge channel, cache expires at {self.cache_expire}")
 
 
 class BattlePass(Channel):
@@ -1233,6 +1249,7 @@ class BattlePass(Channel):
         Update the events for the battle pass channel
         :return: None
         """
+        sanic.log.logger.debug(f"Reading battle pass ical file")
         async with aiofiles.open("res/wex/api/calendar/battlepass.ics", "rb") as f:
             events = recurring_ical_events.of(icalendar.Calendar.from_ical(await f.read())).at(
                 datetime.datetime.now(datetime.UTC)
@@ -1244,6 +1261,9 @@ class BattlePass(Channel):
             "seasonId": event_data[0].get("Properties", {}).get("EventId", "None"),
             "seasonEndDate": await format_time(end_date),
         }
+        sanic.log.logger.debug(
+            f"Current battle pass event set to {self.states[0].state['seasonId']}, ending at {self.states[0].state['seasonEndDate']}")
         self.cache_expire = await format_time(
             min(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2), end_date)
         )
+        sanic.log.logger.debug(f"Finished updating battle pass channel, cache expires at {self.cache_expire}")

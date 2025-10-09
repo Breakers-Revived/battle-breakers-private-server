@@ -6,6 +6,8 @@ This code is licensed under the Breakers Revived License (BRL).
 
 Class based systems for each of the storefronts in the storefront service
 """
+import sanic.log
+
 from typing_extensions import Any, Self, Optional
 
 
@@ -462,6 +464,7 @@ class SecretShopPage3(Storefront):
             meta_info=[{'key': 'VipLevelMin', 'value': '3'}],
             item_grants=[{'templateId': 'Reagent:Reagent_Shared_T02', 'quantity': 1}],
         ))
+        sanic.log.logger.debug(f"Updated SecretShopPage3 storefront with {len(self.catalog_entries)} entries")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -762,6 +765,7 @@ class SecretShopPage4(Storefront):
             meta_info=[{'key': 'VipLevelMin', 'value': '3'}],
             item_grants=[{'templateId': 'Reagent:Reagent_Shard_Light', 'quantity': 1}],
         ))
+        sanic.log.logger.debug(f"Updated SecretShopPage4 storefront with {len(self.catalog_entries)} entries")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -910,6 +914,7 @@ class GemStore(Storefront):
                          {'templateId': 'UpgradePotion:UpgradeHealthMajor', 'quantity': 75},
                          {'templateId': 'UpgradePotion:UpgradeStrengthMajor', 'quantity': 75}],
         ))
+        sanic.log.logger.debug(f"Updated GemStore storefront with {len(self.catalog_entries)} entries")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -1140,6 +1145,7 @@ class SecretShopPage2(Storefront):
             meta_info=[{'key': 'VipLevelMin', 'value': '3'}],
             item_grants=[{'templateId': 'Reagent:Reagent_Shared_T02', 'quantity': 1}],
         ))
+        sanic.log.logger.debug(f"Updated SecretShopPage2 storefront with {len(self.catalog_entries)} entries")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -1330,6 +1336,7 @@ class WeeklyChallenge(Storefront):
                                ".CD_Assassin_R2_Nature_Slasher_T03",
             item_grants=[{'templateId': 'Character:Assassin_R2_Nature_Slasher_T03', 'quantity': 1}],
         ))
+        sanic.log.logger.debug(f"Updated WeeklyChallenge storefront with {len(self.catalog_entries)} entries")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -1728,6 +1735,7 @@ class HeroStore(Storefront):
             sort_priority=31,
             item_grants=[{'templateId': 'Character:Pet_SR1_Cloudpuff_Light_T05', 'quantity': 1}],
         ))
+        sanic.log.logger.debug(f"Updated HeroStore storefront with {len(self.catalog_entries)} entries")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -5949,6 +5957,7 @@ class Featured(Storefront):
             title="Support Gift 36",
             description="Thank you for your support!",
         ))
+        sanic.log.logger.debug(f"Updated Featured storefront with {len(self.catalog_entries)} offers")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -5980,6 +5989,7 @@ class SecretShop(Storefront):
         This rotation never changed
         :return: None
         """
+        sanic.log.logger.debug(f"Updated SecretShop storefront with {len(self.catalog_entries)} offers")
         return None
 
     @classmethod
@@ -6012,6 +6022,7 @@ class MagicTicket(Storefront):
         This rotation never changed
         :return: None
         """
+        sanic.log.logger.debug(f"Updated MagicTicket storefront with {len(self.catalog_entries)} offers")
         return None
 
     @classmethod
@@ -6222,6 +6233,7 @@ class Services(Storefront):
                  'finalPrice': 100, 'saleExpiration': '9999-12-31T23:59:59.999Z', 'basePrice': 100}],
             meta_info=[{'key': 'ServiceName', 'value': 'ResetLaborPool'}],
         ))
+        sanic.log.logger.debug(f"Updated Services storefront with {len(self.catalog_entries)} offers")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -6485,6 +6497,7 @@ class Marketplace(Storefront):
             meta_info=[{'key': 'MarketLevel', 'value': '9'}],
             item_grants=[{'templateId': 'UpgradePotion:UpgradeStrengthMajor', 'quantity': 1}],
         ))
+        sanic.log.logger.debug(f"Updated Marketplace storefront with {len(self.catalog_entries)} offers")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -6737,6 +6750,7 @@ class MarketplacePage3(Storefront):
             meta_info=[{'key': 'MarketLevel', 'value': '11'}, {'key': 'MaxMarketLevel', 'value': '15'}],
             item_grants=[{'templateId': 'TreasureMap:TM_MapResource', 'quantity': 1}],
         ))
+        sanic.log.logger.debug(f"Updated MarketplacePage3 storefront with {len(self.catalog_entries)} offers")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -6989,6 +7003,7 @@ class MarketplacePage2(Storefront):
             meta_info=[{'key': 'MarketLevel', 'value': '8'}],
             item_grants=[{'templateId': 'TreasureMap:TM_MapResource', 'quantity': 1}],
         ))
+        sanic.log.logger.debug(f"Updated MarketplacePage2 storefront with {len(self.catalog_entries)} offers")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -7407,6 +7422,7 @@ class Events(Storefront):
             sort_priority=195,
             item_grants=[{'templateId': 'Currency:HeroXp_Basic', 'quantity': 500000}],
         ))
+        sanic.log.logger.debug(f"Updated Events storefront with {len(self.catalog_entries)} offers")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -8644,6 +8660,7 @@ class Workshop(Storefront):
             title="Build Random Item",
             description="Construct a random item, with a chance to get a hero!",
         ))
+        sanic.log.logger.debug(f"Updated Workshop storefront with {len(self.catalog_entries)} offers")
 
     @classmethod
     async def init_storefront(cls) -> Self:
@@ -8926,6 +8943,7 @@ class Loyalty(Storefront):
             sort_priority=125,
             item_grants=[{'templateId': 'Currency:MtxGiveaway', 'quantity': 100}],
         ))
+        sanic.log.logger.debug(f"Updated Loyalty storefront with {len(self.catalog_entries)} offers")
 
     @classmethod
     async def init_storefront(cls) -> Self:

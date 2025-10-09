@@ -10,6 +10,8 @@ import datetime
 import uuid
 from typing_extensions import Any, Optional, Self
 
+import sanic.log
+
 import utils.services.storefront.storefronts as storefronts
 from utils.utils import get_nearest_12_hour_interval, format_time, get_current_12_hour_interval
 
@@ -120,6 +122,7 @@ class StoreCatalogue:
         Initialise the store catalogue
         :return: The initialised store catalogue class
         """
+        sanic.log.logger.debug("Setting up the storefront catalogue")
         self: StoreCatalogue = cls()
         self.secret_shop_page_3 = await storefronts.SecretShopPage3.init_storefront()
         self.secret_shop_page_4 = await storefronts.SecretShopPage4.init_storefront()
@@ -149,6 +152,8 @@ class StoreCatalogue:
             # The ETag having double quotes is intentional
             self.entity_tag = f'"{str(uuid.uuid4().hex).upper()}|{await format_time(await get_current_12_hour_interval())}"'
             self.expiration = await get_nearest_12_hour_interval()
+            sanic.log.logger.info(
+                f"Updating storefronts for time {self.entity_tag[34:-1]} with expiration at {self.expiration.isoformat()}")
             await self.secret_shop_page_3.update_storefront()
             await self.secret_shop_page_4.update_storefront()
             await self.gem_store.update_storefront()
@@ -165,6 +170,8 @@ class StoreCatalogue:
             await self.events.update_storefront()
             await self.workshop.update_storefront()
             await self.loyalty.update_storefront()
+        else:
+            sanic.log.logger.debug("Storefronts are still valid, not updating")
         return self.__dict__()
 
     async def get_offer_by_id(self, offer_id: str) -> Optional[storefronts.Offer]:
@@ -173,6 +180,7 @@ class StoreCatalogue:
         :param offer_id: The ID of the offer to get
         :return: The offer with the given ID or None if not found
         """
+        sanic.log.logger.debug(f"Searching for offer with ID {offer_id} in the storefront catalogue")
         storefronts_list = [
             self.secret_shop_page_3, self.secret_shop_page_4, self.gem_store, self.secret_shop_page_2,
             self.weekly_challenge, self.hero_store, self.featured, self.secret_shop, self.magic_ticket,
@@ -183,5 +191,8 @@ class StoreCatalogue:
             if storefront is not None:
                 offer = await storefront.get_offer_by_id(offer_id)
                 if offer is not None:
+                    sanic.log.logger.debug(
+                        f"Found offer with ID {offer_id} in storefront {storefront.__class__.__name__}")
                     return offer
+        sanic.log.logger.debug("Offer not found in any storefront")
         return None
