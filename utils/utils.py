@@ -714,9 +714,13 @@ async def get_account_data_owner(database: AsyncDatabase, account_id: str) -> Op
         "headless": account_data["headless"],
         "preferredLanguage": account_data["preferredLanguage"],
         "lastDisplayNameChange": account_data["lastDisplayNameChange"],
-        "canUpdateDisplayName": True if (not account_data["lastDisplayNameChange"] or
-                                         (datetime.datetime.now(datetime.UTC) - account_data[
-                                             "lastDisplayNameChange"]).days >= 14) else False,
+        "canUpdateDisplayName": (lambda v: (not v) or (
+                (datetime.datetime.now(datetime.UTC) - (
+                    (lambda d: d if d.tzinfo else d.replace(tzinfo=datetime.UTC))(
+                        datetime.datetime.fromisoformat(v.replace('Z', '+00:00')) if isinstance(v, str) else v
+                    )
+                )).days >= 14
+        ))(account_data.get("lastDisplayNameChange")),
         "tfaEnabled": account_data["tfaEnabled"],
         "externalAuths": account_data["externalAuths"],
         "failedLoginAttempts": 0,

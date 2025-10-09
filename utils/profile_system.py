@@ -527,7 +527,6 @@ class MCPProfile:
         sanic.log.logger.debug(f"Saving profile {self.accountId} of type {self.profile_type}")
         collection = database[f"profile_{self.profile_type}"]
         sanic.log.logger.debug("Serialising profile")
-        print(self.profile)
         profile = orjson.loads(orjson.dumps(self.profile, default=custom_serialise))
         sanic.log.logger.debug("Serialised profile, saving to database")
         await collection.replace_one({"_id": self.accountId}, profile, upsert=True)
