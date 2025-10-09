@@ -30,162 +30,185 @@ async def bulk_improve_heroes(request: types.BBProfileRequest, accountId: str) -
     :param accountId: The account id
     :return: The modified profile
     """
-    # TODO: validation
     gold_id = (await request.ctx.profile.find_item_by_template_id("Currency:Gold"))[0]
     current_gold = (await request.ctx.profile.get_item_by_guid(gold_id))["quantity"]
-    silver_id = await request.ctx.profile.find_item_by_template_id("Ore:Ore_Silver")
-    current_silver = (await request.ctx.profile.get_item_by_guid(silver_id[0])).get("quantity", 0)
-    magicite_id = await request.ctx.profile.find_item_by_template_id("Ore:Ore_Magicite")
-    current_magicite = (await request.ctx.profile.get_item_by_guid(magicite_id[0])).get("quantity", 0)
-    iron_id = await request.ctx.profile.find_item_by_template_id("Ore:Ore_Iron")
-    current_iron = (await request.ctx.profile.get_item_by_guid(iron_id[0])).get("quantity", 0)
+    silver_ids = await request.ctx.profile.find_item_by_template_id("Ore:Ore_Silver")
+    silver_id = silver_ids[0] if silver_ids else None
+    current_silver = (await request.ctx.profile.get_item_by_guid(silver_id)).get("quantity", 0) if silver_id else 0
+    magicite_ids = await request.ctx.profile.find_item_by_template_id("Ore:Ore_Magicite")
+    magicite_id = magicite_ids[0] if magicite_ids else None
+    current_magicite = (await request.ctx.profile.get_item_by_guid(magicite_id)).get("quantity", 0) if magicite_id else 0
+    iron_ids = await request.ctx.profile.find_item_by_template_id("Ore:Ore_Iron")
+    iron_id = iron_ids[0] if iron_ids else None
+    current_iron = (await request.ctx.profile.get_item_by_guid(iron_id)).get("quantity", 0) if iron_id else 0
     xp_guid = await request.ctx.profile.find_item_by_template_id("Currency:HeroXp_Basic")
     current_xp = (await request.ctx.profile.get_item_by_guid(xp_guid[0])).get("quantity", 0)
-    xp_datatable = (await load_datatable("Content/Balance/Datatables/XPUnitLevels"))[0]["Rows"][
-        "UnitXPTNLNormal"]["Keys"]
-    strength_ma_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeStrengthMinor")
-    strength_ma_potion_quantity = (await request.ctx.profile.get_item_by_guid(strength_ma_potion_guid[0])).get(
-        "quantity", 0)
-    strength_mi_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeStrengthMajor")
-    strength_mi_potion_quantity = (await request.ctx.profile.get_item_by_guid(strength_mi_potion_guid[0])).get(
-        "quantity", 0)
-    health_ma_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeHealthMinor")
-    health_ma_potion_quantity = (await request.ctx.profile.get_item_by_guid(health_ma_potion_guid[0])).get("quantity",
-                                                                                                           0)
-    health_mi_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeHealthMajor")
-    health_mi_potion_quantity = (await request.ctx.profile.get_item_by_guid(health_mi_potion_guid[0])).get("quantity",
-                                                                                                           0)
-    mana_potion_guid = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeMana")
-    mana_potion_quantity = (await request.ctx.profile.get_item_by_guid(mana_potion_guid[0])).get("quantity", 0)
+    xp_datatable = (await load_datatable("Content/Balance/Datatables/XPUnitLevels"))[0]["Rows"]["UnitXPTNLNormal"]["Keys"]
+    strength_ma_ids = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeStrengthMinor")
+    strength_ma_potion_guid = strength_ma_ids[0] if strength_ma_ids else None
+    strength_ma_potion_quantity = (await request.ctx.profile.get_item_by_guid(strength_ma_potion_guid)).get("quantity", 0) if strength_ma_potion_guid else 0
+    strength_mi_ids = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeStrengthMajor")
+    strength_mi_potion_guid = strength_mi_ids[0] if strength_mi_ids else None
+    strength_mi_potion_quantity = (await request.ctx.profile.get_item_by_guid(strength_mi_potion_guid)).get("quantity", 0) if strength_mi_potion_guid else 0
+    health_ma_ids = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeHealthMinor")
+    health_ma_potion_guid = health_ma_ids[0] if health_ma_ids else None
+    health_ma_potion_quantity = (await request.ctx.profile.get_item_by_guid(health_ma_potion_guid)).get("quantity", 0) if health_ma_potion_guid else 0
+    health_mi_ids = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeHealthMajor")
+    health_mi_potion_guid = health_mi_ids[0] if health_mi_ids else None
+    health_mi_potion_quantity = (await request.ctx.profile.get_item_by_guid(health_mi_potion_guid)).get("quantity", 0) if health_mi_potion_guid else 0
+    mana_ids = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeMana")
+    mana_potion_guid = mana_ids[0] if mana_ids else None
+    mana_potion_quantity = (await request.ctx.profile.get_item_by_guid(mana_potion_guid)).get("quantity", 0) if mana_potion_guid else 0
     for upgrade in request.json.get("detail"):
         hero_item = await request.ctx.profile.get_item_by_guid(upgrade["heroItemId"])
         hero_upgrades = hero_item["attributes"]["upgrades"]
         # potions
         for potion_upgrade in upgrade["potionItems"]:
+            template_id = potion_upgrade.get("templateId")
+            requested_qty = max(0, int(potion_upgrade.get("quantity", 0)))
+            if requested_qty <= 0:
+                continue
             potion_cost = (await load_datatable(
-                (await get_path_from_template_id(potion_upgrade.get("templateId"))).replace(
+                (await get_path_from_template_id(template_id)).replace(
                     "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
-                "Properties"][
-                "ConsumptionCostGold"]
-            match potion_upgrade.get("templateId"):
+                "Properties"]["ConsumptionCostGold"]
+            match template_id:
                 case "UpgradePotion:UpgradeStrengthMinor":
-                    if potion_upgrade["quantity"] > strength_ma_potion_quantity:
-                        raise errors.com.epicgames.world_explorers.bad_request(
-                            errorMessage=f"Invalid quantity for {potion_upgrade.get('templateId')}")
-                    hero_upgrades[0] += potion_upgrade["quantity"]
-                    for _ in range(potion_upgrade.get("quantity")):
+                    if strength_ma_potion_guid is None:
+                        raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                            errorMessage=f"Missing item {template_id} in profile")
+                    applicable = min(requested_qty, strength_ma_potion_quantity)
+                    applied = 0
+                    for _ in range(applicable):
                         if current_gold < potion_cost:
                             break
                         await request.ctx.profile.change_item_quantity(gold_id, current_gold - potion_cost)
                         current_gold -= potion_cost
-                        await request.ctx.profile.change_item_quantity(strength_mi_potion_guid[0],
-                                                                       strength_mi_potion_quantity - 1)
-                        strength_mi_potion_quantity -= 1
-                case "UpgradePotion:UpgradeStrengthMajor":
-                    if potion_upgrade["quantity"] > strength_ma_potion_quantity:
-                        raise errors.com.epicgames.world_explorers.bad_request(
-                            errorMessage=f"Invalid quantity for {potion_upgrade.get('templateId')}")
-                    hero_upgrades[1] += potion_upgrade["quantity"]
-                    for _ in range(potion_upgrade.get("quantity")):
-                        if current_gold < potion_cost:
-                            break
-                        await request.ctx.profile.change_item_quantity(gold_id, current_gold - potion_cost)
-                        current_gold -= potion_cost
-                        await request.ctx.profile.change_item_quantity(strength_ma_potion_guid[0],
-                                                                       strength_ma_potion_quantity - 1)
+                        await request.ctx.profile.change_item_quantity(strength_ma_potion_guid, strength_ma_potion_quantity - 1)
                         strength_ma_potion_quantity -= 1
-                case "UpgradePotion:UpgradeHealthMinor":
-                    if potion_upgrade["quantity"] > health_ma_potion_quantity:
-                        raise errors.com.epicgames.world_explorers.bad_request(
-                            errorMessage=f"Invalid quantity for {potion_upgrade.get('templateId')}")
-                    hero_upgrades[2] += potion_upgrade["quantity"]
-                    for _ in range(potion_upgrade.get("quantity")):
+                        applied += 1
+                    hero_upgrades[0] += applied
+                case "UpgradePotion:UpgradeStrengthMajor":
+                    if strength_mi_potion_guid is None:
+                        raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                            errorMessage=f"Missing item {template_id} in profile")
+                    applicable = min(requested_qty, strength_mi_potion_quantity)
+                    applied = 0
+                    for _ in range(applicable):
                         if current_gold < potion_cost:
                             break
                         await request.ctx.profile.change_item_quantity(gold_id, current_gold - potion_cost)
                         current_gold -= potion_cost
-                        await request.ctx.profile.change_item_quantity(health_mi_potion_guid[0],
-                                                                       health_mi_potion_quantity - 1)
-                        health_mi_potion_quantity -= 1
-                case "UpgradePotion:UpgradeHealthMajor":
-                    if potion_upgrade["quantity"] > health_ma_potion_quantity:
-                        raise errors.com.epicgames.world_explorers.bad_request(
-                            errorMessage=f"Invalid quantity for {potion_upgrade.get('templateId')}")
-                    hero_upgrades[3] += potion_upgrade["quantity"]
-                    for _ in range(potion_upgrade.get("quantity")):
+                        await request.ctx.profile.change_item_quantity(strength_mi_potion_guid, strength_mi_potion_quantity - 1)
+                        strength_mi_potion_quantity -= 1
+                        applied += 1
+                    hero_upgrades[1] += applied
+                case "UpgradePotion:UpgradeHealthMinor":
+                    if health_ma_potion_guid is None:
+                        raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                            errorMessage=f"Missing item {template_id} in profile")
+                    applicable = min(requested_qty, health_ma_potion_quantity)
+                    applied = 0
+                    for _ in range(applicable):
+                        if current_gold < potion_cost:
+                            break
                         await request.ctx.profile.change_item_quantity(gold_id, current_gold - potion_cost)
                         current_gold -= potion_cost
-                        await request.ctx.profile.change_item_quantity(health_ma_potion_guid[0],
-                                                                       health_ma_potion_quantity - 1)
+                        await request.ctx.profile.change_item_quantity(health_ma_potion_guid, health_ma_potion_quantity - 1)
                         health_ma_potion_quantity -= 1
-                case "UpgradePotion:UpgradeMana":
-                    if potion_upgrade["quantity"] > mana_potion_quantity:
-                        raise errors.com.epicgames.world_explorers.bad_request(
-                            errorMessage=f"Invalid quantity for {potion_upgrade.get('templateId')}")
-                    hero_upgrades[4] += potion_upgrade["quantity"]
-                    for _ in range(potion_upgrade.get("quantity")):
+                        applied += 1
+                    hero_upgrades[2] += applied
+                case "UpgradePotion:UpgradeHealthMajor":
+                    if health_mi_potion_guid is None:
+                        raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                            errorMessage=f"Missing item {template_id} in profile")
+                    applicable = min(requested_qty, health_mi_potion_quantity)
+                    applied = 0
+                    for _ in range(applicable):
+                        if current_gold < potion_cost:
+                            break
                         await request.ctx.profile.change_item_quantity(gold_id, current_gold - potion_cost)
                         current_gold -= potion_cost
-                        await request.ctx.profile.change_item_quantity(mana_potion_guid[0],
-                                                                       mana_potion_quantity - 1)
+                        await request.ctx.profile.change_item_quantity(health_mi_potion_guid, health_mi_potion_quantity - 1)
+                        health_mi_potion_quantity -= 1
+                        applied += 1
+                    hero_upgrades[3] += applied
+                case "UpgradePotion:UpgradeMana":
+                    if mana_potion_guid is None:
+                        raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                            errorMessage=f"Missing item {template_id} in profile")
+                    applicable = min(requested_qty, mana_potion_quantity)
+                    applied = 0
+                    for _ in range(applicable):
+                        if current_gold < potion_cost:
+                            break
+                        await request.ctx.profile.change_item_quantity(gold_id, current_gold - potion_cost)
+                        current_gold -= potion_cost
+                        await request.ctx.profile.change_item_quantity(mana_potion_guid, mana_potion_quantity - 1)
                         mana_potion_quantity -= 1
+                        applied += 1
+                    hero_upgrades[4] += applied
                 case _:
                     raise errors.com.epicgames.world_explorers.bad_request(
                         errorMessage="Invalid potion item template id")
         # weapons
         for weapon_upgrade in upgrade["weaponUpgrades"]:
-            match weapon_upgrade.get("upgradeType"):
+            upgrade_type = weapon_upgrade.get("upgradeType")
+            num_upgrades = max(0, int(weapon_upgrade.get("numUpgrades", 0)))
+            if num_upgrades <= 0:
+                continue
+            match upgrade_type:
                 case "WeaponLevel":
-                    current_level = hero_upgrades[5]
-                    hero_upgrades[5] += weapon_upgrade["numUpgrades"]
-                    promotion_table = \
-                        (await load_datatable("Content/Recipes/PT_WeaponLevel"))[0]["Properties"][
-                            "RankRecipes"]
+                    idx = 5
+                    promotion_table = (await load_datatable("Content/Recipes/PT_WeaponLevel"))[0]["Properties"]["RankRecipes"]
                 case "WeaponStars":
-                    current_level = hero_upgrades[6]
-                    hero_upgrades[6] += weapon_upgrade["numUpgrades"]
-                    promotion_table = \
-                        (await load_datatable("Content/Recipes/PT_WeaponTier"))[0]["Properties"][
-                            "RankRecipes"]
+                    idx = 6
+                    promotion_table = (await load_datatable("Content/Recipes/PT_WeaponTier"))[0]["Properties"]["RankRecipes"]
                 case "ArmorLevel":
-                    current_level = hero_upgrades[7]
-                    hero_upgrades[7] += weapon_upgrade["numUpgrades"]
-                    promotion_table = \
-                        (await load_datatable("Content/Recipes/PT_ArmorLevel"))[0]["Properties"][
-                            "RankRecipes"]
-                case "ArmorStars":
-                    current_level = hero_upgrades[8]
-                    hero_upgrades[8] += weapon_upgrade["numUpgrades"]
-                    promotion_table = \
-                        (await load_datatable("Content/Recipes/PT_ArmorTier"))[0]["Properties"][
-                            "RankRecipes"]
+                    idx = 7
+                    promotion_table = (await load_datatable("Content/Recipes/PT_ArmorLevel"))[0]["Properties"]["RankRecipes"]
+                case"ArmorStars":
+                    idx = 8
+                    promotion_table = (await load_datatable("Content/Recipes/PT_ArmorTier"))[0]["Properties"]["RankRecipes"]
                 case _:
                     raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid weapon upgrade type")
-            for i in range(current_level, current_level + weapon_upgrade.get("numUpgrades")):
+            current_level = hero_upgrades[idx]
+            applied_steps = 0
+            for i in range(current_level, current_level + num_upgrades):
                 consumed_item = (await load_datatable(
                     promotion_table[i].get("AssetPathName").replace("/Game/", "Content/").split(".")[0]))[0][
                     "Properties"]["ConsumedItems"][0]
-                match consumed_item.get("ItemDefinition", "").get("ObjectName"):
+                obj_name = consumed_item.get("ItemDefinition", "").get("ObjectName")
+                count = int(consumed_item.get("Count", 0))
+                match obj_name:
                     case "WExpGenericAccountItemDefinition'Ore_Silver'":
-                        if current_silver < consumed_item["Count"]:
+                        if count > 0 and silver_id is None:
+                            raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                                errorMessage="Missing resource Ore:Ore_Silver in profile")
+                        if current_silver < count:
                             break
-                        await request.ctx.profile.change_item_quantity(silver_id[0],
-                                                                       current_silver - consumed_item["Count"])
-                        current_silver -= consumed_item["Count"]
+                        await request.ctx.profile.change_item_quantity(silver_id, current_silver - count)
+                        current_silver -= count
                     case "WExpGenericAccountItemDefinition'Ore_Magicite'":
-                        if current_magicite < consumed_item["Count"]:
+                        if count > 0 and magicite_id is None:
+                            raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                                errorMessage="Missing resource Ore:Ore_Magicite in profile")
+                        if current_magicite < count:
                             break
-                        await request.ctx.profile.change_item_quantity(magicite_id[0],
-                                                                       current_magicite - consumed_item["Count"])
-                        current_magicite -= consumed_item["Count"]
+                        await request.ctx.profile.change_item_quantity(magicite_id, current_magicite - count)
+                        current_magicite -= count
                     case "WExpGenericAccountItemDefinition'Ore_Iron'":
-                        if current_iron < consumed_item["Count"]:
+                        if count > 0 and iron_id is None:
+                            raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                                errorMessage="Missing resource Ore:Ore_Iron in profile")
+                        if current_iron < count:
                             break
-                        await request.ctx.profile.change_item_quantity(iron_id[0],
-                                                                       current_iron - consumed_item["Count"])
-                        current_iron -= consumed_item["Count"]
+                        await request.ctx.profile.change_item_quantity(iron_id, current_iron - count)
+                        current_iron -= count
                     case _:
                         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid item to consume")
+                applied_steps += 1
+            hero_upgrades[idx] = current_level + applied_steps
         await request.ctx.profile.change_item_attribute(upgrade["heroItemId"], "upgrades", hero_upgrades)
         # level
         current_hero_level = hero_item["attributes"]["level"]
