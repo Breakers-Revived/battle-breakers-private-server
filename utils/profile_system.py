@@ -761,7 +761,7 @@ class PlayerProfile:
 
     async def grant_item(self, template_id: str, quantity: int = 1,
                          attributes: Optional[dict[str, MCPTypes]] = None, unique=False,
-                         profile_id: ProfileType = ProfileType.PROFILE0) -> str:
+                         profile_id: ProfileType = ProfileType.PROFILE0) -> str | list[str]:
         """
         Grant the specified item to the profile
         :param template_id: The template ID of the item to grant
@@ -778,19 +778,32 @@ class PlayerProfile:
             await self.change_item_quantity(item_guid, item["quantity"] + quantity, profile_id)
             return item_guid
         else:
-            item_data: dict = {
-                "templateId": template_id,
-                "attributes": attributes if attributes is not None else {},
-                "quantity": quantity
-            }
-            return await self.add_item(item_data, profile_id=profile_id)
+            if unique and quantity > 1:
+                item_ids: list[str] = []
+                for _ in range(quantity):
+                    item_data: dict = {
+                        "templateId": template_id,
+                        "attributes": attributes if attributes is not None else {},
+                        "quantity": 1
+                    }
+                    item_id: str = await self.add_item(item_data, profile_id=profile_id)
+                    item_ids.append(item_id)
+                return item_ids
+            else:
+                item_data: dict = {
+                    "templateId": template_id,
+                    "attributes": attributes if attributes is not None else {},
+                    "quantity": quantity
+                }
+                return await self.add_item(item_data, profile_id=profile_id)
 
     async def grant_hero(self, template_id: str, gear_weapon_item_id: str = "", weapon_unlocked: bool = False,
                          sidekick_template_id: str = "", level: int = 1, is_new: bool = True, num_sold: int = 0,
                          skill_level: int = 1, sidekick_unlocked: bool = False, upgrades: Optional[list[int]] = None,
                          used_as_sidekick: bool = False, gear_armor_item_id: str = "", skill_xp: int = 0,
                          armor_unlocked: bool = False, foil_lvl: int = -1, xp: int = 0, rank: int = 0,
-                         sidekick_item_id: str = "", profile_id: ProfileType = ProfileType.PROFILE0) -> str:
+                         sidekick_item_id: str = "", quantity: int = 1,
+                         profile_id: ProfileType = ProfileType.PROFILE0) -> str | list[str]:
         """
         Grant the specified hero to the profile
         :param template_id: The template ID of the hero to grant
@@ -811,12 +824,13 @@ class PlayerProfile:
         :param xp: The XP of the hero
         :param rank: The rank of the hero
         :param sidekick_item_id: The item ID of the sidekick to grant
+        :param quantity: The quantity of the hero to grant
         :param profile_id: The type of profile to add the hero to
         :return: The GUID of the hero granted
         """
         if upgrades is None:
             upgrades = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        return await self.grant_item(template_id, 1, {
+        return await self.grant_item(template_id, quantity, {
             "gear_weapon_item_id": gear_weapon_item_id,
             "weapon_unlocked": weapon_unlocked,
             "sidekick_template_id": sidekick_template_id,

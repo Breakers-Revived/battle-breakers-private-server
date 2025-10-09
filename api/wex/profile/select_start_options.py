@@ -40,39 +40,7 @@ async def select_start_options(request: types.BBProfileRequest, accountId: str) 
     await request.ctx.profile.modify_stat("starter_hero",
                                           f"starter{request.json.get('characterTemplateId').split('_')[2]}")
     await request.ctx.profile.modify_stat("starter_hero_template_id", request.json.get('characterTemplateId'))
-    starter_character_guid = await request.ctx.profile.add_item({
-        "templateId": request.json.get("characterTemplateId"),
-        "attributes": {
-            "gear_weapon_item_id": "",
-            "weapon_unlocked": False,
-            "sidekick_template_id": "",
-            "is_new": False,
-            "level": 1,
-            "num_sold": 0,
-            "skill_level": 1,
-            "sidekick_unlocked": False,
-            "upgrades": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "used_as_sidekick": False,
-            "gear_armor_item_id": "",
-            "skill_xp": 0,
-            "armor_unlocked": False,
-            "foil_lvl": -1,
-            "xp": 0,
-            "rank": 0,
-            "sidekick_item_id": ""
-        },
-        "quantity": 1
-    })
+    starter_character_guid = await request.ctx.profile.grant_hero(request.json.get("characterTemplateId"), is_new=False)
     await request.ctx.profile.modify_stat("rep_hero_ids", [starter_character_guid])
     party_instance_guid = await request.ctx.profile.add_item({
         "templateId": "Party:Instance",

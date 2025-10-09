@@ -49,29 +49,7 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                 if not item_id:
                     match item["ItemType"].split(":")[0]:
                         case "Character":
-                            item_id = await request.ctx.profile.add_item({
-                                "templateId": item["ItemType"],
-                                "attributes": {
-                                    "gear_weapon_item_id": "",
-                                    "weapon_unlocked": False,
-                                    "sidekick_template_id": "",
-                                    "is_new": True,
-                                    "level": 1,
-                                    "num_sold": 0,
-                                    "skill_level": 1,
-                                    "sidekick_unlocked": False,
-                                    "upgrades": [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                                    "used_as_sidekick": False,
-                                    "gear_armor_item_id": "",
-                                    "skill_xp": 0,
-                                    "armor_unlocked": False,
-                                    "foil_lvl": -1,
-                                    "xp": 0,
-                                    "rank": 0,
-                                    "sidekick_item_id": ""
-                                },
-                                "quantity": item["Quantity"]
-                            })
+                            item_id = await request.ctx.profile.grant_hero(item["ItemType"], quantity=item["Quantity"])
                         case "Giftbox":
                             item_id = await request.ctx.profile.add_item({
                                 "templateId": item["ItemType"],
@@ -92,12 +70,21 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
                     item_id = item_id[0]
                     item_data = await request.ctx.profile.get_item_by_guid(item_id)
                     await request.ctx.profile.change_item_quantity(item_id, item_data["quantity"] + item["Quantity"])
-                items.append({
-                    "itemType": item["ItemType"],
-                    "itemGuid": item_id,
-                    "itemProfile": "profile0",
-                    "quantity": item["Quantity"]
-                })
+                if isinstance(item_id, list):
+                    for item_ids in item_id:
+                        items.append({
+                            "itemType": item["ItemType"],
+                            "itemGuid": item_ids,
+                            "itemProfile": "profile0",
+                            "quantity": 1
+                        })
+                else:
+                    items.append({
+                        "itemType": item["ItemType"],
+                        "itemGuid": item_id,
+                        "itemProfile": "profile0",
+                        "quantity": item["Quantity"]
+                    })
         else:
             match '.'.join(giftbox_data["Loot"]["TierGroupName"].split(".")[:-1]):
                 case "LTG.GiftBox.AccountLevel":

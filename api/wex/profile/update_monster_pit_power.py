@@ -64,23 +64,14 @@ async def update_monster_pit_power(request: types.BBProfileRequest, accountId: s
             reward_quantity = level_data['RewardCount']
             reward_template_id = await get_template_id_from_path(reward_path)
             if reward_template_id.split(':')[0] == "Character":
-                item_id = await request.ctx.profile.add_item({"templateId": reward_template_id,
-                                                              "attributes": {"gear_weapon_item_id": "",
-                                                                             "weapon_unlocked": False,
-                                                                             "sidekick_template_id": "", "is_new": True,
-                                                                             "level": 1,
-                                                                             "num_sold": 0, "skill_level": 1,
-                                                                             "sidekick_unlocked": False,
-                                                                             "upgrades": [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                                                                             "used_as_sidekick": False,
-                                                                             "gear_armor_item_id": "",
-                                                                             "skill_xp": 0, "armor_unlocked": False,
-                                                                             "foil_lvl": -1,
-                                                                             "xp": 0, "rank": 0,
-                                                                             "sidekick_item_id": ""},
-                                                              "quantity": reward_quantity})
-                items.append({"itemType": reward_template_id, "itemGuid": item_id, "itemProfile": "profile0",
-                              "quantity": reward_quantity})
+                item_ids = await request.ctx.profile.grant_hero(reward_template_id, quantity=reward_quantity)
+                if isinstance(item_ids, list):
+                    for item_id in item_ids:
+                        items.append({"itemType": reward_template_id, "itemGuid": item_id, "itemProfile": "profile0",
+                                      "quantity": 1})
+                else:
+                    items.append({"itemType": reward_template_id, "itemGuid": item_ids, "itemProfile": "profile0",
+                                  "quantity": reward_quantity})
             else:
                 current_item = await request.ctx.profile.find_item_by_template_id(reward_template_id)
                 if reward_template_id in awarded_history:

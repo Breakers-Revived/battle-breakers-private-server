@@ -1148,40 +1148,10 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
     for item in items:
         if not item.get("itemGuid"):
             if item.get("itemType").startswith("Character:"):
-                guid = await request.ctx.profile.add_item({
-                    "templateId": item.get("itemType"),
-                    "attributes": {
-                        "gear_weapon_item_id": "",
-                        "weapon_unlocked": False,
-                        "sidekick_template_id": "",
-                        "is_new": True,
-                        "level": 1,
-                        "num_sold": 0,
-                        "skill_level": 1,
-                        "sidekick_unlocked": False,
-                        "upgrades": [
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0
-                        ],
-                        "used_as_sidekick": False,
-                        "gear_armor_item_id": "",
-                        "skill_xp": 0,
-                        "armor_unlocked": False,
-                        "foil_lvl": -1,
-                        "xp": 0,
-                        "rank": 0,
-                        "sidekick_item_id": ""
-                    },
-                    "quantity": item.get("quantity")
-                })
-                item["itemGuid"] = guid
+                item["itemGuid"] = await request.ctx.profile.grant_hero(item.get("itemType"),
+                                                                        quantity=item.get("quantity"))
+                if isinstance(item["itemGuid"], list):
+                    item["itemGuid"] = item["itemGuid"][0]
             else:
                 await request.ctx.profile.add_item({
                     "templateId": item.get("itemType"),

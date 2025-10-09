@@ -71,39 +71,7 @@ async def buy_back_from_monster_pit(request: types.BBProfileRequest, accountId: 
         else:
             raise errors.com.epicgames.world_explorers.bad_request(
                 errorMessage="You cannot afford to buy back this item")
-    await request.ctx.profile.add_item({
-        "templateId": request.json.get("characterTemplateId"),
-        "attributes": {
-            "gear_weapon_item_id": "",
-            "weapon_unlocked": False,
-            "sidekick_template_id": "",
-            "level": 1,
-            "is_new": True,
-            "num_sold": 0,
-            "skill_level": 1,
-            "sidekick_unlocked": False,
-            "upgrades": [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            "used_as_sidekick": False,
-            "gear_armor_item_id": "",
-            "skill_xp": 0,
-            "armor_unlocked": False,
-            "foil_lvl": -1,
-            "xp": 0,
-            "rank": 0,
-            "sidekick_item_id": ""
-        },
-        "quantity": 1
-    })
+    await request.ctx.profile.grant_hero(request.json.get("characterTemplateId"))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions)
