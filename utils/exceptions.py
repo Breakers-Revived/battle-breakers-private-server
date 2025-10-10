@@ -536,6 +536,16 @@ class errors:
                         numericErrorCode: int = 18130
                         originatingService: str = "com.epicgames.account.public"
 
+                    class not_found(EpicException):
+                        """
+                        This error is thrown when an account device auth is not found
+                        *errors.com.epicgames.account.device_auth.not_found*
+                        """
+                        errorMessage: str = "Sorry, we couldn't find the specified device {0} auth for account {1}"
+                        numericErrorCode: int = 18130
+                        originatingService: str = "com.epicgames.account.public"
+                        statusCode: int = 404
+
                 class display_name_already_set(EpicException):
                     """
                     This error is thrown when the account display name is already set

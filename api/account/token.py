@@ -205,8 +205,8 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                             await oauth_response(client_id, account['displayName'], request.form.get('device_id'),
                                                  account["_id"]))
                     else:
-                        raise errors.com.epicgames.common.authentication.authentication_failed(
-                            request.form.get('account_id'))
+                        raise errors.com.epicgames.account.device_auth.not_found(request.form.get('device_id'),
+                                                                                 request.form.get('account_id'))
                 else:
                     raise errors.com.epicgames.account.device_auth.invalid_device_info()
             case _:
