@@ -1,0 +1,233 @@
+{
+  "level": {
+    "potentialBattlepassXp": 0,
+    "rooms": [
+      {
+        "roomName": "Room.Unique.HallsOfFadedGlory.Elemental1.D3.R01",
+        "discoveryGoldMult": 0,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Nature_T02",
+                "killXp": 0,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Nature_ChargedFist_T03",
+                "killXp": 0,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Troll_Nature_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T02",
+                "killXp": 0,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 595
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Nature",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.HallsOfFadedGlory.Elemental1.D3.R02",
+        "discoveryGoldMult": 0,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Exploder_Nature_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T03",
+                "killXp": 0,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Troll_Nature_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Nature_Medium",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Nature_Low",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Nature",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Nature_AOE_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.HallsOfFadedGlory.Elemental1.D3.R03",
+        "discoveryGoldMult": 0,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Nature_SwiftStrike_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Nature_ChargedFist_T03",
+                "killXp": 0,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_Basic_Nature_GuardianStance_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Nature_GuardianStance_T02",
+                "killXp": 0,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:MageKnight_R1_Nature_Thorns_T05",
+            "spawnClass": "BossLarge",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Nature_ChargedFist_T04",
+                "killXp": 0,
+                "spawnClass": "BossLarge",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 11475
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Nature_Medium",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Nature",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      }
+    ]
+  }
+}

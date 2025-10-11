@@ -1,0 +1,377 @@
+{
+  "level": {
+    "potentialBattlepassXp": [
+      61,
+      100
+    ],
+    "rooms": [
+      {
+        "roomName": "Room.Standard.FullClear.Easy.R01",
+        "discoveryGoldMult": 1,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Basic_Light_AimedShot_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Fire_Sprite_T01",
+            "spawnClass": "Normal",
+            "killXp": 3,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Light_Sprite_T01",
+            "spawnClass": "Normal",
+            "killXp": 3,
+            "lootTemplateId": {
+              "templateId": "Currency:HeroXp_Basic",
+              "quantity": 461
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  17,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  17,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  17,
+                  38
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_All_VeryLow",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shrine_ManaPool",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Standard.FindKeyAndExit.Easy.R01",
+        "discoveryGoldMult": 1,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Basic_Water_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_C1_Nature_ImpStab_T01",
+            "spawnClass": "Normal",
+            "killXp": 3,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  17,
+                  30
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  17,
+                  30
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  17,
+                  30
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  17,
+                  30
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Nature_VeryHigh",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shrine_ManaPool",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Standard.ClearPathToExit.Medium.R02",
+        "discoveryGoldMult": 1,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Water_Sprite_T01",
+            "spawnClass": "Normal",
+            "killXp": 3,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 450
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Assassin_C1_Light_ImpStab_T01",
+                "killXp": 3,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Nature_EnergyBlast_T03",
+            "spawnClass": "Normal",
+            "killXp": 9,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Basic_Fire_AimedShot_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  15,
+                  31
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  15,
+                  31
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  15,
+                  31
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Item:HealthVial",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shrine_ManaPool",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Standard.KillAllEnemies.Easy.R02",
+        "discoveryGoldMult": 1,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_C1_Light_ImpStab_T01",
+            "spawnClass": "Normal",
+            "killXp": 3,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Basic_Light_AimedShot_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Fire_Flurry_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 10
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  13,
+                  15
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  13,
+                  15
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Item:HealthVial",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Fire_Low",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shrine_ManaPool",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Fire_Sprite_T01",
+            "spawnClass": "Normal",
+            "killXp": 3,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      }
+    ]
+  }
+}

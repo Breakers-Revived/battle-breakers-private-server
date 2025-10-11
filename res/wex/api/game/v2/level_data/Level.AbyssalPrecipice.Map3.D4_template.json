@@ -1,0 +1,4164 @@
+{
+  "level": {
+    "potentialBattlepassXp": [
+      402,
+      447
+    ],
+    "rooms": [
+      {
+        "roomName": "Room.Storm.FindKeyAndExit.R01",
+        "discoveryGoldMult": 26,
+        "occupants": [
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_PoisonTank_Dark_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 1104,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 1768
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Dark_VeryHigh",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_VeryHigh",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_R2_Dark_Soulslave_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": {
+              "templateId": "Currency:HeroXp_Basic",
+              "quantity": 1841
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 364
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 416
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 884
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_Pummel_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  312,
+                  780
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  312,
+                  780
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  312,
+                  780
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  138
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Dark",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Fire",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Light",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Nature",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Water",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_R2_Fire_TripleStab_T04",
+            "spawnClass": [
+              "BossMedium",
+              "Normal"
+            ],
+            "killXp": [
+              184,
+              736
+            ],
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 1404
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3016
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Fire_ChargedFist_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Fire_Pummel_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 2102
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R1_Dark_SiphonPower_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 1949
+              },
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC1_Fire_Reconstruction_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Fire_Medium",
+              "quantity": 1
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_All_VeryLow",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R1_Dark_SiphonPower_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 1950
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3301
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Dark_SwiftStrike_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Dark_Medium",
+                  "quantity": 1
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Item:HealthVial",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Dark_Stun_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_R2_Dark_Soulslave_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 1534
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Fire_ElementalBreath_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3123
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_PoisonTank_Dark_T04",
+                "killXp": 1104,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Dark_High",
+                  "quantity": 1
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 2171
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 442
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Item:ManaVial",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Storm.FindKeyAndExit.R02",
+        "discoveryGoldMult": 26,
+        "occupants": [
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Dark_SwiftStrike_T04",
+            "spawnClass": [
+              "BossMedium",
+              "Normal"
+            ],
+            "killXp": [
+              184,
+              736
+            ],
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1144,
+                  1690
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1144,
+                  1690
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1144,
+                  1690
+                ]
+              },
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 3242
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3438
+                }
+              },
+              {
+                "spawnChance": 67,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T03",
+                "killXp": [
+                  138,
+                  552
+                ],
+                "spawnClass": [
+                  "BossMedium",
+                  "Normal"
+                ],
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:Gold",
+                    "quantity": [
+                      260,
+                      1118
+                    ]
+                  },
+                  {
+                    "templateId": "Currency:Gold",
+                    "quantity": [
+                      260,
+                      1118
+                    ]
+                  }
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3097
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Assassin_R1_Dark_SiphonPower_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Fire_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 416
+                }
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null,
+                  null
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Dark_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_All_VeryLow",
+                  "quantity": 1
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 156
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 338
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Basic_Fire_AimedShot_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R2_Dark_Slasher_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Fire_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_All_VeryLow",
+                  "quantity": 1
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Item:ManaVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:ManaVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:ManaVial",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Dark",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Fire",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Light",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Nature",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Water",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R2_Dark_Slasher_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 2288
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3209
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Fire_VeryHigh",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Fire_VeryHigh",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Fire_VeryHigh",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 2093
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null,
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_UC1_Dark_Pummel_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  962
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  962
+                ]
+              },
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Dark_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:Gold",
+                    "quantity": 182
+                  },
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 630
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": [
+                  2784,
+                  3170
+                ]
+              },
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": [
+                  2784,
+                  3170
+                ]
+              },
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": [
+                  2784,
+                  3170
+                ]
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Fire_Reconstruction_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 260
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 260
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null,
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1014
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_R2_Fire_Firebolt_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Fire_High",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Dark_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null,
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Assassin_VR1_Fire_HiddenStrike_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Troll_Fire_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 962
+              },
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_R2_Fire_Soulslave_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": {
+              "templateId": "Currency:HeroXp_Basic",
+              "quantity": 1940
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Fire_Buff_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R1_Dark_SiphonPower_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 1508
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 1144
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3406
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3229
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 2002
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Treasure_Dark_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  17316,
+                  21814
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  17316,
+                  21814
+                ]
+              },
+              {
+                "templateId": "Container:Chest_Dark_Extreme",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Shadowknight_R2_Dark_Soulslave_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Dark_High",
+                  "quantity": 1
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_R2_Dark_Shadowbolt_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Dark_High",
+                  "quantity": 1
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Troll_Dark_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 936
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_UC2_Dark_Ghoul_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 1144
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Dark_VeryHigh",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_UC2_Dark_Ghoul_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Dark_SwiftStrike_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Dark_High",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_R2_Dark_TripleStab_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 1638
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 1014
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 2941
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 234
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_R2_Dark_Soulslave_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 936
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC2_Fire_SpearThrust_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T04",
+            "spawnClass": [
+              "BossMedium",
+              "Normal"
+            ],
+            "killXp": [
+              184,
+              736
+            ],
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": [
+                  2726,
+                  3230
+                ]
+              },
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": [
+                  2726,
+                  3230
+                ]
+              },
+              {
+                "templateId": "Container:Chest_Dark_Medium",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_PoisonTank_Dark_T04",
+                "killXp": 276,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 1066
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_UC1_Fire_ElementalBreath_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 156
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 260
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Dark_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Item:HasteVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HasteVial",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": {
+              "templateId": "Currency:HeroXp_Basic",
+              "quantity": 2936
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_PoisonTank_Dark_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 1104,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 1976
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R1_Dark_SiphonPower_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 338
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 182
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Fire_SwiftStrike_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 910
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_R1_Fire_LeadTheCharge_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Fire_Medium",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Fire_ElementalBlast_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Fire_Medium",
+              "quantity": 1
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_Pummel_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3401
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC2_Dark_SpearThrust_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Dark_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 714
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 710
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC2_Dark_SpearThrust_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 754
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Storm.FindKeyAndExit.R03",
+        "discoveryGoldMult": 26,
+        "occupants": [
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R1_Dark_SiphonPower_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 1534
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 754
+                }
+              },
+              {
+                "spawnChance": 67,
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:Gold",
+                    "quantity": [
+                      936,
+                      962
+                    ]
+                  },
+                  {
+                    "templateId": "Currency:Gold",
+                    "quantity": [
+                      936,
+                      962
+                    ]
+                  }
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 2132
+                }
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Fire_ElementalPhantom_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Fire_Medium",
+                  "quantity": 1
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Dark_SwiftStrike_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 1144
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_R2_Dark_Warbear_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 1170
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Dark_SwiftStrike_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  702,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  702,
+                  1170
+                ]
+              },
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 962
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_PoisonTank_Dark_T04",
+                "killXp": 276,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 1170
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 780
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Exploder_Dark_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 1092
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  46,
+                  230
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  234,
+                  1170
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Dark",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Fire",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Light",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Nature",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Trap_Elemental_Water",
+            "spawnClass": "Normal",
+            "killXp": 46,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warmage_R1_Fire_FuelTheFire_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 1534
+              },
+              {
+                "templateId": "Container:Chest_Fire_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Fire_High",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_UC1_Dark_SwiftStrike_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 806
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Dark_Medium",
+                "quantity": 1
+              },
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Fire_LesserDemon_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 988
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Fire_Flurry_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 2193
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 643
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 708
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Dark_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Fire_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": [
+                  1830,
+                  2047
+                ]
+              },
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": [
+                  1830,
+                  2047
+                ]
+              },
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Fire_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Dark_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_PoisonTank_Dark_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 1104,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Fire_Pummel_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 728
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_UC1_Fire_SwiftStrike_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 2811
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 23,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Treasure_Dark_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 15643
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  21970,
+                  24596
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  21970,
+                  24596
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  21970,
+                  24596
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  21970,
+                  24596
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  21970,
+                  24596
+                ]
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3138
+                }
+              },
+              {
+                "spawnChance": 67,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:HeroXp_Basic",
+                    "quantity": 3051
+                  },
+                  {
+                    "templateId": "Container:Chest_Dark_Medium",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 1092
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 988
+              },
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:HeroXp_Basic",
+                    "quantity": 1909
+                  },
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 442
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R2_Dark_Slasher_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 1909
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 312
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 701
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Dark_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_UC1_Fire_ElementalBreath_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": {
+              "templateId": "Currency:HeroXp_Basic",
+              "quantity": 1959
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Fire_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Item:ManaVial",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_R2_Dark_TripleStab_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 736,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Dark_ElementalBreath_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3080
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_Exploder_Dark_T04",
+                "killXp": 736,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Dark_High",
+                  "quantity": 1
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_Pummel_T03",
+                "killXp": 552,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 1040
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_UC1_Fire_ElementalBreath_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Fire_Reconstruction_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC1_Fire_Reconstruction_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": {
+              "templateId": "Currency:HeroXp_Basic",
+              "quantity": 2168
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Dark_Stun_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Dark_VeryHigh",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_VeryHigh",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_VeryHigh",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_VeryHigh",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R2_Dark_Slasher_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 1066
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_PoisonTank_Dark_T04",
+                "killXp": 276,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 988
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_Exploder_Dark_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 2952
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Fire_ElementalBlast_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Fire_Medium",
+                "quantity": 1
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 1144
+              },
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 3187
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Dark_GuardianStance_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_Pummel_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 468
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Fire_Pummel_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Fire_LesserDemon_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 858
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC2_Dark_SpearThrust_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Dark_Medium",
+                "quantity": 1
+              },
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 962
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Fire_Reconstruction_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Dark_Low",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Dark_Flurry_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 15,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Dark_ElementalPhantom_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": [
+                  1972,
+                  2015
+                ]
+              },
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": [
+                  1972,
+                  2015
+                ]
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Fire_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Fire_SwiftStrike_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_LesserDemon_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 2086
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_Basic_Fire_GuardianStance_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warmage_R1_Fire_FuelTheFire_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R1_Dark_SiphonPower_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Dark_ElementalBlast_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Dark_Reconstruction_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Dark_Pummel_T03",
+                "killXp": 138,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_R2_Dark_Soulslave_T04",
+            "spawnClass": "Normal",
+            "killXp": 184,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Dark_ChargedFist_T04",
+                "killXp": 184,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Dark_AOE_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_UC1_Dark_Pummel_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Dark_T02",
+                "killXp": 92,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 8,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Fire_ElementalBlast_T03",
+            "spawnClass": "Normal",
+            "killXp": 138,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      }
+    ]
+  }
+}

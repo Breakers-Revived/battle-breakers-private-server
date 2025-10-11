@@ -1,0 +1,356 @@
+{
+  "level": {
+    "potentialBattlepassXp": 0,
+    "rooms": [
+      {
+        "roomName": "Room.Unique.Mine.Map4.D4.Entrance",
+        "discoveryGoldMult": 0,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  17,
+                  38
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  17,
+                  38
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  17,
+                  44
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  17,
+                  44
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  17,
+                  44
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  17,
+                  44
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  17,
+                  44
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  17,
+                  44
+                ]
+              }
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.Mine.Map4.D4.Common",
+        "discoveryGoldMult": 0,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  18,
+                  52
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  18,
+                  52
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  18,
+                  52
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  18,
+                  52
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  18,
+                  52
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  18,
+                  52
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  18,
+                  52
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  26,
+                  49
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  26,
+                  49
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  26,
+                  49
+                ]
+              }
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.Mine.Map4.D4.Uncommon",
+        "discoveryGoldMult": 0,
+        "occupants": [
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  35,
+                  48
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  35,
+                  48
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  35,
+                  48
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  35,
+                  48
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  35,
+                  48
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  35,
+                  48
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Iron",
+                "quantity": [
+                  35,
+                  48
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              },
+              {
+                "templateId": "Ore:Ore_Silver",
+                "quantity": [
+                  34,
+                  80
+                ]
+              }
+            ],
+            "spawnGroup": []
+          }
+        ]
+      }
+    ]
+  }
+}

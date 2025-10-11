@@ -1,0 +1,1301 @@
+{
+  "level": {
+    "potentialBattlepassXp": [
+      72,
+      101
+    ],
+    "rooms": [
+      {
+        "roomName": "Room.Unique.ForestOfMixedEmotions.Map5.R01",
+        "discoveryGoldMult": 1,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Basic_Dark_AimedShot_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 8
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 20,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Assassin_C1_Water_ImpStab_T01",
+                "killXp": 2,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 20,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Assassin_C1_Light_ImpStab_T01",
+                "killXp": 2,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 20,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Water_Sprite_T01",
+                "killXp": 2,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Basic_Nature_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 20,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Assassin_C1_Water_ImpStab_T01",
+                "killXp": 2,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Dark_EnergyBlast_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 20,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Water_Sprite_T01",
+                "killXp": 2,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 60,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Starter_Fire_Berserking_T05",
+            "spawnClass": "BossMedium",
+            "killXp": 40,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  69,
+                  79
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  69,
+                  79
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  69,
+                  79
+                ]
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Nature_ElementalBlast_T03",
+                "killXp": 24,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 2206
+                }
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_PoisonTank_Water_T04",
+                "killXp": 48,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 89
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 80,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  9,
+                  38
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 40,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Water_Low",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Nature_Low",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 40,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_VR1_Nature_ChargedShot_T05",
+            "spawnClass": "BossMedium",
+            "killXp": 40,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Nature_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 63
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  2,
+                  6
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  2,
+                  6
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_All_VeryLow",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.ForestOfMixedEmotions.Map5.R02",
+        "discoveryGoldMult": 1,
+        "occupants": [
+          {
+            "spawnChance": 60,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Fire_Flurry_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 482
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  7,
+                  9
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  7,
+                  9
+                ]
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Light_Flurry_T02",
+                "killXp": 4,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 9
+                }
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Assassin_C1_Nature_ImpStab_T01",
+                "killXp": 2,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_Sprite_T01",
+                "killXp": 2,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 9
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Troll_Light_T03",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  34,
+                  39
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  34,
+                  39
+                ]
+              },
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 2055
+              },
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 20,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Fire_Flurry_T02",
+                "killXp": 4,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 20,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_Basic_Fire_T02",
+                "killXp": 4,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 80,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  11,
+                  43
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 60,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 40,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_All_VeryLow",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_All_VeryLow",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Fire_Low",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 40,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Water_EnergyBlast_T02",
+                "killXp": 4,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Water_Flurry_T02",
+                "killXp": 4,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 439
+                }
+              },
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Nature_EnergyBlast_T02",
+                "killXp": 4,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  4,
+                  10
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  4,
+                  10
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  4,
+                  10
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  4,
+                  10
+                ]
+              }
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.ForestOfMixedEmotions.Map5.Side.R02.Treasure",
+        "discoveryGoldMult": 4,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  116,
+                  1412
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              },
+              {
+                "templateId": "Item:HealthVial",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Nature_Low",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  8,
+                  11
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  8,
+                  11
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  8,
+                  11
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Item:ManaVial",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.ForestOfMixedEmotions.Map5.R03.Boss",
+        "discoveryGoldMult": 1,
+        "occupants": [
+          {
+            "spawnChance": 60,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Water_Flurry_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 440
+              },
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 60,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 60,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Basic_Water_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  8,
+                  12
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  8,
+                  12
+                ]
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 33,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Light_AimedShot_T02",
+                "killXp": 4,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_R2_Dark_Soulslave_T04_Tutorial",
+            "spawnClass": "BossMedium",
+            "killXp": 32,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Dark_High",
+                "quantity": 1
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  67,
+                  81
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  67,
+                  81
+                ]
+              }
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 20,
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Fire_ChargedFist_T03",
+                "killXp": 24,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 68
+                }
+              },
+              {
+                "spawnChance": 20,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Light_ElementalBreath_T03",
+                "killXp": 24,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Light_Medium",
+                  "quantity": 1
+                }
+              }
+            ]
+          },
+          {
+            "spawnChance": 80,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  10,
+                  43
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Item:HealthVial",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Nature_Low",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 40,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Fire_Flurry_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 7
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_EnergyBlast_T02",
+                "killXp": 4,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 40,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Nature_EnergyBlast_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "spawnChance": 50,
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Fire_Sprite_T01",
+                "killXp": 2,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "spawnChance": 40,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Basic_Fire_T02",
+            "spawnClass": "Normal",
+            "killXp": 4,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 413
+              },
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 20,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  4,
+                  6
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  4,
+                  6
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  4,
+                  6
+                ]
+              },
+              {
+                "templateId": "StandIn:AccountXp",
+                "quantity": [
+                  4,
+                  6
+                ]
+              }
+            ],
+            "spawnGroup": []
+          }
+        ]
+      }
+    ]
+  }
+}

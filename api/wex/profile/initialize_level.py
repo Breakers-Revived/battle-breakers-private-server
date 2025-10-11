@@ -68,6 +68,13 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
                 pass
             if level_data is not None:
                 break
+            else:
+                try:
+                    level_data = await read_file(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.D{difficulty}_template.json")
+                except FileNotFoundError:
+                    pass
+            if level_data is not None:
+                break
         else:
             try:
                 level_data = await read_file(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.json")

@@ -1,0 +1,262 @@
+{
+  "level": {
+    "potentialBattlepassXp": 54,
+    "rooms": [
+      {
+        "roomName": "Room.Standard.ClearPathToExit.Hard.R01",
+        "discoveryGoldMult": 2,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Water_Flurry_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Basic_Water_AimedShot_T03",
+            "spawnClass": "Normal",
+            "killXp": 9,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Basic_Light_AimedShot_T03",
+            "spawnClass": "Normal",
+            "killXp": 9,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 80
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Light_AimedShot_T02",
+                "killXp": 6,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 24
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  20,
+                  82
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  20,
+                  82
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  20,
+                  82
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  20,
+                  82
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shrine_ManaPool",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Standard.FindExit.Medium.R03",
+        "discoveryGoldMult": 2,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Basic_Water_AimedShot_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Fire_GuardianStance_T02",
+                "killXp": 6,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_Basic_Light_Flurry_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Water_EnergyBlast_T02",
+            "spawnClass": "Normal",
+            "killXp": 6,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Basic_Water_Sprite_T01",
+            "spawnClass": "Normal",
+            "killXp": 3,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  26,
+                  68
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  26,
+                  68
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  26,
+                  68
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Item:HealthVial",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Treasure.FullClear.R03",
+        "discoveryGoldMult": 12,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  408,
+                  3720
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  408,
+                  3720
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  408,
+                  3720
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  408,
+                  3720
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  408,
+                  3720
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  408,
+                  3720
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  408,
+                  3720
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  408,
+                  3720
+                ]
+              }
+            ],
+            "spawnGroup": []
+          }
+        ]
+      }
+    ]
+  }
+}

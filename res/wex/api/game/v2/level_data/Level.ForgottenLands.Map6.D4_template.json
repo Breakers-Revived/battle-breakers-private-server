@@ -1,0 +1,516 @@
+{
+  "level": {
+    "potentialBattlepassXp": 907,
+    "rooms": [
+      {
+        "roomName": "Room.Unique.ForgottenLands.Map6.R01",
+        "discoveryGoldMult": 14,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Exploder_Nature_T04",
+            "spawnClass": "Normal",
+            "killXp": 152,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  420,
+                  560
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  420,
+                  560
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  420,
+                  560
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  420,
+                  560
+                ]
+              },
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Nature_Heal_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 182
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_Exploder_Nature_T04",
+                "killXp": 152,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Nature_Medium",
+                  "quantity": 1
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Nature_Heal_T04",
+                "killXp": 152,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Fire_Stun_T03",
+            "spawnClass": "Normal",
+            "killXp": 114,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_SR1_Nature_PerfectShield_T06",
+            "spawnClass": "BossMedium",
+            "killXp": 912,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 3318
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Nature_ChargedFist_T04",
+                "killXp": 608,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3160
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Blademaster_SR1_Nature_HurricaneBlade_T06",
+            "spawnClass": "BossMedium",
+            "killXp": 912,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 12768
+            },
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_R2_Nature_Shieldwall_T05",
+            "spawnClass": "BossMedium",
+            "killXp": 760,
+            "lootTemplateId": {
+              "templateId": "Currency:HeroXp_Basic",
+              "quantity": 7110
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Nature_Reconstruction_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3272
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.ForgottenLands.Map6.R02",
+        "discoveryGoldMult": 14,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Nature_SwiftStrike_T04",
+            "spawnClass": "Normal",
+            "killXp": 152,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  420,
+                  574
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  420,
+                  574
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  420,
+                  574
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  420,
+                  574
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  420,
+                  574
+                ]
+              },
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Nature_Heal_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 1949
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Nature_ElementalBreath_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:HeroXp_Basic",
+                    "quantity": [
+                      1970,
+                      2186
+                    ]
+                  },
+                  {
+                    "templateId": "Currency:HeroXp_Basic",
+                    "quantity": [
+                      1970,
+                      2186
+                    ]
+                  },
+                  null,
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Nature_EnergyBlast_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_PoisonTank_Nature_T04",
+                "killXp": 228,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Nature_Pummel_T04",
+                "killXp": 152,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Fire_Buff_T03",
+            "spawnClass": "Normal",
+            "killXp": 114,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_SR1_Fire_GolemMaster_T06",
+            "spawnClass": "BossMedium",
+            "killXp": 912,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Fire_High",
+              "quantity": 1
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Nature_ChargedFist_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 490
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_VR2_Nature_Backstab_T05",
+            "spawnClass": "BossLarge",
+            "killXp": 3800,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 10346
+            },
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.ForgottenLands.Map6.R03",
+        "discoveryGoldMult": 14,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC1_Nature_Reconstruction_T04",
+            "spawnClass": "Normal",
+            "killXp": 152,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  476,
+                  546
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  476,
+                  546
+                ]
+              },
+              {
+                "templateId": "Container:Chest_Nature_Medium",
+                "quantity": 1
+              },
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Nature_AimedShot_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Nature_Flurry_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MageKnight_R1_Nature_Thorns_T04",
+                "killXp": 152,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Nature_ElementalBlast_T04",
+                "killXp": 152,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Nature_Heal_T04",
+                "killXp": 152,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:Gold",
+                    "quantity": 476
+                  },
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Nature_Pummel_T04",
+                "killXp": 152,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 602
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_UC1_Nature_Reconstruction_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Nature_Heal_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Nature_ElementalPhantom_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Fire_Stun_T03",
+            "spawnClass": "Normal",
+            "killXp": 114,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warmage_SR2_Fire_Shadowflame_T06",
+            "spawnClass": "BossMedium",
+            "killXp": 912,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Fire_High",
+              "quantity": 1
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Nature_GuardianStance_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Nature_Medium",
+                  "quantity": 1
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_UC1_Nature_SwiftStrike_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3457
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:MageKnight_SR1_Nature_RockForm_T06",
+            "spawnClass": "BossLarge",
+            "killXp": 4560,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 12950
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Nature_Pummel_T04",
+                "killXp": 3040,
+                "spawnClass": "BossLarge",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 14762
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

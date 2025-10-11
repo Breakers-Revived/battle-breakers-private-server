@@ -1,0 +1,498 @@
+{
+  "level": {
+    "potentialBattlepassXp": 950,
+    "rooms": [
+      {
+        "roomName": "Room.Unique.ForgottenLands.Map8.R01",
+        "discoveryGoldMult": 14,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_VR1_Water_RelentlessTide_T05",
+            "spawnClass": "Normal",
+            "killXp": 190,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 3114
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 476
+              },
+              {
+                "templateId": "Container:Chest_Water_Medium",
+                "quantity": 1
+              },
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Water_Heal_T04",
+                "killXp": 152,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Water_ElementalPhantom_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Dark_Stun_T03",
+            "spawnClass": "Normal",
+            "killXp": 114,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Starter_Water_MultiShot_T05",
+            "spawnClass": "BossMedium",
+            "killXp": 760,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 7728
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 1190
+              }
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Water_Pummel_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 532
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Water_ElementalPhantom_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 882
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_VR1_Dark_SeekerMissile_T05",
+            "spawnClass": "BossMedium",
+            "killXp": 760,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 966
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_UC1_Water_SwiftStrike_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3243
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.ForgottenLands.Map8.R02",
+        "discoveryGoldMult": 14,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_VR1_Water_SmokeBomb_T05",
+            "spawnClass": "Normal",
+            "killXp": 190,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:HeroXp_Basic",
+                "quantity": 2864
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": 434
+              },
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Water_EnergyBlast_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_Basic_Water_Flurry_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:Gold",
+                    "quantity": [
+                      168,
+                      252
+                    ]
+                  },
+                  {
+                    "templateId": "Currency:Gold",
+                    "quantity": [
+                      168,
+                      252
+                    ]
+                  }
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Water_ElementalBreath_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null,
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_UC1_Water_Pummel_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Water_ElementalPhantom_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 168
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Water_Heal_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:HeroXp_Basic",
+                    "quantity": 1861
+                  },
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Dark_AOE_T03",
+            "spawnClass": "Normal",
+            "killXp": 114,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_VR1_Dark_GravityWell_T05",
+            "spawnClass": "BossMedium",
+            "killXp": 760,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 1246
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Water_ElementalBreath_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Water_Medium",
+                  "quantity": 1
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Ninja_R2_Water_TripleStab_T04",
+                "killXp": 608,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 1246
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:TreasureHunter_VR1_Water_FlashFreeze_T05",
+            "spawnClass": "BossLarge",
+            "killXp": 3800,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 9128
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Water_AimedShot_T03",
+                "killXp": 2280,
+                "spawnClass": "BossLarge",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 15694
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Water_ChargedFist_T03",
+                "killXp": 2280,
+                "spawnClass": "BossLarge",
+                "lootTemplateId": {
+                  "templateId": "Container:Chest_Water_High",
+                  "quantity": 1
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Water_Heal_T03",
+                "killXp": 2280,
+                "spawnClass": "BossLarge",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 3556
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.ForgottenLands.Map8.R03",
+        "discoveryGoldMult": 14,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_R2_Water_Frostbreath_T05",
+            "spawnClass": "Normal",
+            "killXp": 190,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  448,
+                  532
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  448,
+                  532
+                ]
+              },
+              {
+                "templateId": "Container:Chest_Water_Medium",
+                "quantity": 1
+              },
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:MartialArtist_UC1_Water_ChargedFist_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Warrior_VR1_Water_Bash_T04",
+                "killXp": 152,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 378
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:AI_PoisonTank_Water_T04",
+                "killXp": 228,
+                "spawnClass": "Normal",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3551
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Knight_Basic_Water_GuardianStance_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Water_ElementalPhantom_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_UC1_Water_ElementalBreath_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:HeroXp_Basic",
+                    "quantity": 1941
+                  },
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Archer_Basic_Water_AimedShot_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  {
+                    "templateId": "Currency:HeroXp_Basic",
+                    "quantity": 1798
+                  },
+                  null
+                ]
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Water_Heal_T03",
+                "killXp": 114,
+                "spawnClass": "Normal",
+                "lootTemplateId": [
+                  null
+                ]
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Tower_Dark_AOE_T03",
+            "spawnClass": "Normal",
+            "killXp": 114,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_VR1_Dark_DarkEmbrace_T05",
+            "spawnClass": "BossMedium",
+            "killXp": 760,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 798
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_Basic_Water_EnergyBlast_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:HeroXp_Basic",
+                  "quantity": 3244
+                }
+              },
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Cleric_UC1_Water_Heal_T03",
+                "killXp": 456,
+                "spawnClass": "BossMedium",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 1078
+                }
+              }
+            ]
+          },
+          {
+            "isFriendly": false,
+            "characterTemplateId": "Character:DragonKnight_SR1_Water_DragonForm_T06",
+            "spawnClass": "BossLarge",
+            "killXp": 4560,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 12152
+            },
+            "spawnGroup": [
+              {
+                "isFriendly": false,
+                "characterTemplateId": "Character:Mage_UC1_Water_ElementalPhantom_T03",
+                "killXp": 2280,
+                "spawnClass": "BossLarge",
+                "lootTemplateId": {
+                  "templateId": "Currency:Gold",
+                  "quantity": 13300
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

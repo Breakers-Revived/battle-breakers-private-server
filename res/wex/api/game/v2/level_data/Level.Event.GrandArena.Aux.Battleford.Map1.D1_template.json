@@ -1,0 +1,774 @@
+{
+  "level": {
+    "potentialBattlepassXp": 0,
+    "rooms": [
+      {
+        "roomName": "Room.Unique.PvP.DefaultOpponents",
+        "discoveryGoldMult": 5,
+        "occupants": [
+          {
+            "spawnChance": 34,
+            "isFriendly": false,
+            "characterTemplateId": "Character:HolyKnight_VR2_Light_BASE_T05",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 38,
+            "isFriendly": false,
+            "characterTemplateId": "Character:TreasureHunter_VR2_Fire_AntiMaterialCharge_T05",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 31,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_VR1_Light_CrystalDaggers_T04",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 41,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_VR2_Nature_GoinCommando_T05",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 17,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_Starter_Water_MultiShot_T03",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "isFriendly": false,
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 10,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_VR2_Dark_Rampage_T04",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 14,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_R2_Nature_Whirlwind_T03",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 7,
+            "isFriendly": false,
+            "characterTemplateId": "Character:TreasureHunter_R2_Water_PowerEfflux_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_R2_Dark_BloodMagic_T04",
+            "spawnClass": "PvpBossLarge",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 21,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Starter_Fire_Fireball_T03",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 14,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Assassin_R2_Nature_Slasher_T03",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 7,
+            "isFriendly": false,
+            "characterTemplateId": "Character:MartialArtist_R2_Water_Ironfist_T04",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 31,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Cleric_VR2_Dark_TerraRifle_T04",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:TreasureHunter_R2_Fire_PowerEfflux_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 10,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Starter_Fire_Fireball_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Water_SwiftStrike_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Light_SwiftStrike_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 24,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Starter_Fire_BurningSwordCombo_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 10,
+            "isFriendly": false,
+            "characterTemplateId": "Character:TreasureHunter_R2_Nature_PowerEfflux_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 7,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Cleric_R1_Water_RejuvenatingBreeze_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 7,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_UC1_Fire_ElementalBreath_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 7,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Starter_Dark_RoboGuy_T02",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 7,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_R2_Dark_BloodMagic_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 21,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Starter_Fire_Berserking_T03",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 14,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_UC1_Water_SwiftStrike_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 14,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_Starter_Nature_PowerStrike_T03",
+            "spawnClass": [
+              "Normal",
+              "PvpBossLarge"
+            ],
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_R2_Light_Warbear_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_UC2_Water_SpearThrust_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:MartialArtist_SR1_Dark_ExplodingPalm_T05",
+            "spawnClass": "PvpBossLarge",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Spellsword_SR2_Water_ChainShot_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 7,
+            "isFriendly": false,
+            "characterTemplateId": "Character:TreasureHunter_R2_Fire_PowerEfflux_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null,
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:MartialArtist_VR1_Dark_ShatteringFist_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_Starter_Fire_BurningSwordCombo_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warmage_VR1_Fire_CleansingLight_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:HolyKnight_R1_Light_Resurrect_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Blademaster_VR1_Dark_SinisterStrike_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warrior_VR1_Light_Deflect_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Cleric_R1_Water_RejuvenatingBreeze_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Spellsword_VR1_Fire_TargetAll_T05",
+            "spawnClass": "PvpBossLarge",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_UC1_Fire_ElementalBlast_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:HolyKnight_R1_Light_Resurrect_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:TreasureHunter_R2_Fire_PowerEfflux_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Mage_VR1_Nature_Shatter_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_R2_Dark_TripleStab_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_VR1_Water_ShieldStance_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_SR2_Dark_SynchronizedBarrage_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Warmage_SR2_Dark_CuddleTeamLeader_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Cleric_SR2_Nature_MysticBlessing_T05",
+            "spawnClass": "PvpBossLarge",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_SR2_Fire_Zed_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Knight_VR1_Water_ShieldStance_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Ninja_VR1_Light_CrystalDaggers_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Shadowknight_SR2_Dark_Devour_T05",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:Archer_VR2_Fire_Rustlord_T04",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 3,
+            "isFriendly": false,
+            "characterTemplateId": "Character:MartialArtist_R2_Water_Ironfist_T03",
+            "spawnClass": "Normal",
+            "killXp": 0,
+            "lootTemplateId": [
+              null
+            ],
+            "spawnGroup": []
+          }
+        ]
+      }
+    ]
+  }
+}

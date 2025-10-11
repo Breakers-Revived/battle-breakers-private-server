@@ -1,0 +1,235 @@
+{
+  "level": {
+    "potentialBattlepassXp": [
+      91,
+      120
+    ],
+    "rooms": [
+      {
+        "roomName": "Room.Unique.TreasureLevel",
+        "discoveryGoldMult": 60,
+        "occupants": [
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1620,
+                  22620
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 25,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Nature_Medium",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Container:Chest_Fire_Medium",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Fire_Medium",
+                "quantity": 1
+              },
+              {
+                "templateId": "Container:Chest_Fire_Medium",
+                "quantity": 1
+              }
+            ],
+            "spawnGroup": []
+          }
+        ]
+      },
+      {
+        "roomName": "Room.Unique.TreasureLevelFinal",
+        "discoveryGoldMult": 60,
+        "occupants": [
+          {
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": [
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1860,
+                  20220
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1860,
+                  20220
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1860,
+                  20220
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1860,
+                  20220
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1860,
+                  20220
+                ]
+              },
+              {
+                "templateId": "Currency:Gold",
+                "quantity": [
+                  1860,
+                  20220
+                ]
+              }
+            ],
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Nature_Medium",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Water_VeryHigh",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "killXp": 0,
+            "lootTemplateId": {
+              "templateId": "Container:Chest_Light_Medium",
+              "quantity": 1
+            },
+            "spawnGroup": []
+          },
+          {
+            "spawnChance": 50,
+            "isFriendly": false,
+            "characterTemplateId": "Character:AI_Treasure_Fire_T04",
+            "spawnClass": "BossMedium",
+            "killXp": 48,
+            "lootTemplateId": {
+              "templateId": "Currency:Gold",
+              "quantity": 50940
+            },
+            "spawnGroup": []
+          }
+        ]
+      }
+    ]
+  }
+}
