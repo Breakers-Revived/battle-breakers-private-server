@@ -1109,7 +1109,7 @@ async def room_generator(level_id: str, level_info: dict) -> list:
     rooms_count = level_info.get("NumExpectedRooms", 1)
     room_info = (await load_datatable("Content/World/Datatables/LevelRooms"))[0]["Rows"]
     room = {
-        "roomName": "Room.Unique.Onboarding1",
+        "roomName": "Room.Standard.FindExit.Easy.R01",
         "regionName": level_id,
         "depth": 1,
         "worldLevel": int(random.randint(
