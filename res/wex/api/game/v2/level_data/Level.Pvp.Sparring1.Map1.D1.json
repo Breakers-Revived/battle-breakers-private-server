@@ -1,0 +1,12 @@
+{
+  "level": {
+    "potentialBattlepassXp": 0,
+    "rooms": [
+      {
+        "roomName": "Room.Unique.PvP.DefaultOpponents",
+        "discoveryGoldMult": 1,
+        "occupants": []
+      }
+    ]
+  }
+}

@@ -177,6 +177,53 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
             depth += 1
     else:
         level_notification["level"]["rooms"] = await room_generator(level_id, level_info)
+    if level_id == "Level.Pvp.Sparring1.Map1.D1":
+        level_notification["level"]["rooms"][0]["worldLevel"] = 1
+        level_notification["level"]["rooms"][0]["discoveryGoldMult"] = 1.0
+        opponents_id = await request.ctx.profile.find_item_by_template_id("MultiplayerMode:PvpDuel")
+        if not opponents_id:
+            raise errors.com.epicgames.world_explorers.level_requirements_not_met()
+        opponents = await request.ctx.profile.get_item_by_guid(opponents_id)
+        for match in opponents["attributes"].get("match_roster", []):
+            if match["opponent"]["matchmakingId"] == request.json.get("friendInstanceId") and match["opponent"]["type"] == "Sparring":
+                current_idx = 0
+                for opponent in match.get("heroInfo", []):
+                    if opponent.get("characterTemplateId") is None:
+                        level_notification["level"]["rooms"][0]["occupants"].append({
+                            "isFriendly": False,
+                            "killXp": 0,
+                            "spawnClass": "Normal",
+                            "lootQuantity": 0
+                        })
+                        continue
+                    level_notification["level"]["rooms"][0]["occupants"].append({
+                        "isFriendly": False,
+                        "characterTemplateId": opponent["templateId"],
+                        "killXp": 0,
+                        "spawnClass": "PvpBossLarge" if match.get("mainCommanderIdx", 0) == current_idx else "BossMedium" if opponent["bIsCommander"] else "Normal",
+                        "lootQuantity": 0,
+                        "options": {
+                            "preferredSlotIndex": 0,
+                            "level": opponent["level"],
+                            "skillLevel": opponent["skillLevel"],
+                            "upgrades": opponent["upgrades"]
+                        }
+                    })
+                    match current_idx:
+                        case 0:
+                            level_notification["level"]["rooms"][0]["occupants"][-1]["options"]["preferredSlotIndex"] = 15
+                        case 1:
+                            level_notification["level"]["rooms"][0]["occupants"][-1]["options"]["preferredSlotIndex"] = 32
+                        case 2:
+                            level_notification["level"]["rooms"][0]["occupants"][-1]["options"]["preferredSlotIndex"] = 33
+                        case 3:
+                            level_notification["level"]["rooms"][0]["occupants"][-1]["options"]["preferredSlotIndex"] = 38
+                        case 4:
+                            level_notification["level"]["rooms"][0]["occupants"][-1]["options"]["preferredSlotIndex"] = 40
+                    current_idx += 1
+                break
+        else:
+            raise errors.com.epicgames.world_explorers.invalid_friend()
     account_info = {
         "level": await request.ctx.profile.get_stat("level"),
         "perks": []
