@@ -1027,11 +1027,9 @@ class RotationalContent(Channel):
             "eventId": event_data[0].get("Properties").get("EventId"),
             "expiresAt": await format_time(end_date)
         }]
-        self.states[0].state["purchaseEventId"] = \
-            event_data[0].get("Properties").get("EventCurrency")[0].get("AssetPathName").split(".Reagent_")[-1].split(
-                "Event_")[-1].split("_")[0]
+        self.states[0].state["purchasingEventId"] = f"Event.{event_data[0].get('Name').split('_')[-1]}"
         sanic.log.logger.info(
-            f"Current battle pass event set to {self.states[0].state['activeEvents'][0]['eventId']} (Currency {self.states[0].state['purchaseEventId']}), ending at {self.states[0].state['activeEvents'][0]['expiresAt']}")
+            f"Current battle pass event set to {self.states[0].state['activeEvents'][0]['eventId']} (Currency {self.states[0].state['purchasingEventId']}), ending at {self.states[0].state['activeEvents'][0]['expiresAt']}")
         self.cache_expire = await format_time(datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2))
         sanic.log.logger.debug(f"Finished updating rotational content channel, cache expires at {self.cache_expire}")
 

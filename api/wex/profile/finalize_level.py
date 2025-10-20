@@ -6,9 +6,14 @@ This code is licensed under the Breakers Revived License (BRL).
 
 Handles finalizing levels
 """
+import datetime
 
+import aiofiles
+import icalendar
+import recurring_ical_events
 import sanic
 
+import utils.utils
 from utils import types
 from utils.exceptions import errors
 from utils.enums import ProfileType
@@ -3598,17 +3603,24 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     # TODO: update account level + xp + add perk choice + notification
     # TODO: activity gift box
     # TODO: update battle pass xp
-    await request.app.ctx.calendar.update_required_events()
-    event_currency = request.app.ctx.calendar.rotational_content.states[0].state.get("purchaseEventId", "Reagent:Reagent_Event_NinjasAttack_NinjaStars")
-    level_complete_notification[0]["loot"].append({
-        "tierGroupName": "Level.EventsLoot",
-        "items": [{
-            "itemType": event_currency,
-            "itemGuid": await request.ctx.profile.grant_item(event_currency, 64 + battlepassxp),
-            "itemProfile": "profile0",
-            "quantity": 64 + battlepassxp
-        }]
-    })
+    async with aiofiles.open("res/wex/api/calendar/battlepass.ics", "rb") as f:
+        events = recurring_ical_events.of(icalendar.Calendar.from_ical(await f.read())).at(
+            datetime.datetime.now(datetime.UTC)
+        )
+    event_data = await load_datatable(events[-1].get("DESCRIPTION")[1:])
+    # TODO: determine what happens for events with multiple currency
+    # TODO: fix crash
+    for currency_path in event_data[0]["Properties"]["EventCurrency"]:
+        event_currency = await utils.utils.get_template_id_from_path(currency_path["AssetPathName"])
+        level_complete_notification[0]["loot"].append({
+            "tierGroupName": "Level.EventsLoot",
+            "items": [{
+                "itemType": event_currency,
+                "itemGuid": await request.ctx.profile.grant_item(event_currency, 64 + battlepassxp),
+                "itemProfile": "profile0",
+                "quantity": 64 + battlepassxp
+            }]
+        })
     # TODO: update score for daily quests
     pit_unlocks = await request.ctx.profile.find_item_by_template_id("MonsterPitUnlock:Character",
                                                                      ProfileType.MONSTERPIT)
