@@ -35,8 +35,7 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
     :return: The modified profile
     """
     level_id = request.json.get("levelId")
-    level_info = (await load_datatable("Content/World/Datatables/LevelInfo"))[0]["Rows"].get(
-        request.json.get("levelId"))
+    level_info = (await load_datatable("Content/World/Datatables/LevelInfo"))[0]["Rows"].get(level_id)
     if level_info is None:
         raise errors.com.epicgames.world_explorers.level_not_found()
     level_item_id = str(uuid.uuid4())
