@@ -217,8 +217,18 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
+                    }, {
+                        "itemType": "Voucher:Voucher_Chest_Gold",
+                        "itemGuid": await request.ctx.profile.grant_item("Voucher:Voucher_Chest_Gold", 1),
+                        "itemProfile": "profile0",
+                        "quantity": 1
+                    }, {
+                        "itemType": "Unlockable:Unlockable_Duels",
+                        "itemGuid": await request.ctx.profile.grant_item("Unlockable:Unlockable_Duels", 1),
                         "itemProfile": "profile0",
                         "quantity": 1
                     }]
@@ -292,8 +302,18 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
+                    }, {
+                        "itemType": "UpgradePotion:UpgradeStrengthMinor",
+                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeStrengthMinor", 5),
+                        "itemProfile": "profile0",
+                        "quantity": 5
+                    }, {
+                        "itemType": "Unlockable:Unlockable_Elixirs",
+                        "itemGuid": await request.ctx.profile.grant_item("Unlockable:Unlockable_Elixirs", 1),
                         "itemProfile": "profile0",
                         "quantity": 1
                     }]
@@ -302,8 +322,23 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
+                    }, {
+                        "itemType": "Currency:HeroXp_Basic",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 500),
+                        "itemProfile": "profile0",
+                        "quantity": 500
+                    }, {
+                        "itemType": "Character:Pet_C1_Water_Magekoi_T02",
+                        "itemGuid": await request.ctx.profile.grant_hero("Character:Pet_C1_Water_Magekoi_T02"),
+                        "itemProfile": "profile0",
+                        "quantity": 1
+                    }, {
+                        "itemType": "Reagent:Reagent_HeroMap_Bronze",
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Bronze", 1),
                         "itemProfile": "profile0",
                         "quantity": 1
                     }]
@@ -312,18 +347,43 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
                         "itemProfile": "profile0",
-                        "quantity": 1
+                        "quantity": 20
+                    }, {
+                        "itemType": "Currency:HeroXp_Basic",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 1500),
+                        "itemProfile": "profile0",
+                        "quantity": 1500
+                    }, {
+                        "itemType": "Reagent:Reagent_HeroMap_Elemental",
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Elemental", 100),
+                        "itemProfile": "profile0",
+                        "quantity": 100
+                    }, {
+                        "itemType": "TreasureMap:TM_MapResource",
+                        "itemGuid": await request.ctx.profile.grant_item("TreasureMap:TM_MapResource", 35),
+                        "itemProfile": "profile0",
+                        "quantity": 35
                     }]
                 })
             case "LTG.FC.ForestOfMixedEmotions.Map4":
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
+                    }, {
+                        "itemType": "UpgradePotion:UpgradeHealthMinor",
+                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeHealthMinor", 3),
+                        "itemProfile": "profile0",
+                        "quantity": 3
+                    }, {
+                        "itemType": "Voucher:Voucher_Hero_TreasureHunter_Water_PowerEfflux",
+                        "itemGuid": await request.ctx.profile.grant_item("Voucher:Voucher_Hero_TreasureHunter_Water_PowerEfflux", 1),
                         "itemProfile": "profile0",
                         "quantity": 1
                     }]
@@ -332,8 +392,28 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
+                    }, {
+                        "itemType": "Reagent:Reagent_HeroMap_Elemental",
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Elemental", 100),
+                        "itemProfile": "profile0",
+                        "quantity": 100
+                    }, {
+                        "itemType": "Character:Warrior_Starter_Dark_RoboGuy_T02",
+                        "itemGuid": await request.ctx.profile.grant_hero("Character:Warrior_Starter_Dark_RoboGuy_T02"),
+                        "itemProfile": "profile0",
+                        "quantity": 1
+                    }, {
+                        "itemType": "Character:Warrior_Starter_Dark_RoboGuy_T02",
+                        "itemGuid": await request.ctx.profile.grant_hero("Character:Warrior_Starter_Dark_RoboGuy_T02"),
+                        "itemProfile": "profile0",
+                        "quantity": 1
+                    }, {
+                        "itemType": "Character:Warrior_Starter_Dark_RoboGuy_T02",
+                        "itemGuid": await request.ctx.profile.grant_hero("Character:Warrior_Starter_Dark_RoboGuy_T02"),
                         "itemProfile": "profile0",
                         "quantity": 1
                     }]
@@ -342,8 +422,13 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
+                    }, {
+                        "itemType": "Voucher:Voucher_Hero_Mage_Fire_BurningSword",
+                        "itemGuid": await request.ctx.profile.grant_item("Voucher:Voucher_Hero_Mage_Fire_BurningSword", 1),
                         "itemProfile": "profile0",
                         "quantity": 1
                     }]
@@ -352,8 +437,18 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "TreasureMap:TM_ForestOfMixedEmotions_Map8",
+                        "itemGuid": await request.ctx.profile.grant_item("TreasureMap:TM_ForestOfMixedEmotions_Map8", 1),
+                        "itemProfile": "profile0",
+                        "quantity": 1
+                    }, {
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 50),
+                        "itemProfile": "profile0",
+                        "quantity": 50
+                    }, {
+                        "itemType": "Unlockable:Unlockable_Quests",
+                        "itemGuid": await request.ctx.profile.grant_item("Unlockable:Unlockable_Quests", 1),
                         "itemProfile": "profile0",
                         "quantity": 1
                     }]
@@ -362,10 +457,10 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 75),
                         "itemProfile": "profile0",
-                        "quantity": 1
+                        "quantity": 75
                     }]
                 })
             case "LTG.FC.ForgottenLands.Default":
@@ -402,10 +497,10 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
                         "itemProfile": "profile0",
-                        "quantity": 1
+                        "quantity": 20
                     }]
                 })
             case "LTG.FC.MTXPointsExtreme":
@@ -702,8 +797,8 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Reagent:Reagent_Pet_Rockbeast",
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Pet_Rockbeast", 1),
                         "itemProfile": "profile0",
                         "quantity": 1
                     }]
@@ -1002,13 +1097,14 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 }]
             })
         case "LTG.Completion.All.VeryLow":
+            loot_choice = await utils.utils.process_choices([["Reagent:Reagent_Shared_T03", 1], ["Reagent:Reagent_Shared_T02", await utils.utils.process_choices([1, 2, 2, 3])], ["Currency:HeroXp_Basic", await utils.utils.process_choices([400, 600])]])
             level_complete_notification[0]["loot"].append({
                 "tierGroupName": "Level.Instance",
                 "items": [{
-                    "itemType": "Reagent:Reagent_Shared_T03",
-                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 2),
+                    "itemType": loot_choice[0],
+                    "itemGuid": await request.ctx.profile.grant_item(loot_choice[0], loot_choice[1]),
                     "itemProfile": "profile0",
-                    "quantity": 2
+                    "quantity": loot_choice[1]
                 }]
             })
         case "LTG.Completion.BlessedPlains.Map10.D1":
@@ -3435,10 +3531,10 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
             level_complete_notification[0]["loot"].append({
                 "tierGroupName": "Level.Instance",
                 "items": [{
-                    "itemType": "Reagent:Reagent_Shared_T03",
-                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                    "itemType": "Currency:MtxGiveaway",
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
                     "itemProfile": "profile0",
-                    "quantity": 1
+                    "quantity": 20
                 }]
             })
         case "LTG.PE.MidgameChallenge.Completion":

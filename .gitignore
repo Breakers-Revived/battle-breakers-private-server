@@ -248,7 +248,5 @@ fabric.properties
 # Log uploads
 /res/wex/api/feedback/log-upload/*
 
-# Copilot
-/.idea/copilot/chatSessions/blobs/version
-/.idea/copilot/chatSessions/00000000000.xd
-/.idea/copilot/chatSessions/xd.lck
+/.idea/copilot*
+/.idea/csv-editor.xml
