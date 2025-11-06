@@ -16,7 +16,7 @@ from utils.enums import AuthClient
 from utils.exceptions import errors
 from utils.profile_system import PlayerProfile
 from utils.utils import (authorized as auth, oauth_response, parse_eg1, create_account, verify_google_token,
-                         oauth_client_response, bcrypt_check)
+                         oauth_client_response, bcrypt_check, format_time)
 
 from utils.sanic_gzip import Compress
 
@@ -201,6 +201,18 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                         }
                     })
                     if account:
+                        await request.app.ctx.db["accounts"].update_one({
+                            "_id": request.form.get('account_id'),
+                            "extra.deviceAuths.deviceId": request.form.get('device_id')
+                        }, {
+                            "$set": {
+                                "extra.deviceAuths.$.lastAccess": {
+                                    "location": None,
+                                    "ipAddress": request.ip,
+                                    "dateTime": await format_time()
+                                }
+                            }
+                        })
                         return sanic.response.json(
                             await oauth_response(client_id, account['displayName'], request.form.get('device_id'),
                                                  account["_id"]))

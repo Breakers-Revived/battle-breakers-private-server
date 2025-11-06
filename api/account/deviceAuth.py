@@ -10,7 +10,7 @@ import sanic
 
 from utils import types
 from utils.exceptions import errors
-from utils.utils import authorized as auth, uuid_generator, token_generator, format_time
+from utils.utils import authorized as auth, token_generator, format_time
 
 from utils.sanic_gzip import Compress
 
@@ -30,7 +30,7 @@ async def device_auth_create(request: types.BBRequest, accountId: str) -> sanic.
     :return: The response object
     """
     device_authorisation = {
-        "deviceId": await uuid_generator(),
+        "deviceId": request.ctx.dvid,
         "accountId": accountId,
         "secret": (await token_generator()).upper(),
         "userAgent": request.headers.get("User-Agent"),
@@ -45,9 +45,9 @@ async def device_auth_create(request: types.BBRequest, accountId: str) -> sanic.
             "dateTime": await format_time()
         },
         "deviceInfo": {
-            "type": "",
-            "model": "",
-            "os": ""
+            "type": request.headers.get("X-Epic-Device-Info", {}).get("type"),
+            "model": request.headers.get("X-Epic-Device-Info", {}).get("model"),
+            "os": request.headers.get("X-Epic-Device-Info", {}).get("os")
         }
     }
     await request.app.ctx.db["accounts"].update_one({"_id": accountId}, {

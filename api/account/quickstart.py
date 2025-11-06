@@ -31,7 +31,7 @@ async def quickstart(request: types.BBRequest) -> sanic.response.HTTPResponse:
     """
     # TODO: better signup system
     new_account_id = await create_account(request.app.ctx.db, calendar=request.app.ctx.calendar)
-    device_id = await uuid_generator()
+    device_id = request.headers.get("X-Epic-Device-ID", await uuid_generator())
     device_authorisation = {
         "deviceId": device_id,
         "accountId": new_account_id,
