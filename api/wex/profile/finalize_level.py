@@ -78,6 +78,13 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
             "loot": []
         }
     ]
+    async with aiofiles.open("res/wex/api/calendar/battlepass.ics", "rb") as f:
+        events = recurring_ical_events.of(icalendar.Calendar.from_ical(await f.read())).at(
+            datetime.datetime.now(datetime.UTC)
+        )
+    event_data = await load_datatable(events[-1].get("DESCRIPTION")[1:])
+    event_currency = await utils.utils.get_template_id_from_path(
+        (await utils.utils.process_choices(event_data[0]["Properties"]["EventCurrency"]))["AssetPathName"])
     battlepassxp = 0
     for item in request.json.get("claimedItems", []):
         match item["itemTemplateId"].split(":")[0]:
@@ -104,11 +111,22 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     if first_clear:
         match level_info["FirstCompletionLoot"]:
             case "LTG.Event.Completion.GrandArena.Bonus":
+                element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Currency:Gold",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:Gold", 10000),
+                        "itemProfile": "profile0",
+                        "quantity": 10000
+                    }, {
+                        "itemType": event_currency,
+                        "itemGuid": await request.ctx.profile.grant_item(event_currency, 200),
+                        "itemProfile": "profile0",
+                        "quantity": 200
+                    }, {
+                        "itemType": f"Reagent:Reagent_Shard_{element}",
+                        "itemGuid": await request.ctx.profile.grant_item(f"Reagent:Reagent_Shard_{element}", 1),
                         "itemProfile": "profile0",
                         "quantity": 1
                     }]
@@ -557,10 +575,15 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "Unlockable:Unlockable_Skills", # Seems to be unused and not granted in later versions
+                        "itemGuid": await request.ctx.profile.grant_item("Unlockable:Unlockable_Skills", 1),
                         "itemProfile": "profile0",
                         "quantity": 1
+                    }, {
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
                     }]
                 })
             case "LTG.FC.Onboarding1":
@@ -847,10 +870,15 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Reagent:Reagent_Shared_T03",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                        "itemType": "TreasureMap:TM_MapResource",
+                        "itemGuid": await request.ctx.profile.grant_item("TreasureMap:TM_MapResource", 5),
                         "itemProfile": "profile0",
-                        "quantity": 1
+                        "quantity": 5
+                    }, {
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
                     }]
                 })
             case "LTG.TM.MapResource.06":
@@ -2351,10 +2379,15 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
             level_complete_notification[0]["loot"].append({
                 "tierGroupName": "Level.Instance",
                 "items": [{
-                    "itemType": "Reagent:Reagent_Shared_T03",
-                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                    "itemType": "Token:TK_Shadowknight_VR1_Fire_Shadowtouch_T04",
+                    "itemGuid": await request.ctx.profile.grant_item("Token:TK_Shadowknight_VR1_Fire_Shadowtouch_T04", 1),
                     "itemProfile": "profile0",
-                    "quantity": 1
+                    "quantity": 10
+                }, {
+                    "itemType": "Reagent:Reagent_SupplyPoints_Elite",
+                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_SupplyPoints_Elite", 3),
+                    "itemProfile": "profile0",
+                    "quantity": 3
                 }]
             })
         case "LTG.Completion.Special.UnderwaterForest.D1":
@@ -3699,11 +3732,6 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     # TODO: update account level + xp + add perk choice + notification
     # TODO: activity gift box
     # TODO: update battle pass xp
-    async with aiofiles.open("res/wex/api/calendar/battlepass.ics", "rb") as f:
-        events = recurring_ical_events.of(icalendar.Calendar.from_ical(await f.read())).at(
-            datetime.datetime.now(datetime.UTC)
-        )
-    event_data = await load_datatable(events[-1].get("DESCRIPTION")[1:])
     # TODO: determine what happens for events with multiple currency
     # TODO: fix crash
     for currency_path in event_data[0]["Properties"]["EventCurrency"]:
@@ -3717,6 +3745,24 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 "quantity": 64 + battlepassxp
             }]
         })
+    # TODO: challenge bonus
+    # event_currency = await utils.utils.get_template_id_from_path(
+    #     (await utils.utils.process_choices(event_data[0]["Properties"]["EventCurrency"]))["AssetPathName"])
+    # element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
+    # level_complete_notification[0]["loot"].append({
+    #     "tierGroupName": "Level.FirstInstance",
+    #     "items": [{
+    #         "itemType": event_currency,
+    #         "itemGuid": await request.ctx.profile.grant_item(event_currency, 200),
+    #         "itemProfile": "profile0",
+    #         "quantity": 200
+    #     }, {
+    #         "itemType": f"Reagent:Reagent_Shard_{element}",
+    #         "itemGuid": await request.ctx.profile.grant_item(f"Reagent:Reagent_Shard_{element}", 1),
+    #         "itemProfile": "profile0",
+    #         "quantity": 1
+    #     }]
+    # })
     # TODO: update score for daily quests
     pit_unlocks = await request.ctx.profile.find_item_by_template_id("MonsterPitUnlock:Character",
                                                                      ProfileType.MONSTERPIT)
