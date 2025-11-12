@@ -1298,10 +1298,10 @@ async def reward_for_level(level: int):
     if level < 2 or level > 999:
         return None
     if level == 984:
-        return "AccountPerk_ATK_PET"
+        return "ATK_PET"
     if level == 986:
-        return "AccountPerk_ATK_DEF"
+        return "ATK_DEF"
     if level == 999:
-        return "AccountPerk_Basic_Special"
+        return "Basic_Special"
     idx = (level - 1) % 40   # map level to index in the 20-slot cycle
     return level_cycle[idx]

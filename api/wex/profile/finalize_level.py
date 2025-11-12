@@ -2305,7 +2305,6 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     # grant bonus xp for playing breakers revived during launch
     level_complete_notification[0]["bonusAccountXp"] = int(
         level_complete_notification[0]["accountXp"] * (1.5 + (current_account_level / 100)))
-    level_complete_notification[0]["bonusAccountXp"] += 9999999999
     level_complete_notification[0]["accountXp"] += level_complete_notification[0]["bonusAccountXp"]
     sanic.log.logger.debug(f"Granted bonus account XP: {level_complete_notification[0]['bonusAccountXp']}")
     xp = await request.ctx.profile.get_stat("xp")
