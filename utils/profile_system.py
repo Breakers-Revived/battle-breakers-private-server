@@ -812,6 +812,7 @@ class PlayerProfile:
         """
         sanic.log.logger.debug(
             f"Granting item {template_id} x{quantity} to profile {profile_id.value} for account {self.account_id}")
+        # TODO: handle non unique items that are in pending changes
         item_guids: list = await self.find_item_by_template_id(template_id, profile_id)
         if item_guids and not unique:
             item_guid: str = item_guids[0]
