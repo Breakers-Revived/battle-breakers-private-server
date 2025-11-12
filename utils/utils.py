@@ -910,25 +910,15 @@ async def get_template_id_from_path(path: Optional[str]) -> Optional[str]:
             case "WExpUpgradePotionDefinition":
                 return f"UpgradePotion:{data[0].get('Name')}"
             case "WExpXpBookDefinition":
-                return "Currency:HeroXp_Basic"  # hardcoded as in newer versions, all xp books are one type
+                return "Currency:HeroXp_Basic"  # hardcoded as in newer versions, all xp books are one type, otherwise it would be "XpBook:{name}"
             case "WExpTreasureMapDefinition":
                 return f"TreasureMap:{data[0].get('Name')}"
             case "WExpTokenDefinition":
                 return f"Token:{data[0].get('Name')}"
             case "WExpAccountRewardDefinition":
                 return f"AccountReward:{data[0].get('Name')}"
-            case "WExpCharacterDisplay":
-                return f"CharacterDisplay:{data[0].get('Name')}"
-            case "WExpCharacterEvolutionNode":
-                return f"CharacterEvolutionNode:{data[0].get('Name')}"
-            case "WExpChunkDefinition":
-                return f"Chunk:{data[0].get('Name')}"
             case "WExpContainerDefinition":
                 return f"Container:{data[0].get('Name')}"
-            case "WExpCharacterHeroGearInfo":
-                return f"CharacterHeroGearInfo:{data[0].get('Name')}"
-            case "WExpEventDefinition":
-                return f"Event:{data[0].get('Name')}"
             case "WExpGearAffix":
                 return f"GearAffix:{data[0].get('Name')}"
             case "WExpGearAccountItemDefinition":
@@ -956,53 +946,33 @@ async def get_template_id_from_path(path: Optional[str]) -> Optional[str]:
             case "WExpItemDefinition":
                 return f"Item:{data[0].get('Name')}"
             case "WExpLTMItemDefinition":
-                return f"LTMItem:{data[0].get('Name')}"
-            case "WExpLevelArtDefinition":
-                return f"LevelArt:{data[0].get('Name')}"
+                return f"LTM:{data[0].get('Name')}"
             case "WExpMajorEventTrackerDefinition":
                 return f"MajorEventTracker:{data[0].get('Name')}"
-            case "WExpMappedStyleData":
-                return f"MappedStyle:{data[0].get('Name')}"
             case "WExpMenuData":
                 return f"Menu:{data[0].get('Name')}"
-            case "WExpOnboardingMenuData":
-                return f"OnboardingMenu:{data[0].get('Name')}"
-            case "WExpOnboardingGlobalData":
-                return f"OnboardingGlobal:{data[0].get('Name')}"
             case "WExpPromotionTable":
                 return f"PromotionTable:{data[0].get('Name')}"
-            case "WExpProgressionData":
-                return f"Progression:{data[0].get('Name')}"
             case "WExpPersonalEventDefinition":
                 return f"PersonalEvent:{data[0].get('Name')}"
             case "WExpRecipe":
                 return f"Recipe:{data[0].get('Name')}"
             case "WExpStandInDefinition":
                 return f"StandIn:{data[0].get('Name')}"
-            case "WExpStyleData":
-                return f"Style:{data[0].get('Name')}"
-            case "WExpSlateAnimationData":
-                return f"SlateAnimation:{data[0].get('Name')}"
-            case "WExpTileDefinition":
-                return f"Tile:{data[0].get('Name')}"
-            case "WExpTileGenerator":
-                return f"TileGenerator:{data[0].get('Name')}"
             case "WExpUpgradePotionDefinition":
                 return f"UpgradePotion:{data[0].get('Name')}"
             case "WExpUnlockableDefinition":
                 return f"Unlockable:{data[0].get('Name')}"
             case "WExpVoucherItemDefinition":
                 return f"Voucher:{data[0].get('Name')}"
-            case "WExpZoneDefinition":
-                return f"Zone:{data[0].get('Name')}"
-            case "WExpHelpData":
-                return f"Help:{data[0].get('Name')}"
-            case "WExpCampaignDefinition":
-                return f"Campaign:{data[0].get('Name')}"
-            case "WExpBasicStyleData":
-                return f"Style:{data[0].get('Name')}"
-            case "WExpCameraTransitionAsset":
-                return f"CameraTransition:{data[0].get('Name')}"
+            case "WExpHeroChestDefinition":
+                return f"HeroChest:{data[0].get('Name')}"
+            case "WExpGiftboxDefinition":
+                return f"Giftbox:{data[0].get('Name')}"
+            case "WExpHammerChestDefinition":
+                return f"HammerChest:{data[0].get('Name')}"
+            case _:
+                return f"{data[0].get('Type')}:{data[0].get('Name')}"
     sanic.log.logger.debug(f"Failed to match template id from path {path}")
     return None
 
