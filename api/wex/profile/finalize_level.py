@@ -1236,11 +1236,43 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 }]
             })
         case "LTG.Completion.Dark.Medium":
+            element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
+            quantity = await utils.utils.process_choices([1, 4])
             level_complete_notification[0]["loot"].append({
                 "tierGroupName": "Level.Instance",
                 "items": [{
-                    "itemType": "Reagent:Reagent_Shared_T03",
-                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                    "itemType": "Currency:HeroXp_Basic",
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 1000),
+                    "itemProfile": "profile0",
+                    "quantity": 1000
+                }, {
+                    "itemType": "Currency:HeroXp_Basic",
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 1000),
+                    "itemProfile": "profile0",
+                    "quantity": 1000
+                }, {
+                    "itemType": "Currency:Gold",
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:Gold", 100000),
+                    "itemProfile": "profile0",
+                    "quantity": 100000
+                }, {
+                    "itemType": "Currency:MtxGiveaway",
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 10),
+                    "itemProfile": "profile0",
+                    "quantity": 10
+                }, {
+                    "itemType": "Reagent:Reagent_Foil",
+                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Foil", 10),
+                    "itemProfile": "profile0",
+                    "quantity": 10
+                }, {
+                    "itemType": f"Reagent:Reagent_Shard_{element}",
+                    "itemGuid": await request.ctx.profile.grant_item(f"Reagent:Reagent_Shard_{element}", quantity),
+                    "itemProfile": "profile0",
+                    "quantity": quantity
+                }, {
+                    "itemType": "Gear:GD_Weapon_ElementalPistol_Nature", # TODO: random weapon
+                    "itemGuid": await request.ctx.profile.grant_item("Gear:GD_Weapon_ElementalPistol_Nature", 1),
                     "itemProfile": "profile0",
                     "quantity": 1
                 }]
@@ -1566,15 +1598,68 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 }]
             })
         case "LTG.Completion.Fire.Medium":
+            event_currency = await utils.utils.get_template_id_from_path((await utils.utils.process_choices(event_data[0]["Properties"]["EventCurrency"]))["AssetPathName"])
             level_complete_notification[0]["loot"].append({
                 "tierGroupName": "Level.Instance",
                 "items": [{
-                    "itemType": "Reagent:Reagent_Shared_T03",
-                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                    "itemType": "Reagent:Reagent_RXT_Parts_Small",
+                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_RXT_Parts_Small", 2),
                     "itemProfile": "profile0",
-                    "quantity": 1
+                    "quantity": 2
+                }, {
+                    "itemType": "Reagent:Reagent_RXT_Parts_Small",
+                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_RXT_Parts_Small", 2),
+                    "itemProfile": "profile0",
+                    "quantity": 2
+                }, {
+                    "itemType": "Currency:HeroXp_Basic",
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 1000),
+                    "itemProfile": "profile0",
+                    "quantity": 1000
+                }, {
+                    "itemType": "Reagent:Reagent_RXT_Parts_Small",
+                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_RXT_Parts_Small", 2),
+                    "itemProfile": "profile0",
+                    "quantity": 2
+                }, {
+                    "itemType": "Reagent:Reagent_RXT_Parts_Small",
+                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_RXT_Parts_Small", 2),
+                    "itemProfile": "profile0",
+                    "quantity": 2
+                }, {
+                    "itemType": "Currency:Gold",
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:Gold", 100000),
+                    "itemProfile": "profile0",
+                    "quantity": 100000
+                }, {
+                    "itemType": "Ore:Ore_Magicite",
+                    "itemGuid": await request.ctx.profile.grant_item("Ore:Ore_Magicite", 15),
+                    "itemProfile": "profile0",
+                    "quantity": 15
+                }, {
+                    "itemType": "Currency:HeroXp_Basic",
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 1000),
+                    "itemProfile": "profile0",
+                    "quantity": 1000
+                }, {
+                    "itemType": event_currency,
+                    "itemGuid": await request.ctx.profile.grant_item(event_currency, 1000),
+                    "itemProfile": "profile0",
+                    "quantity": 1000
                 }]
             })
+            for _ in range(2):
+                element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
+                quantity = await utils.utils.process_choices([1, 4])
+                level_complete_notification[0]["loot"].append({
+                    "tierGroupName": "Level.Instance",
+                    "items": [{
+                        "itemType": f"Reagent:Reagent_Shard_{element}",
+                        "itemGuid": await request.ctx.profile.grant_item(f"Reagent:Reagent_Shard_{element}", quantity),
+                        "itemProfile": "profile0",
+                        "quantity": quantity
+                    }]
+                })
         case "LTG.Completion.Fire.VeryHigh":
             level_complete_notification[0]["loot"].append({
                 "tierGroupName": "Level.Instance",
@@ -3671,21 +3756,44 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 }]
             })
         case "LTG.WC.Completion.WeekendReward":
+            coin_quantity = await utils.utils.process_choices([40, 90])
             level_complete_notification[0]["loot"].append({
                 "tierGroupName": "Level.Instance",
                 "items": [{
-                    "itemType": "Reagent:Reagent_Shared_T03",
-                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                    "itemType": "Reagent:WCCoins",
+                    "itemGuid": await request.ctx.profile.grant_item("Reagent:WCCoins", coin_quantity),
                     "itemProfile": "profile0",
-                    "quantity": 1
+                    "quantity": coin_quantity
                 }]
             })
         case "LTG.WC.FC.WeekendReward":
+            coin_quantity = await utils.utils.process_choices([10, 30])
             level_complete_notification[0]["loot"].append({
                 "tierGroupName": "Level.Instance",
                 "items": [{
-                    "itemType": "Reagent:Reagent_Shared_T03",
-                    "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T03", 1),
+                    "itemType": "Reagent:WCCoins",
+                    "itemGuid": await request.ctx.profile.grant_item("Reagent:WCCoins", coin_quantity),
+                    "itemProfile": "profile0",
+                    "quantity": coin_quantity
+                }]
+            })
+            for _ in range(20):
+                quantity = await utils.utils.process_choices([12000, 19000])
+                level_complete_notification[0]["loot"].append({
+                    "tierGroupName": "Level.Instance",
+                    "items": [{
+                        "itemType": "Currency:HeroXp_Basic",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", quantity),
+                        "itemProfile": "profile0",
+                        "quantity": quantity
+                    }]
+                })
+            element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
+            level_complete_notification[0]["loot"].append({
+                "tierGroupName": "Level.Instance",
+                "items": [{
+                    "itemType": f"Reagent:Reagent_Shard_{element}",
+                    "itemGuid": await request.ctx.profile.grant_item(f"Reagent:Reagent_Shard_{element}", 1),
                     "itemProfile": "profile0",
                     "quantity": 1
                 }]
