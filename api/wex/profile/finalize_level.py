@@ -140,44 +140,134 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                     "items": []
                 })
             case "LTG.Event.NewPlayer.Map1":
+                element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
+                quantity = await utils.utils.process_choices([1, 4])
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
-                    "items": []
+                    "items": [{
+                        "itemType": "Currency:Gold",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:Gold", 100000),
+                        "itemProfile": "profile0",
+                        "quantity": 100000
+                    }, {
+                        "itemType": "Currency:HeroXp_Basic",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 1000),
+                        "itemProfile": "profile0",
+                        "quantity": 1000
+                    }, {
+                        "itemType": f"Reagent:Reagent_Shard_{element}",
+                        "itemGuid": await request.ctx.profile.grant_item(f"Reagent:Reagent_Shard_{element}", quantity),
+                        "itemProfile": "profile0",
+                        "quantity": quantity
+                    }]
                 })
             case "LTG.Event.NewPlayer.Map2":
+                # unsure
+                element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
+                quantity = await utils.utils.process_choices([3, 5])
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
-                    "items": []
+                    "items": [{
+                        "itemType": "Currency:Gold",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:Gold", 100000),
+                        "itemProfile": "profile0",
+                        "quantity": 100000
+                    }, {
+                        "itemType": "Currency:HeroXp_Basic",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 5000),
+                        "itemProfile": "profile0",
+                        "quantity": 5000
+                    }, {
+                        "itemType": f"Reagent:Reagent_Shard_{element}",
+                        "itemGuid": await request.ctx.profile.grant_item(f"Reagent:Reagent_Shard_{element}", quantity),
+                        "itemProfile": "profile0",
+                        "quantity": quantity
+                    }]
                 })
             case "LTG.Event.NewPlayer.Map3":
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
-                    "items": []
+                    "items": [{
+                        "itemType": "UpgradePotion:UpgradeStrengthMinor",
+                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeStrengthMinor", 33),
+                        "itemProfile": "profile0",
+                        "quantity": 33
+                    }, {
+                        "itemType": "UpgradePotion:UpgradeHealthMinor",
+                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeHealthMinor", 33),
+                        "itemProfile": "profile0",
+                        "quantity": 33
+                    }]
                 })
             case "LTG.Event.NewPlayer.Map4":
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
-                    "items": []
+                    "items": [{
+                        "itemType": "Voucher:Voucher_HeroSilver",
+                        "itemGuid": await request.ctx.profile.grant_item("Voucher:Voucher_HeroSilver", 1),
+                        "itemProfile": "profile0",
+                        "quantity": 1
+                    }]
                 })
             case "LTG.Event.NewPlayer.Map5":
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
-                    "items": []
+                    "items": [{
+                        "itemType": "Reagent:Reagent_Shard_Nature",
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Nature", 10),
+                        "itemProfile": "profile0",
+                        "quantity": 10
+                    }, {
+                        "itemType": "Reagent:Reagent_Shard_Fire",
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Fire", 10),
+                        "itemProfile": "profile0",
+                        "quantity": 10
+                    }, {
+                        "itemType": "Reagent:Reagent_Shard_Water",
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Water", 10),
+                        "itemProfile": "profile0",
+                        "quantity": 10
+                    }]
                 })
             case "LTG.Event.NewPlayer.Map6":
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
-                    "items": []
+                    "items": [{
+                        "itemType": "UpgradePotion:UpgradeStrengthMajor",
+                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeStrengthMajor", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
+                    }, {
+                        "itemType": "UpgradePotion:UpgradeHealthMajor",
+                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeHealthMajor", 20),
+                        "itemProfile": "profile0",
+                        "quantity": 20
+                    }]
                 })
             case "LTG.Event.NewPlayer.Map7":
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
-                    "items": []
+                    "items": [{
+                        "itemType": "Voucher:Voucher_HeroGold",
+                        "itemGuid": await request.ctx.profile.grant_item("Voucher:Voucher_HeroGold", 1),
+                        "itemProfile": "profile0",
+                        "quantity": 1
+                    }]
                 })
             case "LTG.Event.NewPlayer.Map8":
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
-                    "items": []
+                    "items": [{
+                        "itemType": "Voucher:Voucher_HeroGold",
+                        "itemGuid": await request.ctx.profile.grant_item("Voucher:Voucher_HeroGold", 1),
+                        "itemProfile": "profile0",
+                        "quantity": 1
+                    }, {
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 300),
+                        "itemProfile": "profile0",
+                        "quantity": 300
+                    }]
                 })
             case "LTG.FC.AbyssalPrecipice.Map8.D1":
                 level_complete_notification[0]["loot"].append({
@@ -477,7 +567,32 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
             case "LTG.FC.Onboarding1":
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
-                    "items": []
+                    "items": [{
+                        "itemType": "Party:Instance",
+                        "itemGuid": await request.ctx.profile.grant_item("Party:Instance", 3),
+                        "itemProfile": "profile0",
+                        "quantity": 3
+                    }, {
+                        "itemType": "Currency:MtxGiveaway",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 40),
+                        "itemProfile": "profile0",
+                        "quantity": 40
+                    }, {
+                        "itemType": "Currency:Gold",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:Gold", 700),
+                        "itemProfile": "profile0",
+                        "quantity": 700
+                    }, {
+                        "itemType": "Currency:HeroXp_Basic",
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 1000),
+                        "itemProfile": "profile0",
+                        "quantity": 1000
+                    }, {
+                        "itemType": "HammerChest:HC_Tutorial",
+                        "itemGuid": await request.ctx.profile.grant_item("HammerChest:HC_Tutorial", 1),
+                        "itemProfile": "profile0",
+                        "quantity": 1
+                    }]
                 })
             case "LTG.FC.Onboarding2":
                 level_complete_notification[0]["loot"].append({

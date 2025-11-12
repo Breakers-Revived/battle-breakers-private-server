@@ -35,8 +35,8 @@ async def abandon_level(request: types.BBProfileRequest, accountId: str,
     :param body: The request body
     :return: The modified profile
     """
-    await request.ctx.profile.modify_stat("last_forgiven_abandon", await format_time(), request.ctx.profile_id)
-    await request.ctx.profile.remove_item(body.model_dump().get("levelItemId"), request.ctx.profile_id)
+    await request.ctx.profile.modify_stat("last_forgiven_abandon", await format_time(), ProfileType.LEVELS)
+    await request.ctx.profile.remove_item(body.model_dump().get("levelItemId"), ProfileType.LEVELS)
     # TODO: calculate quests + handle rewards for completed rooms
     await request.ctx.profile.clear_notifications(ProfileType.LEVELS)
     return sanic.response.json(
