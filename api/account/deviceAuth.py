@@ -6,6 +6,7 @@ This code is licensed under the Breakers Revived License (BRL).
 
 Handles the device auth creation for mobile
 """
+import orjson
 import sanic
 
 from utils import types
@@ -45,9 +46,9 @@ async def device_auth_create(request: types.BBRequest, accountId: str) -> sanic.
             "dateTime": await format_time()
         },
         "deviceInfo": {
-            "type": request.headers.get("X-Epic-Device-Info", {}).get("type"),
-            "model": request.headers.get("X-Epic-Device-Info", {}).get("model"),
-            "os": request.headers.get("X-Epic-Device-Info", {}).get("os")
+            "type": orjson.loads(request.headers.get("X-Epic-Device-Info", "{}")).get("type"),
+            "model": orjson.loads(request.headers.get("X-Epic-Device-Info", "{}")).get("model"),
+            "os": orjson.loads(request.headers.get("X-Epic-Device-Info", "{}")).get("os")
         }
     }
     await request.app.ctx.db["accounts"].update_one({"_id": accountId}, {
