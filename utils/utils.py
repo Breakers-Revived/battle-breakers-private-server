@@ -1287,3 +1287,21 @@ async def deterministic_shuffle(item_pool: list, item_count: Optional[int] = -1,
         item_count = len(item_pool)
     selected_items = generator.choice(item_pool, item_count, p=weights, replace=False)
     return selected_items.tolist()
+
+async def reward_for_level(level: int):
+    """
+    Return reward string for a given level.
+    Returns None if level is outside reward range (here: <2 or >999).
+    The cycle above is a 20-slot template inferred from your sample data.
+    """
+    level_cycle = await read_file("res/wex/api/game/v2/balance/perk_cycle.json")
+    if level < 2 or level > 999:
+        return None
+    if level == 984:
+        return "AccountPerk_ATK_PET"
+    if level == 986:
+        return "AccountPerk_ATK_DEF"
+    if level == 999:
+        return "AccountPerk_Basic_Special"
+    idx = (level - 1) % 40   # map level to index in the 20-slot cycle
+    return level_cycle[idx]

@@ -80,24 +80,24 @@ async def claim_account_reward(request: types.BBProfileRequest, accountId: str) 
         if perk.get("itemId") not in perk_quantities:
             perk_quantities[perk.get("itemId")] = perk_item["quantity"]
         perk_quantities[perk.get("itemId")] -= 1
-        rewards_claimed[perk_item["templateId"]] += 1
+        rewards_claimed[perk_item["templateId"]] = rewards_claimed.get(perk_item["templateId"], 0) + 1
         match perk_choice:
             case AccountPerk.MaxMana:
-                account_perks["MaxMana"] += 1
+                account_perks["MaxMana"] = account_perks.get("MaxMana", 0) + 1
             case AccountPerk.DamageReduction:
-                account_perks["DamageReduction"] += 1
+                account_perks["DamageReduction"] = account_perks.get("DamageReduction", 0) + 1
             case AccountPerk.SpecialAttack:
-                account_perks["SpecialAttack"] += 1
+                account_perks["SpecialAttack"] = account_perks.get("SpecialAttack", 0) + 1
             case AccountPerk.Attack:
-                account_perks["Attack"] += 1
+                account_perks["Attack"] = account_perks.get("Attack", 0) + 1
             case AccountPerk.BasicAttack:
-                account_perks["BasicAttack"] += 1
+                account_perks["BasicAttack"] = account_perks.get("BasicAttack", 0) + 1
             case AccountPerk.PetStrength:
-                account_perks["PetStrength"] += 1
+                account_perks["PetStrength"] = account_perks.get("PetStrength", 0) + 1
             case AccountPerk.RegenStat:
-                account_perks["RegenStat"] += 1
+                account_perks["RegenStat"] = account_perks.get("RegenStat", 0) + 1
             case AccountPerk.MaxHitPoints:
-                account_perks["MaxHitPoints"] += 1
+                account_perks["MaxHitPoints"] = account_perks.get("MaxHitPoints", 0) + 1
     for perk_id in perk_quantities:
         if perk_quantities[perk_id] <= 0:
             await request.ctx.profile.remove_item(perk_id)

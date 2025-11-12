@@ -2305,17 +2305,23 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     # grant bonus xp for playing breakers revived during launch
     level_complete_notification[0]["bonusAccountXp"] = int(
         level_complete_notification[0]["accountXp"] * (1.5 + (current_account_level / 100)))
+    level_complete_notification[0]["bonusAccountXp"] += 9999999999
+    level_complete_notification[0]["accountXp"] += level_complete_notification[0]["bonusAccountXp"]
     sanic.log.logger.debug(f"Granted bonus account XP: {level_complete_notification[0]['bonusAccountXp']}")
     xp = await request.ctx.profile.get_stat("xp")
     sanic.log.logger.debug(f"Current account XP: {xp}")
-    account_xp = xp + account_level_datatable.get(str(current_account_level), "998")["XpTotal"]
+    account_xp = xp + account_level_datatable.get(str(current_account_level), {"XpTotal": 521341325, "XpToNextLevel": 1054090})["XpTotal"]
     sanic.log.logger.debug(f"Total account XP: {account_xp}")
-    granted_xp = level_complete_notification[0]["accountXp"] + level_complete_notification[0]["bonusAccountXp"]
+    granted_xp = level_complete_notification[0]["accountXp"]
     sanic.log.logger.debug(f"Total granted account XP: {granted_xp}")
-    if xp + granted_xp > account_level_datatable.get(str(current_account_level), "998")["XpToNextLevel"] and current_account_level < 999:
+    if xp + granted_xp > account_level_datatable.get(str(current_account_level), {"XpTotal": 521341325, "XpToNextLevel": 1054090})["XpToNextLevel"] and current_account_level < 999:
         level_up_times = 1
-        while account_xp + granted_xp >= account_level_datatable.get(str(current_account_level + level_up_times), "998")["XpTotal"] and current_account_level + level_up_times < 999:
+        await request.ctx.profile.grant_item(
+            f"AccountReward:AccountPerk_{await utils.utils.reward_for_level(current_account_level + level_up_times)}")
+        while account_xp + granted_xp >= account_level_datatable.get(str(current_account_level + level_up_times), {"XpTotal": 521341325, "XpToNextLevel": 1054090})["XpTotal"] and current_account_level + level_up_times < 999:
             level_up_times += 1
+            await request.ctx.profile.grant_item(
+                f"AccountReward:AccountPerk_{await utils.utils.reward_for_level(current_account_level + level_up_times)}")
         sanic.log.logger.debug(f"Leveled up {level_up_times} times to level {current_account_level + level_up_times}")
         await request.ctx.profile.modify_stat("level", current_account_level + level_up_times)
         await request.ctx.profile.add_notifications({
@@ -2324,8 +2330,8 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
             "level": current_account_level + level_up_times
         }, ProfileType.PROFILE0)
         # calculate leftover xp after level up
-        xp = account_level_datatable.get(str(current_account_level + level_up_times))["XpTotal"] - (granted_xp + account_xp)
-        sanic.log.logger.debug(f"Calculating leftover XP after level up with: {account_level_datatable.get(str(current_account_level + level_up_times))['XpTotal']} - ({granted_xp} + {account_xp}) = {xp}")
+        xp = account_level_datatable.get(str(current_account_level + level_up_times), {"XpTotal": 521341325, "XpToNextLevel": 1054090})["XpTotal"] - (granted_xp + account_xp)
+        sanic.log.logger.debug(f"Calculating leftover XP after level up with: {account_level_datatable.get(str(current_account_level + level_up_times), {'XpTotal': 521341325, 'XpToNextLevel': 1054090})['XpTotal']} - ({granted_xp} + {account_xp}) = {xp}")
     else:
         sanic.log.logger.debug(f"No level up occurred.")
         xp += granted_xp
