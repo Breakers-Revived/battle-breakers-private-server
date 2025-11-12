@@ -802,7 +802,7 @@ class PlayerProfile:
                          attributes: Optional[dict[str, MCPTypes]] = None, unique=False,
                          profile_id: ProfileType = ProfileType.PROFILE0) -> str | list[str]:
         """
-        Grant the specified item to the profile
+        Grant the specified item to the profile, directly modifies pending changes when not unique
         :param template_id: The template ID of the item to grant
         :param quantity: The quantity of the item to grant
         :param attributes: The default attributes of the item to grant
@@ -812,32 +812,48 @@ class PlayerProfile:
         """
         sanic.log.logger.debug(
             f"Granting item {template_id} x{quantity} to profile {profile_id.value} for account {self.account_id}")
-        # TODO: handle non unique items that are in pending changes
-        item_guids: list = await self.find_item_by_template_id(template_id, profile_id)
-        if item_guids and not unique:
-            item_guid: str = item_guids[0]
-            item: dict = await self.get_item_by_guid(item_guid, profile_id)
-            await self.change_item_quantity(item_guid, item["quantity"] + quantity, profile_id)
-            return item_guid
-        else:
-            if unique and quantity > 1:
-                item_ids: list[str] = []
-                for _ in range(quantity):
-                    item_data: dict = {
-                        "templateId": template_id,
-                        "attributes": attributes if attributes is not None else {},
-                        "quantity": 1
-                    }
-                    item_id: str = await self.add_item(item_data, profile_id=profile_id)
-                    item_ids.append(item_id)
-                return item_ids
-            else:
+        profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
+        if not unique:
+            for change in profile_changes:
+                if change["changeType"] == "itemAdded" and change["item"]["templateId"] == template_id:
+                    change["item"]["quantity"] += quantity
+                    sanic.log.logger.debug(
+                        f"Merged {quantity}x {template_id} into pending itemAdded for account {self.account_id}")
+                    setattr(self, f"{profile_id.value}_changes", profile_changes)
+                    return change["itemId"]
+            for change in reversed(profile_changes):
+                if change["changeType"] == "itemQuantityChanged":
+                    item = await self.get_item_by_guid(change["itemId"], profile_id)
+                    if item and item["templateId"] == template_id:
+                        change["quantity"] += quantity
+                        sanic.log.logger.debug(
+                            f"Merged {quantity}x {template_id} into pending itemQuantityChanged for account {self.account_id}")
+                        setattr(self, f"{profile_id.value}_changes", profile_changes)
+                        return change["itemId"]
+            item_guids: list = await self.find_item_by_template_id(template_id, profile_id)
+            if item_guids:
+                item_guid: str = item_guids[0]
+                item: dict = await self.get_item_by_guid(item_guid, profile_id)
+                await self.change_item_quantity(item_guid, item["quantity"] + quantity, profile_id)
+                return item_guid
+        if unique and quantity > 1:
+            item_ids: list[str] = []
+            for _ in range(quantity):
                 item_data: dict = {
                     "templateId": template_id,
                     "attributes": attributes if attributes is not None else {},
-                    "quantity": quantity
+                    "quantity": 1
                 }
-                return await self.add_item(item_data, profile_id=profile_id)
+                item_id: str = await self.add_item(item_data, profile_id=profile_id)
+                item_ids.append(item_id)
+            return item_ids
+        else:
+            item_data: dict = {
+                "templateId": template_id,
+                "attributes": attributes if attributes is not None else {},
+                "quantity": quantity
+            }
+            return await self.add_item(item_data, profile_id=profile_id)
 
     async def grant_hero(self, template_id: str, gear_weapon_item_id: str = "", weapon_unlocked: bool = False,
                          sidekick_template_id: str = "", level: int = 1, is_new: bool = True, num_sold: int = 0,
