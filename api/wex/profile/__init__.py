@@ -7,6 +7,7 @@ This code is licensed under the Breakers Revived License (BRL).
 Handles the mcp profile subsystem
 """
 import sanic
+import sanic.log
 
 from utils import types
 from utils.profile_system import PlayerProfile
@@ -151,6 +152,9 @@ async def add_mcp_profile(request: types.BBProfileRequest) -> None:
     else:
         request.ctx.profile_id = ProfileType.from_string(request.args.get("profileId"))
     request.ctx.profile_revisions = request.headers.get("X-EpicGames-ProfileRevisions")
+    sanic.log.logger.debug(f"MCP operation {request.path.split('/')[-1].split('?')[0]} called for {account_id} "
+                           f"with profileId {request.ctx.profile_id.name} and rvn {request.ctx.rvn}")
+    sanic.log.logger.debug(f"Request body: {request.json}")
 
 
 @wex_profile.on_response
