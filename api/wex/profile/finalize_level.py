@@ -140,48 +140,23 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                     "items": []
                 })
             case "LTG.Event.NewPlayer.Map1":
-                element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
-                quantity = await utils.utils.process_choices([1, 4])
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Currency:Gold",
-                        "itemGuid": await request.ctx.profile.grant_item("Currency:Gold", 100000),
-                        "itemProfile": "profile0",
-                        "quantity": 100000
-                    }, {
                         "itemType": "Currency:HeroXp_Basic",
-                        "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 1000),
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 20000),
                         "itemProfile": "profile0",
-                        "quantity": 1000
-                    }, {
-                        "itemType": f"Reagent:Reagent_Shard_{element}",
-                        "itemGuid": await request.ctx.profile.grant_item(f"Reagent:Reagent_Shard_{element}", quantity),
-                        "itemProfile": "profile0",
-                        "quantity": quantity
+                        "quantity": 20000
                     }]
                 })
             case "LTG.Event.NewPlayer.Map2":
-                # unsure
-                element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
-                quantity = await utils.utils.process_choices([3, 5])
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
                         "itemType": "Currency:Gold",
-                        "itemGuid": await request.ctx.profile.grant_item("Currency:Gold", 100000),
+                        "itemGuid": await request.ctx.profile.grant_item("Currency:Gold", 200000),
                         "itemProfile": "profile0",
-                        "quantity": 100000
-                    }, {
-                        "itemType": "Currency:HeroXp_Basic",
-                        "itemGuid": await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 5000),
-                        "itemProfile": "profile0",
-                        "quantity": 5000
-                    }, {
-                        "itemType": f"Reagent:Reagent_Shard_{element}",
-                        "itemGuid": await request.ctx.profile.grant_item(f"Reagent:Reagent_Shard_{element}", quantity),
-                        "itemProfile": "profile0",
-                        "quantity": quantity
+                        "quantity": 200000
                     }]
                 })
             case "LTG.Event.NewPlayer.Map3":
@@ -189,24 +164,24 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
                         "itemType": "UpgradePotion:UpgradeStrengthMinor",
-                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeStrengthMinor", 33),
+                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeStrengthMinor", 20),
                         "itemProfile": "profile0",
-                        "quantity": 33
+                        "quantity": 20
                     }, {
                         "itemType": "UpgradePotion:UpgradeHealthMinor",
-                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeHealthMinor", 33),
+                        "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeHealthMinor", 20),
                         "itemProfile": "profile0",
-                        "quantity": 33
+                        "quantity": 20
                     }]
                 })
             case "LTG.Event.NewPlayer.Map4":
                 level_complete_notification[0]["loot"].append({
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
-                        "itemType": "Voucher:Voucher_HeroSilver",
-                        "itemGuid": await request.ctx.profile.grant_item("Voucher:Voucher_HeroSilver", 1),
+                        "itemType": "Reagent:Reagent_SupplyPoints_Elite",
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_SupplyPoints_Elite", 150),
                         "itemProfile": "profile0",
-                        "quantity": 1
+                        "quantity": 150
                     }]
                 })
             case "LTG.Event.NewPlayer.Map5":
@@ -214,19 +189,19 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                     "tierGroupName": "Level.FirstInstance",
                     "items": [{
                         "itemType": "Reagent:Reagent_Shard_Nature",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Nature", 10),
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Nature", 5),
                         "itemProfile": "profile0",
-                        "quantity": 10
+                        "quantity": 5
                     }, {
                         "itemType": "Reagent:Reagent_Shard_Fire",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Fire", 10),
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Fire", 5),
                         "itemProfile": "profile0",
-                        "quantity": 10
+                        "quantity": 5
                     }, {
                         "itemType": "Reagent:Reagent_Shard_Water",
-                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Water", 10),
+                        "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Water", 5),
                         "itemProfile": "profile0",
-                        "quantity": 10
+                        "quantity": 5
                     }]
                 })
             case "LTG.Event.NewPlayer.Map6":
