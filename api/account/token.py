@@ -225,6 +225,10 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                 # TODO: misc to implement: continuation_token + device_code + otp + token_to_token
                 # ALl of these except opt are unused by any client / launcher. OTP could be used in the future for 2fa.
                 # otp fields: otp, challenge
+                # otp requires:
+                # "errorCode": "errors.com.epicgames.common.two_factor_authentication.required"
+                # "twoFactorMethod": "authenticator", "challenge": "abc"
+                # http 431
                 # token_to_token fields:
                 # continuation_token fields:
                 # device_code fields:

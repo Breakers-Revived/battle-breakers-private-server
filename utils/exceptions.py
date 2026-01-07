@@ -48,6 +48,8 @@ class EpicException(Exception):
     error_description: str = None
     error: str = None
     validationFailures: dict[str, dict[str, str | dict[str, str]]] = None
+    challenge: str = None
+    metadata: dict[str, str | list[str]] = None
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
@@ -66,6 +68,8 @@ class EpicException(Exception):
         :ivar error_description: The error description
         :ivar error: The error
         :ivar validationFailures: The validation failures
+        :ivar challenge: The otp challenge
+        :ivar metadata: 2fa metadata method, email, alternative methods
 
         :raises: None
 
@@ -2131,10 +2135,12 @@ class errors:
                         This error is thrown when 2fa is required
                         *errors.com.epicgames.common.two_factor_authentication.required*
                         """
-                        errorMessage: str = "Sorry, two factor authentication is required for this account."
-                        numericErrorCode: int = 0
+                        errorMessage: str = "Two-Factor authentication required to process request."
+                        numericErrorCode: int = 1042
                         originatingService: str = "WEX"
-                        statusCode: int = 400
+                        statusCode: int = 431
+                        challenge: str = ""
+                        metadata: dict = {"twoFactorMethod": "email", "email": "**@gmail.com", "alternativeMethods": ["backupCode", "email"]}
 
                     class verification_failed(EpicException):
                         """
