@@ -1,0 +1,26 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 20
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": 500
+			},
+			{
+				"itemType": "Character:Pet_C1_Water_Magekoi_T02",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Reagent:Reagent_HeroMap_Bronze",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

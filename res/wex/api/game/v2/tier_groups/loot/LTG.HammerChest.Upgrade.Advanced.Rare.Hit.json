@@ -1,0 +1,17 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": ["UpgradePotion:UpgradeHealthMajor", "UpgradePotion:UpgradeStrengthMajor"],
+				"itemProfile": "profile0",
+				"quantity": [3, 7]
+			},
+			{
+				"itemType": "UpgradePotion:UpgradeMana",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		],
+		"spawnType": 1
+	}
+}

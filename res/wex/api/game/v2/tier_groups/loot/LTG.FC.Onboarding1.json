@@ -1,0 +1,31 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Party:Instance",
+				"itemProfile": "profile0",
+				"quantity": 3
+			},
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 40
+			},
+			{
+				"itemType": "Currency:Gold",
+				"itemProfile": "profile0",
+				"quantity": 700
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": 1000
+			},
+			{
+				"itemType": "HammerChest:HC_Tutorial",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

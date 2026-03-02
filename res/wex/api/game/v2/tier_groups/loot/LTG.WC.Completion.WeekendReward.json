@@ -1,0 +1,14 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:WCCoins",
+				"itemProfile": "profile0",
+				"quantity": [
+					40,
+					90
+				]
+			}
+		]
+	}
+}

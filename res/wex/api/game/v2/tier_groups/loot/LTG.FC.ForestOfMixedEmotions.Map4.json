@@ -1,0 +1,21 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 20
+			},
+			{
+				"itemType": "UpgradePotion:UpgradeHealthMinor",
+				"itemProfile": "profile0",
+				"quantity": 3
+			},
+			{
+				"itemType": "Voucher:Voucher_Hero_TreasureHunter_Water_PowerEfflux",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

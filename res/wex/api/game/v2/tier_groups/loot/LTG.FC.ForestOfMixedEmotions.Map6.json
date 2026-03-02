@@ -1,0 +1,16 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 20
+			},
+			{
+				"itemType": "Voucher:Voucher_Hero_Mage_Fire_BurningSword",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

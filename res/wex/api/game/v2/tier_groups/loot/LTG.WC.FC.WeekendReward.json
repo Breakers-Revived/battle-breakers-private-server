@@ -1,0 +1,186 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:WCCoins",
+				"itemProfile": "profile0",
+				"quantity": [
+					10,
+					30
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [
+					12000,
+					19000
+				]
+			},
+			{
+				"itemType": [
+					"Reagent:Reagent_Shard_Nature",
+					"Reagent:Reagent_Shard_Fire",
+					"Reagent:Reagent_Shard_Water",
+					"Reagent:Reagent_Shard_Dark",
+					"Reagent:Reagent_Shard_Light",
+					"Reagent:Reagent_Shard_Gear"
+				],
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

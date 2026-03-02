@@ -1,0 +1,21 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_Shard_Nature",
+				"itemProfile": "profile0",
+				"quantity": 5
+			},
+			{
+				"itemType": "Reagent:Reagent_Shard_Fire",
+				"itemProfile": "profile0",
+				"quantity": 5
+			},
+			{
+				"itemType": "Reagent:Reagent_Shard_Water",
+				"itemProfile": "profile0",
+				"quantity": 5
+			}
+		]
+	}
+}

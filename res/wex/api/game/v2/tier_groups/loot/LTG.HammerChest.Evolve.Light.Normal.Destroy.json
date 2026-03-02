@@ -1,0 +1,11 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_Shared_Light",
+				"itemProfile": "profile0",
+				"quantity": [2, 4]
+			}
+		]
+	}
+}

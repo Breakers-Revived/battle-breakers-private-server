@@ -1,0 +1,31 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 20
+			},
+			{
+				"itemType": "Reagent:Reagent_HeroMap_Elemental",
+				"itemProfile": "profile0",
+				"quantity": 100
+			},
+			{
+				"itemType": "Character:Warrior_Starter_Dark_RoboGuy_T02",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Warrior_Starter_Dark_RoboGuy_T02",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Warrior_Starter_Dark_RoboGuy_T02",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

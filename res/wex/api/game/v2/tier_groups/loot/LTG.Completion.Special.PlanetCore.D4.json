@@ -1,0 +1,16 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Token:TK_Shadowknight_VR1_Fire_Shadowtouch_T04",
+				"itemProfile": "profile0",
+				"quantity": 10
+			},
+			{
+				"itemType": "Reagent:Reagent_SupplyPoints_Elite",
+				"itemProfile": "profile0",
+				"quantity": 3
+			}
+		]
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Unlockable:Unlockable_Skills",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 20
+			}
+		]
+	}
+}

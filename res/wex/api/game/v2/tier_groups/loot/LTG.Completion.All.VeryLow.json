@@ -1,0 +1,17 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_Shared_T02",
+				"itemProfile": "profile0",
+				"quantity": [1, 2, 2, 3]
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [400, 600]
+			}
+		],
+		"spawnType": 1
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_Shared_MysteryGoo",
+				"itemProfile": "profile0",
+				"quantity": [1, 2]
+			}
+		]
+	}
+}

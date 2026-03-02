@@ -1,0 +1,22 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": [1000, 2000]
+			},
+			{
+				"itemType": "Currency:Gold",
+				"itemProfile": "profile0",
+				"quantity": [5000, 10000]
+			},
+			{
+				"itemType": "Reagent:Reagent_HeroMap_Elemental",
+				"itemProfile": "profile0",
+				"quantity": 100
+			}
+		],
+		"spawnType": 1
+	}
+}

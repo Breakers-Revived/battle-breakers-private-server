@@ -1,0 +1,17 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": ["UpgradePotion:UpgradeHealthMajor", "UpgradePotion:UpgradeStrengthMajor"],
+				"itemProfile": "profile0",
+				"quantity": [3, 6]
+			},
+			{
+				"itemType": "Currency:SkillXP",
+				"itemProfile": "profile0",
+				"quantity": [50, 100]
+			}
+		],
+		"spawnType": 1
+	}
+}

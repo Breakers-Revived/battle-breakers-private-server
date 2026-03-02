@@ -1,0 +1,16 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_Shared_T02",
+				"itemProfile": "profile0",
+				"quantity": [5, 12]
+			},
+			{
+				"itemType": "Reagent:Reagent_Shared_T02",
+				"itemProfile": "profile0",
+				"quantity": [5, 12]
+			}
+		]
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 20
+			},
+			{
+				"itemType": "Reagent:Reagent_HeroMap_Elemental",
+				"itemProfile": "profile0",
+				"quantity": 100
+			}
+		]
+	}
+}

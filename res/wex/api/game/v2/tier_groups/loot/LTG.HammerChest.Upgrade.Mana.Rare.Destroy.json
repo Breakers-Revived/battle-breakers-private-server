@@ -1,0 +1,11 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "UpgradePotion:UpgradeMana",
+				"itemProfile": "profile0",
+				"quantity": [6, 10]
+			}
+		]
+	}
+}

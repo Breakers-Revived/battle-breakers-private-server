@@ -1,0 +1,21 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "TreasureMap:TM_ForestOfMixedEmotions_Map8",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 50
+			},
+			{
+				"itemType": "Unlockable:Unlockable_Quests",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

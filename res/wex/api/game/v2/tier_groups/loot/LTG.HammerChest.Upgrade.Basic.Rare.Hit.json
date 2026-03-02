@@ -1,0 +1,22 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": ["UpgradePotion:UpgradeHealthMinor", "UpgradePotion:UpgradeStrengthMinor"],
+				"itemProfile": "profile0",
+				"quantity": [9, 20]
+			},
+			{
+				"itemType": "Reagent:Reagent_Shared_T02",
+				"itemProfile": "profile0",
+				"quantity": [26, 47]
+			},
+			{
+				"itemType": "Currency:SkillXP",
+				"itemProfile": "profile0",
+				"quantity": [123, 129]
+			}
+		],
+		"spawnType": 1
+	}
+}

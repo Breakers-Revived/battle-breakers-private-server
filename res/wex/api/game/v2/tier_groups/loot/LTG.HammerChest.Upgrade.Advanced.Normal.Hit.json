@@ -1,0 +1,11 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": ["UpgradePotion:UpgradeHealthMajor", "UpgradePotion:UpgradeStrengthMajor"],
+				"itemProfile": "profile0",
+				"quantity": [2, 5]
+			}
+		]
+	}
+}

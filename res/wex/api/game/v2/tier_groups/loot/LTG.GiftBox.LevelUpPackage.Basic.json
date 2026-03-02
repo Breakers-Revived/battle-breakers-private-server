@@ -1,0 +1,11 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_HeroMap_Elemental",
+				"itemProfile": "profile0",
+				"quantity": 1000
+			}
+		]
+	}
+}

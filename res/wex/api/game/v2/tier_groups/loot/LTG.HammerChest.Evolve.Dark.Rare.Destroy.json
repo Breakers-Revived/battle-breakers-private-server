@@ -1,0 +1,11 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_Shard_Dark",
+				"itemProfile": "profile0",
+				"quantity": [4, 8]
+			}
+		]
+	}
+}

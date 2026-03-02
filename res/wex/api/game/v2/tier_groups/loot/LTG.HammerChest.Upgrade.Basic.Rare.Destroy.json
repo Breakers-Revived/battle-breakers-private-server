@@ -1,0 +1,17 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:SkillXP",
+				"itemProfile": "profile0",
+				"quantity": 3761
+			},
+			{
+				"itemType": "Reagent:Reagent_Shared_T02",
+				"itemProfile": "profile0",
+				"quantity": [202, 243]
+			}
+		],
+		"spawnType": 1
+	}
+}

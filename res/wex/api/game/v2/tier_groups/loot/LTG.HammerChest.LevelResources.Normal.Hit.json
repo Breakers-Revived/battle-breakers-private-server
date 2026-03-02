@@ -1,0 +1,11 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "TreasureMap:TM_MapResource",
+				"itemProfile": "profile0",
+				"quantity": [3, 8]
+			}
+		]
+	}
+}

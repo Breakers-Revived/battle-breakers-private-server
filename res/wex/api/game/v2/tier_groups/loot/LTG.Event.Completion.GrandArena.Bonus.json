@@ -1,0 +1,28 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:Gold",
+				"itemProfile": "profile0",
+				"quantity": 10000
+			},
+			{
+				"itemType": "StandIn:Event_Currency",
+				"itemProfile": "profile0",
+				"quantity": 200
+			},
+			{
+				"itemType": [
+					"Reagent:Reagent_Shard_Nature",
+					"Reagent:Reagent_Shard_Fire",
+					"Reagent:Reagent_Shard_Water",
+					"Reagent:Reagent_Shard_Dark",
+					"Reagent:Reagent_Shard_Light",
+					"Reagent:Reagent_Shard_Gear"
+				],
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

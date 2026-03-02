@@ -245,6 +245,7 @@ fabric.properties
 !/res/wex/api/game/v2/level_data/*.json
 !/res/wex/api/game/v2/skybreaker/*.json
 !/res/wex/api/game/v2/balance/*.json
+!/res/wex/api/game/v2/tier_groups/*/*.json
 
 # Log uploads
 /res/wex/api/feedback/log-upload/*

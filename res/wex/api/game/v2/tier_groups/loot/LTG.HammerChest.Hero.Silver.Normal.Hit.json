@@ -1,0 +1,17 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:SkillXP",
+				"itemProfile": "profile0",
+				"quantity": [20, 50]
+			},
+			{
+				"itemType": "Reagent:Reagent_RXT_Parts_Small",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		],
+		"spawnType": 1
+	}
+}

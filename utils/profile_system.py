@@ -21,7 +21,7 @@ import sanic.log
 
 from utils.custom_serialiser import custom_serialise
 from utils.enums import ProfileType, FriendStatus
-from utils.utils import format_time
+from utils.utils import format_time, read_file, process_choices, get_event_currency
 
 MCPTypes: UnionType = str | int | float | list | dict | bool
 
@@ -909,6 +909,86 @@ class PlayerProfile:
             "rank": rank,
             "sidekick_item_id": sidekick_item_id
         }, True, profile_id)
+
+    async def grant_loot_from_tiergroup(self, ltg: str) -> Optional[list[dict]]:
+        """
+        Grants items to a profile from a given loot tier group and returns the items granted
+        :param ltg: the tier group name
+        :return: the list of items granted for a response
+        """
+        try:
+            loot_data: dict[str, dict] = await read_file(f"res/wex/api/game/v2/tier_groups/loot/{ltg}.json")
+        except FileNotFoundError:
+            sanic.log.logger.error(f"Failed to find loot tier group {ltg} for account {self.account_id}")
+            return None
+        items = []
+        event_currency = await get_event_currency()
+        match loot_data[""].get("spawnType", 0):
+            case 0:
+                for item in loot_data[""].get("items", []):
+                    item_type = await process_choices(item["itemType"])
+                    item_quantity = await process_choices(item["quantity"])
+                    if item_type == "StandIn:Event_Currency":
+                        item_type = event_currency
+                    if item_type.startswith("Character:"):
+                        item_id = await self.grant_hero(item_type, quantity=item_quantity)
+                    else:
+                        item_id = await self.grant_item(item_type, item_quantity)
+                    items.append({
+                        "itemType": item_type,
+                        "itemGuid": item_id,
+                        "itemProfile": item["itemProfile"],
+                        "quantity": item_quantity
+                    })
+            case 1:
+                item = await process_choices(loot_data[""]["items"])
+                item_type = await process_choices(item["itemType"])
+                item_quantity = await process_choices(item["quantity"])
+                if item_type == "StandIn:Event_Currency":
+                    item_type = event_currency
+                if item_type.startswith("Character:"):
+                    item_id = await self.grant_hero(item_type, quantity=item_quantity)
+                else:
+                    item_id = await self.grant_item(item_type, item_quantity)
+                items.append({
+                    "itemType": item_type,
+                    "itemGuid": item_id,
+                    "itemProfile": item["itemProfile"],
+                    "quantity": item_quantity
+                })
+            case 2:
+                for item in loot_data[""].get("items", []):
+                    item_type = await process_choices(item["itemType"])
+                    item_quantity = await process_choices(item["quantity"])
+                    if item_type == "StandIn:Event_Currency":
+                        item_type = event_currency
+                    if item_type.startswith("Character:"):
+                        item_id = await self.grant_hero(item_type, quantity=item_quantity)
+                    else:
+                        item_id = await self.grant_item(item_type, item_quantity)
+                    items.append({
+                        "itemType": item_type,
+                        "itemGuid": item_id,
+                        "itemProfile": item["itemProfile"],
+                        "quantity": item_quantity
+                    })
+                for _ in range(loot_data[""].get("itemsPickCount", 1)):
+                    item = await process_choices(loot_data[""]["itemsPick"])
+                    item_type = await process_choices(item["itemType"])
+                    item_quantity = await process_choices(item["quantity"])
+                    if item_type == "StandIn:Event_Currency":
+                        item_type = event_currency
+                    if item_type.startswith("Character:"):
+                        item_id = await self.grant_hero(item_type, quantity=item_quantity)
+                    else:
+                        item_id = await self.grant_item(item_type, item_quantity)
+                    items.append({
+                        "itemType": item_type,
+                        "itemGuid": item_id,
+                        "itemProfile": item["itemProfile"],
+                        "quantity": item_quantity
+                    })
+        return items
 
     async def add_notifications(self, notification: dict, profile_id: ProfileType = ProfileType.PROFILE0) -> list[dict]:
         """

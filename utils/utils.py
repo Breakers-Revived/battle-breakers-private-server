@@ -16,6 +16,9 @@ import re
 import uuid
 import zlib
 from inspect import isawaitable
+
+import icalendar
+import recurring_ical_events
 from typing_extensions import Any, Tuple, Optional, Callable
 
 import aiohttp
@@ -1303,5 +1306,18 @@ async def reward_for_level(level: int):
         return "ATK_DEF"
     if level == 999:
         return "Basic_Special"
-    idx = (level - 1) % 40   # map level to index in the 20-slot cycle
+    idx = (level - 1) % 40  # map level to index in the 20-slot cycle
     return level_cycle[idx]
+
+async def get_event_currency() -> str:
+    """
+    Gets the current event currency. This is determined by the current date and the event schedule.
+    :return: The current event currency
+    """
+    async with aiofiles.open("res/wex/api/calendar/battlepass.ics", "rb") as f:
+        events = recurring_ical_events.of(icalendar.Calendar.from_ical(await f.read())).at(
+            datetime.datetime.now(datetime.UTC)
+        )
+    event_data = await load_datatable(events[-1].get("DESCRIPTION")[1:])
+    return await get_template_id_from_path(
+        (await process_choices(event_data[0]["Properties"]["EventCurrency"]))["AssetPathName"])

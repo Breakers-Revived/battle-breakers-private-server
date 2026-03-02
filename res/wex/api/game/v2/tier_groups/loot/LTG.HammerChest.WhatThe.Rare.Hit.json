@@ -1,0 +1,57 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Character:Special_Treasure_Dark_T03",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Special_Treasure_Fire_T03",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Special_Treasure_Light_T03",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Special_Treasure_Nature_T03",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Special_Treasure_Water_T03",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Special_Treasure_Dark_T04",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Special_Treasure_Fire_T04",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Special_Treasure_Light_T04",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Special_Treasure_Nature_T04",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Character:Special_Treasure_Water_T04",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		],
+		"spawnType": 1
+	}
+}

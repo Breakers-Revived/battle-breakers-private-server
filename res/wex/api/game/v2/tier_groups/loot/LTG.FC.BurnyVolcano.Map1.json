@@ -1,0 +1,21 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 20
+			},
+			{
+				"itemType": "Voucher:Voucher_Chest_Gold",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "Unlockable:Unlockable_Duels",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

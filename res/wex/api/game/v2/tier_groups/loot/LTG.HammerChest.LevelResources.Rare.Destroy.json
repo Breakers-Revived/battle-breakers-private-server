@@ -1,0 +1,43 @@
+{
+	"": {
+		"spawnType": 2,
+		"itemsPick": [
+			{
+				"itemType": "TreasureMap:TM_Special_Cloud5",
+				"itemProfile": "profile0",
+				"quantity": 5
+			},
+			{
+				"itemType": "TreasureMap:TM_Special_MeegCity",
+				"itemProfile": "profile0",
+				"quantity": 5
+			},
+			{
+				"itemType": "TreasureMap:TM_Special_GhostShip",
+				"itemProfile": "profile0",
+				"quantity": 3
+			},
+			{
+				"itemType": "TreasureMap:TM_Special_EasterEggDesert",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "TreasureMap:TM_Special_PlanetCore",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "TreasureMap:TM_Special_UnderwaterForest",
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": "TreasureMap:TM_Special_UnderwaterTunnel",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		],
+		"itemsPickCount": 2
+	}
+}

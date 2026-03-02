@@ -1,0 +1,61 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": [
+					"Reagent:Reagent_Shared_Dark",
+					"Reagent:Reagent_Shared_Fire",
+					"Reagent:Reagent_Shared_Light",
+					"Reagent:Reagent_Shared_Nature",
+					"Reagent:Reagent_Shared_Water"
+				],
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": [
+					"Reagent:Reagent_Shared_Dark",
+					"Reagent:Reagent_Shared_Fire",
+					"Reagent:Reagent_Shared_Light",
+					"Reagent:Reagent_Shared_Nature",
+					"Reagent:Reagent_Shared_Water"
+				],
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": [
+					"Reagent:Reagent_Shared_Dark",
+					"Reagent:Reagent_Shared_Fire",
+					"Reagent:Reagent_Shared_Light",
+					"Reagent:Reagent_Shared_Nature",
+					"Reagent:Reagent_Shared_Water"
+				],
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": [
+					"Reagent:Reagent_Shared_Dark",
+					"Reagent:Reagent_Shared_Fire",
+					"Reagent:Reagent_Shared_Light",
+					"Reagent:Reagent_Shared_Nature",
+					"Reagent:Reagent_Shared_Water"
+				],
+				"itemProfile": "profile0",
+				"quantity": 1
+			},
+			{
+				"itemType": [
+					"Reagent:Reagent_Shared_Dark",
+					"Reagent:Reagent_Shared_Fire",
+					"Reagent:Reagent_Shared_Light",
+					"Reagent:Reagent_Shared_Nature",
+					"Reagent:Reagent_Shared_Water"
+				],
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

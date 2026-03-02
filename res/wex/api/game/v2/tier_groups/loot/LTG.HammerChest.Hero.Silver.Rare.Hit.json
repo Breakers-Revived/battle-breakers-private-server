@@ -1,0 +1,17 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:SkillXP",
+				"itemProfile": "profile0",
+				"quantity": 58
+			},
+			{
+				"itemType": "Reagent:Reagent_HeroMap_Elemental",
+				"itemProfile": "profile0",
+				"quantity": [10, 20]
+			}
+		],
+		"spawnType": 1
+	}
+}

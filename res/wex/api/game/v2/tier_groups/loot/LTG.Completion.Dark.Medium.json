@@ -1,0 +1,51 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": 1000
+			},
+			{
+				"itemType": "Currency:HeroXp_Basic",
+				"itemProfile": "profile0",
+				"quantity": 1000
+			},
+			{
+				"itemType": "Currency:Gold",
+				"itemProfile": "profile0",
+				"quantity": 100000
+			},
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 10
+			},
+			{
+				"itemType": "Reagent:Reagent_Foil",
+				"itemProfile": "profile0",
+				"quantity": 10
+			},
+			{
+				"itemType": [
+					"Reagent:Reagent_Shard_Nature",
+					"Reagent:Reagent_Shard_Fire",
+					"Reagent:Reagent_Shard_Water",
+					"Reagent:Reagent_Shard_Dark",
+					"Reagent:Reagent_Shard_Light",
+					"Reagent:Reagent_Shard_Gear"
+				],
+				"itemProfile": "profile0",
+				"quantity": [
+					1,
+					4
+				]
+			},
+			{
+				"itemType": "Gear:GD_Weapon_ElementalPistol_Nature", # TODO: random weapon
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

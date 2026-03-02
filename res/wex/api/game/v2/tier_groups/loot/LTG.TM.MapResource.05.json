@@ -1,0 +1,16 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "TreasureMap:TM_MapResource",
+				"itemProfile": "profile0",
+				"quantity": 5
+			},
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 20
+			}
+		]
+	}
+}
