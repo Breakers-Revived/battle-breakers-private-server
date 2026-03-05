@@ -46,7 +46,7 @@ async def purchase_flow_files(request: types.BBRequest, file: str) -> sanic.resp
         async with aiofiles.open("res/account/login/guided/main.css", "rb") as file:
             return sanic.response.raw(await file.read(), content_type="text/css")
     elif file == "login-script.js":
-        if "register" in request.headers.get("Referer"):
+        if "register" in request.headers.get("Referer", ""):
             async with aiofiles.open("res/account/login/register/signup-script.js", "rb") as file:
                 return sanic.response.raw(await file.read(), content_type="text/javascript")
         else:

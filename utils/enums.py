@@ -180,6 +180,7 @@ class AuthClient(enum.Enum):
     wexpClient_GameDev = ["f8eac541a1c241939f76d26cf2a673a6", "cc545e608de846a18e75a36acc1cf3d0"]
     battlebreakers_web = ["8e873617d81d4caf89bae28a4b74bbfe", "d1d8b2a0-4b0a-4f4e-9f4a-3b3b7b0b0b0b"]
     launcherAppClient2 = ["34a02cf8f4414e29b15921876da36f9a", "daafbccc737745039dffe53d94fc76cf"]
+    login_page_staging = ["ec0ebb7e56f6454e86c62299a7b32e21", "bbprivateserverinmemoryofdippy<3"]
     googleClientId = ["26523943714-k0ekuoist4nb0br1ngq0erv4eaq11u10.apps.googleusercontent.com",
                       "QSzqBOVSk_OA5zNk6XjIdj6Q"]
     googleClientId_new = ["com.googleusercontent.apps.26523943714-vcoht7h19fr69impmedkl8996scv78i0",

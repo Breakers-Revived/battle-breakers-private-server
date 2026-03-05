@@ -206,9 +206,10 @@ async def cloudstorage_user_get_file(request: sanic.request.Request, accountId: 
     :param filename: The filename
     :return: The response object
     """
-    if not os.path.exists(f"res/wex/api/cloudstorage/user/{accountId}/{filename}"):
+    safe_file = await utils.safe_path_join(f"res/wex/api/cloudstorage/user/{accountId}", filename)
+    if not os.path.exists(safe_file):
         raise errors.com.epicgames.cloudstorage.file_not_found(filename, accountId)
-    with open(f"res/wex/api/cloudstorage/user/{accountId}/{filename}", "rb") as f:
+    with open(safe_file, "rb") as f:
         data = f.read()
     return sanic.response.raw(data, content_type="application/octet-stream")
 

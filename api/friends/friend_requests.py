@@ -60,11 +60,11 @@ async def send_friend_request_deprecated(request: types.BBFriendRequest, account
     """
     if request.method == "DELETE":
         delete_request = await request.ctx.friends.remove_friend(request, friendId)
-        if delete_request.get("errorCode") is not None:
+        if delete_request is not None and delete_request.get("errorCode") is not None:
             raise sanic.exceptions.BadRequest(context=delete_request)
         return sanic.response.empty()
     sent_request = await request.ctx.friends.send_friend_request(request, friendId)
-    if sent_request.get("errorCode") is not None:
+    if sent_request is not None and sent_request.get("errorCode") is not None:
         raise sanic.exceptions.BadRequest(context=sent_request)
     return sanic.response.empty()
 

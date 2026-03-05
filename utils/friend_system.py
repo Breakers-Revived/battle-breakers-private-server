@@ -11,6 +11,7 @@ from typing_extensions import Optional, Self
 
 from pymongo.asynchronous.database import AsyncDatabase
 import sanic
+import sanic.log
 
 from utils.enums import FriendStatus
 from utils.exceptions import errors
@@ -272,8 +273,8 @@ class PlayerFriends:
                 request.app.ctx.profiles[friendId]: PlayerProfile = await PlayerProfile.init_profile(friendId)
             await request.app.ctx.profiles[friendId].remove_friend_instance(self.account_id)
             await other_friend.save_friends()
-        except:
-            pass
+        except Exception as e:
+            sanic.log.logger.warning(f"Error removing friend on other side: {e}")
 
     async def update_friends(self, friends: dict) -> None:
         """

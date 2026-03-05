@@ -57,7 +57,7 @@ class CustomErrorHandler(ErrorHandler):
                 error_code = exception.context.get("errorCode", error_code)
                 error_message = exception.context.get("errorMessage", error_message)
                 numeric_error_code = exception.context.get("numericErrorCode", numeric_error_code)
-            if True:  # request.app.debug
+            if request.app.debug:
                 if status_code == 500:
                     error_message = ""
                     for message in message_vars:

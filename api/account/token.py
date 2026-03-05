@@ -41,7 +41,7 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                 authorisation = base64.b64decode(request.headers.get('Authorization').split(' ')[1]).decode()
                 client_id = authorisation.split(':')[0]
                 client_secret = authorisation.split(':')[1]
-            except:
+            except (ValueError, IndexError, UnicodeDecodeError):
                 raise errors.com.epicgames.common.oauth.invalid_client()
             auth_clients: list[AuthClient] = enums.AuthClient.from_string(client_id)
             for auth_client in auth_clients:
@@ -63,14 +63,21 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                 match request.form.get('external_auth_type'):
                     case 'google':
                         # TODO: Reinvestigate what this case is
-                        sub = request.form.get('external_auth_token').split(':')[0]
-                        account: dict = await request.app.ctx.db["accounts"].find_one({"_id": sub}, {
-                            "_id": 0,
-                            "displayName": 1,
-                        })
-                        dn = account['displayName']
-                        dvid = request.headers.get('X-Epic-Device-ID')
-                        return sanic.response.json((await oauth_response(client_id, dn, dvid, sub)))
+                        google_token = await verify_google_token(
+                            request.form.get('external_auth_token'))
+                        if google_token is not None:
+                            sub = google_token['sub']
+                            account = await request.app.ctx.db["accounts"].find_one(
+                                {"externalAuths.google.externalAuthId": sub}, {"displayName": 1})
+                            if account:
+                                dn = account['displayName']
+                                dvid = request.headers.get('X-Epic-Device-ID')
+                                return sanic.response.json(
+                                    (await oauth_response(client_id, dn, dvid, account['_id'])))
+                            else:
+                                raise errors.com.epicgames.account.external_auth_validate_failed()
+                        else:
+                            raise errors.com.epicgames.account.external_auth_validate_failed()
                     case 'google_id_token':
                         google_token = await verify_google_token(
                             request.form.get('external_auth_token'))

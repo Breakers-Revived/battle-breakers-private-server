@@ -39,10 +39,12 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key, l
 from cryptography.hazmat.backends import default_backend
 
 from utils.exceptions import errors
+from utils import enums
 
 # SSL keys
 private_key = None
 public_key = None
+mongo_check_pattern = re.compile(r'^[a-zA-Z0-9_-]+$')
 
 # Load the private key
 if os.path.isfile(PRIVATE_KEY_PEM_PATH):
@@ -149,6 +151,28 @@ async def write_file(filename: str, contents: Any, json: bool = True, raw: bool 
     async with aiofiles.open(filename, "w") as file:
         await file.write(contents)
     return
+
+
+def validate_mongo_key(key: str) -> str:
+    """
+    Validates that a given key is safe for MongoDB field paths
+
+    :param key: The key to validate
+    :return: The validated key if it's safe
+    """
+    if not key or not isinstance(key, str) or not mongo_check_pattern.match(key):
+        raise errors.com.epicgames.bad_request(errorMessage="Key must have alphanumeric/hyphen/underscore only")
+    return key
+
+
+def sanitise_header(header: str) -> str:
+    """
+    Sanitises a header value by removing any newline or null characters to prevent CRLF injection
+
+    :param header: The header value to sanitise
+    :return: The sanitised header value
+    """
+    return re.sub(r'[\r\n\x00]', '', str(header))
 
 
 async def format_time(time: Optional[datetime.datetime | float | int | str] = None) -> str:
@@ -448,7 +472,7 @@ async def verify_google_token(token: str) -> Optional[dict]:
     sanic.log.logger.debug("Verifying Google token")
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://oauth2.googleapis.com/tokeninfo?id_token={token}") as r:
+            async with session.get("https://oauth2.googleapis.com/tokeninfo", params={"id_token": token}) as r:
                 if r.status != 200:
                     sanic.log.logger.warning(f"Failed to verify Google token: {r.status}")
                     return None
@@ -475,7 +499,7 @@ async def verify_owner(request: sanic.request.Request, token: dict) -> bool:
     if account_id is None:
         try:
             account_id = request.json.get("accountId")
-        except:
+        except (AttributeError, TypeError):
             pass
     if account_id is None:
         sanic.log.logger.warning("Failed to verify owner of the token")
@@ -583,11 +607,10 @@ def authorized(maybe_func: Any = None, *, allow_basic: bool = False, strict: boo
                     try:
                         token = request.headers.get("Authorization", "").replace("basic ", "")
                         token = base64.b64decode(token).decode()
-                        if token[32] == ":":
-                            is_authorised = True
-                        else:
-                            raise Exception()
-                    except:
+                        client_id, client_secret = token.split(":", 1)
+                        auth_clients = enums.AuthClient.from_string(client_id)
+                        is_authorised = any(c.value[1] == client_secret for c in auth_clients)
+                    except (ValueError, IndexError, UnicodeDecodeError, Exception):
                         is_authorised = False
                 else:
                     is_authorised = await verify_request_auth(request, strict)

@@ -52,15 +52,18 @@ async def add_external_auth(request: types.BBRequest, accountId: str) -> sanic.r
     # not bothered to add ALL of the external auths, only adding google cause mobile (fb blocked insecure sign in)
     match request.json.get("authType"):
         case "google_user_id":
+            google_token = await verify_google_token(request.json.get("externalAuthToken"))
+            if google_token is None:
+                raise errors.com.epicgames.account.external_auth_validate_failed()
             data["externalAuths"]["google"] = {
                 "accountId": accountId,
                 "type": "google",
-                "externalAuthId": request.json["externalAuthToken"],
+                "externalAuthId": google_token.get("sub"),
                 "externalAuthIdType": "google_user_id",
                 "externalDisplayName": "",
                 "authIds": [
                     {
-                        "id": request.json["externalAuthToken"],
+                        "id": google_token.get("sub"),
                         "type": "google_user_id"
                     }
                 ]
@@ -83,7 +86,8 @@ async def add_external_auth(request: types.BBRequest, accountId: str) -> sanic.r
                 }
         case _:
             raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
-    await request.app.ctx.db["accounts"].update_one({"_id": accountId}, {"$set": data})
+    await request.app.ctx.db["accounts"].update_one({"_id": accountId},
+                                                    {"$set": {"externalAuths": data["externalAuths"]}})
     return sanic.response.json([data["externalAuths"]])
 
 
@@ -102,6 +106,8 @@ async def manage_external_auth(request: types.BBRequest, accountId: str,
     """
     match request.method:
         case "GET":
+            if authType not in ("google", "facebook", "psn", "xbl", "nintendo"):
+                raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
             external_auth_account = await request.app.ctx.db["accounts"].find_one(
                 {"_id": accountId}, {"externalAuths.$": 1, "_id": 0})
             if external_auth_account and "externalAuths" in external_auth_account:
@@ -112,6 +118,8 @@ async def manage_external_auth(request: types.BBRequest, accountId: str,
             else:
                 raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
         case "DELETE":
+            if authType not in ("google", "facebook", "psn", "xbl", "nintendo"):
+                raise errors.com.epicgames.account.ext_auth.unknown_external_auth_type()
             result = await request.app.ctx.db["accounts"].update_one({"_id": accountId},
                                                                      {"$pull": {"externalAuths": {"type": authType}}})
             if result.matched_count == 1 and result.modified_count == 1:

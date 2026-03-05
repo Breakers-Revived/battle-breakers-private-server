@@ -105,9 +105,11 @@ async def set_item_rating(request: types.BBRequest, accountId: str, templateId: 
         (await load_character_data(template_id))[0]["Properties"]["CharacterStatsHandle"]["RowName"],
         {}).get("RatingsKey", f"CD.{template_id.split(':')[1].replace('_', '.')}")).replace(".", "_")
     rating_data = {
-        "gameplayRating": request.json["gameplayRating"],
-        "appearanceRating": request.json["appearanceRating"]
+        "gameplayRating": request.json["gameplayRating"] if isinstance(request.json.get("gameplayRating"), int) else 0,
+        "appearanceRating": request.json["appearanceRating"] if isinstance(request.json.get("appearanceRating"), int) else 0
     }
+    rating_data["gameplayRating"] = int(rating_data["gameplayRating"])
+    rating_data["appearanceRating"] = int(rating_data["appearanceRating"])
     if rating_data["gameplayRating"] > 5:
         rating_data["gameplayRating"] = 5
     elif rating_data["gameplayRating"] < 0:

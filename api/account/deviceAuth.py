@@ -30,6 +30,10 @@ async def device_auth_create(request: types.BBRequest, accountId: str) -> sanic.
     :param accountId: The account id
     :return: The response object
     """
+    try:
+        device_info = orjson.loads(request.headers.get("X-Epic-Device-Info", "{}"))
+    except (orjson.JSONDecodeError, TypeError):
+        device_info = {}
     device_authorisation = {
         "deviceId": request.ctx.dvid,
         "accountId": accountId,
@@ -46,9 +50,9 @@ async def device_auth_create(request: types.BBRequest, accountId: str) -> sanic.
             "dateTime": await format_time()
         },
         "deviceInfo": {
-            "type": orjson.loads(request.headers.get("X-Epic-Device-Info", "{}")).get("type"),
-            "model": orjson.loads(request.headers.get("X-Epic-Device-Info", "{}")).get("model"),
-            "os": orjson.loads(request.headers.get("X-Epic-Device-Info", "{}")).get("os")
+            "type": str(device_info.get("type", ""))[:128] if isinstance(device_info.get("type"), str) else None,
+            "model": str(device_info.get("model", ""))[:128] if isinstance(device_info.get("model"), str) else None,
+            "os": str(device_info.get("os", ""))[:128] if isinstance(device_info.get("os"), str) else None
         }
     }
     await request.app.ctx.db["accounts"].update_one({"_id": accountId}, {

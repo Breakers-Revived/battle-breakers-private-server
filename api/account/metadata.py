@@ -10,7 +10,7 @@ import sanic
 
 from utils import types
 from utils.exceptions import errors
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, validate_mongo_key
 
 from utils.sanic_gzip import Compress
 
@@ -47,6 +47,7 @@ async def get_delete_metadata(request: types.BBRequest, accountId: str, key: str
     :param key: The metadata key
     :return: The response object
     """
+    key = validate_mongo_key(key)
     if request.method == "GET":
         account = await request.app.ctx.db["accounts"].find_one({"_id": accountId}, {"metadata": 1})
         if account and "metadata" in account:
@@ -85,7 +86,14 @@ async def set_metadata(request: types.BBRequest, accountId: str) -> sanic.respon
         account["metadata"] = {}
     if len(account["metadata"]) > 1000:
         raise errors.com.epicgames.account.metadata.too_many_keys()
-    account["metadata"][request.json.get("key")] = request.json.get("value")
+    raw_key = request.json.get("key")
+    raw_value = request.json.get("value")
+    if not isinstance(raw_key, str):
+        raise errors.com.epicgames.bad_request(errorMessage="Metadata key must be a string")
+    key = validate_mongo_key(raw_key)
+    if not isinstance(raw_value, (str, int, float, bool, type(None))):
+        raise errors.com.epicgames.bad_request(errorMessage="Metadata value must be a valid type")
+    account["metadata"][key] = raw_value
     await request.app.ctx.db["accounts"].update_one(
         {"_id": accountId},
         {"$set": {"metadata": account["metadata"]}}

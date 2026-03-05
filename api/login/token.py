@@ -31,6 +31,9 @@ async def login_token_route(request: types.BBRequest) -> sanic.response.JSONResp
     """
     # logging in
     if request.headers.get("X-Request-Source-Form") == "login-form":
+        if not request.json or not isinstance(request.json.get("username"), str) or not isinstance(request.json.get("password"), str):
+            raise sanic.exceptions.InvalidUsage("Invalid request", context={
+                "errorMessage": "Username and password are required"})
         username = request.json.get("username")[:32]
         password = request.json.get("password")
         if len(username) > 24:
@@ -45,13 +48,12 @@ async def login_token_route(request: types.BBRequest) -> sanic.response.JSONResp
                         "extra.pwhash": 1
                     })
                 if account_data is None:
-                    raise sanic.exceptions.InvalidUsage("Invalid username", context={
-                        "errorMessage": "Your account ID doesn't exist...\nAlready have an account to import? Contact "
-                                        "us on Discord.\nTrying to create an account? Sign up instead."})
+                    raise sanic.exceptions.InvalidUsage("Invalid credentials", context={
+                        "errorMessage": "Invalid username or password"})
                 else:
-                    if account_data["extra"]["pwhash"] != password:
-                        raise sanic.exceptions.Unauthorized("Invalid password", context={
-                            "errorMessage": "The password you entered is incorrect"})
+                    if not await bcrypt_check(password, account_data["extra"]["pwhash"].encode()):
+                        raise sanic.exceptions.Unauthorized("Invalid credentials", context={
+                            "errorMessage": "Invalid username or password"})
                     else:
                         return sanic.response.json(
                             {"username": account_data["displayName"],
@@ -83,13 +85,12 @@ async def login_token_route(request: types.BBRequest) -> sanic.response.JSONResp
                         "extra.pwhash": 1
                     })
             if account_data is None:
-                raise sanic.exceptions.InvalidUsage("Invalid username", context={
-                    "errorMessage": "Your username doesn't exist...\nAlready have an account to import? Contact us on "
-                                    "Discord.\nTrying to create an account? Sign up instead."})
+                raise sanic.exceptions.InvalidUsage("Invalid credentials", context={
+                    "errorMessage": "Invalid username or password"})
             else:
                 if not await bcrypt_check(password, account_data["extra"]["pwhash"].encode()):
-                    raise sanic.exceptions.Unauthorized("Invalid password", context={
-                        "errorMessage": "The password you entered is incorrect"})
+                    raise sanic.exceptions.Unauthorized("Invalid credentials", context={
+                        "errorMessage": "Invalid username or password"})
                 else:
                     return sanic.response.json(
                         {"username": account_data["displayName"],
@@ -99,6 +100,9 @@ async def login_token_route(request: types.BBRequest) -> sanic.response.JSONResp
                          }
                     )
     elif request.headers.get("X-Request-Source-Form") == "signup-form":
+        if not request.json or not isinstance(request.json.get("username"), str) or not isinstance(request.json.get("password"), str):
+            raise sanic.exceptions.InvalidUsage("Invalid request", context={
+                "errorMessage": "Username and password are required"})
         username = request.json.get("username")[:32]
         password = request.json.get("password")
         if len(username) < 3:

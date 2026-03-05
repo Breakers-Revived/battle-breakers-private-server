@@ -6,7 +6,6 @@ This code is licensed under the Breakers Revived License (BRL).
 
 Class based system to handle the profile management for wex mcp service
 """
-import ast
 import copy
 import datetime
 import uuid
@@ -1232,7 +1231,7 @@ class PlayerProfile:
         else:
             client_command_revision: list[
                 dict[str, str | int], dict[str, str | int], dict[str, str | int], dict[str, str | int], dict[
-                    str, str | int]] = ast.literal_eval(client_command_revision)
+                    str, str | int]] = orjson.loads(client_command_revision)
         for item in client_command_revision:
             if item["profileId"] == profile_id.value:
                 client_revision: int = item["clientCommandRevision"]
