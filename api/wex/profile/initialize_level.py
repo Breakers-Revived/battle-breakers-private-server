@@ -15,7 +15,8 @@ import sanic
 from utils import types
 from utils.exceptions import errors
 from utils.enums import ProfileType
-from utils.utils import authorized as auth, load_datatable, format_time, room_generator, read_file, process_choices
+from utils.utils import authorized as auth, load_datatable, format_time, room_generator, read_file_cached, \
+    process_choices
 
 from utils.sanic_gzip import Compress
 
@@ -62,26 +63,26 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
         target_difficulty = int(level_id.split(".")[-1][1:])
         for difficulty in range(target_difficulty, 0, -1):
             try:
-                level_data = await read_file(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.D{difficulty}.json")
+                level_data = await read_file_cached(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.D{difficulty}.json")
             except FileNotFoundError:
                 pass
             if level_data is not None:
                 break
             else:
                 try:
-                    level_data = await read_file(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.D{difficulty}_template.json")
+                    level_data = await read_file_cached(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.D{difficulty}_template.json")
                 except FileNotFoundError:
                     pass
             if level_data is not None:
                 break
         else:
             try:
-                level_data = await read_file(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.json")
+                level_data = await read_file_cached(f"res/wex/api/game/v2/level_data/{level_id[:-3]}.json")
             except FileNotFoundError:
                 pass
     else:
         try:
-            level_data = await read_file(f"res/wex/api/game/v2/level_data/{level_id}.json")
+            level_data = await read_file_cached(f"res/wex/api/game/v2/level_data/{level_id}.json")
         except FileNotFoundError:
             pass
     if level_data is not None:

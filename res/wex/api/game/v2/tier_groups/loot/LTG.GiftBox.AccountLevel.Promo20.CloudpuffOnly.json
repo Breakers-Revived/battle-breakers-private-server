@@ -1,0 +1,28 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:Gold",
+				"itemProfile": "profile0",
+				"quantity": 150000
+			},
+			{
+				"itemType": "Giftbox:GB_AccountLevel02",
+				"itemProfile": "profile0",
+				"attributes": {
+					"sealed_days": 0,
+					"params": {
+
+					},
+					"min_level": 25
+				},
+				"quantity": 1
+			},
+			{
+				"itemType": "StandIn:FN_Backbling_Cloudpuff",
+				"quantity": 0,
+				"shouldGrant": false
+			}
+		]
+	}
+}

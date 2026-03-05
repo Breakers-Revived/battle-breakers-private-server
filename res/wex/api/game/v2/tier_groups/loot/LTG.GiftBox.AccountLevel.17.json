@@ -1,0 +1,23 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_HeroMap_Elemental",
+				"itemProfile": "profile0",
+				"quantity": 500
+			},
+			{
+				"itemType": "Giftbox:GB_AccountLevel18",
+				"itemProfile": "profile0",
+				"attributes": {
+					"sealed_days": 0,
+					"params": {
+
+					},
+					"min_level": 700
+				},
+				"quantity": 1
+			}
+		]
+	}
+}

@@ -12,7 +12,7 @@ import sanic
 
 from utils import types
 from utils.sanic_gzip import Compress
-from utils.utils import authorized as auth, load_character_data, load_datatable, read_file
+from utils.utils import authorized as auth, load_character_data, load_datatable, read_file_cached
 
 compress = Compress()
 wex_item_ratings = sanic.Blueprint("wex_item_ratings")
@@ -43,7 +43,7 @@ async def item_ratings(request: types.BBRequest, accountId: str, templateId: str
     data = await request.app.ctx.db["item_ratings"].find_one({"_id": accountId}, {rating_key: 1, "_id": 0})
     if data and rating_key in data:
         my_rating = data[rating_key]
-    base_ratings = await read_file("res/wex/api/game/v2/item_ratings/base_ratings.json")
+    base_ratings = await read_file_cached("res/wex/api/game/v2/item_ratings/base_ratings.json")
     user_ratings = request.app.ctx.db["item_ratings"].find({rating_key: {'$ne': None}},
                                                            {rating_key: 1, "_id": 0})
     ratings = [{
@@ -118,7 +118,7 @@ async def set_item_rating(request: types.BBRequest, accountId: str, templateId: 
         rating_data["appearanceRating"] = 0
     await request.app.ctx.db["item_ratings"].update_one({"_id": accountId}, {"$set": {rating_key: rating_data}},
                                                         upsert=True)
-    base_ratings = await read_file("res/wex/api/game/v2/item_ratings/base_ratings.json")
+    base_ratings = await read_file_cached("res/wex/api/game/v2/item_ratings/base_ratings.json")
     user_ratings = request.app.ctx.db["item_ratings"].find({rating_key: {'$ne': None}},
                                                            {rating_key: 1, "_id": 0})
     ratings = [{

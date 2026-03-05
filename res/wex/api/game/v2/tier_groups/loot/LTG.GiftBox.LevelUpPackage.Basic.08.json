@@ -1,0 +1,21 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_HeroMap_Elemental",
+				"itemProfile": "profile0",
+				"quantity": 1000
+			},
+			{
+				"itemType": "Currency:Gold",
+				"itemProfile": "profile0",
+				"quantity": 100000
+			},
+			{
+				"itemType": "Giftbox:GB_LevelUpPackage_Basic09",
+				"itemProfile": "profile0",
+				"quantity": 1
+			}
+		]
+	}
+}

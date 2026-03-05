@@ -1,0 +1,23 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Currency:MtxGiveaway",
+				"itemProfile": "profile0",
+				"quantity": 100
+			},
+			{
+				"itemType": "Giftbox:GB_Battlepass14",
+				"itemProfile": "profile0",
+				"attributes": {
+					"sealed_days": 1,
+					"params": {
+
+					},
+					"min_level": 1
+				},
+				"quantity": 1
+			}
+		]
+	}
+}

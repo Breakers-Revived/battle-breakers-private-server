@@ -1,0 +1,23 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_SupplyPoints_Elite",
+				"itemProfile": "profile0",
+				"quantity": 100
+			},
+			{
+				"itemType": "Giftbox:GB_AccountLevel04",
+				"itemProfile": "profile0",
+				"attributes": {
+					"sealed_days": 0,
+					"params": {
+
+					},
+					"min_level": 75
+				},
+				"quantity": 1
+			}
+		]
+	}
+}

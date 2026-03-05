@@ -1,0 +1,23 @@
+{
+	"": {
+		"items": [
+			{
+				"itemType": "Reagent:Reagent_HeroMap_Elemental",
+				"itemProfile": "profile0",
+				"quantity": 300
+			},
+			{
+				"itemType": "Giftbox:GB_AccountLevel_Promo50_KurohomuraOnly",
+				"itemProfile": "profile0",
+				"attributes": {
+					"sealed_days": 0,
+					"params": {
+
+					},
+					"min_level": 50
+				},
+				"quantity": 1
+			}
+		]
+	}
+}

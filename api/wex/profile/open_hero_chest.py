@@ -59,7 +59,7 @@ async def open_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
                                              foil_lvl=1 if active_chest["foilLevel"] > 0 else -1)
     # TODO: chest activity
     await request.ctx.profile.change_item_attribute(request.json.get("towerId"), "active_chest", None)
-    hero_tower_data = (await utils.utils.read_file("res/wex/api/game/v2/skybreaker/herotower.json"))[
+    hero_tower_data = (await utils.utils.read_file_cached("res/wex/api/game/v2/skybreaker/herotower.json"))[
         active_chest['heroTrackId']]
     new_page_index = tower_data["attributes"]["page_index"]
     if active_chest["heroTrackId"] == "CoreBasic":

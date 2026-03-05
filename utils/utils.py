@@ -109,6 +109,26 @@ async def read_file(filename: str, json: bool = True, raw: bool = True) -> dict[
         return await file.read()
 
 
+@alru_cache()
+async def read_file_cached(filename: str, json: bool = True, raw: bool = True) -> dict[str, Any] | bytes | str:
+    """
+    Reads a file and returns the contents
+    :param filename: The file to read
+    :param json: Whether to parse the file as json
+    :param raw: Whether to read the file as bytes
+    :return: The contents of the file
+    """
+    sanic.log.logger.debug(f"Reading file and caching: {filename} (json={json}, raw={raw})")
+    if json:
+        async with aiofiles.open(filename, "rb") as file:
+            return orjson.loads((await file.read()))
+    if raw:
+        async with aiofiles.open(filename, "rb") as file:
+            return await file.read()
+    async with aiofiles.open(filename) as file:
+        return await file.read()
+
+
 async def write_file(filename: str, contents: Any, json: bool = True, raw: bool = True) -> None:
     """
     Writes to a file
@@ -150,10 +170,12 @@ async def format_time(time: Optional[datetime.datetime | float | int | str] = No
         # elif isinstance(time, float) or isinstance(time, int):
         #     return datetime.datetime.fromtimestamp(time).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
         elif isinstance(time, str):
-            sanic.log.logger.debug(f"Time is string: {datetime.datetime.fromisoformat(time).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'}")
+            sanic.log.logger.debug(
+                f"Time is string: {datetime.datetime.fromisoformat(time).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'}")
             return datetime.datetime.fromisoformat(time).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
         else:
-            sanic.log.logger.debug(f"Time is timestamp: {datetime.datetime.fromtimestamp(time).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'}")
+            sanic.log.logger.debug(
+                f"Time is timestamp: {datetime.datetime.fromtimestamp(time).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'}")
             return datetime.datetime.fromtimestamp(time).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
 
 
@@ -1291,13 +1313,14 @@ async def deterministic_shuffle(item_pool: list, item_count: Optional[int] = -1,
     selected_items = generator.choice(item_pool, item_count, p=weights, replace=False)
     return selected_items.tolist()
 
+
 async def reward_for_level(level: int):
     """
     Return reward string for a given level.
     Returns None if level is outside reward range (here: <2 or >999).
     The cycle above is a 20-slot template inferred from your sample data.
     """
-    level_cycle = await read_file("res/wex/api/game/v2/balance/perk_cycle.json")
+    level_cycle = await read_file_cached("res/wex/api/game/v2/balance/perk_cycle.json")
     if level < 2 or level > 999:
         return None
     if level == 984:
@@ -1308,6 +1331,7 @@ async def reward_for_level(level: int):
         return "Basic_Special"
     idx = (level - 1) % 40  # map level to index in the 20-slot cycle
     return level_cycle[idx]
+
 
 async def get_event_currency() -> str:
     """
