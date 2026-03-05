@@ -107,8 +107,16 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 elif item["itemTemplateId"] == "StandIn:BattlepassXp":
                     battlepassxp += item["quantity"]
             case "Container":
-                # TODO: implement ltg for chest containers
-                pass
+                chest_data = (await load_datatable(
+                    (await utils.utils.get_path_from_template_id(item["itemTemplateId"])).replace(
+                        "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
+                    "Properties"]
+                items = await request.ctx.profile.grant_loot_from_tiergroup(chest_data["TierGroup"])
+                if items is not None:
+                    level_complete_notification[0]["loot"].append({
+                        "tierGroupName": chest_data["TierGroup"],
+                        "items": items
+                    })
     # TODO: implement rest of LGTs
     if first_clear:
         items = await request.ctx.profile.grant_loot_from_tiergroup(level_info['FirstCompletionLoot'])
