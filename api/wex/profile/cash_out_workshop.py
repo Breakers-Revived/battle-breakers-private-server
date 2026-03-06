@@ -8,6 +8,7 @@ Handles workshop cash out
 """
 
 import sanic
+import sanic.log
 
 from utils import types
 from utils.sanic_gzip import Compress
@@ -43,7 +44,8 @@ async def cash_out_workshop(request: types.BBProfileRequest, accountId: str) -> 
     exchange_rate = \
         (await load_datatable("Content/Menus/Headquarters/HQ_AncientFactory"))[0]["Properties"][
             "LaborToGoldExchangeRate"][workshop_level]
-    # print(f"Stars: {stars}, Gold: {current_gold}, Workshop Level: {workshop_level}, Exchange Rate: {exchange_rate}")
+    sanic.log.logger.debug(
+        f"Stars: {stars}, Gold: {current_gold}, Workshop Level: {workshop_level}, Exchange Rate: {exchange_rate}")
     await request.ctx.profile.modify_stat("labor_force", {
         "lastInterval": await format_time(await get_current_12_hour_interval()),
         "laborUsed": stars})
