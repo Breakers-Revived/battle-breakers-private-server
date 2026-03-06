@@ -62,6 +62,8 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
             case 'external_auth':
                 match request.form.get('external_auth_type'):
                     case 'google':
+                        if request.app.config.LOGIN['ALLOW-GOOGLE-LOGIN'] is "False":
+                            raise errors.com.epicgames.account.ext_auth.login_not_allowed()
                         # TODO: Reinvestigate what this case is
                         google_token = await verify_google_token(
                             request.form.get('external_auth_token'))
@@ -79,6 +81,8 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                         else:
                             raise errors.com.epicgames.account.external_auth_validate_failed()
                     case 'google_id_token':
+                        if request.app.config.LOGIN['ALLOW-GOOGLE-LOGIN'] is "False":
+                            raise errors.com.epicgames.account.ext_auth.login_not_allowed()
                         google_token = await verify_google_token(
                             request.form.get('external_auth_token'))
                         if google_token is not None:

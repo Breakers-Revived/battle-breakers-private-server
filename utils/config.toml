@@ -47,3 +47,6 @@ rotational-content = "https://calendar.google.com/calendar/ical/b8fa9ca911079861
 featured-stores-mcp = "https://calendar.google.com/calendar/ical/9f05d6a22f16d685f2794d1d4d3f953b58a0bd4d722058760fc6f973cad4a243%40group.calendar.google.com/public/basic.ics"
 weekly-challenge = "https://calendar.google.com/calendar/ical/d67afe308646a2dc33dc158cb944706a4ac31cb7ccbb2ea1f76d8fdfe923b890%40group.calendar.google.com/public/basic.ics"
 battlepass = "https://calendar.google.com/calendar/ical/7dad99419c9ee8c8d7982ff93108b946ca32248bd9fa95e4518e052dad44c219%40group.calendar.google.com/public/basic.ics"
+
+[login]
+allow-google-login = "False"
