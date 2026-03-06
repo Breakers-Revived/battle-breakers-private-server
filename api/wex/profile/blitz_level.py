@@ -15,7 +15,7 @@ import sanic
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, mine_level_pattern
 
 from utils.sanic_gzip import Compress
 
@@ -50,7 +50,7 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                 raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid character item id")
             if "TreasureHunter" in hero_item.get("templateId"):
                 treasure_hunter_count += 1
-    if not re.match(r"Level\.Mine\.Map[1-4]\.D[1-4]", request.json.get("levelId")):
+    if not mine_level_pattern.match(request.json.get("levelId")):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid level id")
     level_id = request.json.get("levelId")
     gold_item = (await request.ctx.profile.find_item_by_template_id("Currency:Gold"))

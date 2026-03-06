@@ -45,6 +45,9 @@ from utils import enums
 private_key = None
 public_key = None
 mongo_check_pattern = re.compile(r'^[a-zA-Z0-9_-]+$')
+username_pattern = re.compile(r"[0-9a-f]{12}4[0-9a-f]{3}[89ab][0-9a-f]{15}", re.IGNORECASE)
+level_id_pattern = re.compile(r".*\.D\d")
+mine_level_pattern = re.compile(r"Level\.Mine\.Map[1-4]\.D[1-4]")
 
 # Load the private key
 if os.path.isfile(PRIVATE_KEY_PEM_PATH):

@@ -16,7 +16,7 @@ from utils import types
 from utils.exceptions import errors
 from utils.enums import ProfileType
 from utils.utils import authorized as auth, load_datatable, format_time, room_generator, read_file_cached, \
-    process_choices
+    process_choices, level_id_pattern
 
 from utils.sanic_gzip import Compress
 
@@ -59,7 +59,7 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
         "heroInfo": []
     }
     level_data = None
-    if re.match(r".*\.D\d", level_id):
+    if level_id_pattern.match(level_id):
         target_difficulty = int(level_id.split(".")[-1][1:])
         for difficulty in range(target_difficulty, 0, -1):
             try:
