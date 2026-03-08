@@ -78,7 +78,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -96,7 +96,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -114,7 +114,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -134,7 +134,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -172,7 +172,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -182,7 +182,8 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                         quantity = random.randint(12, 15)
                         items.append({
                             "itemType": "Currency:MtxGiveaway",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway", quantity),
+                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway",
+                                                                                           quantity),
                             "itemProfile": "profile0",
                             "quantity": quantity
                         })
@@ -201,7 +202,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -244,7 +245,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -280,7 +281,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -314,7 +315,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -348,7 +349,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -382,7 +383,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                 await request.ctx.profile.change_item_quantity(streakbreaker_id, streakbreaker_roll[1] + 1)
             else:
                 await request.ctx.profile.add_item({
-                    "templateId": "Currency:SB_Hammer",
+                    "templateId": "Currency:SB_HammerRare",
                     "attributes": {},
                     "quantity": streakbreaker_roll[1] + 1
                 })
@@ -393,7 +394,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                     "itemProfile": "profile0",
                     "quantity": 1
                 })
-    await request.ctx.profile.consume_item(hammer_id[0])
+    await request.ctx.profile.consume_item("Currency:Hammer")
     await request.ctx.profile.add_notifications({
         "type": "WExpHammerChestOpened",
         "primary": True,

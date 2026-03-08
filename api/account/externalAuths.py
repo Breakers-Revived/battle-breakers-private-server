@@ -52,7 +52,7 @@ async def add_external_auth(request: types.BBRequest, accountId: str) -> sanic.r
     # not bothered to add ALL of the external auths, only adding google cause mobile (fb blocked insecure sign in)
     match request.json.get("authType"):
         case "google_user_id":
-            if request.app.config.LOGIN['ALLOW-GOOGLE-LOGIN'] is "False":
+            if request.app.config.LOGIN['ALLOW-GOOGLE-LOGIN'] == "False":
                 raise errors.com.epicgames.account.ext_auth.login_not_allowed()
             google_token = await verify_google_token(request.json.get("externalAuthToken"))
             if google_token is None:
@@ -71,7 +71,7 @@ async def add_external_auth(request: types.BBRequest, accountId: str) -> sanic.r
                 ]
             }
         case "google_id_token":
-            if request.app.config.LOGIN['ALLOW-GOOGLE-LOGIN'] is "False":
+            if request.app.config.LOGIN['ALLOW-GOOGLE-LOGIN'] == "False":
                 raise errors.com.epicgames.account.ext_auth.login_not_allowed()
             google_token = await verify_google_token(request.json.get("externalAuthToken"))
             if google_token is not None:
