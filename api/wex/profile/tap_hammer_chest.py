@@ -57,7 +57,6 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
         current_streakbreaker = 0
     chest_data = await load_datatable(
         f"Content/Loot/AccountItems/HammerChests/{chest_item.get('templateId').split(':')[1]}")
-    hammer_quantity = hammer_item.get("quantity") - 1
     if chest_item.get("attributes").get("taps_remaining") == 1:
         # Original game server would change the taps remaining & applied here before removing the chest
         await request.ctx.profile.remove_item(chest_id)
@@ -84,11 +83,12 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                     "quantity": streakbreaker_roll[1] + 1
                 })
             if streakbreaker_roll[0]:
+                quantity = random.randint(5, 8)
                 items.append({
                     "itemType": "Currency:MtxGiveaway",
-                    "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"),
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", quantity),
                     "itemProfile": "profile0",
-                    "quantity": random.randint(5, 8)
+                    "quantity": quantity
                 })
         case "LTG.HammerChest.Evolve.Dark.Rare.Hit" | "LTG.HammerChest.Evolve.Fire.Rare.Hit" | "LTG.HammerChest.Evolve.Light.Rare.Hit" | "LTG.HammerChest.Evolve.Nature.Rare.Hit" | "LTG.HammerChest.Evolve.Water.Rare.Hit":
             streakbreaker_roll = await calculate_streakbreaker(current_streakbreaker, 50000, 2000)
@@ -101,11 +101,12 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                     "quantity": streakbreaker_roll[1] + 1
                 })
             if streakbreaker_roll[0]:
+                quantity = random.randint(8, 17)
                 items.append({
                     "itemType": "Currency:MtxGiveaway",
-                    "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"),
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", quantity),
                     "itemProfile": "profile0",
-                    "quantity": random.randint(8, 17)
+                    "quantity": quantity
                 })
         case "LTG.HammerChest.Evolve.Shards.Normal.Hit":
             streakbreaker_roll = await calculate_streakbreaker(current_streakbreaker, 50000, 2000)
@@ -123,7 +124,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                      "Reagent:Reagent_Shared_Nature", "Reagent:Reagent_Shared_Water"])
                 items.append({
                     "itemType": random_essence,
-                    "itemGuid": await request.ctx.profile.find_item_by_template_id(random_essence),
+                    "itemGuid": await request.ctx.profile.grant_item(random_essence),
                     "itemProfile": "profile0",
                     "quantity": 1
                 })
@@ -140,27 +141,30 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
             if streakbreaker_roll[0]:
                 match random.randint(0, 2):
                     case 0:
+                        quantity = random.randint(6, 8)
                         items.append({
                             "itemType": "Currency:MtxGiveaway",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"),
+                            "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(6, 8)
+                            "quantity": quantity
                         })
                     case 1:
+                        quantity = random.randint(3, 8)
                         items.append({
                             "itemType": "Reagent:Reagent_HeroMap_Elemental",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_HeroMap_Elemental"),
+                            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Elemental",
+                                                                             quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(3, 8)
+                            "quantity": quantity
                         })
                     case 2:
+                        quantity = random.randint(1, 2)
                         items.append({
                             "itemType": "Reagent:Reagent_HeroMap_Bronze",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_HeroMap_Bronze"),
+                            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Bronze",
+                                                                             quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(1, 2)
+                            "quantity": quantity
                         })
         case "LTG.HammerChest.Hero.Bronze.Rare.Hit":
             streakbreaker_roll = await calculate_streakbreaker(current_streakbreaker, 50000, 2000)
@@ -175,19 +179,21 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
             if streakbreaker_roll[0]:
                 match random.randint(0, 1):
                     case 0:
+                        quantity = random.randint(12, 15)
                         items.append({
                             "itemType": "Currency:MtxGiveaway",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"),
+                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway", quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(12, 15)
+                            "quantity": quantity
                         })
                     case 1:
+                        quantity = random.randint(5, 10)
                         items.append({
                             "itemType": "Reagent:Reagent_HeroMap_Elemental",
                             "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_HeroMap_Elemental"),
+                                "Reagent:Reagent_HeroMap_Elemental", quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(5, 10)
+                            "quantity": quantity
                         })
         case "LTG.HammerChest.Hero.Gold.Rare.Hit":
             streakbreaker_roll = await calculate_streakbreaker(current_streakbreaker, 50000, 2000)
@@ -204,33 +210,33 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                     case 0:
                         items.append({
                             "itemType": "Reagent:Reagent_RXT_Parts_Small",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_RXT_Parts_Small"),
+                            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_RXT_Parts_Small"),
                             "itemProfile": "profile0",
                             "quantity": 1
                         })
                     case 1:
+                        quantity = random.randint(10, 11)
                         items.append({
                             "itemType": "Currency:MtxGiveaway",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"),
+                            "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(10, 11)
+                            "quantity": quantity
                         })
                     case 2:
                         items.append({
                             "itemType": "Reagent:Reagent_HeroMap_Bronze",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_HeroMap_Bronze"),
+                            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Bronze"),
                             "itemProfile": "profile0",
                             "quantity": 1
                         })
                     case 3:
+                        quantity = random.randint(16, 25)
                         items.append({
                             "itemType": "Reagent:Reagent_HeroMap_Elemental",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_HeroMap_Elemental"),
+                            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Elemental",
+                                                                             quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(16, 25)
+                            "quantity": quantity
                         })
         case "LTG.HammerChest.Hero.Silver.Normal.Hit":
             streakbreaker_roll = await calculate_streakbreaker(current_streakbreaker, 50000, 2000)
@@ -245,25 +251,26 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
             if streakbreaker_roll[0]:
                 match random.randint(0, 2):
                     case 0:
+                        quantity = random.randint(5, 12)
                         items.append({
                             "itemType": "Currency:MtxGiveaway",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"),
+                            "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(5, 12)
+                            "quantity": quantity
                         })
                     case 1:
+                        quantity = random.randint(10, 15)
                         items.append({
                             "itemType": "Reagent:Reagent_HeroMap_Elemental",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_HeroMap_Elemental"),
+                            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Elemental",
+                                                                             quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(10, 15)
+                            "quantity": quantity
                         })
                     case 2:
                         items.append({
                             "itemType": "Reagent:Reagent_HeroMap_Bronze",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_HeroMap_Bronze"),
+                            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Bronze"),
                             "itemProfile": "profile0",
                             "quantity": 1
                         })
@@ -280,25 +287,24 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
             if streakbreaker_roll[0]:
                 match random.randint(0, 2):
                     case 0:
+                        quantity = random.randint(11, 16)
                         items.append({
                             "itemType": "Currency:MtxGiveaway",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"),
+                            "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(11, 16)
+                            "quantity": quantity
                         })
                     case 1:
                         items.append({
                             "itemType": "Reagent:Reagent_RXT_Parts_Small",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_RXT_Parts_Small"),
+                            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_RXT_Parts_Small"),
                             "itemProfile": "profile0",
                             "quantity": 1
                         })
                     case 2:
                         items.append({
                             "itemType": "Reagent:Reagent_HeroMap_Bronze",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(
-                                "Reagent:Reagent_HeroMap_Bronze"),
+                            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_HeroMap_Bronze"),
                             "itemProfile": "profile0",
                             "quantity": 1
                         })
@@ -315,11 +321,12 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
             if streakbreaker_roll[0]:
                 match random.randint(0, 1):
                     case 0:
+                        quantity = random.randint(5, 8)
                         items.append({
                             "itemType": "Currency:MtxGiveaway",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"),
+                            "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(5, 8)
+                            "quantity": quantity
                         })
                     case 1:
                         map_drop = random.choice([["TreasureMap:TM_Special_Cloud5", 5],
@@ -331,7 +338,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                                                   ["TreasureMap:TM_Special_UnderwaterTunnel", 1]])
                         items.append({
                             "itemType": map_drop[0],
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(map_drop[0]),
+                            "itemGuid": await request.ctx.profile.grant_item(map_drop[0], map_drop[1]),
                             "itemProfile": "profile0",
                             "quantity": map_drop[1]
                         })
@@ -348,11 +355,12 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
             if streakbreaker_roll[0]:
                 match random.randint(0, 1):
                     case 0:
+                        quantity = random.randint(10, 16)
                         items.append({
                             "itemType": "Currency:MtxGiveaway",
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"),
+                            "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", quantity),
                             "itemProfile": "profile0",
-                            "quantity": random.randint(10, 16)
+                            "quantity": quantity
                         })
                     case 1:
                         map_drop = random.choice([["TreasureMap:TM_Special_Cloud5", 5],
@@ -364,7 +372,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                                                   ["TreasureMap:TM_Special_UnderwaterTunnel", 1]])
                         items.append({
                             "itemType": map_drop[0],
-                            "itemGuid": await request.ctx.profile.find_item_by_template_id(map_drop[0]),
+                            "itemGuid": await request.ctx.profile.grant_item(map_drop[0], map_drop[1]),
                             "itemProfile": "profile0",
                             "quantity": map_drop[1]
                         })
@@ -381,7 +389,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
             if streakbreaker_roll[0]:
                 items.append({
                     "itemType": "UpgradePotion:UpgradeMana",
-                    "itemGuid": await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeMana"),
+                    "itemGuid": await request.ctx.profile.grant_item("UpgradePotion:UpgradeMana"),
                     "itemProfile": "profile0",
                     "quantity": 1
                 })
