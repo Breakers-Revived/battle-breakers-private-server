@@ -45,24 +45,12 @@ async def evolve_hero(request: types.BBProfileRequest, accountId: str) -> sanic.
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Hero level is too low")
     cost_recipe = (await load_datatable(
         evolution_recipe["Recipe"]["ObjectPath"].replace("WorldExplorers/", "").replace(".0", "")))[0]["Properties"]
-    pending_items = []
     for consumed_item in cost_recipe["ConsumedItems"]:
-        consumed_item_id = (await request.ctx.profile.find_item_by_template_id(
-            await get_template_id_from_path(consumed_item["ItemDefinition"]["ObjectPath"])))[0]
-        consumed_item_quantity = (await request.ctx.profile.get_item_by_guid(consumed_item_id))["quantity"]
-        if consumed_item_quantity < consumed_item["Count"]:
-            raise errors.com.epicgames.world_explorers.bad_request(
-                errorMessage=f"Not enough {consumed_item['ItemDefinition']['ObjectName']}")
-        pending_items.append({
-            "itemId": consumed_item_id,
-            "quantity": consumed_item_quantity - consumed_item["Count"]
-        })
-    new_hero_id = (
-        await get_template_id_from_path(evolution_recipe["EvolutionDestination"]["ObjectPath"]))
+        consumed_item_id = await get_template_id_from_path(consumed_item["ItemDefinition"]["ObjectPath"])
+        await request.ctx.profile.consume_item(consumed_item_id, consumed_item["Count"])
+    new_hero_id = await get_template_id_from_path(evolution_recipe["EvolutionDestination"]["ObjectPath"])
     if not new_hero_id:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid hero item id")
-    for pending_item in pending_items:
-        await request.ctx.profile.change_item_quantity(pending_item["itemId"], pending_item["quantity"])
     await request.ctx.profile.add_notifications({
         "type": "WExpCharacterEvolution",
         "primary": True,

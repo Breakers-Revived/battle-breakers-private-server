@@ -8,6 +8,7 @@ Handles upgrading buildings.
 """
 
 import sanic
+import sanic.log
 
 from utils import types
 from utils.exceptions import errors
@@ -43,24 +44,17 @@ async def upgrade_building(request: types.BBProfileRequest, accountId: str) -> s
         "Properties"]
     for item in promotion_table["ConsumedItems"]:
         item_template_id = await get_template_id_from_path(item["ItemDefinition"]["ObjectPath"])
-        current_item = await request.ctx.profile.find_item_by_template_id(item_template_id)
-        current_quantity = (await request.ctx.profile.get_item_by_guid(current_item[0]))["quantity"]
-        if current_quantity < item["Count"]:
-            raise errors.com.epicgames.world_explorers.bad_request(errorMessage=f"Not enough {item_template_id}")
-        # print("Cost: " + str(item["Count"]) + " " + item_template_id)
-        await request.ctx.profile.change_item_quantity(current_item[0],
-                                                       current_quantity - item["Count"])
+        if item_template_id is None:
+            raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid consumed item")
+        await request.ctx.profile.consume_item(item_template_id, item["Count"])
+        sanic.log.logger.debug(f"Cost: {item['Count']} {item_template_id}")
     if promotion_table.get("MtxCost") is not None:
         # TODO: enforce account level
-        mtx_item_id = (await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"))[0]
-        mtx_quantity = (await request.ctx.profile.get_item_by_guid(mtx_item_id))["quantity"]
-        if mtx_quantity < promotion_table["MtxCost"]:
-            raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Not enough mtx")
-        await request.ctx.profile.change_item_quantity(mtx_item_id, mtx_quantity - promotion_table["MtxCost"])
+        await request.ctx.profile.consume_item("Currency:MtxGiveaway", promotion_table["MtxCost"])
     await request.ctx.profile.change_item_attribute(request.json.get("buildingItemId"), "level",
                                                     building_item["attributes"]["level"] + 1, request.ctx.profile_id)
-    # print("Upgraded building " + request.json.get("buildingItemId") + " to level " + str(
-    #     building_item["attributes"]["level"] + 1))
+    sanic.log.logger.debug(
+        f"Upgraded building {request.json.get('buildingItemId')} to level {building_item['attributes']['level'] + 1}")
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions)

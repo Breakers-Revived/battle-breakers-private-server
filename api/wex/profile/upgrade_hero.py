@@ -72,11 +72,6 @@ async def upgrade_hero(request: types.BBProfileRequest, accountId: str) -> sanic
                 hero_upgrades[4] += potion_upgrade["quantity"]
             case _:
                 raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid potion item template id")
-        potion_guid = (await request.ctx.profile.find_item_by_template_id(potion_upgrade.get("templateId")))[0]
-        current_potion_quantity = (await request.ctx.profile.get_item_by_guid(potion_guid))["quantity"]
-        if current_potion_quantity < potion_upgrade.get("quantity"):
-            raise errors.com.epicgames.world_explorers.bad_request(
-                errorMessage=f"Not enough {potion_upgrade.get('templateId')}")
         potion_cost = (await load_datatable(
             (await get_path_from_template_id(potion_upgrade.get("templateId"))).replace(
                 "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
@@ -85,10 +80,9 @@ async def upgrade_hero(request: types.BBProfileRequest, accountId: str) -> sanic
         for _ in range(potion_upgrade.get("quantity")):
             if current_gold < potion_cost:
                 break
-            await request.ctx.profile.change_item_quantity(gold_id, current_gold - potion_cost)
             current_gold -= potion_cost
-            await request.ctx.profile.change_item_quantity(potion_guid, current_potion_quantity - 1)
-            current_potion_quantity -= 1
+            await request.ctx.profile.consume_item("Currency:Gold", potion_cost)
+            await request.ctx.profile.consume_item(potion_upgrade.get("templateId"))
     for weapon_upgrade in request.json.get("weaponUpgrades"):
         match weapon_upgrade.get("upgradeType"):
             case "WeaponLevel":
@@ -125,19 +119,17 @@ async def upgrade_hero(request: types.BBProfileRequest, accountId: str) -> sanic
                 case "WExpGenericAccountItemDefinition'Ore_Silver'":
                     if current_silver < consumed_item["Count"]:
                         break
-                    await request.ctx.profile.change_item_quantity(silver_id[0],
-                                                                   current_silver - consumed_item["Count"])
+                    await request.ctx.profile.consume_item("Ore:Ore_Silver", consumed_item["Count"])
                     current_silver -= consumed_item["Count"]
                 case "WExpGenericAccountItemDefinition'Ore_Magicite'":
                     if current_magicite < consumed_item["Count"]:
                         break
-                    await request.ctx.profile.change_item_quantity(magicite_id[0],
-                                                                   current_magicite - consumed_item["Count"])
+                    await request.ctx.profile.consume_item("Ore:Ore_Magicite", consumed_item["Count"])
                     current_magicite -= consumed_item["Count"]
                 case "WExpGenericAccountItemDefinition'Ore_Iron'":
                     if current_iron < consumed_item["Count"]:
                         break
-                    await request.ctx.profile.change_item_quantity(iron_id[0], current_iron - consumed_item["Count"])
+                    await request.ctx.profile.consume_item("Ore:Ore_Iron", consumed_item["Count"])
                     current_iron -= consumed_item["Count"]
                 case _:
                     raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid item to consume")

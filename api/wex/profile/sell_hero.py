@@ -60,19 +60,8 @@ async def sell_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
                                                             hero_item["attributes"]["foil_lvl"], ProfileType.MONSTERPIT)
         elif pit_copy["attributes"]["foil_lvl"] > 0 and hero_item["attributes"]["foil_lvl"] > 0:
             for foil_reward in foil_sell_rewards:
-                reward_template_id = await get_template_id_from_path(
-                    foil_reward["ItemDefinition"]["ObjectPath"])
-                current_item = await request.ctx.profile.find_item_by_template_id(reward_template_id)
-                if current_item:
-                    current_quantity = (await request.ctx.profile.get_item_by_guid(current_item[0]))["quantity"]
-                    await request.ctx.profile.change_item_quantity(current_item[0],
-                                                                   current_quantity + foil_reward["Count"])
-                else:
-                    await request.ctx.profile.add_item({
-                        "templateId": reward_template_id,
-                        "attributes": {},
-                        "quantity": foil_reward["Count"]
-                    })
+                reward_template_id = await get_template_id_from_path(foil_reward["ItemDefinition"]["ObjectPath"])
+                await request.ctx.profile.grant_item(reward_template_id, foil_reward["Count"])
     for pit_unlock_guid in pit_unlocks:
         pit_unlock = await request.ctx.profile.get_item_by_guid(pit_unlock_guid, ProfileType.MONSTERPIT)
         if pit_unlock["attributes"]["characterId"] == hero_item["templateId"]:
@@ -90,19 +79,8 @@ async def sell_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
             "quantity": 1
         }, profile_id=ProfileType.MONSTERPIT)
     for sell_reward in sell_rewards:
-        reward_template_id = await get_template_id_from_path(
-            sell_reward["ItemDefinition"]["ObjectPath"])
-        current_item = await request.ctx.profile.find_item_by_template_id(reward_template_id)
-        if current_item:
-            current_quantity = (await request.ctx.profile.get_item_by_guid(current_item[0]))["quantity"]
-            await request.ctx.profile.change_item_quantity(current_item[0],
-                                                           current_quantity + sell_reward["Count"])
-        else:
-            await request.ctx.profile.add_item({
-                "templateId": reward_template_id,
-                "attributes": {},
-                "quantity": sell_reward["Count"]
-            })
+        reward_template_id = await get_template_id_from_path(sell_reward["ItemDefinition"]["ObjectPath"])
+        await request.ctx.profile.grant_item(reward_template_id, sell_reward["Count"])
     await request.ctx.profile.remove_item(request.json.get("heroItemId"))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,

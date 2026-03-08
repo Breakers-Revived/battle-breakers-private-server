@@ -37,19 +37,17 @@ async def cash_out_workshop(request: types.BBProfileRequest, accountId: str) -> 
     labor_used = labor_force.get("laborUsed", 0)
     if labor_force["lastInterval"] != await format_time(await get_current_12_hour_interval()):
         labor_used = 0
-    gold_id = (await request.ctx.profile.find_item_by_template_id("Currency:Gold"))[0]
-    current_gold = (await request.ctx.profile.get_item_by_guid(gold_id))["quantity"]
     workshop_id = (await request.ctx.profile.find_item_by_template_id("HqBuilding:HQ_AncientFactory"))[0]
     workshop_level = (await request.ctx.profile.get_item_by_guid(workshop_id))["attributes"]["level"]
     exchange_rate = \
         (await load_datatable("Content/Menus/Headquarters/HQ_AncientFactory"))[0]["Properties"][
             "LaborToGoldExchangeRate"][workshop_level]
     sanic.log.logger.debug(
-        f"Stars: {stars}, Gold: {current_gold}, Workshop Level: {workshop_level}, Exchange Rate: {exchange_rate}")
+        f"Stars: {stars}, Gold: {((stars - labor_used) * exchange_rate)}, Workshop Level: {workshop_level}, Exchange Rate: {exchange_rate}")
     await request.ctx.profile.modify_stat("labor_force", {
         "lastInterval": await format_time(await get_current_12_hour_interval()),
         "laborUsed": stars})
-    await request.ctx.profile.change_item_quantity(gold_id, current_gold + ((stars - labor_used) * exchange_rate))
+    await request.ctx.profile.grant_item("Currency:Gold", ((stars - labor_used) * exchange_rate))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions)

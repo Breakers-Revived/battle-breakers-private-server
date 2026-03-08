@@ -32,10 +32,6 @@ async def upgrade_hero_skills(request: types.BBProfileRequest, accountId: str) -
     :return: The modified profile
     """
     # TODO: validation
-    skill_xp_id = (await request.ctx.profile.find_item_by_template_id("Currency:SkillXP"))[0]
-    skill_xp_quantity = (await request.ctx.profile.get_item_by_guid(skill_xp_id))["quantity"]
-    if skill_xp_quantity < request.json.get("xpToSpend"):
-        raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Not enough skill xp")
     if request.json.get("bIsInPit"):
         hero_data = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT)
         if not hero_data.get("templateId").startswith("Character:"):
@@ -54,7 +50,7 @@ async def upgrade_hero_skills(request: types.BBProfileRequest, accountId: str) -
                                                         hero_data["attributes"]["skill_level"] + 1)
         if hero_data["attributes"]["skill_level"] != 0:
             await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "skill_xp", 0)
-    await request.ctx.profile.change_item_quantity(skill_xp_id, skill_xp_quantity - request.json.get("xpToSpend"))
+    await request.ctx.profile.consume_item("Currency:SkillXP", request.json.get("xpToSpend"))
     # TODO: investigate skill xp attribute
     # Skill xp seems to be awarded sometimes after completing levels with a hero
     # The skill xp acts as a discount for the next skill level

@@ -8,6 +8,7 @@ Handles opening a gift box.
 """
 
 import sanic
+import sanic.log
 
 from utils import types
 from utils.exceptions import errors
@@ -88,20 +89,10 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
         else:
             items = await request.ctx.profile.grant_loot_from_tiergroup(giftbox_data["Loot"]["TierGroupName"])
     if not items:
-        reward_id = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_Shared_T02")
-        if not reward_id:
-            reward_id = await request.ctx.profile.add_item({
-                "templateId": "Reagent:Reagent_Shared_T02",
-                "attributes": {},
-                "quantity": 1
-            })
-        else:
-            reward_id = reward_id[0]
-            reward_data = await request.ctx.profile.get_item_by_guid(reward_id)
-            await request.ctx.profile.change_item_quantity(reward_id, reward_data["quantity"] + 1)
+        sanic.log.logger.warning(f"Gift box {opened_gift_box['templateId']} did not grant any items.")
         items.append({
             "itemType": "Reagent:Reagent_Shared_T02",
-            "itemGuid": reward_id,
+            "itemGuid": await request.ctx.profile.grant_item("Reagent:Reagent_Shared_T02"),
             "itemProfile": "profile0",
             "quantity": 1
         })

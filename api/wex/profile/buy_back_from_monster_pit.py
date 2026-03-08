@@ -58,19 +58,8 @@ async def buy_back_from_monster_pit(request: types.BBProfileRequest, accountId: 
             "quantity": 1
         }, profile_id=ProfileType.MONSTERPIT)
     for sell_reward in sell_rewards:
-        reward_template_id = await get_template_id_from_path(
-            sell_reward["ItemDefinition"]["ObjectPath"])
-        current_item = await request.ctx.profile.find_item_by_template_id(reward_template_id)
-        if current_item:
-            current_quantity = (await request.ctx.profile.get_item_by_guid(current_item[0]))["quantity"]
-            if current_quantity < sell_reward["Count"]:
-                raise errors.com.epicgames.world_explorers.bad_request(
-                    errorMessage="You cannot afford to buy back this item")
-            await request.ctx.profile.change_item_quantity(current_item[0],
-                                                           current_quantity - sell_reward["Count"])
-        else:
-            raise errors.com.epicgames.world_explorers.bad_request(
-                errorMessage="You cannot afford to buy back this item")
+        reward_template_id = await get_template_id_from_path(sell_reward["ItemDefinition"]["ObjectPath"])
+        await request.ctx.profile.consume_item(reward_template_id, sell_reward["Count"])
     await request.ctx.profile.grant_hero(request.json.get("characterTemplateId"))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,

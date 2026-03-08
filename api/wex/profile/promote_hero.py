@@ -51,26 +51,15 @@ async def promote_hero(request: types.BBProfileRequest, accountId: str) -> sanic
             "/Game/", "Content/").split(".")[
             0]))[0]["Properties"]
     # There is a check for account level, but since it only ever requires above level 0, it is not necessary
-    pending_items = []
     for consumed_item in promotion_recipe["ConsumedItems"]:
-        consumed_item_id = (await request.ctx.profile.find_item_by_template_id(
-            await get_template_id_from_path(consumed_item["ItemDefinition"]["ObjectPath"])))[0]
-        consumed_item_quantity = (await request.ctx.profile.get_item_by_guid(consumed_item_id))["quantity"]
-        if consumed_item_quantity < consumed_item["Count"]:
-            raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
-                errorMessage=f"Not enough {consumed_item['ItemDefinition']['ObjectName']}")
-        pending_items.append({
-            "itemId": consumed_item_id,
-            "quantity": consumed_item_quantity - consumed_item["Count"]
-        })
+        consumed_item_id = await get_template_id_from_path(consumed_item["ItemDefinition"]["ObjectPath"])
+        await request.ctx.profile.consume_item(consumed_item_id, consumed_item["Count"])
     if request.json.get("bIsInPit"):
         await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "rank",
                                                         hero_item["attributes"]["rank"] + 1, ProfileType.MONSTERPIT)
     else:
         await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "rank",
                                                         hero_item["attributes"]["rank"] + 1)
-    for pending_item in pending_items:
-        await request.ctx.profile.change_item_quantity(pending_item["itemId"], pending_item["quantity"])
     # TODO: chest activity
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,

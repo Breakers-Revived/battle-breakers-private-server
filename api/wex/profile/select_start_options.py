@@ -74,21 +74,9 @@ async def select_start_options(request: types.BBProfileRequest, accountId: str) 
             },
             "quantity": 1
         })
-    await request.ctx.profile.add_item({
-        "templateId": "Currency:MtxGiveaway",
-        "attributes": {},
-        "quantity": 40
-    })
-    await request.ctx.profile.add_item({
-        "templateId": "Currency:Gold",
-        "attributes": {},
-        "quantity": 700
-    })
-    await request.ctx.profile.add_item({
-        "templateId": "Currency:HeroXp_Basic",
-        "attributes": {},
-        "quantity": 1000
-    })
+    await request.ctx.profile.grant_item("Currency:MtxGiveaway", 40)
+    await request.ctx.profile.grant_item("Currency:Gold", 700)
+    await request.ctx.profile.grant_item("Currency:HeroXp_Basic", 1000)
     await request.ctx.profile.add_item({
         "templateId": "HammerChest:HC_Tutorial",
         "attributes": {

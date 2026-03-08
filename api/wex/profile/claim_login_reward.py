@@ -72,25 +72,12 @@ async def claim_login_reward(request: types.BBProfileRequest, accountId: str) ->
         except:
             pass  # Backwards compat for datatables in the UE4.16 format
         reward_template_id = await get_template_id_from_path(reward_path)
-        if reward_template_id.split(':')[0] == "Character":
-            await request.ctx.profile.add_item({"templateId": reward_template_id,
-                                                "attributes": {"gear_weapon_item_id": "", "weapon_unlocked": False,
-                                                               "sidekick_template_id": "", "is_new": True, "level": 1,
-                                                               "num_sold": 0, "skill_level": 1,
-                                                               "sidekick_unlocked": False,
-                                                               "upgrades": [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                                                               "used_as_sidekick": False, "gear_armor_item_id": "",
-                                                               "skill_xp": 0, "armor_unlocked": False, "foil_lvl": -1,
-                                                               "xp": 0, "rank": 0, "sidekick_item_id": ""},
-                                                "quantity": 1})
+        if reward_template_id is None:
+            raise errors.com.epicgames.world_explorers.bad_request(f"Invalid reward path: {reward_path}")
+        if reward_template_id.startswith("Character:"):
+            await request.ctx.profile.grant_hero(reward_template_id)
         else:
-            current_item = await request.ctx.profile.find_item_by_template_id(reward_template_id)
-            if current_item:
-                current_quantity = (await request.ctx.profile.get_item_by_guid(current_item[0]))["quantity"]
-                await request.ctx.profile.change_item_quantity(current_item[0], current_quantity + reward_quantity)
-            else:
-                await request.ctx.profile.add_item(
-                    {"templateId": reward_template_id, "attributes": {}, "quantity": reward_quantity})
+            await request.ctx.profile.grant_item(reward_template_id, reward_quantity)
         await request.ctx.profile.modify_stat("login_reward", {
             "last_claim_time": await format_time(),
             "next_level": current_day + 1

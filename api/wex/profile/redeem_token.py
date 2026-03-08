@@ -50,18 +50,8 @@ async def redeem_token(request: types.BBProfileRequest, accountId: str) -> sanic
                                                                             f"required to redeem. You only have "
                                                                             f"{token_item['quantity']}.")
     redeem_quantity = token_item["quantity"] // reward_item["RedeemQuantity"]
-    new_item_id = (await request.ctx.profile.find_item_by_template_id(
-        await get_template_id_from_path(reward_item["RewardItem"]["ObjectPath"])))
-    if not new_item_id:
-        new_item_id = await request.ctx.profile.add_item({
-            "templateId": await get_template_id_from_path(reward_item["RewardItem"]["ObjectPath"]),
-            "attributes": {},
-            "quantity": redeem_quantity
-        })
-    else:
-        new_item_id = new_item_id[0]
-        new_item_quantity = (await request.ctx.profile.get_item_by_guid(new_item_id))["quantity"]
-        await request.ctx.profile.change_item_quantity(new_item_id, new_item_quantity + redeem_quantity)
+    new_item_id = await get_template_id_from_path(reward_item["RewardItem"]["ObjectPath"])
+    await request.ctx.profile.grant_item(new_item_id, quantity=redeem_quantity)
     if token_item["quantity"] - (redeem_quantity * reward_item["RedeemQuantity"]) > 0:
         await request.ctx.profile.change_item_quantity(token_id[0], token_item["quantity"] - (
                 redeem_quantity * reward_item["RedeemQuantity"]))

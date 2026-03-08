@@ -393,25 +393,7 @@ async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> s
                     "itemProfile": "profile0",
                     "quantity": 1
                 })
-    await request.ctx.profile.change_item_quantity(hammer_id[0], hammer_quantity)
-    for item in items:
-        if not item.get("itemGuid"):
-            if item.get("itemType").startswith("Character:"):
-                item["itemGuid"] = await request.ctx.profile.grant_hero(item.get("itemType"),
-                                                                        quantity=item.get("quantity"))
-                if isinstance(item["itemGuid"], list):
-                    item["itemGuid"] = item["itemGuid"][0]
-            else:
-                await request.ctx.profile.add_item({
-                    "templateId": item.get("itemType"),
-                    "attributes": {},
-                    "quantity": item.get("quantity")
-                })
-        else:
-            current_quantity = (await request.ctx.profile.get_item_by_guid(item.get("itemGuid")[0])).get("quantity")
-            await request.ctx.profile.change_item_quantity(item.get("itemGuid")[0],
-                                                           current_quantity + item.get("quantity"))
-            item["itemGuid"] = item.get("itemGuid")[0]
+    await request.ctx.profile.consume_item(hammer_id[0])
     await request.ctx.profile.add_notifications({
         "type": "WExpHammerChestOpened",
         "primary": True,

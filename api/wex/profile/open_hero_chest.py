@@ -38,20 +38,9 @@ async def open_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
         raise errors.com.epicgames.world_explorers.bad_request(
             errorMessage="Tower has no active chest. Call PickHeroChest")
     active_chest = tower_data["attributes"]["active_chest"]
-    currency_id = await request.ctx.profile.find_item_by_template_id(
-        tower_data["attributes"][f"{active_chest['heroChestType']}_static_currency_template_id"])
-    if not currency_id:
-        raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Required reagent not found")
-    currency = await request.ctx.profile.get_item_by_guid(currency_id[0])
-    if currency is None:
-        raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Required reagent not found")
-    if currency["quantity"] < tower_data["attributes"][f"{active_chest['heroChestType']}_static_currency_amount"]:
-        raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Not enough reagents")
-    currency["quantity"] -= tower_data["attributes"][f"{active_chest['heroChestType']}_static_currency_amount"]
-    if currency["quantity"] == 0:
-        await request.ctx.profile.remove_item(currency_id[0])
-    else:
-        await request.ctx.profile.change_item_quantity(currency_id[0], currency["quantity"])
+    await request.ctx.profile.consume_item(
+        tower_data["attributes"][f"{active_chest['heroChestType']}_static_currency_template_id"],
+        tower_data["attributes"][f"{active_chest['heroChestType']}_static_currency_amount"])
     if request.json.get("itemTemplateId").split(":")[0] != "Character":
         await request.ctx.profile.grant_item(request.json.get("itemTemplateId"), request.json.get("itemQuantity", 1))
     else:

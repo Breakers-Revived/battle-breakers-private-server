@@ -11,6 +11,7 @@ import sanic
 
 from utils import types
 from utils.enums import ProfileType
+from utils.exceptions import errors
 from utils.utils import authorized as auth, calculate_hero_power, load_datatable, get_template_id_from_path
 
 from utils.sanic_gzip import Compress
@@ -56,14 +57,16 @@ async def update_monster_pit_power(request: types.BBProfileRequest, accountId: s
             break
     if new_pit_level > highest_previous_level:
         levels_gained = new_pit_level - highest_previous_level
-        awarded_history = {}
         items = []
         for i in range(levels_gained):
             level_data = monsterpit_levels_datatable[str(highest_previous_level + i + 1)]
             reward_path = level_data['RewardItem']['ObjectPath']
             reward_quantity = level_data['RewardCount']
             reward_template_id = await get_template_id_from_path(reward_path)
-            if reward_template_id.split(':')[0] == "Character":
+            if reward_template_id is None:
+                raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                    errorMessage=f"Invalid reward template id for level {highest_previous_level + i + 1}")
+            if reward_template_id.startswith("Character:"):
                 item_ids = await request.ctx.profile.grant_hero(reward_template_id, quantity=reward_quantity)
                 if isinstance(item_ids, list):
                     for item_id in item_ids:
@@ -73,30 +76,12 @@ async def update_monster_pit_power(request: types.BBProfileRequest, accountId: s
                     items.append({"itemType": reward_template_id, "itemGuid": item_ids, "itemProfile": "profile0",
                                   "quantity": reward_quantity})
             else:
-                current_item = await request.ctx.profile.find_item_by_template_id(reward_template_id)
-                if reward_template_id in awarded_history:
-                    current_quantity = awarded_history[reward_template_id]["quantity"]
-                    await request.ctx.profile.change_item_quantity(awarded_history[reward_template_id]["guid"],
-                                                                   current_quantity + reward_quantity)
-                    awarded_history[reward_template_id]["quantity"] = current_quantity + reward_quantity
-                    items.append(
-                        {"itemType": reward_template_id, "itemGuid": awarded_history[reward_template_id]["guid"],
-                         "itemProfile": "profile0", "quantity": reward_quantity})
-                elif current_item:
-                    current_quantity = (await request.ctx.profile.get_item_by_guid(current_item[0]))["quantity"]
-                    await request.ctx.profile.change_item_quantity(current_item[0], current_quantity + reward_quantity)
-                    awarded_history[reward_template_id] = {"guid": current_item[0],
-                                                           "quantity": reward_quantity + current_quantity}
-                    items.append(
-                        {"itemType": reward_template_id, "itemGuid": current_item[0], "itemProfile": "profile0",
-                         "quantity": reward_quantity})
-                else:
-                    current_item_id = await request.ctx.profile.add_item(
-                        {"templateId": reward_template_id, "attributes": {}, "quantity": reward_quantity})
-                    awarded_history[reward_template_id] = {"guid": current_item_id, "quantity": reward_quantity}
-                    items.append(
-                        {"itemType": reward_template_id, "itemGuid": current_item_id, "itemProfile": "profile0",
-                         "quantity": reward_quantity})
+                items.append({
+                    "itemType": reward_template_id,
+                    "itemGuid": await request.ctx.profile.grant_item(reward_template_id, reward_quantity),
+                    "itemProfile": "profile0",
+                    "quantity": reward_quantity
+                })
         await request.ctx.profile.add_notifications({
             "type": "WExpMonsterPitLevelUp",
             "primary": True,

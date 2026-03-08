@@ -20,6 +20,7 @@ import sanic.log
 
 from utils.custom_serialiser import custom_serialise
 from utils.enums import ProfileType, FriendStatus
+from utils.exceptions import errors
 from utils.utils import format_time, read_file_cached, process_choices, get_event_currency
 
 MCPTypes: UnionType = str | int | float | list | dict | bool
@@ -909,6 +910,73 @@ class PlayerProfile:
             "sidekick_item_id": sidekick_item_id
         }, True, profile_id)
 
+    async def consume_item(self, template_id: str, quantity: int = 1, profile_id: ProfileType = ProfileType.PROFILE0) -> str:
+        """
+        Consume the specified quantity of the item from the profile, directly modifying pending changes if they exist,
+        and removing the item if the quantity reaches 0. When directly modifying an existing pending change, if the
+        resulting quantity becomes 0, the pending item change quantity will be removed and instead the remove item method will be called.
+        If the quantity to consume is ever greater than the remaining quantity, raise an error
+
+        :param template_id: The template ID of the item to consume
+        :param quantity: The quantity of the item to consume
+        :param profile_id: The ID of the profile to find the item in
+        :raise errors.com.epicgames.modules.gameplayutils.recipe_failed: If the quantity to consume is greater than the remaining quantity
+        :return: The GUID of the item consumed
+        """
+        sanic.log.logger.debug(
+            f"Consuming {quantity}x {template_id} from profile {profile_id.value} for account {self.account_id}")
+        profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
+        for change in profile_changes:
+            if change["changeType"] == "itemAdded" and change["item"]["templateId"] == template_id:
+                if change["item"]["quantity"] < quantity:
+                    raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                        errorMessage=f"Cannot consume {quantity}x {template_id} as only {change['item']['quantity']} is available in pending itemAdded")
+                change["item"]["quantity"] -= quantity
+                sanic.log.logger.debug(
+                    f"Consumed {quantity}x {template_id} from pending itemAdded for account {self.account_id}")
+                if change["item"]["quantity"] == 0:
+                    profile_changes.remove(change)
+                    sanic.log.logger.debug(
+                        f"Removed pending itemAdded for {template_id} as quantity reached 0 for account {self.account_id}")
+                    await self.remove_item(change["itemId"], profile_id)
+                setattr(self, f"{profile_id.value}_changes", profile_changes)
+                return change["itemId"]
+        for change in reversed(profile_changes):
+            if change["changeType"] == "itemQuantityChanged":
+                item = await self.get_item_by_guid(change["itemId"], profile_id)
+                if item and item["templateId"] == template_id:
+                    if change["quantity"] < quantity:
+                        raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                            errorMessage=f"Cannot consume {quantity}x {template_id} as only {change['quantity']} is available in pending itemQuantityChanged")
+                    change["quantity"] -= quantity
+                    sanic.log.logger.debug(
+                        f"Consumed {quantity}x {template_id} from pending itemQuantityChanged for account {self.account_id}")
+                    if change["quantity"] == 0:
+                        profile_changes.remove(change)
+                        sanic.log.logger.debug(
+                            f"Removed pending itemQuantityChanged for {template_id} as quantity reached 0 for account {self.account_id}")
+                        await self.remove_item(change["itemId"], profile_id)
+                    setattr(self, f"{profile_id.value}_changes", profile_changes)
+                    return change["itemId"]
+        item_guids: list = await self.find_item_by_template_id(template_id, profile_id)
+        if not item_guids:
+            raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                errorMessage=f"Item with template {template_id} not found")
+        item_guid: str = item_guids[0]
+        item: dict = await self.get_item_by_guid(item_guid, profile_id)
+        if item["quantity"] < quantity:
+            raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                errorMessage=f"Cannot consume {quantity}x {template_id} as remaining quantity {item['quantity']} is insufficient")
+        if item["quantity"] - quantity == 0:
+            await self.remove_item(item_guid, profile_id)
+            sanic.log.logger.debug(
+                f"Removed item {item_guid} as quantity reached 0 for account {self.account_id}")
+            return item_guid
+        await self.change_item_quantity(item_guid, item["quantity"] - quantity, profile_id)
+        sanic.log.logger.debug(
+            f"Consumed {quantity}x {template_id} from item {item_guid} for account {self.account_id}")
+        return item_guid
+
     async def grant_loot_from_tiergroup(self, ltg: str) -> Optional[list[dict]]:
         """
         Grants items to a profile from a given loot tier group and returns the items granted
@@ -935,12 +1003,21 @@ class PlayerProfile:
                             item_id = await self.grant_hero(item_type, quantity=item_quantity)
                         else:
                             item_id = await self.grant_item(item_type, item_quantity, item.get("attributes", None))
-                        items.append({
-                            "itemType": item_type,
-                            "itemGuid": item_id,
-                            "itemProfile": item.get("itemProfile", "profile0"),
-                            "quantity": item_quantity
-                        })
+                        if isinstance(item_id, list):
+                            for i_id in item_id:
+                                items.append({
+                                    "itemType": item_type,
+                                    "itemGuid": i_id,
+                                    "itemProfile": item.get("itemProfile", "profile0"),
+                                    "quantity": 1
+                                })
+                        else:
+                            items.append({
+                                "itemType": item_type,
+                                "itemGuid": item_id,
+                                "itemProfile": item.get("itemProfile", "profile0"),
+                                "quantity": item_quantity
+                            })
                     else:
                         items.append({
                             "itemType": item_type,
@@ -957,12 +1034,21 @@ class PlayerProfile:
                         item_id = await self.grant_hero(item_type, quantity=item_quantity)
                     else:
                         item_id = await self.grant_item(item_type, item_quantity, item.get("attributes", None))
-                    items.append({
-                        "itemType": item_type,
-                        "itemGuid": item_id,
-                        "itemProfile": item["itemProfile"],
-                        "quantity": item_quantity
-                    })
+                    if isinstance(item_id, list):
+                        for i_id in item_id:
+                            items.append({
+                                "itemType": item_type,
+                                "itemGuid": i_id,
+                                "itemProfile": item.get("itemProfile", "profile0"),
+                                "quantity": 1
+                            })
+                    else:
+                        items.append({
+                            "itemType": item_type,
+                            "itemGuid": item_id,
+                            "itemProfile": item.get("itemProfile", "profile0"),
+                            "quantity": item_quantity
+                        })
                 else:
                     items.append({
                         "itemType": item_type,
@@ -979,12 +1065,21 @@ class PlayerProfile:
                             item_id = await self.grant_hero(item_type, quantity=item_quantity)
                         else:
                             item_id = await self.grant_item(item_type, item_quantity, item.get("attributes", None))
-                        items.append({
-                            "itemType": item_type,
-                            "itemGuid": item_id,
-                            "itemProfile": item["itemProfile"],
-                            "quantity": item_quantity
-                        })
+                        if isinstance(item_id, list):
+                            for i_id in item_id:
+                                items.append({
+                                    "itemType": item_type,
+                                    "itemGuid": i_id,
+                                    "itemProfile": item.get("itemProfile", "profile0"),
+                                    "quantity": 1
+                                })
+                        else:
+                            items.append({
+                                "itemType": item_type,
+                                "itemGuid": item_id,
+                                "itemProfile": item.get("itemProfile", "profile0"),
+                                "quantity": item_quantity
+                            })
                     else:
                         items.append({
                             "itemType": item_type,
@@ -1001,12 +1096,21 @@ class PlayerProfile:
                             item_id = await self.grant_hero(item_type, quantity=item_quantity)
                         else:
                             item_id = await self.grant_item(item_type, item_quantity, item.get("attributes", None))
-                        items.append({
-                            "itemType": item_type,
-                            "itemGuid": item_id,
-                            "itemProfile": item["itemProfile"],
-                            "quantity": item_quantity
-                        })
+                        if isinstance(item_id, list):
+                            for i_id in item_id:
+                                items.append({
+                                    "itemType": item_type,
+                                    "itemGuid": i_id,
+                                    "itemProfile": item.get("itemProfile", "profile0"),
+                                    "quantity": 1
+                                })
+                        else:
+                            items.append({
+                                "itemType": item_type,
+                                "itemGuid": item_id,
+                                "itemProfile": item.get("itemProfile", "profile0"),
+                                "quantity": item_quantity
+                            })
                     else:
                         items.append({
                             "itemType": item_type,

@@ -40,14 +40,10 @@ async def claim_quest_reward(request: types.BBProfileRequest, accountId: str) ->
         raise errors.com.epicgames.world_explorers.bad_request(
             errorMessage="You have not met the requirements for this quest")
     for reward in quest_item["attributes"]["rewards"]:
-        current_reward_id = await request.ctx.profile.find_item_by_template_id(reward["templateId"])
-        if not current_reward_id:
-            await request.ctx.profile.add_item({"templateId": reward["templateId"],
-                                                "attributes": {}, "quantity": reward["quantity"]})
+        if reward["templateId"].startswith("Character:"):
+            await request.ctx.profile.grant_hero(reward["templateId"], quantity=reward["quantity"])
         else:
-            current_reward_item = await request.ctx.profile.get_item_by_guid(current_reward_id[0])
-            await request.ctx.profile.change_item_quantity(current_reward_id[0],
-                                                           current_reward_item["quantity"] + reward["quantity"])
+            await request.ctx.profile.grant_item(reward["templateId"], reward["quantity"])
     await request.ctx.profile.remove_item(request.json.get("questMcpId"))
     await request.ctx.profile.add_notifications({
         "type": "WExpGiftPointReward",

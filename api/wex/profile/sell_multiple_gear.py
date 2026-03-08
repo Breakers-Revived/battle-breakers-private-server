@@ -35,10 +35,6 @@ async def sell_multiple_gear(request: types.BBProfileRequest, accountId: str) ->
     # EWExpRarity::Rare         - 4
     # EWExpRarity::VeryRare     - 8
     # EWExpRarity::SuperRare    - 20
-    gear_guid = await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_Shard_Gear")
-    gear_quantity = 0
-    if gear_guid:
-        gear_quantity = (await request.ctx.profile.get_item_by_guid(gear_guid[0]))["quantity"]
     if not request.json.get("itemIds"):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="No items to sell")
     if len(request.json.get("itemIds")) == 1:
@@ -63,16 +59,7 @@ async def sell_multiple_gear(request: types.BBProfileRequest, accountId: str) ->
                 # raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid rarity")
                 # silently fail so that other items can be sold still
                 continue
-        if gear_guid:
-            gear_quantity += value
-            await request.ctx.profile.change_item_quantity(gear_guid[0], gear_quantity)
-        else:
-            gear_quantity += value
-            gear_guid = [(await request.ctx.profile.add_item({
-                "templateId": "Reagent:Reagent_Shard_Gear",
-                "attributes": {},
-                "quantity": value}
-            ))]
+        await request.ctx.profile.grant_item("Reagent:Reagent_Shard_Gear", value)
         await request.ctx.profile.remove_item(item_guid)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,

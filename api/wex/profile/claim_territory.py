@@ -47,8 +47,6 @@ async def claim_territory(request: types.BBProfileRequest, accountId: str) -> sa
     }, profile_id=ProfileType.LEVELS)
     await request.ctx.profile.modify_stat("num_territories_claimed",
                                           (await request.ctx.profile.get_stat("num_territories_claimed")) + 1)
-    mtx_item_id = (await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"))[0]
-    mtx_quantity = (await request.ctx.profile.get_item_by_guid(mtx_item_id))["quantity"]
     await request.ctx.profile.add_notifications({
         "type": "WExpTerritoryClaim",
         "primary": True,
@@ -58,14 +56,13 @@ async def claim_territory(request: types.BBProfileRequest, accountId: str) -> sa
             "items": [
                 {
                     "itemType": "Currency:MtxGiveaway",
-                    "itemGuid": mtx_item_id,
+                    "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 100),
                     "itemProfile": "profile0",
                     "quantity": 100
                 }
             ]
         }
     }, ProfileType.LEVELS)
-    await request.ctx.profile.change_item_quantity(mtx_item_id, mtx_quantity + 100)
     # TODO: friend activity
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,

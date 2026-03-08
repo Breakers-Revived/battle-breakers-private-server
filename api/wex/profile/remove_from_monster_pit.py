@@ -34,11 +34,7 @@ async def remove_from_monster_pit(request: types.BBProfileRequest, accountId: st
     character = await request.ctx.profile.get_item_by_guid(character_item_id, request.ctx.profile_id)
     if not character.get("templateId").startswith("Character:"):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid character item id")
-    mtx_item_id = (await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"))[0]
-    mtx_quantity = (await request.ctx.profile.get_item_by_guid(mtx_item_id))["quantity"]
-    if mtx_quantity < 50:  # TODO: dont hardcode this value
-        raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Not enough mtx")
-    await request.ctx.profile.change_item_quantity(mtx_item_id, mtx_quantity - 50)
+    await request.ctx.profile.consume_item("Currency:MtxGiveaway", 50)
     await request.ctx.profile.remove_item(character_item_id, request.ctx.profile_id)
     await request.ctx.profile.add_item(character, character_item_id)
     # This isnt done on the original server, but imo it should be

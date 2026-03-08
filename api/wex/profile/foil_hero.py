@@ -31,8 +31,6 @@ async def foil_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
     :param accountId: The account id
     :return: The modified profile
     """
-    foil_guid = (await request.ctx.profile.find_item_by_template_id("Reagent:Reagent_Foil"))[0]
-    current_foil_count = (await request.ctx.profile.get_item_by_guid(foil_guid))["quantity"]
     if request.json.get("bIsInPit"):
         character_data = await load_character_data(
             (await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT))[
@@ -44,9 +42,8 @@ async def foil_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
         foil_cost = (await load_datatable((await load_datatable(foil_table))[0]["Properties"]["RankRecipes"][0][
                                               "AssetPathName"].replace("/Game/", "Content/").split(".")[0]))[0][
             "Properties"]["ConsumedItems"][0]["Count"]
-        if current_foil_count < foil_cost:
-            raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Not enough foil")
-        # TODO: mark pit as dirty and recalculate power
+        await request.ctx.profile.consume_item("Reagent:Reagent_Foil", foil_cost)
+        await request.ctx.profile.modify_stat("pit_power_dirty", True)
         await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "foil_lvl", 1,
                                                         ProfileType.MONSTERPIT)
     else:
@@ -59,10 +56,8 @@ async def foil_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
         foil_cost = (await load_datatable((await load_datatable(foil_table))[0]["Properties"]["RankRecipes"][0][
                                               "AssetPathName"].replace("/Game/", "Content/").split(".")[0]))[0][
             "Properties"]["ConsumedItems"][0]["Count"]
-        if current_foil_count < foil_cost:
-            raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Not enough foil")
+        await request.ctx.profile.consume_item("Reagent:Reagent_Foil", foil_cost)
         await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "foil_lvl", 1)
-    await request.ctx.profile.change_item_quantity(foil_guid, current_foil_count - foil_cost)
     # TODO: foil hero activity
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
