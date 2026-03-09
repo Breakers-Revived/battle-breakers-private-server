@@ -43,6 +43,9 @@ async def request_access(request: types.BBRequest, accountId: str) -> sanic.resp
     if await request.app.ctx.db["entitlements"].count_documents({"_id": request.ctx.owner, "entitlements": {
         "$elemMatch": {"catalogItemId": "e458e71024404176addca212860f9ef2"}}}):
         raise errors.com.epicgames.bad_request(errorMessage="Already have access to this game.")
+    if await request.app.ctx.db["entitlements"].count_documents({"_id": request.ctx.owner, "entitlements": {
+        "$elemMatch": {"catalogItemId": "0b47fc048f3b41b2a1fd80d4cd3054af"}}}):
+        raise errors.com.epicgames.world_explorers.banned_access_found_when_granting()
     await request.app.ctx.db["entitlements"].update_one(
         {"_id": accountId, "entitlements": {"$exists": False}},
         {"$set": {"entitlements": []}}
@@ -72,12 +75,6 @@ async def request_access(request: types.BBRequest, accountId: str) -> sanic.resp
         }
     })
     return sanic.response.empty()
-    # TODO Check for bans
-    # raise errors.com.epicgames.world_explorers.banned_access_found_when_granting()
-    # raise errors.com.epicgames.bad_request(
-    #     errorMessage = "Client requested access grant but has banned access entitlement.",
-    #     numericErrorCode = 1001
-    # )
 
 
 @wex_entitlement.route("/api/storeaccess/v1/redeem_access/<accountId>", methods=["POST"])
@@ -91,8 +88,11 @@ async def redeem_access(request: types.BBRequest, accountId: str) -> sanic.respo
     """
     entitlements = await request.app.ctx.db["entitlements"].find_one({"_id": accountId})
     for entitlement in entitlements["entitlements"]:
-        if entitlement.get("catalogItemId") == "e458e71024404176addca212860f9ef2":
-            raise errors.com.epicgames.bad_request(errorMessage="Already have access to this game.")
+        match entitlement.get("catalogItemId"):
+            case "e458e71024404176addca212860f9ef2":
+                raise errors.com.epicgames.bad_request(errorMessage="Already have access to this game.")
+            case "0b47fc048f3b41b2a1fd80d4cd3054af":
+                raise errors.com.epicgames.world_explorers.banned_access_found_when_granting()
     entitlements["entitlements"].append({
         "id": await uuid_generator(),
         "entitlementName": "WorldExplorers_Free",
@@ -115,8 +115,6 @@ async def redeem_access(request: types.BBRequest, accountId: str) -> sanic.respo
     })
     await request.app.ctx.db["entitlements"].update_one({"_id": accountId}, {"$set": entitlements})
     return sanic.response.empty()
-    # TODO Check for bans
-    # raise errors.com.epicgames.world_explorers.banned_access_found_when_granting()
 
 
 @wex_entitlement.route("/api/accesscontrol/status", methods=["GET"])
@@ -128,14 +126,15 @@ async def real_game_access(request: types.BBRequest, accountId: str) -> sanic.re
     :param accountId: The account id
     :return: The response object
     """
-    # TODO: Check for bans
+    play_entitlement = False
+    ban_entitlement = False
     if await request.app.ctx.db["entitlements"].count_documents({"_id": request.ctx.owner, "entitlements": {
-        "$elemMatch": {"catalogItemId": "e458e71024404176addca212860f9ef2"}}}) == 0:
-        return sanic.response.json({
-            "play": False,
-            "isBanned": False,
-        })
+        "$elemMatch": {"catalogItemId": "e458e71024404176addca212860f9ef2"}}}):
+        play_entitlement = True
+    if await request.app.ctx.db["entitlements"].count_documents({"_id": request.ctx.owner, "entitlements": {
+        "$elemMatch": {"catalogItemId": "0b47fc048f3b41b2a1fd80d4cd3054af"}}}):
+        ban_entitlement = True
     return sanic.response.json({
-        "play": True,
-        "isBanned": False,
+        "play": play_entitlement,
+        "isBanned": ban_entitlement,
     })
