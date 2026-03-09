@@ -1223,7 +1223,6 @@ class PlayerProfile:
         wex_data: dict = await request.app.ctx.profiles[friendId].get_profile(ProfileType.PROFILE0)
         rep_heroes: list = []
         account_perks: list = []
-        # TODO: Move to database
         account_data: dict = await request.app.ctx.db["accounts"].find_one({"_id": friendId}, {
             "displayName": 1,
         })

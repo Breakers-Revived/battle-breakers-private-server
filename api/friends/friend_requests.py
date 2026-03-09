@@ -40,7 +40,6 @@ async def send_friend_request(request: types.BBFriendRequest, accountId: str,
             raise sanic.exceptions.BadRequest(context=delete_request)
         return sanic.response.empty()
     sent_request = await request.ctx.friends.send_friend_request(request, friendId)
-    # TODO: add info to wex friend profile
     if sent_request is not None:
         raise sanic.exceptions.BadRequest(context=sent_request)
     return sanic.response.empty()
