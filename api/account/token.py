@@ -16,7 +16,7 @@ from utils.enums import AuthClient
 from utils.exceptions import errors
 from utils.profile_system import PlayerProfile
 from utils.utils import (authorized as auth, oauth_response, parse_eg1, create_account, verify_google_token,
-                         oauth_client_response, bcrypt_check, format_time)
+                         oauth_client_response, bcrypt_check, format_time, username_pattern)
 
 from utils.sanic_gzip import Compress
 
@@ -154,32 +154,23 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                     raise errors.com.epicgames.account.auth_token.invalid_refresh_token()
             case 'password':  # backwards compatibility for old clients
                 # TODO: support display name and email login
-                if len(request.form.get('username').split('@')[0].strip()) < 3:
+                if not (3 < len(request.form.get('username').split('@')[0].strip()) < 24):
                     raise errors.com.epicgames.account.invalid_account_credentials()
-                elif len(request.form.get('username').split('@')[0].strip()) > 24:
+                if not (4 < len(request.form.get('password')) < 64):
                     raise errors.com.epicgames.account.invalid_account_credentials()
-                if len(request.form.get('password')) < 4:
-                    raise errors.com.epicgames.account.invalid_account_credentials()
-                elif len(request.form.get('password')) > 64:
+                if not username_pattern.match(request.form.get('username')):
                     raise errors.com.epicgames.account.invalid_account_credentials()
                 # TODO: implement better signup system
-                # allows email@. to be used as a username login
-                if re.match(r"^[^@]+@[^@]+\.[^@]+$", request.form.get('username')):
-                    account_data: dict = await request.app.ctx.db["accounts"].find_one(
-                        {"email": {"$regex": f"^{re.escape(request.form.get('username').strip())}$",
-                                   "$options": "i"}}, {
-                            "_id": 1,
-                            "displayName": 1,
-                            "extra.pwhash": 1
-                        })
-                else:
-                    account_data: dict = await request.app.ctx.db["accounts"].find_one(
-                        {"displayName": {"$regex": f"^{re.escape(request.form.get('username').split('@')[0].strip())}$",
-                                         "$options": "i"}}, {
-                            "_id": 1,
-                            "displayName": 1,
-                            "extra.pwhash": 1
-                        })
+                username = re.escape(request.form.get('username').strip())
+                if username.endswith('@') or username.endswith('@.'):
+                    username = username.rsplit('@', 1)[0]
+                account_data: dict = await request.app.ctx.db["accounts"].find_one(
+                    {"displayName": {"$regex": f"^{username}$",
+                                     "$options": "i"}}, {
+                        "_id": 1,
+                        "displayName": 1,
+                        "extra.pwhash": 1
+                    })
                 if account_data is None:
                     raise errors.com.epicgames.account.account_not_found(
                         request.form.get('username').split("@")[0].strip())
