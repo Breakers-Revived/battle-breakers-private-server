@@ -11,7 +11,7 @@ import sanic
 
 from utils import types
 from utils.sanic_gzip import Compress
-from utils.utils import authorized as auth, format_time
+from utils.utils import authorized as auth, format_time, extract_version_info
 
 compress = Compress()
 wex_profile_generate_daily_quests = sanic.Blueprint("wex_profile_generate_daily_quests")
@@ -41,5 +41,7 @@ async def generate_daily_quests(request: types.BBProfileRequest, accountId: str)
     }, request.ctx.profile_id)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

@@ -16,7 +16,7 @@ from utils import types
 from utils.exceptions import errors
 from utils.enums import ProfileType
 from utils.utils import authorized as auth, load_datatable, format_time, room_generator, read_file_cached, \
-    process_choices, level_id_pattern
+    process_choices, level_id_pattern, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -390,5 +390,7 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
     # TODO: daily_friends if friend commander is used
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

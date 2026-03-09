@@ -11,7 +11,7 @@ import sanic
 
 from utils import types
 from utils.exceptions import errors
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -43,5 +43,7 @@ async def pick_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
                                                         "1.88.244-r17036752")
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

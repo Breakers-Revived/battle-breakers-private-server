@@ -12,7 +12,8 @@ import sanic
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
-from utils.utils import authorized as auth, calculate_hero_power, load_datatable, get_template_id_from_path
+from utils.utils import authorized as auth, calculate_hero_power, load_datatable, get_template_id_from_path, \
+    extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -95,5 +96,7 @@ async def update_monster_pit_power(request: types.BBProfileRequest, accountId: s
     await request.ctx.profile.modify_stat("pit_power_dirty", False, ProfileType.MONSTERPIT)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

@@ -230,5 +230,7 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     # TODO: LevelRunMarker for limited run rooms
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await utils.extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

@@ -86,5 +86,7 @@ async def open_hero_chest(request: types.BBProfileRequest, accountId: str) -> sa
     await request.ctx.profile.change_item_attribute(request.json.get("towerId"), "chest_options", [new_chest_options])
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await utils.utils.extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

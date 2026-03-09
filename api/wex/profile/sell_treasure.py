@@ -11,7 +11,7 @@ import sanic
 
 from utils import types
 from utils.exceptions import errors
-from utils.utils import authorized as auth, load_datatable, get_path_from_template_id
+from utils.utils import authorized as auth, load_datatable, get_path_from_template_id, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -56,5 +56,7 @@ async def sell_treasure(request: types.BBProfileRequest, accountId: str) -> sani
     await request.ctx.profile.grant_item("Currency:Gold", value * sell_quantity)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

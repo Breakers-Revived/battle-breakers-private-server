@@ -56,15 +56,14 @@ class FriendStatus(enum.Enum):
         SUGGESTED: Suggested friend
         REQUESTED: Outgoing friend request
         INVITED: Incoming friend request
-        FRIEND: Normal friend
+        FRIEND: Normal friend (Legacy)
         EPICFRIEND: Epic friend (1.80+)
         EPICNONPLATFORMFRIEND: Epic friend on a different platform
         PLATFORMONLYFRIEND: Friend on a different platform
         SUGGESTEDREQUEST: Suggested friend request sent
         SUGGESTEDLEGACY: Suggested friend from legacy
         NOTPLAYING: Not playing
-        PLATFORMNOTPLAYING: Not playing on a different platform
-        MAXNONE: Max friends reached
+        PLATFORMNOTPLAYING: Platform friend not playing
 
     Methods:
         from_string(cls, s: str) -> "FriendStatus":
@@ -82,7 +81,6 @@ class FriendStatus(enum.Enum):
     SUGGESTEDLEGACY: str = "SuggestedLegacy"
     NOTPLAYING: str = "NotPlaying"
     PLATFORMNOTPLAYING: str = "PlatformNotPlaying"
-    MAXNONE: str = "Max_None"
 
     @classmethod
     def from_string(cls, s: str) -> "FriendStatus":

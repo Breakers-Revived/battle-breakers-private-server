@@ -12,7 +12,7 @@ import sanic
 from utils import types
 from utils.enums import AccountPerk
 from utils.exceptions import errors
-from utils.utils import authorized as auth, get_path_from_template_id, load_datatable
+from utils.utils import authorized as auth, get_path_from_template_id, load_datatable, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -107,5 +107,7 @@ async def claim_account_reward(request: types.BBProfileRequest, accountId: str) 
     await request.ctx.profile.modify_stat("rewards_claimed", rewards_claimed)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

@@ -10,7 +10,7 @@ Handles tracking level milestones
 import sanic
 
 from utils import types
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -36,5 +36,7 @@ async def client_tracked_retention_analytics(request: types.BBProfileRequest,
                                           request.ctx.profile_id)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

@@ -12,7 +12,7 @@ import sanic
 from utils import types
 from utils.friend_system import PlayerFriends
 from utils.sanic_gzip import Compress
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, extract_version_info
 
 compress = Compress()
 wex_profile_add_epic_friend = sanic.Blueprint("wex_profile_add_epic_friend")
@@ -48,5 +48,7 @@ async def add_epic_friend(request: types.BBProfileRequest, accountId: str) -> sa
         await request.app.ctx.friends[accountId].send_friend_request(request, request.json.get("friendAccountId"))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

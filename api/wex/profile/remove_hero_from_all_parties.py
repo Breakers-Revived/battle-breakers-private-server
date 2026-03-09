@@ -11,7 +11,7 @@ import sanic
 
 from utils import types
 from utils.exceptions import errors
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -45,4 +45,7 @@ async def remove_hero_parties(request: types.BBProfileRequest, accountId: str) -
             await request.ctx.profile.change_item_attribute(party_instance, "members", party["attributes"]["members"])
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_id))
+                                                     request.ctx.profile_id,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
+    )

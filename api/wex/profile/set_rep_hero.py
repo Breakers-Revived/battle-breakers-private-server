@@ -12,7 +12,7 @@ import sanic
 from utils import types
 from utils.exceptions import errors
 from utils.sanic_gzip import Compress
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, extract_version_info
 
 compress = Compress()
 wex_profile_set_rep_hero = sanic.Blueprint("wex_profile_set_rep_hero")
@@ -51,5 +51,7 @@ async def set_rep_hero(request: types.BBProfileRequest, accountId: str) -> sanic
     await request.ctx.profile.modify_stat("rep_hero_ids", rep_heroes)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

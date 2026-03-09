@@ -14,7 +14,7 @@ from utils import types
 from utils.enums import ProfileType
 from utils.friend_system import PlayerFriends
 from utils.profile_system import PlayerProfile
-from utils.utils import authorized as auth, format_time
+from utils.utils import authorized as auth, format_time, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -93,5 +93,7 @@ async def suggest_friends(request: types.BBProfileRequest, accountId: str) -> sa
         }, profile_id=ProfileType.FRIENDS)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

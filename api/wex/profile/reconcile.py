@@ -11,7 +11,7 @@ import sanic
 from utils import types
 from utils.friend_system import PlayerFriends
 from utils.enums import ProfileType
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -49,5 +49,7 @@ async def reconcile(request: types.BBProfileRequest, accountId: str) -> sanic.re
     }, ProfileType.FRIENDS)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

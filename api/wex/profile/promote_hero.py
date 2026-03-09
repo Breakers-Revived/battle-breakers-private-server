@@ -13,7 +13,7 @@ from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, load_datatable, get_template_id_from_path, \
-    load_character_data
+    load_character_data, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -63,5 +63,7 @@ async def promote_hero(request: types.BBProfileRequest, accountId: str) -> sanic
     # TODO: chest activity
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

@@ -13,7 +13,7 @@ import sanic
 
 from utils import types
 from utils.exceptions import errors
-from utils.utils import authorized as auth, calculate_streakbreaker, load_datatable
+from utils.utils import authorized as auth, calculate_streakbreaker, load_datatable, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -70,5 +70,7 @@ async def roll_hammer_chests(request: types.BBProfileRequest, accountId: str) ->
         })
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

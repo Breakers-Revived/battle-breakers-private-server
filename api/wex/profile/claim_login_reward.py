@@ -94,5 +94,7 @@ async def claim_login_reward(request: types.BBProfileRequest, accountId: str) ->
         await request.ctx.profile.change_item_attribute(giftbox, "sealed_days", max(0, sealed_days - 1))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

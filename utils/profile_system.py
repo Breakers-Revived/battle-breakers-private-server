@@ -21,6 +21,7 @@ import sanic.log
 from utils.custom_serialiser import custom_serialise
 from utils.enums import ProfileType, FriendStatus
 from utils.exceptions import errors
+from utils.polyfills import profile_polyfill
 from utils.utils import format_time, read_file_cached, process_choices, get_event_currency
 
 MCPTypes: UnionType = str | int | float | list | dict | bool
@@ -1317,12 +1318,13 @@ class PlayerProfile:
                 await self.remove_item(friend_instance_guid, ProfileType.FRIENDS)
 
     async def construct_response(self, profile_id: ProfileType = ProfileType.PROFILE0, rvn: int = -1,
-                                 client_command_revision: Optional[str] = None) -> dict:
+                                 client_command_revision: Optional[str] = None, client_version: int = 17036752) -> dict:
         """
         Construct a response for the specified profile
         :param profile_id: The profile to construct a response for
         :param rvn: The revision number of the profile
         :param client_command_revision: The revision number of the client command
+        :param client_version: The version of the client making the request, used for polyfilling the response
         :return: The response
         """
         sanic.log.logger.debug(
@@ -1416,7 +1418,7 @@ class PlayerProfile:
             sanic.log.logger.debug(f"Flushed changes for account {self.account_id}, saving profile")
             await self.save_profile()
 
-        return response
+        return await profile_polyfill(response, client_version)
 
     async def bump_revision(self, profile_id: ProfileType = ProfileType.PROFILE0,
                             response: Optional[dict] = None) -> None:

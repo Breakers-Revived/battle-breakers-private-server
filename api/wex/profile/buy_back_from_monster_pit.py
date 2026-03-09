@@ -12,7 +12,8 @@ import sanic
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
-from utils.utils import authorized as auth, load_character_data, load_datatable, get_template_id_from_path
+from utils.utils import authorized as auth, load_character_data, load_datatable, get_template_id_from_path, \
+    extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -63,5 +64,7 @@ async def buy_back_from_monster_pit(request: types.BBProfileRequest, accountId: 
     await request.ctx.profile.grant_hero(request.json.get("characterTemplateId"))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

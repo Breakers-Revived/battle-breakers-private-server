@@ -11,7 +11,7 @@ import sanic
 
 from utils import types
 from utils.exceptions import errors
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -45,5 +45,7 @@ async def claim_notification_opt_in_reward(request: types.BBProfileRequest,
     await request.ctx.profile.modify_stat("notification_optin_reward_claimed", True)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

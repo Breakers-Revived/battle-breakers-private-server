@@ -12,7 +12,8 @@ import sanic.log
 
 from utils import types
 from utils.sanic_gzip import Compress
-from utils.utils import authorized as auth, load_datatable, get_current_12_hour_interval, format_time
+from utils.utils import authorized as auth, load_datatable, get_current_12_hour_interval, format_time, \
+    extract_version_info
 
 compress = Compress()
 wex_profile_cash_out_workshop = sanic.Blueprint("wex_profile_cash_out_workshop")
@@ -50,5 +51,7 @@ async def cash_out_workshop(request: types.BBProfileRequest, accountId: str) -> 
     await request.ctx.profile.grant_item("Currency:Gold", ((stars - labor_used) * exchange_rate))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

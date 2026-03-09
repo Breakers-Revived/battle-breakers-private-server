@@ -10,7 +10,7 @@ Handles marking an item as seen
 import sanic
 
 from utils import types
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -32,5 +32,7 @@ async def mark_item_seen(request: types.BBProfileRequest, accountId: str) -> san
     await request.ctx.profile.change_item_attribute(request.json.get("itemId"), "is_new", False, request.ctx.profile_id)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

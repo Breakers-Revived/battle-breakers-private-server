@@ -34,5 +34,7 @@ async def set_sac(request: types.BBProfileRequest, accountId: str) -> sanic.resp
     await request.ctx.profile.modify_stat("affiliate_set_time", await utils.utils.format_time())
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await utils.utils.extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )

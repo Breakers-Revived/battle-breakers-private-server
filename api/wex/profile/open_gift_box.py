@@ -12,7 +12,7 @@ import sanic.log
 
 from utils import types
 from utils.exceptions import errors
-from utils.utils import authorized as auth, get_path_from_template_id, load_datatable
+from utils.utils import authorized as auth, get_path_from_template_id, load_datatable, extract_version_info
 
 from utils.sanic_gzip import Compress
 
@@ -108,5 +108,7 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
     await request.ctx.profile.remove_item(request.json["itemId"])
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
-                                                     request.ctx.profile_revisions)
+                                                     request.ctx.profile_revisions,
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
+                                                         -1])
     )
