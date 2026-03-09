@@ -4852,6 +4852,36 @@ class errors:
                     originatingService: str = "WEX"
                     statusCode: int = 400
 
+                class name_invalid(EpicException):
+                    """
+                    This error is returned when the given username is not valid.
+                    *errors.com.epicgames.world_explorers.name_invalid*
+                    """
+                    errorMessage: str = "Contains reserved characters."
+                    numericErrorCode: int = 0
+                    originatingService: str = "WEX"
+                    statusCode: int = 400
+
+                class name_too_short(EpicException):
+                    """
+                    This error is returned when the given username is too short.
+                    *errors.com.epicgames.world_explorers.name_too_short*
+                    """
+                    errorMessage: str = "Not enough text characters"
+                    numericErrorCode: int = 0
+                    originatingService: str = "WEX"
+                    statusCode: int = 400
+
+                class name_too_long(EpicException):
+                    """
+                    This error is returned when the given username is too short.
+                    *errors.com.epicgames.world_explorers.name_too_long*
+                    """
+                    errorMessage: str = "Too many characters"
+                    numericErrorCode: int = 0
+                    originatingService: str = "WEX"
+                    statusCode: int = 400
+
                 class no_matchmaking_id(EpicException):
                     """
                     This error is returned when the matchmaking id is not found.
