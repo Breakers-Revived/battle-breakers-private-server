@@ -9,6 +9,7 @@ Handles selecting a starter hero
 import datetime
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
@@ -16,6 +17,7 @@ from utils.friend_system import PlayerFriends
 from utils.profile_system import PlayerProfile
 from utils.enums import ProfileType
 from utils.utils import authorized as auth, normalise_string, format_time, extract_version_info, username_pattern
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -26,17 +28,23 @@ wex_profile_select_start_options = sanic.Blueprint("wex_profile_select_start_opt
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/SelectStartOptions.md
 @wex_profile_select_start_options.route("/<accountId>/SelectStartOptions", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.SelectStartOptions, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def select_start_options(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def select_start_options(request: types.BBProfileRequest, accountId: str,
+                               body: MCPValidation.SelectStartOptions,
+                               query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to choose a starter hero, and update the display name / support a creator code
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
+    request_body = body.model_dump()
     if await request.ctx.profile.get_stat("has_started"):
         raise errors.com.epicgames.world_explorers.service_not_required(errorMessage="Already started game")
-    username = request.json.get("displayName")
+    username = request_body.get("displayName")
     if not username_pattern.match(username):
         raise errors.com.epicgames.world_explorers.name_invalid()
     if username < 3:
@@ -45,9 +53,9 @@ async def select_start_options(request: types.BBProfileRequest, accountId: str) 
         raise errors.com.epicgames.world_explorers.name_too_long()
     await request.ctx.profile.modify_stat("has_started", True)
     await request.ctx.profile.modify_stat("starter_hero",
-                                          f"starter{request.json.get('characterTemplateId').split('_')[2]}")
-    await request.ctx.profile.modify_stat("starter_hero_template_id", request.json.get('characterTemplateId'))
-    starter_character_guid = await request.ctx.profile.grant_hero(request.json.get("characterTemplateId"), is_new=False)
+                                          f"starter{request_body.get('characterTemplateId').split('_')[2]}")
+    await request.ctx.profile.modify_stat("starter_hero_template_id", request_body.get('characterTemplateId'))
+    starter_character_guid = await request.ctx.profile.grant_hero(request_body.get("characterTemplateId"), is_new=False)
     await request.ctx.profile.modify_stat("rep_hero_ids", [starter_character_guid])
     party_instance_guid = await request.ctx.profile.add_item({
         "templateId": "Party:Instance",
@@ -92,12 +100,12 @@ async def select_start_options(request: types.BBProfileRequest, accountId: str) 
         },
         "quantity": 1
     })
-    await request.ctx.profile.modify_stat("display_name", request.json.get("displayName"))
+    await request.ctx.profile.modify_stat("display_name", request_body.get("displayName"))
     await request.ctx.profile.modify_stat("normalized_name",
-                                          await normalise_string(request.json.get("displayName")))
+                                          await normalise_string(request_body.get("displayName")))
     await request.app.ctx.db["accounts"].update_one(
         {"_id": accountId},
-        {"$set": {"displayName": request.json.get("displayName")}}
+        {"$set": {"displayName": request_body.get("displayName")}}
     )
     await request.ctx.profile.modify_stat("suggestion_timeout",
                                           await format_time(

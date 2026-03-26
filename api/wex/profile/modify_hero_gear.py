@@ -8,11 +8,13 @@ Handles modifying hero gear.
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -24,50 +26,56 @@ wex_profile_modify_hero_gear = sanic.Blueprint("wex_profile_modify_hero_gear")
 # noinspection IncorrectFormatting
 @wex_profile_modify_hero_gear.route("/<accountId>/ModifyHeroGear", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.ModifyHeroGear, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def modify_hero_gear(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def modify_hero_gear(request: types.BBProfileRequest, accountId: str,
+                           body: MCPValidation.ModifyHeroGear,
+                           query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to modify hero gear.
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
-    if request.json.get("bIsInPit"):
-        hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT)
+    request_body = body.model_dump()
+    if request_body.get("bIsInPit"):
+        hero_item = await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId"), ProfileType.MONSTERPIT)
         if not hero_item["templateId"].startswith("Character:"):
             raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid hero item id")
     else:
-        hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"))
+        hero_item = await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId"))
         if not hero_item["templateId"].startswith("Character:"):
             raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid hero item id")
-    if request.json.get("gearHeroItemId") != "":
-        sidekick_template_id = (await request.ctx.profile.get_item_by_guid(request.json.get("gearHeroItemId")))[
+    if request_body.get("gearHeroItemId") != "":
+        sidekick_template_id = (await request.ctx.profile.get_item_by_guid(request_body.get("gearHeroItemId")))[
                 "templateId"]
         if not sidekick_template_id.startswith("Character:"):
             raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid gear weapon item id")
-        await request.ctx.profile.change_item_attribute(request.json.get("gearHeroItemId"), "used_as_sidekick", True)
-        await request.ctx.profile.change_item_attribute(request.json.get("gearHeroItemId"), "sidekick_item_id",
-                                                        request.json.get("heroItemId"))
-        if request.json.get("bIsInPit"):
-            await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "sidekick_item_id",
-                                                            request.json.get("gearHeroItemId"),
+        await request.ctx.profile.change_item_attribute(request_body.get("gearHeroItemId"), "used_as_sidekick", True)
+        await request.ctx.profile.change_item_attribute(request_body.get("gearHeroItemId"), "sidekick_item_id",
+                                                        request_body.get("heroItemId"))
+        if request_body.get("bIsInPit"):
+            await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "sidekick_item_id",
+                                                            request_body.get("gearHeroItemId"),
                                                             ProfileType.MONSTERPIT)
-            await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "sidekick_template_id",
+            await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "sidekick_template_id",
                                                             sidekick_template_id, ProfileType.MONSTERPIT)
         else:
-            await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "sidekick_item_id",
-                                                            request.json.get("gearHeroItemId"))
-            await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "sidekick_template_id",
+            await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "sidekick_item_id",
+                                                            request_body.get("gearHeroItemId"))
+            await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "sidekick_template_id",
                                                             sidekick_template_id)
     else:
-        if request.json.get("bIsInPit"):
-            await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "sidekick_item_id", "",
+        if request_body.get("bIsInPit"):
+            await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "sidekick_item_id", "",
                                                             ProfileType.MONSTERPIT)
-            await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "sidekick_template_id",
+            await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "sidekick_template_id",
                                                             "", ProfileType.MONSTERPIT)
         else:
-            await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "sidekick_item_id", "")
-            await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "sidekick_template_id", "")
+            await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "sidekick_item_id", "")
+            await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "sidekick_template_id", "")
         if hero_item["attributes"]["sidekick_item_id"] != "":
             await request.ctx.profile.change_item_attribute(hero_item["attributes"]["sidekick_item_id"],
                                                             "used_as_sidekick", False)

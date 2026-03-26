@@ -8,10 +8,12 @@ Handles claiming quest rewards
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -22,16 +24,22 @@ wex_profile_claim_quest_reward = sanic.Blueprint("wex_profile_claim_quest_reward
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/ClaimQuestReward.md
 @wex_profile_claim_quest_reward.route("/<accountId>/ClaimQuestReward", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.ClaimQuestReward, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def claim_quest_reward(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def claim_quest_reward(request: types.BBProfileRequest, accountId: str,
+                             body: MCPValidation.ClaimQuestReward,
+                             query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to claim quest rewards
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: validation
-    quest_item = await request.ctx.profile.get_item_by_guid(request.json.get("questMcpId"))
+    quest_id = body.model_dump().get("questMcpId")
+    quest_item = await request.ctx.profile.get_item_by_guid(quest_id)
     if quest_item is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid quest item id")
     if not quest_item["attributes"]["bIsCompleted"]:
@@ -44,7 +52,7 @@ async def claim_quest_reward(request: types.BBProfileRequest, accountId: str) ->
             await request.ctx.profile.grant_hero(reward["templateId"], quantity=reward["quantity"])
         else:
             await request.ctx.profile.grant_item(reward["templateId"], reward["quantity"])
-    await request.ctx.profile.remove_item(request.json.get("questMcpId"))
+    await request.ctx.profile.remove_item(quest_id)
     await request.ctx.profile.add_notifications({
         "type": "WExpGiftPointReward",
         "primary": True,

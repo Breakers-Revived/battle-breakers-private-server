@@ -8,12 +8,14 @@ Handles selling heroes.
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, get_template_id_from_path, load_datatable, load_character_data, \
     extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -24,20 +26,26 @@ wex_profile_sell_hero = sanic.Blueprint("wex_profile_sell_hero")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/SellHero.md
 @wex_profile_sell_hero.route("/<accountId>/SellHero", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.SellHero, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def sell_hero(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def sell_hero(request: types.BBProfileRequest, accountId: str,
+                    body: MCPValidation.SellHero,
+                    query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to sell heroes
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: validation
-    if request.json.get("bIsInPit"):
-        # hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT)
+    request_body = body.model_dump()
+    if request_body.get("bIsInPit"):
+        # hero_item = await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId"), ProfileType.MONSTERPIT)
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="How did you do this?")
     else:
-        hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"))
+        hero_item = await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId"))
     if hero_item is None:
         raise errors.com.epicgames.world_explorers.not_found(
             errorMessage="We're sorry, but we were unable to sell your item as it was not found in your inventory.")
@@ -82,7 +90,7 @@ async def sell_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
     for sell_reward in sell_rewards:
         reward_template_id = await get_template_id_from_path(sell_reward["ItemDefinition"]["ObjectPath"])
         await request.ctx.profile.grant_item(reward_template_id, sell_reward["Count"])
-    await request.ctx.profile.remove_item(request.json.get("heroItemId"))
+    await request.ctx.profile.remove_item(request_body.get("heroItemId"))
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions,

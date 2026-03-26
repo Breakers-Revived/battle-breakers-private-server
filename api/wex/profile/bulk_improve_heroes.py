@@ -8,10 +8,12 @@ Handles bulk improve heroes (used for auto upgrade)
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, load_datatable, get_path_from_template_id, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -22,12 +24,17 @@ wex_profile_bulk_improve_heroes = sanic.Blueprint("wex_profile_bulk_improve_hero
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/BulkImproveHeroes.md
 @wex_profile_bulk_improve_heroes.route("/<accountId>/BulkImproveHeroes", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.BulkImproveHeroes, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def bulk_improve_heroes(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def bulk_improve_heroes(request: types.BBProfileRequest, accountId: str,
+                              body: MCPValidation.BulkImproveHeroes,
+                              query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to upgrade heroes in bulk
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     gold_id = (await request.ctx.profile.find_item_by_template_id("Currency:Gold"))[0]
@@ -59,7 +66,7 @@ async def bulk_improve_heroes(request: types.BBProfileRequest, accountId: str) -
     mana_ids = await request.ctx.profile.find_item_by_template_id("UpgradePotion:UpgradeMana")
     mana_potion_guid = mana_ids[0] if mana_ids else None
     mana_potion_quantity = (await request.ctx.profile.get_item_by_guid(mana_potion_guid)).get("quantity", 0) if mana_potion_guid else 0
-    for upgrade in request.json.get("detail"):
+    for upgrade in body.model_dump().get("detail"):
         hero_item = await request.ctx.profile.get_item_by_guid(upgrade["heroItemId"])
         hero_upgrades = hero_item["attributes"]["upgrades"]
         # potions

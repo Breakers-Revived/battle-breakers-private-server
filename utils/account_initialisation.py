@@ -11,9 +11,8 @@ import uuid
 
 from pymongo.asynchronous.database import AsyncDatabase
 
-import utils.utils
 from utils.services.calendar.calendar import ScheduledEvents
-from utils.utils import normalise_string, format_time, uuid_generator
+from utils.utils import normalise_string, format_time, uuid_generator, get_current_24_hour_interval
 
 
 async def initialise_account(database: AsyncDatabase, account_id: str = None, display_name: str = None,
@@ -569,7 +568,7 @@ async def initialise_account(database: AsyncDatabase, account_id: str = None, di
                 },
                 "activity": {
                     "a": {
-                        "date": await format_time(await utils.utils.get_current_24_hour_interval()),
+                        "date": await format_time(await get_current_24_hour_interval()),
                         "claimed": False,
                         "props": {
                             "BaseBonus": 10

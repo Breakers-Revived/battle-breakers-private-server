@@ -12,6 +12,8 @@ from concurrent.futures import ThreadPoolExecutor
 from functools import partial, wraps
 import gzip
 import zlib
+from inspect import isawaitable
+
 from typing_extensions import Optional, Any, Callable, Coroutine
 
 import brotli
@@ -167,7 +169,10 @@ class Compress(object):
                 if not accept_encoding or (
                         "gzip" not in accept_encoding and "deflate" not in accept_encoding and "br" not in accept_encoding
                 ):
-                    return await f(*args, **kwargs)
+                    retval = f(*args, **kwargs)
+                    if isawaitable(retval):
+                        retval = await retval
+                    return retval
 
                 response: sanic.response.BaseHTTPResponse = await f(*args, **kwargs)
 

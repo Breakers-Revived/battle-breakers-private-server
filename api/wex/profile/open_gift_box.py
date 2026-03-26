@@ -8,11 +8,13 @@ Handles opening a gift box.
 """
 
 import sanic
+import sanic_ext
 import sanic.log
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, get_path_from_template_id, load_datatable, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -23,19 +25,25 @@ wex_profile_open_gift_box = sanic.Blueprint("wex_profile_open_gift_box")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/OpenGiftBox.md
 @wex_profile_open_gift_box.route("/<accountId>/OpenGiftBox", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.OpenGiftBox, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def open_gift_box(request: types.BBProfileRequest, accountId: str,
+                        body: MCPValidation.OpenGiftBox,
+                        query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to open a gift box.
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
-    opened_gift_box = await request.ctx.profile.get_item_by_guid(request.json.get("itemId"), request.ctx.profile_id)
+    request_body = body.model_dump()
+    opened_gift_box = await request.ctx.profile.get_item_by_guid(request_body.get("itemId"), request.ctx.profile_id)
     if opened_gift_box is None or not opened_gift_box["templateId"].startswith("Giftbox:"):
         raise errors.com.epicgames.world_explorers.not_found(errorMessage="Gift box not found.")
     items = []
-    tier_group_name = request.json.get("itemId")
+    tier_group_name = request_body.get("itemId")
     giftbox_data = (await load_datatable(
         (await get_path_from_template_id(opened_gift_box["templateId"])).replace(
             "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"]
@@ -105,7 +113,7 @@ async def open_gift_box(request: types.BBProfileRequest, accountId: str) -> sani
             "items": items
         }
     })
-    await request.ctx.profile.remove_item(request.json["itemId"])
+    await request.ctx.profile.remove_item(request_body["itemId"])
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions,

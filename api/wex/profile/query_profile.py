@@ -8,9 +8,11 @@ Handles profile queries
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -21,12 +23,17 @@ wex_profile_query = sanic.Blueprint("wex_profile_query")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/QueryProfile(profile0).md
 @wex_profile_query.route("/<accountId>/QueryProfile", methods=["GET", "POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.QueryProfile, query=MCPQueryValidation.MCPAnyProfile)
 @compress.compress()
-async def query_profile(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def query_profile(request: types.BBProfileRequest, accountId: str,
+                        body: MCPValidation.QueryProfile,
+                        query: MCPQueryValidation.MCPAnyProfile) -> sanic.response.JSONResponse:
     """
     Handles the query profile request
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The response object
     """
     return sanic.response.json(

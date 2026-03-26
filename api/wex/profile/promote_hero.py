@@ -8,12 +8,14 @@ Handles promoting a hero.
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, load_datatable, get_template_id_from_path, \
     load_character_data, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -24,21 +26,27 @@ wex_profile_promote_hero = sanic.Blueprint("wex_profile_promote_hero")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/PromoteHero.md
 @wex_profile_promote_hero.route("/<accountId>/PromoteHero", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.PromoteHero, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def promote_hero(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def promote_hero(request: types.BBProfileRequest, accountId: str,
+                       body: MCPValidation.PromoteHero,
+                       query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to promote a hero.
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # errors.com.epicgames.modules.gameplayutils.recipe_failed - Unable to promote
     # TODO: investigate when prestigePromote is true
     # TODO: validation
-    if request.json.get("bIsInPit"):
-        hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT)
+    request_body = body.model_dump()
+    if request_body.get("bIsInPit"):
+        hero_item = await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId"), ProfileType.MONSTERPIT)
     else:
-        hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"))
+        hero_item = await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId"))
     if hero_item is None:
         raise errors.com.epicgames.modules.gameplayutils.recipe_failed(errorMessage="Invalid hero item id")
     hero_data = await load_character_data(hero_item["templateId"])
@@ -54,11 +62,11 @@ async def promote_hero(request: types.BBProfileRequest, accountId: str) -> sanic
     for consumed_item in promotion_recipe["ConsumedItems"]:
         consumed_item_id = await get_template_id_from_path(consumed_item["ItemDefinition"]["ObjectPath"])
         await request.ctx.profile.consume_item(consumed_item_id, consumed_item["Count"])
-    if request.json.get("bIsInPit"):
-        await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "rank",
+    if request_body.get("bIsInPit"):
+        await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "rank",
                                                         hero_item["attributes"]["rank"] + 1, ProfileType.MONSTERPIT)
     else:
-        await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "rank",
+        await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "rank",
                                                         hero_item["attributes"]["rank"] + 1)
     # TODO: chest activity
     return sanic.response.json(

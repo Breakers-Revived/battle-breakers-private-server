@@ -8,10 +8,12 @@ Handles claiming the come back reward
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -22,12 +24,17 @@ wex_profile_claim_comeback = sanic.Blueprint("wex_profile_claim_comeback")
 # undocumented
 @wex_profile_claim_comeback.route("/<accountId>/ClaimComeBackReward", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.ClaimComeBackReward, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def claim_comeback(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def claim_comeback(request: types.BBProfileRequest, accountId: str,
+                         body: MCPValidation.ClaimComeBackReward,
+                         query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to claim the comeback reward.
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Sorry, the promotion period has ended.")

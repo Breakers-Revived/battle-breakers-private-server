@@ -8,10 +8,12 @@ Handles adding heroes to monster pit
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -22,15 +24,20 @@ wex_profile_add_to_monster_pit = sanic.Blueprint("wex_profile_add_to_monster_pit
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/AddToMonsterPit.md
 @wex_profile_add_to_monster_pit.route("/<accountId>/AddToMonsterPit", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.AddToMonsterPit, query=MCPQueryValidation.MCPMonsterpit)
 @compress.compress()
-async def add_to_monster_pit(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def add_to_monster_pit(request: types.BBProfileRequest, accountId: str,
+                             body: MCPValidation.AddToMonsterPit,
+                             query: MCPQueryValidation.MCPMonsterpit) -> sanic.response.JSONResponse:
     """
     This endpoint is used to add heroes to the monster pit
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
-    character_item_id = request.json.get("characterItemId")
+    character_item_id = body.model_dump().get("characterItemId")
     character = await request.ctx.profile.get_item_by_guid(character_item_id)
     if not character.get("templateId").startswith("Character:"):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid character item id")

@@ -9,10 +9,12 @@ Handles upgrading buildings.
 
 import sanic
 import sanic.log
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, get_template_id_from_path, load_datatable, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -23,16 +25,22 @@ wex_profile_upgrade_building = sanic.Blueprint("wex_profile_upgrade_building")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/UpgradeBuilding.md
 @wex_profile_upgrade_building.route("/<accountId>/UpgradeBuilding", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.UpgradeBuilding, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def upgrade_building(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def upgrade_building(request: types.BBProfileRequest, accountId: str,
+                           body: MCPValidation.UpgradeBuilding,
+                           query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to upgrade buildings
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: modify chest activity
-    building_item = await request.ctx.profile.get_item_by_guid(request.json.get("buildingItemId"),
+    request_body = body.model_dump()
+    building_item = await request.ctx.profile.get_item_by_guid(request_body.get("buildingItemId"),
                                                                request.ctx.profile_id)
     if not building_item.get("templateId").startswith("HqBuilding:"):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid building item id")
@@ -51,10 +59,10 @@ async def upgrade_building(request: types.BBProfileRequest, accountId: str) -> s
     if promotion_table.get("MtxCost") is not None:
         # TODO: enforce account level
         await request.ctx.profile.consume_item("Currency:MtxGiveaway", promotion_table["MtxCost"])
-    await request.ctx.profile.change_item_attribute(request.json.get("buildingItemId"), "level",
+    await request.ctx.profile.change_item_attribute(request_body.get("buildingItemId"), "level",
                                                     building_item["attributes"]["level"] + 1, request.ctx.profile_id)
     sanic.log.logger.debug(
-        f"Upgraded building {request.json.get('buildingItemId')} to level {building_item['attributes']['level'] + 1}")
+        f"Upgraded building {request_body.get('buildingItemId')} to level {building_item['attributes']['level'] + 1}")
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions,

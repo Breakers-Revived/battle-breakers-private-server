@@ -7,9 +7,11 @@ This code is licensed under the Breakers Revived License (BRL).
 Handles updating default party
 """
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -20,16 +22,22 @@ wex_profile_set_default_party = sanic.Blueprint("wex_profile_set_default_party")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/SetDefaultParty.md
 @wex_profile_set_default_party.route("/<accountId>/SetDefaultParty", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.SetDefaultParty, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def set_default_party(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def set_default_party(request: types.BBProfileRequest, accountId: str,
+                            body: MCPValidation.SetDefaultParty,
+                            query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to update the default hero party slot
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
-    party_id = request.json.get("partyId")
-    party_type = request.json.get("type")
+    request_body = body.model_dump()
+    party_id = request_body.get("partyId")
+    party_type = request_body.get("type")
     parties = await request.ctx.profile.get_stat("default_parties", request.ctx.profile_id)
     parties[party_type] = party_id
     parties["LastPvePartyUsed"] = party_id

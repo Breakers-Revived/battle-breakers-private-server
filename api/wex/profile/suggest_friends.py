@@ -9,12 +9,14 @@ Handles the friend suggestion request
 import datetime
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.friend_system import PlayerFriends
 from utils.profile_system import PlayerProfile
 from utils.utils import authorized as auth, format_time, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -25,12 +27,17 @@ wex_profile_suggest_friends = sanic.Blueprint("wex_profile_suggest_friends")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/UpdateFriends.md
 @wex_profile_suggest_friends.route("/<accountId>/SuggestFriends", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.SuggestFriends, query=MCPQueryValidation.MCPFriends)
 @compress.compress()
-async def suggest_friends(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def suggest_friends(request: types.BBProfileRequest, accountId: str,
+                          body: MCPValidation.SuggestFriends,
+                          query: MCPQueryValidation.MCPFriends) -> sanic.response.JSONResponse:
     """
     This endpoint is used to request friend suggestions (on legacy clients/friend system)
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     if accountId not in request.app.ctx.friends:

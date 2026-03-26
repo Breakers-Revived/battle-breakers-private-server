@@ -8,10 +8,12 @@ Handles collecting hammer quests energy
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -22,12 +24,17 @@ wex_profile_collect_hammer_quest_energy = sanic.Blueprint("wex_profile_collect_h
 # undocumented
 @wex_profile_collect_hammer_quest_energy.route("/<accountId>/CollectHammerQuest_Energy", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.CollectHammerQuest_Energy, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def collect_hammer_quest_energy(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def collect_hammer_quest_energy(request: types.BBProfileRequest, accountId: str,
+                                      body: MCPValidation.CollectHammerQuest_Energy,
+                                      query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to collect hammer quests energy
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     raise errors.com.epicgames.not_implemented()

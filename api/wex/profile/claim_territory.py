@@ -8,11 +8,13 @@ Handles claiming territory
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -23,25 +25,31 @@ wex_profile_claim_territory = sanic.Blueprint("wex_profile_claim_territory")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/ClaimTerritory.md
 @wex_profile_claim_territory.route("/<accountId>/ClaimTerritory", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.ClaimTerritory, query=MCPQueryValidation.MCPLevels)
 @compress.compress()
-async def claim_territory(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def claim_territory(request: types.BBProfileRequest, accountId: str,
+                          body: MCPValidation.ClaimTerritory,
+                          query: MCPQueryValidation.MCPLevels) -> sanic.response.JSONResponse:
     """
     This endpoint is used to claim a territory when completing all 1/2/3/4 star missions in a zone
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: validation
     unlocked_territories = await request.ctx.profile.find_item_by_template_id("WorldUnlock:Territory",
                                                                               ProfileType.LEVELS)
+    request_body = body.model_dump()
     for territory in unlocked_territories:
-        if territory["attributes"]["territoryId"] == request.json.get("territoryId"):
+        if territory["attributes"]["territoryId"] == request_body.get("territoryId"):
             raise errors.com.epicgames.world_explorers.bad_request(
-                errorMessage=f"Territory {request.json.get('zoneId')} is already unlocked.")
+                errorMessage=f"Territory {request_body.get('zoneId')} is already unlocked.")
     await request.ctx.profile.add_item({
         "templateId": "WorldUnlock:Territory",
         "attributes": {
-            "territoryId": request.json.get("territoryId")
+            "territoryId": request_body.get("territoryId")
         },
         "quantity": 1
     }, profile_id=ProfileType.LEVELS)
@@ -50,7 +58,7 @@ async def claim_territory(request: types.BBProfileRequest, accountId: str) -> sa
     await request.ctx.profile.add_notifications({
         "type": "WExpTerritoryClaim",
         "primary": True,
-        "territoryId": request.json.get("territoryId"),
+        "territoryId": request_body.get("territoryId"),
         "lootResult": {
             "tierGroupName": "LTG.FC.Territory.Claim",  # claiming territories always has the same loot tier group
             "items": [

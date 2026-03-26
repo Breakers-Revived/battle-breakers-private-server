@@ -8,11 +8,13 @@ Handles foiling hero
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, load_datatable, load_character_data, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -23,17 +25,23 @@ wex_profile_foil_hero = sanic.Blueprint("wex_profile_foil_hero")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/FoilHero.md
 @wex_profile_foil_hero.route("/<accountId>/FoilHero", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.FoilHero, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def foil_hero(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def foil_hero(request: types.BBProfileRequest, accountId: str,
+                    body: MCPValidation.FoilHero,
+                    query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to foil heroes
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
-    if request.json.get("bIsInPit"):
+    request_body = body.model_dump()
+    if request_body.get("bIsInPit"):
         character_data = await load_character_data(
-            (await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT))[
+            (await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId"), ProfileType.MONSTERPIT))[
                 "templateId"])
         if not character_data[0]["Properties"].get("FoilTable"):
             raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Hero cannot be foiled")
@@ -44,11 +52,11 @@ async def foil_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
             "Properties"]["ConsumedItems"][0]["Count"]
         await request.ctx.profile.consume_item("Reagent:Reagent_Foil", foil_cost)
         await request.ctx.profile.modify_stat("pit_power_dirty", True)
-        await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "foil_lvl", 1,
+        await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "foil_lvl", 1,
                                                         ProfileType.MONSTERPIT)
     else:
         character_data = await load_character_data(
-            (await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId")))["templateId"])
+            (await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId")))["templateId"])
         if not character_data[0]["Properties"].get("FoilTable"):
             raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Hero cannot be foiled")
         foil_table = character_data[0]["Properties"]["FoilTable"]["AssetPathName"].replace("/Game/", "Content/").split(
@@ -57,7 +65,7 @@ async def foil_hero(request: types.BBProfileRequest, accountId: str) -> sanic.re
                                               "AssetPathName"].replace("/Game/", "Content/").split(".")[0]))[0][
             "Properties"]["ConsumedItems"][0]["Count"]
         await request.ctx.profile.consume_item("Reagent:Reagent_Foil", foil_cost)
-        await request.ctx.profile.change_item_attribute(request.json.get("heroItemId"), "foil_lvl", 1)
+        await request.ctx.profile.change_item_attribute(request_body.get("heroItemId"), "foil_lvl", 1)
     # TODO: foil hero activity
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,

@@ -9,12 +9,14 @@ Handles purchasing a catalog entry.
 import datetime
 
 import sanic
+import sanic_ext
 
-import utils.utils
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
-from utils.utils import authorized as auth
+from utils.utils import authorized as auth, format_time, get_current_24_hour_interval, get_current_12_hour_interval, \
+    get_current_weekly_interval, get_current_monthly_interval, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -25,33 +27,39 @@ wex_profile_purchase_catalog_entry = sanic.Blueprint("wex_profile_purchase_catal
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/PurchaseCatalogEntry.md
 @wex_profile_purchase_catalog_entry.route("/<accountId>/PurchaseCatalogEntry", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.PurchaseCatalogEntry, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str,
+                                 body: MCPValidation.PurchaseCatalogEntry,
+                                 query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to purchase a catalog entry.
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
-    if not request.json.get("offerId"):
+    request_body = body.model_dump()
+    if not request_body.get("offerId"):
         raise errors.com.epicgames.modules.gamesubcatalog.invalid_parameter(errorMessage="Offer ID is required.")
-    if not request.json.get("purchaseQuantity"):
+    if not request_body.get("purchaseQuantity"):
         raise errors.com.epicgames.modules.gamesubcatalog.invalid_parameter(errorMessage="Quantity is required.")
-    if request.json.get("currency") == "RealMoney":
+    if request_body.get("currency") == "RealMoney":
         raise errors.com.epicgames.modules.gamesubcatalog.invalid_parameter()
-    offer_id = request.json.get("offerId")
+    offer_id = request_body.get("offerId")
     await request.app.ctx.storefronts.update_storefronts()
     storefronts = request.app.ctx.storefronts
     offer = await storefronts.get_offer_by_id(offer_id)
     if offer is None:
         raise errors.com.epicgames.modules.gamesubcatalog.catalog_out_of_date(offer_id)
     # Check if the expected price matches the actual price for the currency and currency subtype
-    expected_price = request.json.get("expectedTotalPrice")
-    currency = request.json.get("currency")
-    currency_subtype = request.json.get("currencySubType", "")
+    expected_price = request_body.get("expectedTotalPrice")
+    currency = request_body.get("currency")
+    currency_subtype = request_body.get("currencySubType", "")
     for price in offer.prices:
         if price["currencyType"] == currency and price["currencySubType"] == currency_subtype:
-            if price["finalPrice"] * request.json.get("purchaseQuantity") != expected_price:
+            if price["finalPrice"] * request_body.get("purchaseQuantity") != expected_price:
                 raise errors.com.epicgames.modules.gamesubcatalog.invalid_parameter(
                     errorMessage=f"Expected price {expected_price} does not match actual price {price['finalPrice']}.")
             break
@@ -92,8 +100,7 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 labor_force = await request.ctx.profile.get_stat("labor_force")
                 stars = await request.ctx.profile.get_stat("num_levels_completed")
                 labor_used = labor_force.get("laborUsed", 0)
-                if labor_force["lastInterval"] != await utils.utils.format_time(
-                        await utils.utils.get_current_12_hour_interval()):
+                if labor_force["lastInterval"] != await format_time(await get_current_12_hour_interval()):
                     labor_used = 0
                 labor_points = stars - labor_used
                 if labor_points < expected_price:
@@ -106,9 +113,8 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 errorMessage=f"Currency {currency} with subtype {currency_subtype} is not valid.")
     daily_limit = await request.ctx.profile.get_stat("daily_purchases")
     # if the last interval is not today, reset the daily purchases
-    if daily_limit.get("lastInterval") != await utils.utils.format_time(
-            await utils.utils.get_current_24_hour_interval()):
-        daily_limit["lastInterval"] = await utils.utils.format_time(await utils.utils.get_current_24_hour_interval())
+    if daily_limit.get("lastInterval") != await format_time(await get_current_24_hour_interval()):
+        daily_limit["lastInterval"] = await format_time(await get_current_24_hour_interval())
         daily_limit["purchaseList"] = {}
     # Check if the offer has a daily limit and if it has been exceeded
     if offer.daily_limit != -1:
@@ -117,19 +123,18 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 raise errors.com.epicgames.modules.gamesubcatalog.purchase_not_allowed(offer.dev_name,
                                                                                        offer.item_grants[0].get(
                                                                                            "templateId", offer_id),
-                                                                                       request.json.get(
+                                                                                       request_body.get(
                                                                                            "purchaseQuantity"),
                                                                                        offer.daily_limit)
         else:
             daily_limit["purchaseList"][offer_id] = 0
-        daily_limit["purchaseList"][offer_id] += request.json.get("purchaseQuantity")
+        daily_limit["purchaseList"][offer_id] += request_body.get("purchaseQuantity")
     await request.ctx.profile.modify_stat("daily_purchases", daily_limit)
     # Check if the offer has a weekly limit and if it has been exceeded
     weekly_limit = await request.ctx.profile.get_stat("weekly_purchases")
     # if the last interval is not this week, reset the weekly purchases
-    if weekly_limit.get("lastInterval") != await utils.utils.format_time(
-            await utils.utils.get_current_weekly_interval()):
-        weekly_limit["lastInterval"] = await utils.utils.format_time(await utils.utils.get_current_weekly_interval())
+    if weekly_limit.get("lastInterval") != await format_time(await get_current_weekly_interval()):
+        weekly_limit["lastInterval"] = await format_time(await get_current_weekly_interval())
         weekly_limit["purchaseList"] = {}
     # Check if the offer has a weekly limit and if it has been exceeded
     if offer.weekly_limit != -1:
@@ -138,19 +143,18 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 raise errors.com.epicgames.modules.gamesubcatalog.purchase_not_allowed(offer.dev_name,
                                                                                        offer.item_grants[0].get(
                                                                                            "templateId", offer_id),
-                                                                                       request.json.get(
+                                                                                       request_body.get(
                                                                                            "purchaseQuantity"),
                                                                                        offer.weekly_limit)
         else:
             weekly_limit["purchaseList"][offer_id] = 0
-        weekly_limit["purchaseList"][offer_id] += request.json.get("purchaseQuantity")
+        weekly_limit["purchaseList"][offer_id] += request_body.get("purchaseQuantity")
     await request.ctx.profile.modify_stat("weekly_purchases", weekly_limit)
     # Check if the offer has a monthly limit and if it has been exceeded
     monthly_limit = await request.ctx.profile.get_stat("monthly_purchases")
     # if the last interval is not this month, reset the monthly purchases
-    if monthly_limit.get("lastInterval") != await utils.utils.format_time(
-            await utils.utils.get_current_monthly_interval()):
-        monthly_limit["lastInterval"] = await utils.utils.format_time(await utils.utils.get_current_monthly_interval())
+    if monthly_limit.get("lastInterval") != await format_time(await get_current_monthly_interval()):
+        monthly_limit["lastInterval"] = await format_time(await get_current_monthly_interval())
         monthly_limit["purchaseList"] = {}
     # Check if the offer has a monthly limit and if it has been exceeded
     if offer.monthly_limit != -1:
@@ -159,12 +163,12 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 raise errors.com.epicgames.modules.gamesubcatalog.purchase_not_allowed(offer.dev_name,
                                                                                        offer.item_grants[0].get(
                                                                                            "templateId", offer_id),
-                                                                                       request.json.get(
+                                                                                       request_body.get(
                                                                                            "purchaseQuantity"),
                                                                                        offer.monthly_limit)
         else:
             monthly_limit["purchaseList"][offer_id] = 0
-        monthly_limit["purchaseList"][offer_id] += request.json.get("purchaseQuantity")
+        monthly_limit["purchaseList"][offer_id] += request_body.get("purchaseQuantity")
     await request.ctx.profile.modify_stat("monthly_purchases", monthly_limit)
     # Check the requirements require/deny fulfillments
     purchase_list = await request.ctx.profile.get_stat("in_app_purchases")
@@ -247,11 +251,10 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 service_name = meta["value"].split(":")[0]
                 match service_name:
                     case "ResetLaborPool":
-                        await request.ctx.profile.modify_stat("labor_refill_cd", await utils.utils.format_time(
+                        await request.ctx.profile.modify_stat("labor_refill_cd", await format_time(
                             datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2)))
                         await request.ctx.profile.modify_stat("labor_force", {
-                            "lastInterval": await utils.utils.format_time(
-                                await utils.utils.get_current_12_hour_interval()),
+                            "lastInterval": await format_time(await get_current_12_hour_interval()),
                             "laborUsed": 0})
                     case "PerkReset":
                         perks = await request.ctx.profile.get_stat("rewards_claimed")
@@ -262,12 +265,12 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                     case "MarketRefresh":
                         if meta["value"].split(":")[1] == "0":
                             await request.ctx.profile.modify_stat("market_page", {
-                                "unlock_time": await utils.utils.format_time(),
+                                "unlock_time": await format_time(),
                                 "page": 1
                             })
                         else:
                             await request.ctx.profile.modify_stat("market_page", {
-                                "unlock_time": await utils.utils.format_time(
+                                "unlock_time": await format_time(
                                     datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)),
                                 "page": 2
                             })
@@ -276,8 +279,7 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                         energy_item = await request.ctx.profile.get_item_by_guid(energy_id)
                         await request.ctx.profile.change_item_quantity(energy_id,
                                                                        energy_item["attributes"]["max_value"])
-                        await request.ctx.profile.change_item_attribute(energy_id, "updated",
-                                                                        await utils.utils.format_time())
+                        await request.ctx.profile.change_item_attribute(energy_id, "updated", await format_time())
                     case "GameContinue":
                         # No action needed, handled client side
                         pass
@@ -285,18 +287,18 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                         match meta["value"].split(":")[1]:
                             case "0":
                                 await request.ctx.profile.modify_stat("secret_shop_page", {
-                                    "unlock_time": await utils.utils.format_time(),
+                                    "unlock_time": await format_time(),
                                     "page": 1
                                 })
                             case "1":
                                 await request.ctx.profile.modify_stat("secret_shop_page", {
-                                    "unlock_time": await utils.utils.format_time(
+                                    "unlock_time": await format_time(
                                         datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=1)),
                                     "page": 2
                                 })
                             case "2":
                                 await request.ctx.profile.modify_stat("secret_shop_page", {
-                                    "unlock_time": await utils.utils.format_time(
+                                    "unlock_time": await format_time(
                                         datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=2)),
                                     "page": 3
                                 })
@@ -318,12 +320,12 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                     case "StandIn:InventoryUpgrade":
                         inventory_limit = await request.ctx.profile.get_stat("hero_limit")
                         await request.ctx.profile.modify_stat("hero_limit", inventory_limit + item_grant["attributes"][
-                            "FakeQuantity"] * request.json.get("purchaseQuantity"))
+                            "FakeQuantity"] * request_body.get("purchaseQuantity"))
                     case "StandIn:RocketUnlock":
                         await request.ctx.profile.modify_stat("rocket_unlock", 1)
                     case "StandIn:FreeSecretShopItem":
                         secret_shop = await request.ctx.profile.get_stat("secret_shop_page")
-                        secret_shop["unlock_time"] = await utils.utils.format_time()
+                        secret_shop["unlock_time"] = await format_time()
                         if secret_shop["page"] < 1:
                             secret_shop["page"] = 1
                         await request.ctx.profile.modify_stat("secret_shop_page", secret_shop)
@@ -352,11 +354,11 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 items.append({
                     "itemType": item_grant["templateId"],
                     "attributes": item_grant.get("attributes", {}),
-                    "quantity": item_grant.get("quantity", 1) * request.json.get("purchaseQuantity")
+                    "quantity": item_grant.get("quantity", 1) * request_body.get("purchaseQuantity")
                 })
                 continue
             elif item_grant["templateId"].startswith("Character:"):
-                for _ in range(item_grant["quantity"] * request.json.get("purchaseQuantity")):
+                for _ in range(item_grant["quantity"] * request_body.get("purchaseQuantity")):
                     hero_id = await request.ctx.profile.grant_hero(item_grant["templateId"])
                     items.append({
                         "itemType": item_grant["templateId"],
@@ -372,7 +374,7 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                     "itemType": item_grant["templateId"],
                     "itemGuid": item_id,
                     "itemProfile": request.ctx.profile_id,
-                    "quantity": item_grant.get("quantity", 1) * request.json.get("purchaseQuantity")
+                    "quantity": item_grant.get("quantity", 1) * request_body.get("purchaseQuantity")
                 })
     store_level = await request.ctx.profile.get_stat("store_level")
     await request.ctx.profile.modify_stat("store_level", store_level + expected_price)
@@ -434,15 +436,14 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 labor_force = await request.ctx.profile.get_stat("labor_force")
                 stars = await request.ctx.profile.get_stat("num_levels_completed")
                 labor_used = labor_force.get("laborUsed", 0)
-                if labor_force["lastInterval"] != await utils.utils.format_time(
-                        await utils.utils.get_current_12_hour_interval()):
+                if labor_force["lastInterval"] != await format_time(await get_current_12_hour_interval()):
                     labor_used = 0
                 labor_points = stars - labor_used
                 if labor_points < expected_price:
                     raise errors.com.epicgames.modules.gamesubcatalog.cannot_afford_purchase(offer_id)
                 labor_used += expected_price
                 await request.ctx.profile.modify_stat("labor_force", {
-                    "lastInterval": await utils.utils.format_time(await utils.utils.get_current_12_hour_interval()),
+                    "lastInterval": await format_time(await get_current_12_hour_interval()),
                     "laborUsed": labor_used})
     # Update fulfillments
     if offer.requirements:
@@ -451,7 +452,7 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                 deny_id = requirement["requiredId"]
                 if deny_id not in purchase_list.get("fulfillmentCounts", {}):
                     purchase_list["fulfillmentCounts"][deny_id] = 0
-                purchase_list["fulfillmentCounts"][deny_id] += request.json.get("purchaseQuantity")
+                purchase_list["fulfillmentCounts"][deny_id] += request_body.get("purchaseQuantity")
     await request.ctx.profile.modify_stat("in_app_purchases", purchase_list)
     await request.ctx.profile.add_notifications({
         "type": "CatalogPurchase",
@@ -463,6 +464,6 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions,
-                                                     (await utils.utils.extract_version_info(request.headers.get("User-Agent")))[
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
                                                          -1])
     )

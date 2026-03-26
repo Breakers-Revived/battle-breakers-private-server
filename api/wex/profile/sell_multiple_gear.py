@@ -8,10 +8,12 @@ Handles selling multiple gear.
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -22,12 +24,16 @@ wex_profile_sell_multiple_gear = sanic.Blueprint("wex_profile_sell_multiple_gear
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/SellHero.md
 @wex_profile_sell_multiple_gear.route("/<accountId>/SellMultipleGear", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.SellMultipleGear, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def sell_multiple_gear(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def sell_multiple_gear(request: types.BBProfileRequest, accountId: str, body: MCPValidation.SellMultipleGear,
+                             query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to sell multiple gear
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # EWExpRarity::Common       - 1
@@ -35,13 +41,14 @@ async def sell_multiple_gear(request: types.BBProfileRequest, accountId: str) ->
     # EWExpRarity::Rare         - 4
     # EWExpRarity::VeryRare     - 8
     # EWExpRarity::SuperRare    - 20
-    if not request.json.get("itemIds"):
+    request_body = body.model_dump()
+    if not request_body.get("itemIds"):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="No items to sell")
-    if len(request.json.get("itemIds")) == 1:
-        if (await request.ctx.profile.get_item_by_guid(request.json.get("itemIds")[0])) is None:
+    if len(request_body.get("itemIds")) == 1:
+        if (await request.ctx.profile.get_item_by_guid(request_body.get("itemIds")[0])) is None:
             raise errors.com.epicgames.world_explorers.not_found(
                 errorMessage="We're sorry, but we were unable to sell your item as it was not found in your inventory.")
-    for item_guid in request.json.get("itemIds"):
+    for item_guid in request_body.get("itemIds"):
         # TODO: validate the item to sell
         value = 0
         match (await request.ctx.profile.get_item_by_guid(item_guid))["attributes"]["rarity"]:

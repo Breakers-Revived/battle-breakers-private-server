@@ -8,11 +8,13 @@ Handles claiming account level up rewards etc
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import AccountPerk
 from utils.exceptions import errors
 from utils.utils import authorized as auth, get_path_from_template_id, load_datatable, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -23,23 +25,29 @@ wex_profile_claim_account_reward = sanic.Blueprint("wex_profile_claim_account_re
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/ClaimAccountReward.md
 @wex_profile_claim_account_reward.route("/<accountId>/ClaimAccountReward", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.ClaimAccountReward, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def claim_account_reward(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def claim_account_reward(request: types.BBProfileRequest, accountId: str,
+                               body: MCPValidation.ClaimAccountReward,
+                               query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to claim account level up rewards
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: validation
     account_perks = await request.ctx.profile.get_stat("account_perks")
     rewards_claimed = await request.ctx.profile.get_stat("rewards_claimed")
     perk_quantities = {}
-    perks = request.json.get("perks")
+    request_body = body.model_dump()
+    perks = request_body.get("perks")
     if perks is None:
         perks = [{
-            "itemId": request.json.get("rewardItemId"),
-            "perkChoice": request.json.get("choiceIdx")
+            "itemId": request_body.get("rewardItemId"),
+            "perkChoice": request_body.get("choiceIdx")
         }]
     for perk in perks:
         perk_item = await request.ctx.profile.get_item_by_guid(perk.get("itemId"))

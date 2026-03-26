@@ -8,12 +8,14 @@ Handles evolving heroes
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, load_datatable, get_path_from_template_id, get_template_id_from_path, \
     extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -24,23 +26,29 @@ wex_profile_evolve_hero = sanic.Blueprint("wex_profile_evolve_hero")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/EvolveHero.md
 @wex_profile_evolve_hero.route("/<accountId>/EvolveHero", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.EvolveHero, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def evolve_hero(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def evolve_hero(request: types.BBProfileRequest, accountId: str,
+                      body: MCPValidation.EvolveHero,
+                      query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to evolve heroes
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: validation
-    if request.json.get("bIsInPit"):
-        old_hero = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"), ProfileType.MONSTERPIT)
+    request_body = body.model_dump()
+    if request_body.get("bIsInPit"):
+        old_hero = await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId"), ProfileType.MONSTERPIT)
     else:
-        old_hero = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"))
+        old_hero = await request.ctx.profile.get_item_by_guid(request_body.get("heroItemId"))
     if old_hero is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid hero item id")
     evolution_recipe = (await load_datatable(
-        (await get_path_from_template_id(request.json.get("evoPathName"))).replace(
+        (await get_path_from_template_id(request_body.get("evoPathName"))).replace(
             "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"]
     if old_hero["attributes"]["level"] < evolution_recipe.get("RequiredCharacterLevel", 0):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Hero level is too low")
@@ -55,15 +63,15 @@ async def evolve_hero(request: types.BBProfileRequest, accountId: str) -> sanic.
     await request.ctx.profile.add_notifications({
         "type": "WExpCharacterEvolution",
         "primary": True,
-        "oldItemId": request.json.get("heroItemId"),
+        "oldItemId": request_body.get("heroItemId"),
         "oldTemplateId": old_hero["templateId"],
-        "newItemId": request.json.get("heroItemId")  # TODO: determine compatibility with old clients
+        "newItemId": request_body.get("heroItemId")  # TODO: determine compatibility with old clients
     }, request.ctx.profile_id)
     old_hero["templateId"] = new_hero_id
-    if request.json.get("bIsInPit"):
-        await request.ctx.profile.add_item(old_hero, request.json.get("heroItemId"), ProfileType.MONSTERPIT)
+    if request_body.get("bIsInPit"):
+        await request.ctx.profile.add_item(old_hero, request_body.get("heroItemId"), ProfileType.MONSTERPIT)
     else:
-        await request.ctx.profile.add_item(old_hero, request.json.get("heroItemId"))
+        await request.ctx.profile.add_item(old_hero, request_body.get("heroItemId"))
     # TODO: chest activity
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,

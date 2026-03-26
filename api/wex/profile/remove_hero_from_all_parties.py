@@ -8,10 +8,12 @@ Handles removing a hero from all parties
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -22,17 +24,22 @@ wex_profile_remove_hero_from_all_parties = sanic.Blueprint("wex_profile_remove_h
 # undocumented
 @wex_profile_remove_hero_from_all_parties.route("/<accountId>/RemoveHeroFromAllParties", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.RemoveHeroFromAllParties, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def remove_hero_parties(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def remove_hero_parties(request: types.BBProfileRequest, accountId: str,
+                              body: MCPValidation.RemoveHeroFromAllParties,
+                              query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to remove a hero from all parties.
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: validation
     # TODO: determine when original game calls this and what data it sends
-    hero_item = await request.ctx.profile.get_item_by_guid(request.json.get("heroItemId"))
+    hero_item = await request.ctx.profile.get_item_by_guid(body.model_dump().get("heroItemId"))
     if hero_item is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid hero item id")
     if not hero_item.get("templateId").startswith("Character:"):

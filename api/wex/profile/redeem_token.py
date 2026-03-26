@@ -8,11 +8,13 @@ Handles redeeming tokens.
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, get_path_from_template_id, load_datatable, get_template_id_from_path, \
     extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -23,18 +25,24 @@ wex_profile_redeem_token = sanic.Blueprint("wex_profile_redeem_token")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/RollHammerChests.md
 @wex_profile_redeem_token.route("/<accountId>/RedeemToken", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.RedeemToken, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def redeem_token(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def redeem_token(request: types.BBProfileRequest, accountId: str,
+                       body: MCPValidation.RedeemToken,
+                       query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to upgrade tokens to the actual item (for migrating from old accounts)
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
-    token_id = await request.ctx.profile.find_item_by_template_id(request.json.get("tokenTemplate"))
+    request_body = body.model_dump()
+    token_id = await request.ctx.profile.find_item_by_template_id(request_body.get("tokenTemplate"))
     if not token_id:
         raise errors.com.epicgames.world_explorers.not_found(errorMessage="This token was not found in your profile.")
-    item_path = (await get_path_from_template_id(request.json.get("tokenTemplate")))
+    item_path = (await get_path_from_template_id(request_body.get("tokenTemplate")))
     token_item = await request.ctx.profile.get_item_by_guid(token_id[0])
     try:
         reward_item = (await load_datatable(
@@ -47,7 +55,7 @@ async def redeem_token(request: types.BBProfileRequest, accountId: str) -> sanic
     if token_item["quantity"] < reward_item["RedeemQuantity"]:
         raise errors.com.epicgames.world_explorers.bad_request(reward_item["RedeemQuantity"], token_item["quantity"],
                                                                errorMessage=f"{reward_item['RedeemQuantity']}x "
-                                                                            f"{request.json.get('tokenTemplate')}s "
+                                                                            f"{request_body.get('tokenTemplate')}s "
                                                                             f"required to redeem. You only have "
                                                                             f"{token_item['quantity']}.")
     redeem_quantity = token_item["quantity"] // reward_item["RedeemQuantity"]

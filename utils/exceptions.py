@@ -3070,8 +3070,8 @@ class errors:
                         This exception is thrown when the account id param is invalid.
                         *errors.com.epicgames.modules.profile.invalid_account_id_param*
                         """
-                        errorMessage: str = "Invalid account id param"
-                        numericErrorCode: int = 0
+                        errorMessage: str = "'{0}' is not a valid accountId"
+                        numericErrorCode: int = 12808
                         originatingService: str = "WEX"
                         statusCode: int = 400
 

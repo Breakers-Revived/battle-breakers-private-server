@@ -7,15 +7,16 @@ This code is licensed under the Breakers Revived License (BRL).
 Handles level blitz for burny mines
 """
 import random
-import re
 import uuid
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, mine_level_pattern, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -26,22 +27,28 @@ wex_profile_blitz_level = sanic.Blueprint("wex_profile_blitz_level")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/BlitzLevel.md
 @wex_profile_blitz_level.route("/<accountId>/BlitzLevel", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.BlitzLevel, query=MCPQueryValidation.MCPLevels)
 @compress.compress()
-async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def blitz_level(request: types.BBProfileRequest, accountId: str,
+                      body: MCPValidation.BlitzLevel,
+                      query: MCPQueryValidation.MCPLevels) -> sanic.response.JSONResponse:
     """
     This endpoint is used to blitz a level
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: validation
     # TODO: modify activity chest
     # TODO: proper blitz mine streakbreaker for magicite drops
-    if not any(member.get("heroType") == "LocalCommander" for member in request.json.get("partyMembers")):
+    request_body = body.model_dump()
+    if not any(member.get("heroType") == "LocalCommander" for member in request_body.get("partyMembers")):
         raise errors.com.epicgames.world_explorers.bad_request("SingleCommander", "0", "0", "1",
                                                                errorMessage="Invalid SingleCommander configuration f=0, d=0, l=1")
     treasure_hunter_count = 0
-    for member in request.json.get("partyMembers"):
+    for member in request_body.get("partyMembers"):
         if member.get("heroType") in ["LocalHero", "LocalCommander"]:
             hero_item = await request.ctx.profile.get_item_by_guid(member.get("heroItemId"))
             if hero_item is None:
@@ -50,9 +57,9 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
                 raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid character item id")
             if "TreasureHunter" in hero_item.get("templateId"):
                 treasure_hunter_count += 1
-    if not mine_level_pattern.match(request.json.get("levelId")):
+    if not mine_level_pattern.match(request_body.get("levelId")):
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid level id")
-    level_id = request.json.get("levelId")
+    level_id = request_body.get("levelId")
     gold_item = (await request.ctx.profile.find_item_by_template_id("Currency:Gold"))
     if not gold_item:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage="Invalid gold item")
@@ -993,7 +1000,7 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
         difficulty = int(level_id[-1])
     except ValueError:
         difficulty = 1
-    await request.ctx.profile.remove_item(request.json.get("levelItemId"), request.ctx.profile_id)
+    await request.ctx.profile.remove_item(request_body.get("levelItemId"), request.ctx.profile_id)
     mtx_item_id = (await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"))[0]
     mtx_quantity = (await request.ctx.profile.get_item_by_guid(mtx_item_id))["quantity"]
     for unlocked_level_guids in (await request.ctx.profile.find_item_by_template_id("WorldUnlock:Level",
@@ -1021,7 +1028,7 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str) -> sanic.
         })
         await request.ctx.profile.change_item_quantity(mtx_item_id, mtx_quantity + 20)
     await request.ctx.profile.modify_stat("last_played_level", level_id, profile_id=request.ctx.profile_id)
-    await request.ctx.profile.modify_stat("last_used_friend_id", request.json.get("friendInstanceId"),
+    await request.ctx.profile.modify_stat("last_used_friend_id", request_body.get("friendInstanceId"),
                                           profile_id=request.ctx.profile_id)
     iron_instance = random.randint(1, 10)
     loot_items.append({

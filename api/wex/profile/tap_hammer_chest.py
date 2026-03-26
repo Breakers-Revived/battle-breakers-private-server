@@ -9,10 +9,12 @@ Handles tapping the hammer chest.
 import random
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, load_datatable, calculate_streakbreaker, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -23,12 +25,17 @@ wex_profile_tap_hammer_chest = sanic.Blueprint("wex_profile_tap_hammer_chest")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/TapHammerChest.md
 @wex_profile_tap_hammer_chest.route("/<accountId>/TapHammerChest", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.TapHammerChest, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def tap_hammer_chest(request: types.BBProfileRequest, accountId: str,
+                           body: MCPValidation.TapHammerChest,
+                           query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to tap the hammer chest
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     hammer_id = await request.ctx.profile.find_item_by_template_id("Currency:Hammer")

@@ -7,133 +7,179 @@ This code is licensed under the Breakers Revived License (BRL).
 Contains validation classes for requests
 """
 import uuid
-from typing_extensions import Callable, Any, Optional
+from typing import Annotated
+
+from pydantic import AfterValidator
+from typing_extensions import Optional
 
 import pydantic
-import pydantic_core
+
+from utils.exceptions import errors
 
 
-class UUIDString(str):
+def UUIDString(v: str) -> str:
     """
-    Validation class for UUID strings
+    Validates the UUID string
+
+    :param v: The UUID string
+    :return: The UUID string
+    :raises ValueError: If the UUID string is invalid
     """
+    if not isinstance(v, str):
+        raise ValueError('UUIDString must be a string')
+    try:
+        uuid.UUID(v)
+    except ValueError:
+        raise ValueError('Invalid UUID string')
+    return v
 
-    @classmethod
-    def __get_pydantic_json_schema__(
-            cls, core_schema: pydantic_core.core_schema.JsonSchema, handler: pydantic.GetJsonSchemaHandler
-    ):
-        json_schema = handler(core_schema)
-        json_schema.update(type="string", format="binary")
-        return json_schema
-
-    @classmethod
-    def validate(cls, v: Any, _: pydantic_core.core_schema.ValidationInfo) -> str:
-        """
-        Validates the UUID string
-
-        :param v: The UUID string
-        :param _: The validation info
-        :return: The UUID string
-        :raises ValueError: If the UUID string is invalid
-        """
-        if not isinstance(v, str):
-            raise ValueError('UUIDString must be a string')
-        try:
-            uuid.UUID(v)
-        except ValueError:
-            raise ValueError('Invalid UUID string')
-        return v
-
-    @classmethod
-    def __get_pydantic_core_schema__(
-            cls, source: type[Any], handler: Callable[[Any], pydantic_core.core_schema.CoreSchema]
-    ):
-        return pydantic_core.core_schema.with_info_plain_validator_function(cls.validate)
-
-
-class CharacterTemplateId(str):
+def CharacterTemplateId(v: str) -> str:
     """
-    Validation class for Character Template IDs
+    Validates the Character Template ID
+
+    :param v: The Character Template ID
+    :return: The Character Template ID
+    :raises ValueError: If the Character Template ID is invalid
     """
-
-    @classmethod
-    def __get_pydantic_json_schema__(
-            cls, core_schema: pydantic_core.core_schema.JsonSchema, handler: pydantic.GetJsonSchemaHandler
-    ):
-        json_schema = handler(core_schema)
-        json_schema.update(type="string", format="binary")
-        return json_schema
-
-    @classmethod
-    def validate(cls, v: Any, _: pydantic_core.core_schema.ValidationInfo) -> str:
-        """
-        Validates the Character Template ID
-
-        :param v: The Character Template ID
-        :param _: The validation info
-        :return: The Character Template ID
-        :raises ValueError: If the Character Template ID is invalid
-        """
-        if not isinstance(v, str):
-            raise ValueError('CharacterTemplateId must be a string')
-        try:
-            if not v.startswith('Character:'):
-                raise ValueError('Invalid Character Template ID')
-            # TODO: Validate the Character in the template ID
-        except ValueError:
+    if not isinstance(v, str):
+        raise ValueError('CharacterTemplateId must be a string')
+    try:
+        if not v.startswith('Character:'):
             raise ValueError('Invalid Character Template ID')
-        return v
+        # TODO: Validate the Character in the template ID
+    except ValueError:
+        raise ValueError('Invalid Character Template ID')
+    return v
 
-    @classmethod
-    def __get_pydantic_core_schema__(
-            cls, source: type[Any], handler: Callable[[Any], pydantic_core.core_schema.CoreSchema]
-    ) -> pydantic_core.core_schema.CoreSchema:
-        return pydantic_core.core_schema.with_info_plain_validator_function(cls.validate)
-
-
-class AccountId(str):
+def AccountId(v: str) -> str:
     """
-    Validation class for Account ID strings
+    Validates the Account ID string
+
+    :param v: The Account ID string
+    :return: The Account ID string
+    :raises ValueError: If the Account ID is invalid
     """
+    if not isinstance(v, str):
+        raise errors.com.epicgames.modules.profile.invalid_account_id_param(v)
+    try:
+        uuid.UUID(v)
+    except ValueError:
+        raise errors.com.epicgames.modules.profile.invalid_account_id_param(v)
+    return v
 
-    @classmethod
-    def __get_pydantic_json_schema__(
-            cls, core_schema: pydantic_core.core_schema.JsonSchema, handler: pydantic.GetJsonSchemaHandler
-    ):
-        json_schema = handler(core_schema)
-        json_schema.update(type="string", format="binary")
-        return json_schema
+def ProfileProfile0(v: str) -> str:
+    """
+    Validates the Profile ID string
 
-    @classmethod
-    def validate(cls, v: Any, _: pydantic_core.core_schema.ValidationInfo) -> str:
-        """
-        Validates the Account ID string
+    :param v: The Profile ID string
+    :return: The Profile ID string
+    :raises ValueError: If the Profile ID is invalid
+    """
+    if not isinstance(v, str):
+        raise errors.com.epicgames.modules.profile.invalid_profile_id_param(v)
+    if v not in ["profile0", "levels", "monsterpit", "friends", "multiplayer"]:
+        raise errors.com.epicgames.modules.profile.profile_not_found(v)
+    if v != "profile0":
+        raise errors.com.epicgames.modules.profile.invalid_profile_command("", f"player:profile_{v}", v)
+    return v
 
-        :param v: The Account ID string
-        :param _: The validation info
-        :return: The Account ID string
-        :raises ValueError: If the Account ID is invalid
-        """
-        if not isinstance(v, str):
-            raise ValueError('AccountId must be a string')
-        try:
-            if len(v) != 32:
-                raise ValueError('Invalid Account ID string')
-            int(v, 16)
-        except ValueError:
-            raise ValueError('Invalid Account ID string')
-        return v
+def ProfileProfile0MonsterPit(v: str) -> str:
+    """
+    Validates the Profile ID string
 
-    @classmethod
-    def __get_pydantic_core_schema__(
-            cls, source: type[Any], handler: Callable[[Any], pydantic_core.core_schema.CoreSchema]
-    ) -> pydantic_core.core_schema.CoreSchema:
-        return pydantic_core.core_schema.with_info_plain_validator_function(cls.validate)
+    :param v: The Profile ID string
+    :return: The Profile ID string
+    :raises ValueError: If the Profile ID is invalid
+    """
+    if not isinstance(v, str):
+        raise errors.com.epicgames.modules.profile.invalid_profile_id_param(v)
+    if v not in ["profile0", "levels", "monsterpit", "friends", "multiplayer"]:
+        raise errors.com.epicgames.modules.profile.profile_not_found(v)
+    if v not in ["profile0", "monsterpit"]:
+        raise errors.com.epicgames.modules.profile.invalid_profile_command("", f"player:profile_{v}", v)
+    return v
 
+def ProfileLevels(v: str) -> str:
+    """
+    Validates the Profile ID string
+
+    :param v: The Profile ID string
+    :return: The Profile ID string
+    :raises ValueError: If the Profile ID is invalid
+    """
+    if not isinstance(v, str):
+        raise errors.com.epicgames.modules.profile.invalid_profile_id_param(v)
+    if v not in ["profile0", "levels", "monsterpit", "friends", "multiplayer"]:
+        raise errors.com.epicgames.modules.profile.profile_not_found(v)
+    if v != "levels":
+        raise errors.com.epicgames.modules.profile.invalid_profile_command("", f"player:profile_{v}", v)
+    return v
+
+def ProfileFriends(v: str) -> str:
+    """
+    Validates the Profile ID string
+
+    :param v: The Profile ID string
+    :return: The Profile ID string
+    :raises ValueError: If the Profile ID is invalid
+    """
+    if not isinstance(v, str):
+        raise errors.com.epicgames.modules.profile.invalid_profile_id_param(v)
+    if v not in ["profile0", "levels", "monsterpit", "friends", "multiplayer"]:
+        raise errors.com.epicgames.modules.profile.profile_not_found(v)
+    if v != "friends":
+        raise errors.com.epicgames.modules.profile.invalid_profile_command("", f"player:profile_{v}", v)
+    return v
+
+def ProfileMonsterpit(v: str) -> str:
+    """
+    Validates the Profile ID string
+
+    :param v: The Profile ID string
+    :return: The Profile ID string
+    :raises ValueError: If the Profile ID is invalid
+    """
+    if not isinstance(v, str):
+        raise errors.com.epicgames.modules.profile.invalid_profile_id_param(v)
+    if v not in ["profile0", "levels", "monsterpit", "friends", "multiplayer"]:
+        raise errors.com.epicgames.modules.profile.profile_not_found(v)
+    if v != "monsterpit":
+        raise errors.com.epicgames.modules.profile.invalid_profile_command("", f"player:profile_{v}", v)
+    return v
+
+def ProfileMultiplayer(v: str) -> str:
+    """
+    Validates the Profile ID string
+
+    :param v: The Profile ID string
+    :return: The Profile ID string
+    :raises ValueError: If the Profile ID is invalid
+    """
+    if not isinstance(v, str):
+        raise errors.com.epicgames.modules.profile.invalid_profile_id_param(v)
+    if v not in ["profile0", "levels", "monsterpit", "friends", "multiplayer"]:
+        raise errors.com.epicgames.modules.profile.profile_not_found(v)
+    if v != "multiplayer":
+        raise errors.com.epicgames.modules.profile.invalid_profile_command("", f"player:profile_{v}", v)
+    return v
+
+def ProfileAny(v: str) -> str:
+    """
+    Validates the Profile ID string
+
+    :param v: The Profile ID string
+    :return: The Profile ID string
+    :raises ValueError: If the Profile ID is invalid
+    """
+    if not isinstance(v, str):
+        raise errors.com.epicgames.modules.profile.invalid_profile_id_param(v)
+    if v not in ["profile0", "levels", "monsterpit", "friends", "multiplayer"]:
+        raise errors.com.epicgames.modules.profile.profile_not_found(v)
+    return v
 
 class MCPValidation:
     """
-    Validation parent class for MCP requests
+    Validation parent class for MCP requests body
     """
 
     class AbandonLevel(pydantic.BaseModel):
@@ -147,13 +193,22 @@ class MCPValidation:
             postBattleResults: The post battle results
             dailyQuestZoneType: The daily quest zone type
         """
-        levelItemId: UUIDString
+        levelItemId: Annotated[str, AfterValidator(UUIDString)]
         # These don't get sent when abandoning a level from another device in an old version
         depthCompleted: Optional[int]
         # These don't get sent by old clients
         levelElement: Optional[str]
-        postBattleResults: Optional[dict[str, dict[str, int] | list[UUIDString] | list[CharacterTemplateId]]]
+        postBattleResults: Optional[dict[str, dict[str, int] | list[Annotated[str, AfterValidator(UUIDString)]] | list[Annotated[str, AfterValidator(CharacterTemplateId)]]]]
         dailyQuestZoneType: Optional[int]
+
+    class AddEpicFriend(pydantic.BaseModel):
+        """
+        Validation class for the add epic friend request
+
+        Attributes:
+            friendAccountId: The epic account id
+        """
+        friendAccountId: Annotated[str, AfterValidator(AccountId)]
 
     class AddFriend(pydantic.BaseModel):
         """
@@ -162,7 +217,7 @@ class MCPValidation:
         Attributes:
             friendAccountId: The epic account id
         """
-        friendAccountId: AccountId
+        friendAccountId: Annotated[str, AfterValidator(AccountId)]
 
     class AddToMonsterPit(pydantic.BaseModel):
         """
@@ -171,7 +226,7 @@ class MCPValidation:
         Attributes:
             characterItemId: The character UUID
         """
-        characterItemId: UUIDString
+        characterItemId: Annotated[str, AfterValidator(UUIDString)]
 
     class BlitzLevel(pydantic.BaseModel):
         """
@@ -185,8 +240,8 @@ class MCPValidation:
         """
         manifestVersion: Optional[str]
         levelId: str
-        partyMembers: list[dict[str, str | UUIDString]]
-        friendInstanceId: Optional[UUIDString]
+        partyMembers: list[dict[str, str | Annotated[str, AfterValidator(UUIDString)]]]
+        friendInstanceId: Optional[Annotated[str, AfterValidator(UUIDString)]]
 
     class BulkImproveHeroes(pydantic.BaseModel):
         """
@@ -195,7 +250,7 @@ class MCPValidation:
         Attributes:
             detail: The character ids
         """
-        detail: list[dict[str, UUIDString | list | list[dict[str, int]] | int]]
+        detail: list[dict[str, Annotated[str, AfterValidator(UUIDString)] | list | list[dict[str, int]] | int]]
 
     class BuyBackFromMonsterPit(pydantic.BaseModel):
         """
@@ -204,7 +259,14 @@ class MCPValidation:
         Attributes:
             characterTemplateId: The character template id
         """
-        characterTemplateId: CharacterTemplateId
+        characterTemplateId: Annotated[str, AfterValidator(CharacterTemplateId)]
+
+    class CashOutWorkshop(pydantic.BaseModel):
+        """
+        Validation class for the cash out workshop request
+
+        Attributes:
+        """
 
     class ClaimAccountReward(pydantic.BaseModel):
         """
@@ -213,7 +275,50 @@ class MCPValidation:
         Attributes:
             perks: The list of perks
         """
-        perks: list[dict[str, UUIDString | int]]
+        perks: list[dict[str, Annotated[str, AfterValidator(UUIDString)] | int]]
+
+    class ClaimComeBackReward(pydantic.BaseModel):
+        """
+        Validation class for the claim comeback reward request
+
+        Attributes:
+        """
+
+    class ClaimEventRewards(pydantic.BaseModel):
+        """
+        Validation class for the claim battlepass reward request
+
+        Attributes:
+        """
+
+    class ClaimGiftPoints(pydantic.BaseModel):
+        """
+        Validation class for the claim gift point request
+
+        Attributes:
+        """
+        pass
+
+    class ClaimLoginReward(pydantic.BaseModel):
+        """
+        Validation class for the claim daily reward request
+
+        Attributes:
+        """
+
+    class ClaimNotificationOptInReward(pydantic.BaseModel):
+        """
+        Validation class for the claim notification opt in request
+
+        Attributes:
+        """
+
+    class ClaimPersonalEvent(pydantic.BaseModel):
+        """
+        Validation class for the claim personal event request
+
+        Attributes:
+        """
 
     class ClaimQuestReward(pydantic.BaseModel):
         """
@@ -222,7 +327,7 @@ class MCPValidation:
         Attributes:
             questMcpId: The quest id
         """
-        questMcpId: UUIDString
+        questMcpId: Annotated[str, AfterValidator(UUIDString)]
 
     class ClaimTerritory(pydantic.BaseModel):
         """
@@ -233,6 +338,55 @@ class MCPValidation:
         """
         territoryId: str
 
+    class ClientAddedExternalAccount(pydantic.BaseModel):
+        """
+        Validation class for the external account link tracking request
+
+        Attributes:
+        """
+
+    class ClientTrackedRetentionAnalytics(pydantic.BaseModel):
+        """
+        Validation class for the level tracking request
+
+        Attributes:
+        """
+
+    class CollectHammerQuest_Energy(pydantic.BaseModel):
+        """
+        Validation class for the hammer quest energy request
+
+        Attributes:
+        """
+        pass
+
+    class CollectHammerQuest_Realtime(pydantic.BaseModel):
+        """
+        Validation class for the hammer quest realtime request
+
+        Attributes:
+        """
+        pass
+
+    class CraftRecipe(pydantic.BaseModel):
+        """
+        Validation class for the craft recipe request
+
+        Attributes:
+        """
+        pass
+
+    class DeleteFriend(pydantic.BaseModel):
+        """
+        Validation class for the delete friend request
+
+        Attributes:
+            friendInstanceId: The friend instance id to unfriend
+            friendInstanceIds: The list of friend instance ids to unfriend
+        """
+        friendInstanceId: Annotated[str, AfterValidator(UUIDString)] | None
+        friendInstanceIds: Annotated[str, AfterValidator(UUIDString)] | None
+
     class EvolveHero(pydantic.BaseModel):
         """
         Validation class for the evolve hero request
@@ -242,13 +396,13 @@ class MCPValidation:
             bIsInPit: If the hero is in the pit
             evoPathName: The evolution path name
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
         evoPathName: str
 
     class FinalizeLevel(pydantic.BaseModel):
         """
-        Validation class for the finalize level request
+        Validation class for the finalise level request
 
         Attributes:
             levelItemId: The level UUID
@@ -262,12 +416,13 @@ class MCPValidation:
             partyItemId: The party UUID
             bShouldGiveBonus: If the player should get a bonus
         """
-        levelItemId: UUIDString
+        levelItemId: Annotated[str, AfterValidator(UUIDString)]
         levelElement: str
         claimDepth: int
         claimedItems: list[dict[str, str | int]]
         seenCharacters: list
-        postBattleResults: dict[str, dict[str, int] | list[UUIDString] | list[CharacterTemplateId]]
+        postBattleResults: dict[str, dict[str, int] | list[Annotated[str, AfterValidator(UUIDString)]] | list[
+            Annotated[str, AfterValidator(CharacterTemplateId)]]]
         battleMetaData: str = None
         dailyQuestZoneType: int
         partyItemId: str
@@ -281,8 +436,15 @@ class MCPValidation:
             heroItemId: The hero UUID
             bIsInPit: If the hero is in the pit
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
+
+    class GenerateDailyQuests(pydantic.BaseModel):
+        """
+        Validation class for the daily quests request
+
+        Attributes:
+        """
 
     class GenerateMatchWithFriend(pydantic.BaseModel):
         """
@@ -291,11 +453,19 @@ class MCPValidation:
         Attributes:
             friendInstanceId: The friend instance id
         """
-        friendInstanceId: UUIDString
+        friendInstanceId: Annotated[str, AfterValidator(UUIDString)]
+
+    class GenerateMatches(pydantic.BaseModel):
+        """
+        Validation class for the generate matches request
+
+        Attributes:
+        """
+        pass
 
     class InitializeLevel(pydantic.BaseModel):
         """
-        Validation class for the initialize level request
+        Validation class for the initialise level request
 
         Attributes:
             manifestVersion: The manifest version
@@ -309,12 +479,19 @@ class MCPValidation:
         """
         manifestVersion: str
         levelId: str
-        partyMembers: list[dict[str, str | UUIDString]]
-        friendInstanceId: UUIDString
+        partyMembers: list[dict[str, str | Annotated[str, AfterValidator(UUIDString)]]]
+        friendInstanceId: Annotated[str, AfterValidator(UUIDString)]
         ltmId: str = None
         normalMode: bool
         blitzMode: bool
         teamPower: int
+
+    class JoinMatchmaking(pydantic.BaseModel):
+        """
+        Validation class for the join match making request
+
+        Attributes:
+        """
 
     class LevelUpHero(pydantic.BaseModel):
         """
@@ -326,10 +503,19 @@ class MCPValidation:
             bMaxOut: If the hero is maxed out
             numLevelUps: The number of level ups
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
         bMaxOut: bool
         numLevelUps: int
+
+    class MarkHeroSeen(pydantic.BaseModel):
+        """
+        Validation class for the mark hero seen request
+
+        Attributes:
+            itemId: The item UUID
+        """
+        itemId: Annotated[str, AfterValidator(UUIDString)]
 
     class MarkItemSeen(pydantic.BaseModel):
         """
@@ -338,7 +524,7 @@ class MCPValidation:
         Attributes:
             itemId: The item UUID
         """
-        itemId: UUIDString
+        itemId: Annotated[str, AfterValidator(UUIDString)]
 
     class ModifyHeroArmor(pydantic.BaseModel):
         """
@@ -349,9 +535,9 @@ class MCPValidation:
             bIsInPit: If the hero is in the pit
             gearArmorItemId: The gear armor UUID
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
-        gearArmorItemId: UUIDString
+        gearArmorItemId: Annotated[str, AfterValidator(UUIDString)]
 
     class ModifyHeroGear(pydantic.BaseModel):
         """
@@ -362,9 +548,9 @@ class MCPValidation:
             bIsInPit: If the hero is in the pit
             gearHeroItemId: The gear UUID
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
-        gearHeroItemId: UUIDString
+        gearHeroItemId: Annotated[str, AfterValidator(UUIDString)]
 
     class ModifyHeroWeapon(pydantic.BaseModel):
         """
@@ -375,9 +561,9 @@ class MCPValidation:
             bIsInPit: If the hero is in the pit
             gearWeaponItemId: The gear weapon UUID
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
-        gearWeaponItemId: UUIDString
+        gearWeaponItemId: Annotated[str, AfterValidator(UUIDString)]
 
     class OpenGiftBox(pydantic.BaseModel):
         """
@@ -386,7 +572,7 @@ class MCPValidation:
         Attributes:
             itemId: The gift box UUID
         """
-        itemId: UUIDString
+        itemId: Annotated[str, AfterValidator(UUIDString)]
 
     class OpenHeroChest(pydantic.BaseModel):
         """
@@ -397,8 +583,8 @@ class MCPValidation:
             itemTemplateId: The item template id
             itemQuantity: The item quantity
         """
-        towerId: UUIDString
-        itemTemplateId: CharacterTemplateId
+        towerId: Annotated[str, AfterValidator(UUIDString)]
+        itemTemplateId: Annotated[str, AfterValidator(CharacterTemplateId)]
         itemQuantity: int
 
     class PickHeroChest(pydantic.BaseModel):
@@ -410,7 +596,7 @@ class MCPValidation:
             heroTrackId: The hero track id
             heroChestType: The hero chest type
         """
-        towerId: UUIDString
+        towerId: Annotated[str, AfterValidator(UUIDString)]
         heroTrackId: str
         heroChestType: str
 
@@ -423,7 +609,7 @@ class MCPValidation:
             bIsInPit: If the hero is in the pit
             prestigePromote: If the hero is being prestige promoted
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
         prestigePromote: bool
 
@@ -446,6 +632,13 @@ class MCPValidation:
         expectedTotalPrice: int
         gameContext: str
 
+    class QueryProfile(pydantic.BaseModel):
+        """
+        Validation class for the query profile request
+
+        Attributes:
+        """
+
     class Reconcile(pydantic.BaseModel):
         """
         Validation class for the reconcile request
@@ -455,9 +648,37 @@ class MCPValidation:
             outgoingIdList: The outgoing UUID list
             incomingIdList: The incoming UUID list
         """
-        friendIdList: list[AccountId]
-        outgoingIdList: list[AccountId]
-        incomingIdList: list[AccountId]
+        friendIdList: list[Annotated[str, AfterValidator(AccountId)]]
+        outgoingIdList: list[Annotated[str, AfterValidator(AccountId)]]
+        incomingIdList: list[Annotated[str, AfterValidator(AccountId)]]
+
+    class RedeemToken(pydantic.BaseModel):
+        """
+        Validation class for the redeem token request
+
+        Attributes:
+            tokenTemplate: The templateid of the token to redeem
+        """
+        tokenTemplate: str
+
+    class RefreshRunCount(pydantic.BaseModel):
+        """
+        Validation class for the refresh run count request
+
+        Attributes:
+        """
+        pass
+
+    class RemoveFriend(pydantic.BaseModel):
+        """
+        Validation class for the remove friend request
+
+        Attributes:
+            friendInstanceId: The friend instance id to unfriend
+            friendInstanceIds: The list of friend instance ids to unfriend
+        """
+        friendInstanceId: Annotated[str, AfterValidator(UUIDString)] | None
+        friendInstanceIds: Annotated[str, AfterValidator(UUIDString)] | None
 
     class RemoveFromMonsterPit(pydantic.BaseModel):
         """
@@ -466,7 +687,30 @@ class MCPValidation:
         Attributes:
             characterItemId: The character UUID
         """
-        characterItemId: UUIDString
+        characterItemId: Annotated[str, AfterValidator(UUIDString)]
+
+    class RemoveHeroFromAllParties(pydantic.BaseModel):
+        """
+        Validation class for the remove hero from all parties request
+
+        Attributes:
+            heroItemId: The hero UUID
+        """
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
+
+    class RequestPreregistrationReward(pydantic.BaseModel):
+        """
+        Validation class for the request preregistration reward request
+
+        Attributes:
+        """
+
+    class RollHammerChests(pydantic.BaseModel):
+        """
+        Validation class for the roll hammer chest request
+
+        Attributes:
+        """
 
     class SelectHammerChest(pydantic.BaseModel):
         """
@@ -475,7 +719,7 @@ class MCPValidation:
         Attributes:
             chestId: The chest UUID
         """
-        chestId: UUIDString
+        chestId: Annotated[str, AfterValidator(UUIDString)]
 
     class SelectStartOptions(pydantic.BaseModel):
         """
@@ -486,9 +730,18 @@ class MCPValidation:
             displayName: The display name
             affiliateId: The affiliate id
         """
-        characterTemplateId: CharacterTemplateId
+        characterTemplateId: Annotated[str, AfterValidator(CharacterTemplateId)]
         displayName: str
         affiliateId: str
+
+    class SellGear(pydantic.BaseModel):
+        """
+        Validation class for the sell gear request
+
+        Attributes:
+            itemId: The item UUID to sell
+        """
+        itemId: Annotated[str, AfterValidator(UUIDString)]
 
     class SellHero(pydantic.BaseModel):
         """
@@ -498,8 +751,44 @@ class MCPValidation:
             heroItemId: The hero UUID
             bIsInPit: If the hero is in the pit
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
+
+    class SellMultipleGear(pydantic.BaseModel):
+        """
+        Validation class for the sell multiple gear request
+
+        Attributes:
+            itemIds: The item UUIDs to sell
+        """
+        itemIds: list[Annotated[str, AfterValidator(UUIDString)]]
+
+    class SellTreasure(pydantic.BaseModel):
+        """
+        Validation class for the sell treasure request
+
+        Attributes:
+            itemTemplateId: The item template id
+            quantity: The quantity to sell
+        """
+        itemTemplateId: str
+        quantity: int
+
+    class SendGiftPoints(pydantic.BaseModel):
+        """
+        Validation class for the send gift points request
+
+        Attributes:
+        """
+
+    class SetAffiliate(pydantic.BaseModel):
+        """
+        Validation class for the set sac request
+
+        Attributes:
+            affiliateId: The sac
+        """
+        affiliateId: str
 
     class SetDefaultParty(pydantic.BaseModel):
         """
@@ -509,7 +798,7 @@ class MCPValidation:
             partyId: The party UUID
             type: The party type
         """
-        partyId: UUIDString
+        partyId: Annotated[str, AfterValidator(UUIDString)]
         type: str
 
     class SetRepHero(pydantic.BaseModel):
@@ -520,8 +809,15 @@ class MCPValidation:
             heroId: The hero UUID
             slotIdx: The slot index
         """
-        heroId: UUIDString
+        heroId: Annotated[str, AfterValidator(UUIDString)]
         slotIdx: int
+
+    class SuggestFriends(pydantic.BaseModel):
+        """
+        Validation class for the suggest friends request
+
+        Attributes:
+        """
 
     class SuggestionResponse(pydantic.BaseModel):
         """
@@ -531,8 +827,15 @@ class MCPValidation:
             invitedFriendInstanceIds: The invited friend instance ids
             rejectedFriendInstanceIds: The rejected friend instance ids
         """
-        invitedFriendInstanceIds: list[UUIDString]
-        rejectedFriendInstanceIds: list[UUIDString]
+        invitedFriendInstanceIds: list[Annotated[str, AfterValidator(UUIDString)]]
+        rejectedFriendInstanceIds: list[Annotated[str, AfterValidator(UUIDString)]]
+
+    class TapHammerChest(pydantic.BaseModel):
+        """
+        Validation class for the tap hammer chest request
+
+        Attributes:
+        """
 
     class UnlockArmorGear(pydantic.BaseModel):
         """
@@ -541,7 +844,7 @@ class MCPValidation:
         Attributes:
             heroItemId: The hero UUID
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
 
     class UnlockHeroGear(pydantic.BaseModel):
         """
@@ -550,7 +853,7 @@ class MCPValidation:
         Attributes:
             heroItemId: The hero UUID
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
 
     class UnlockRegion(pydantic.BaseModel):
         """
@@ -568,7 +871,14 @@ class MCPValidation:
         Attributes:
             heroItemId: The hero UUID
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
+
+    class UpdateAccountHeadlessStatus(pydantic.BaseModel):
+        """
+        Validation class for the update account headless status request
+
+        Attributes:
+        """
 
     class UpdateFriends(pydantic.BaseModel):
         """
@@ -577,7 +887,14 @@ class MCPValidation:
         Attributes:
             friendInstanceId: The friend instance id
         """
-        friendInstanceId: UUIDString
+        friendInstanceId: Annotated[str, AfterValidator(UUIDString)]
+
+    class UpdateMonsterPitPower(pydantic.BaseModel):
+        """
+        Validation class for the update monster pit power request
+
+        Attributes:
+        """
 
     class UpdateParty(pydantic.BaseModel):
         """
@@ -587,8 +904,8 @@ class MCPValidation:
             partyItemId: The party UUID
             partyInstance: The party instance
         """
-        partyItemId: UUIDString
-        partyInstance: dict[str, list[UUIDString] | int | str]
+        partyItemId: Annotated[str, AfterValidator(UUIDString)]
+        partyInstance: dict[str, list[Annotated[str, AfterValidator(UUIDString)]] | int | str]
 
     class UpgradeBuilding(pydantic.BaseModel):
         """
@@ -597,7 +914,7 @@ class MCPValidation:
         Attributes:
             buildingItemId: The building UUID
         """
-        buildingItemId: UUIDString
+        buildingItemId: Annotated[str, AfterValidator(UUIDString)]
 
     class UpgradeHero(pydantic.BaseModel):
         """
@@ -609,7 +926,7 @@ class MCPValidation:
             potionItems: The potion items
             weaponUpgrades: The weapon upgrades
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
         potionItems: list[dict[str, str | int]]
         weaponUpgrades: list[dict[str, str | int]]
@@ -623,7 +940,7 @@ class MCPValidation:
             bIsInPit: If the hero is in the pit
             xpToSpend: The xp to spend
         """
-        heroItemId: UUIDString
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
         xpToSpend: int
 
@@ -643,3 +960,85 @@ class MCPValidation:
         receiptId: str
         receiptInfo: str
         purchaseCorrelationId: Optional[str]
+
+class MCPQueryValidation:
+    """
+    Validation for MCP requests to use the correct query arguments
+    """
+
+    class MCPLevels(pydantic.BaseModel):
+        """
+        Validation class for MCP requests that apply to the levels profile only
+
+        Attributes:
+            profileId: The levels profileId
+            rvn: The client's current profile revision
+        """
+        profileId: Annotated[str, AfterValidator(ProfileLevels)]
+        rvn: int | None
+
+    class MCPFriends(pydantic.BaseModel):
+        """
+        Validation class for MCP requests that apply to the friends profile only
+
+        Attributes:
+            profileId: The friends profileId
+            rvn: The client's current profile revision
+        """
+        profileId: Annotated[str, AfterValidator(ProfileFriends)]
+        rvn: int | None
+
+    class MCPMonsterpit(pydantic.BaseModel):
+        """
+        Validation class for MCP requests that apply to the monsterpit profile only
+
+        Attributes:
+            profileId: The monsterpit profileId
+            rvn: The client's current profile revision
+        """
+        profileId: Annotated[str, AfterValidator(ProfileMonsterpit)]
+        rvn: int | None
+
+    class MCPProfile0(pydantic.BaseModel):
+        """
+        Validation class for MCP requests that apply to profile0 profile only
+
+        Attributes:
+            profileId: The profile0 profile
+            rvn: The client's current profile revision
+        """
+        profileId: Annotated[str, AfterValidator(ProfileProfile0)]
+        rvn: int | None
+
+    class MCPProfile0Monsterpit(pydantic.BaseModel):
+        """
+        Validation class for MCP requests that apply to profile0 or monsterpit profiles
+
+        Attributes:
+            profileId: The profile0 or monsterpit profile
+            rvn: The client's current profile revision
+        """
+        profileId: Annotated[str, AfterValidator(ProfileProfile0MonsterPit)]
+        rvn: int | None
+
+    class MCPMultiplayer(pydantic.BaseModel):
+        """
+        Validation class for MCP requests that apply to multiplayer profiles only
+
+        Attributes:
+            profileId: The multiplayer profile
+            rvn: The client's current profile revision
+        """
+        profileId: Annotated[str, AfterValidator(ProfileMultiplayer)]
+        rvn: int | None
+
+    class MCPAnyProfile(pydantic.BaseModel):
+        """
+        Validation class for MCP requests that use any profile
+
+        Attributes:
+            profileId: Any valid profileId
+            rvn: The client's current profile revision
+        """
+        profileId: Annotated[str, AfterValidator(ProfileAny)]
+        rvn: int | None

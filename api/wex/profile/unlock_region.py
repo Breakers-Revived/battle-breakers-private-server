@@ -8,11 +8,13 @@ Handles unlocking map regions
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -23,24 +25,30 @@ wex_profile_unlock_region = sanic.Blueprint("wex_profile_unlock_region")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/UnlockRegion.md
 @wex_profile_unlock_region.route("/<accountId>/UnlockRegion", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.UnlockRegion, query=MCPQueryValidation.MCPLevels)
 @compress.compress()
-async def unlock_region(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def unlock_region(request: types.BBProfileRequest, accountId: str,
+                        body: MCPValidation.UnlockRegion,
+                        query: MCPQueryValidation.MCPLevels) -> sanic.response.JSONResponse:
     """
     This endpoint is used to unlock a map region
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
+    request_body = body.model_dump()
     unlocked_regions = await request.ctx.profile.find_item_by_template_id("WorldUnlock:Region", ProfileType.LEVELS)
     for region_guid in unlocked_regions:
         region = await request.ctx.profile.get_item_by_guid(region_guid, ProfileType.LEVELS)
-        if region is not None and region["attributes"]["regionId"] == request.json.get("regionId"):
+        if region is not None and region["attributes"]["regionId"] == request_body.get("regionId"):
             raise errors.com.epicgames.world_explorers.bad_request(
-                errorMessage=f"Region {request.json.get('regionId')} is already unlocked.")
+                errorMessage=f"Region {request_body.get('regionId')} is already unlocked.")
     await request.ctx.profile.add_item({
         "templateId": "WorldUnlock:Region",
         "attributes": {
-            "regionId": request.json.get("regionId")
+            "regionId": request_body.get("regionId")
         },
         "quantity": 1
     }, profile_id=request.ctx.profile_id)

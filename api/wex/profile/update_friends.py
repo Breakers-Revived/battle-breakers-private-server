@@ -9,12 +9,14 @@ Handles updating friends
 import datetime
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.friend_system import PlayerFriends
 from utils.profile_system import PlayerProfile
 from utils.enums import ProfileType, FriendStatus
 from utils.utils import authorized as auth, format_time, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -25,12 +27,17 @@ wex_profile_update_friends = sanic.Blueprint("wex_profile_update_friends")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/UpdateFriends.md
 @wex_profile_update_friends.route("/<accountId>/UpdateFriends", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.UpdateFriends, query=MCPQueryValidation.MCPFriends)
 @compress.compress()
-async def update_friends(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def update_friends(request: types.BBProfileRequest, accountId: str,
+                         body: MCPValidation.UpdateFriends,
+                         query: MCPQueryValidation.MCPFriends) -> sanic.response.JSONResponse:
     """
     This endpoint is used to update the friends list details
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     friend_instances = await request.ctx.profile.find_item_by_template_id("Friend:Instance", request.ctx.profile_id)

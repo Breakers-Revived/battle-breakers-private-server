@@ -8,12 +8,14 @@ Handles updating the monster pit power.
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.enums import ProfileType
 from utils.exceptions import errors
 from utils.utils import authorized as auth, calculate_hero_power, load_datatable, get_template_id_from_path, \
     extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -24,12 +26,17 @@ wex_profile_update_monster_pit_power = sanic.Blueprint("wex_profile_update_monst
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/UpdateMonsterPitPower.md
 @wex_profile_update_monster_pit_power.route("/<accountId>/UpdateMonsterPitPower", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.UpdateMonsterPitPower, query=MCPQueryValidation.MCPMonsterpit)
 @compress.compress()
-async def update_monster_pit_power(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def update_monster_pit_power(request: types.BBProfileRequest, accountId: str,
+                                   body: MCPValidation.UpdateMonsterPitPower,
+                                   query: MCPQueryValidation.MCPMonsterpit) -> sanic.response.JSONResponse:
     """
     This endpoint is used to update the monster pit power
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     all_pitted_hero_ids = await request.ctx.profile.find_items_by_type("Character", ProfileType.MONSTERPIT)

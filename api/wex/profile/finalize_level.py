@@ -12,13 +12,15 @@ import aiofiles
 import icalendar
 import recurring_ical_events
 import sanic
+import sanic_ext
 import sanic.log
 
-import utils.utils
 from utils import types
 from utils.exceptions import errors
 from utils.enums import ProfileType
-from utils.utils import authorized as auth, load_datatable
+from utils.utils import authorized as auth, load_datatable, get_event_currency, get_path_from_template_id, \
+    reward_for_level, get_template_id_from_path, extract_version_info, process_choices
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -29,16 +31,22 @@ wex_profile_finalize_level = sanic.Blueprint("wex_profile_finalize_level")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/FinalizeLevel.md
 @wex_profile_finalize_level.route("/<accountId>/FinalizeLevel", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.FinalizeLevel, query=MCPQueryValidation.MCPLevels)
 @compress.compress()
-async def finalize_level(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def finalize_level(request: types.BBProfileRequest, accountId: str,
+                         body: MCPValidation.FinalizeLevel,
+                         query: MCPQueryValidation.MCPLevels) -> sanic.response.JSONResponse:
     """
     This endpoint is used to finalize a level upon completion / abandoning
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
+    request_body = body.model_dump()
     try:
-        level_item = await request.ctx.profile.get_item_by_guid(request.json.get("levelItemId"), request.ctx.profile_id)
+        level_item = await request.ctx.profile.get_item_by_guid(request_body.get("levelItemId"), request.ctx.profile_id)
         level_id = level_item["attributes"]["debug_name"]
         level_info = (await load_datatable("Content/World/Datatables/LevelInfo"))[0]["Rows"].get(level_id)
     except:
@@ -50,7 +58,7 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     except ValueError:
         difficulty = 1
     await request.ctx.profile.clear_notifications(ProfileType.LEVELS)
-    await request.ctx.profile.remove_item(request.json.get("levelItemId"), request.ctx.profile_id)
+    await request.ctx.profile.remove_item(request_body.get("levelItemId"), request.ctx.profile_id)
     level_complete_notification = [
         {
             "type": "WExpLevelCompleted",
@@ -62,7 +70,7 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
             "loot": []
         }
     ]
-    if request.json.get("claimDepth") < level_item["attributes"]["debug_roomcount"]:
+    if request_body.get("claimDepth") < level_item["attributes"]["debug_roomcount"]:
         level_complete_notification[0]["completed"] = False
     first_clear = False
     for unlocked_level_guids in (await request.ctx.profile.find_item_by_template_id("WorldUnlock:Level",
@@ -86,9 +94,9 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
             datetime.datetime.now(datetime.UTC)
         )
     event_data = await load_datatable(events[-1].get("DESCRIPTION")[1:])
-    event_currency = await utils.utils.get_event_currency()
+    event_currency = await get_event_currency()
     battlepassxp = 0
-    for item in request.json.get("claimedItems", []):
+    for item in request_body.get("claimedItems", []):
         match item["itemTemplateId"].split(":")[0]:
             case "Currency":
                 item_id = await request.ctx.profile.grant_item(item["itemTemplateId"], item["quantity"])
@@ -107,9 +115,8 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
                 elif item["itemTemplateId"] == "StandIn:BattlepassXp":
                     battlepassxp += item["quantity"]
             case "Container":
-                chest_data = (await load_datatable(
-                    (await utils.utils.get_path_from_template_id(item["itemTemplateId"])).replace(
-                        "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
+                chest_data = (await load_datatable((await get_path_from_template_id(item["itemTemplateId"])).replace(
+                    "res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0][
                     "Properties"]
                 items = await request.ctx.profile.grant_loot_from_tiergroup(chest_data["TierGroup"])
                 if items is not None:
@@ -152,11 +159,11 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     if xp + granted_xp > account_level_datatable.get(str(current_account_level), {"XpTotal": 521341325, "XpToNextLevel": 1054090})["XpToNextLevel"] and current_account_level < 999:
         level_up_times = 1
         await request.ctx.profile.grant_item(
-            f"AccountReward:AccountPerk_{await utils.utils.reward_for_level(current_account_level + level_up_times)}")
+            f"AccountReward:AccountPerk_{await reward_for_level(current_account_level + level_up_times)}")
         while account_xp + granted_xp >= account_level_datatable.get(str(current_account_level + level_up_times), {"XpTotal": 521341325, "XpToNextLevel": 1054090})["XpTotal"] and current_account_level + level_up_times < 999:
             level_up_times += 1
             await request.ctx.profile.grant_item(
-                f"AccountReward:AccountPerk_{await utils.utils.reward_for_level(current_account_level + level_up_times)}")
+                f"AccountReward:AccountPerk_{await reward_for_level(current_account_level + level_up_times)}")
         sanic.log.logger.debug(f"Leveled up {level_up_times} times to level {current_account_level + level_up_times}")
         await request.ctx.profile.modify_stat("level", current_account_level + level_up_times)
         await request.ctx.profile.add_notifications({
@@ -178,7 +185,7 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     # TODO: determine what happens for events with multiple currency
     event_loot = []
     for currency_path in event_data[0]["Properties"]["EventCurrency"]:
-        event_currency = await utils.utils.get_template_id_from_path(currency_path["AssetPathName"])
+        event_currency = await get_template_id_from_path(currency_path["AssetPathName"])
         event_loot.append({
             "itemType": event_currency,
             "itemGuid": await request.ctx.profile.grant_item(event_currency, 64 + battlepassxp),
@@ -192,9 +199,9 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
         })
     # TODO: challenge bonus
     await request.ctx.profile.add_notifications(level_complete_notification, ProfileType.LEVELS)
-    # event_currency = await utils.utils.get_template_id_from_path(
-    #     (await utils.utils.process_choices(event_data[0]["Properties"]["EventCurrency"]))["AssetPathName"])
-    # element = await utils.utils.process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
+    # event_currency = await get_template_id_from_path(
+    #     (await process_choices(event_data[0]["Properties"]["EventCurrency"]))["AssetPathName"])
+    # element = await process_choices(["Nature", "Fire", "Water", "Dark", "Light", "Gear"])
     # level_complete_notification[0]["loot"].append({
     #     "tierGroupName": "Level.FirstInstance",
     #     "items": [{
@@ -212,7 +219,7 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     # TODO: update score for daily quests
     pit_unlocks = await request.ctx.profile.find_item_by_template_id("MonsterPitUnlock:Character",
                                                                      ProfileType.MONSTERPIT)
-    seen_characters = request.json.get("seenCharacters", [])
+    seen_characters = request_body.get("seenCharacters", [])
     for character in seen_characters:
         for pit_unlock_guid in pit_unlocks:
             pit_unlock = await request.ctx.profile.get_item_by_guid(pit_unlock_guid, ProfileType.MONSTERPIT)
@@ -231,6 +238,6 @@ async def finalize_level(request: types.BBProfileRequest, accountId: str) -> san
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions,
-                                                     (await utils.extract_version_info(request.headers.get("User-Agent")))[
+                                                     (await extract_version_info(request.headers.get("User-Agent")))[
                                                          -1])
     )

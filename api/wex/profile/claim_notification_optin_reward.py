@@ -8,10 +8,12 @@ Handles claiming the notification opt-in reward
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -22,13 +24,17 @@ wex_profile_claim_notification_opt_in_reward = sanic.Blueprint("wex_profile_clai
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/ClaimNotificationOptInReward.md
 @wex_profile_claim_notification_opt_in_reward.route("/<accountId>/ClaimNotificationOptInReward", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.ClaimNotificationOptInReward, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def claim_notification_opt_in_reward(request: types.BBProfileRequest,
-                                           accountId: str) -> sanic.response.JSONResponse:
+async def claim_notification_opt_in_reward(request: types.BBProfileRequest, accountId: str,
+                                           body: MCPValidation.ClaimNotificationOptInReward,
+                                           query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to claim the notification opt-in reward
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     if await request.ctx.profile.get_stat("notification_optin_reward_claimed"):

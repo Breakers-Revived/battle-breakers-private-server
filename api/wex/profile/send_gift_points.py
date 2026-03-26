@@ -9,9 +9,11 @@ Handles sending gifts.
 import datetime
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.utils import authorized as auth, format_time, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -22,12 +24,17 @@ wex_profile_send_gift = sanic.Blueprint("wex_profile_send_gift")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/QueryProfile(profile0).md
 @wex_profile_send_gift.route("/<accountId>/SendGiftPoints", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.SendGiftPoints, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def send_gift_points(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def send_gift_points(request: types.BBProfileRequest, accountId: str,
+                           body: MCPValidation.SendGiftPoints,
+                           query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     Handles the send gift point request
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The response object
     """
     await request.ctx.profile.modify_stat("activity", {

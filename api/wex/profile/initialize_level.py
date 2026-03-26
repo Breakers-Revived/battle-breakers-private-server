@@ -7,16 +7,17 @@ This code is licensed under the Breakers Revived License (BRL).
 Handles initializing a level for a profile.
 """
 import random
-import re
 import uuid
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
 from utils.enums import ProfileType
 from utils.utils import authorized as auth, load_datatable, format_time, room_generator, read_file_cached, \
     process_choices, level_id_pattern, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
 
@@ -27,15 +28,21 @@ wex_profile_initialize_level = sanic.Blueprint("wex_profile_initialize_level")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/InitializeLevel.md
 @wex_profile_initialize_level.route("/<accountId>/InitializeLevel", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.InitializeLevel, query=MCPQueryValidation.MCPLevels)
 @compress.compress()
-async def initialize_level(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def initialize_level(request: types.BBProfileRequest, accountId: str,
+                           body: MCPValidation.InitializeLevel,
+                           query: MCPQueryValidation.MCPLevels) -> sanic.response.JSONResponse:
     """
     This endpoint is used to initialize a level for a profile.
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
-    level_id = request.json.get("levelId")
+    request_body = body.model_dump()
+    level_id = request_body.get("levelId")
     level_info = (await load_datatable("Content/World/Datatables/LevelInfo"))[0]["Rows"].get(level_id)
     if level_info is None:
         raise errors.com.epicgames.world_explorers.level_not_found()
@@ -185,7 +192,7 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
             raise errors.com.epicgames.world_explorers.level_requirements_not_met()
         opponents = await request.ctx.profile.get_item_by_guid(opponents_id)
         for match in opponents["attributes"].get("match_roster", []):
-            if match["opponent"]["matchmakingId"] == request.json.get("friendInstanceId") and match["opponent"]["type"] == "Sparring":
+            if match["opponent"]["matchmakingId"] == request_body.get("friendInstanceId") and match["opponent"]["type"] == "Sparring":
                 current_idx = 0
                 for opponent in match.get("heroInfo", []):
                     if opponent.get("characterTemplateId") is None:
@@ -232,12 +239,12 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
     for account_perk in ["MaxHitPoints", "RegenStat", "PetStrength", "BasicAttack", "Attack", "SpecialAttack",
                          "DamageReduction", "MaxMana"]:
         account_info["perks"].append(perks.get(account_perk, 0))
-    if request.json.get("partyMembers") is not None:
-        party_members = request.json.get("partyMembers")
+    if request_body.get("partyMembers") is not None:
+        party_members = request_body.get("partyMembers")
     else:
         # Backwards compatability for old clients
         party_members = []
-        party_instance = await request.ctx.profile.get_item_by_guid(request.json.get("partyId"))
+        party_instance = await request.ctx.profile.get_item_by_guid(request_body.get("partyId"))
         for character_id in party_instance.get("attributes").get("character_ids"):
             if party_instance.get("attributes").get("commander_index") == party_instance.get("attributes").get(
                     "character_ids").index(character_id):
@@ -247,20 +254,20 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
                 })
             elif party_instance.get("attributes").get("friend_index") == party_instance.get("attributes").get(
                     "character_ids").index(character_id):
-                if request.json.get("friendInstanceId") == "" and request.json.get("commanderId") == "":
+                if request_body.get("friendInstanceId") == "" and request_body.get("commanderId") == "":
                     party_members.append({
                         "heroType": "DefaultCommander",
                         "heroItemId": ""
                     })
-                elif request.json.get("friendInstanceId") != "":
+                elif request_body.get("friendInstanceId") != "":
                     party_members.append({
                         "heroType": "FriendCommander",
-                        "heroItemId": request.json.get("commanderId")
+                        "heroItemId": request_body.get("commanderId")
                     })
-                elif request.json.get("commanderId") != "":
+                elif request_body.get("commanderId") != "":
                     party_members.append({
                         "heroType": "LocalCommander",
-                        "heroItemId": request.json.get("commanderId")
+                        "heroItemId": request_body.get("commanderId")
                     })
                 else:
                     party_members.append({
@@ -272,7 +279,7 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str) -> s
                     "heroType": "LocalHero",
                     "heroItemId": character_id
                 })
-    friend_instance_id = request.json.get("friendInstanceId")
+    friend_instance_id = request_body.get("friendInstanceId")
     for party_member in party_members:
         if party_member.get("heroType") in ["FriendHero", "FriendCommander"]:
             friend_snapshot_data = await request.ctx.profile.get_item_by_guid(

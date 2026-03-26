@@ -8,11 +8,14 @@ Handles setting friend hero
 """
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
-from utils.sanic_gzip import Compress
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
+
+from utils.sanic_gzip import Compress
 
 compress = Compress()
 wex_profile_set_rep_hero = sanic.Blueprint("wex_profile_set_rep_hero")
@@ -21,16 +24,22 @@ wex_profile_set_rep_hero = sanic.Blueprint("wex_profile_set_rep_hero")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/SetRepHero.md
 @wex_profile_set_rep_hero.route("/<accountId>/SetRepHero", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.SetRepHero, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def set_rep_hero(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def set_rep_hero(request: types.BBProfileRequest, accountId: str,
+                       body: MCPValidation.SetRepHero,
+                       query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to update the player's rep hero
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
-    hero_id = request.json.get("heroId")
-    slot_index = request.json.get("slotIdx")
+    request_body = body.model_dump()
+    hero_id = request_body.get("heroId")
+    slot_index = request_body.get("slotIdx")
     hero = await request.ctx.profile.get_item_by_guid(hero_id)
     if hero is None:
         raise errors.com.epicgames.world_explorers.bad_request(errorMessage=f"Hero with id {hero_id} not found")

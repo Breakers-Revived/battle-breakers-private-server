@@ -7,10 +7,13 @@ This code is licensed under the Breakers Revived License (BRL).
 Handles update headless mcp
 """
 import sanic
+import sanic_ext
 
 from utils import types
-from utils.sanic_gzip import Compress
 from utils.utils import authorized as auth, extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
+
+from utils.sanic_gzip import Compress
 
 compress = Compress()
 wex_update_headless = sanic.Blueprint("wex_update_headless")
@@ -19,12 +22,17 @@ wex_update_headless = sanic.Blueprint("wex_update_headless")
 # undocumented
 @wex_update_headless.route("/<accountId>/UpdateAccountHeadlessStatus", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.UpdateAccountHeadlessStatus, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def update_headless(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def update_headless(request: types.BBProfileRequest, accountId: str,
+                          body: MCPValidation.UpdateAccountHeadlessStatus,
+                          query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     This endpoint is used to set the display name on an account and mark it as non-headless.
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: Determine what the request provides us with

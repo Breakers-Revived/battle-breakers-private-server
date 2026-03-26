@@ -9,11 +9,14 @@ Handles profile claim daily reward
 import datetime
 
 import sanic
+import sanic_ext
 
 from utils import types
 from utils.exceptions import errors
-from utils.sanic_gzip import Compress
 from utils.utils import authorized as auth, load_datatable, get_template_id_from_path, extract_version_info, format_time
+from utils.validation import MCPValidation, MCPQueryValidation
+
+from utils.sanic_gzip import Compress
 
 compress = Compress()
 wex_profile_claim_login = sanic.Blueprint("wex_profile_claim_login")
@@ -22,12 +25,17 @@ wex_profile_claim_login = sanic.Blueprint("wex_profile_claim_login")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/QueryProfile(profile0).md
 @wex_profile_claim_login.route("/<accountId>/ClaimLoginReward", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.ClaimLoginReward, query=MCPQueryValidation.MCPProfile0)
 @compress.compress()
-async def claim_login_reward(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def claim_login_reward(request: types.BBProfileRequest, accountId: str,
+                             body: MCPValidation.ClaimLoginReward,
+                             query: MCPQueryValidation.MCPProfile0) -> sanic.response.JSONResponse:
     """
     Handles the daily reward request
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The response object
     """
     current_day = (await request.ctx.profile.get_stat("login_reward"))["next_level"]

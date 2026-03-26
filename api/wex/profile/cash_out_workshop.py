@@ -9,11 +9,14 @@ Handles workshop cash out
 
 import sanic
 import sanic.log
+import sanic_ext
 
 from utils import types
-from utils.sanic_gzip import Compress
 from utils.utils import authorized as auth, load_datatable, get_current_12_hour_interval, format_time, \
     extract_version_info
+from utils.validation import MCPValidation, MCPQueryValidation
+
+from utils.sanic_gzip import Compress
 
 compress = Compress()
 wex_profile_cash_out_workshop = sanic.Blueprint("wex_profile_cash_out_workshop")
@@ -22,12 +25,16 @@ wex_profile_cash_out_workshop = sanic.Blueprint("wex_profile_cash_out_workshop")
 # https://github.com/dippyshere/battle-breakers-documentation/blob/main/docs/World%20Explorers%20Service/wex/api/game/v2/profile/accountId/CashOutWorkshop.md
 @wex_profile_cash_out_workshop.route("/<accountId>/CashOutWorkshop", methods=["POST"])
 @auth(strict=True)
+@sanic_ext.validate(json=MCPValidation.CashOutWorkshop)
 @compress.compress()
-async def cash_out_workshop(request: types.BBProfileRequest, accountId: str) -> sanic.response.JSONResponse:
+async def cash_out_workshop(request: types.BBProfileRequest, accountId: str,
+                            body: MCPValidation.CashOutWorkshop) -> sanic.response.JSONResponse:
     """
     This endpoint is used to exchange workshop stars to gold
     :param request: The request object
     :param accountId: The account id
+    :param body: The request body
+    :param query: The query arguments
     :return: The modified profile
     """
     # TODO: validation
