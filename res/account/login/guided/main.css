@@ -100,8 +100,8 @@ section {
 
 .box .square {
     position: absolute;
-    -webkit-backdrop-filter: blur(5px) saturate(150%);
-    backdrop-filter: blur(5px) saturate(150%);
+    -webkit-backdrop-filter: saturate(150%);
+    backdrop-filter: saturate(150%);
     -webkit-box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
     box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
@@ -233,8 +233,8 @@ section {
     -webkit-align-items: center;
     -moz-box-align: center;
     align-items: center;
-    -webkit-backdrop-filter: blur(5px) saturate(150%);
-    backdrop-filter: blur(5px) saturate(150%);
+    -webkit-backdrop-filter: saturate(150%);
+    backdrop-filter: saturate(150%);
     -webkit-box-shadow: 0 35px 55px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0 35px 55px rgba(0, 0, 0, 0.3);
     box-shadow: 0 35px 55px rgba(0, 0, 0, 0.3);
