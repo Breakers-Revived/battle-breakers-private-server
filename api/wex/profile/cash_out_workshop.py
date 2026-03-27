@@ -43,7 +43,7 @@ async def cash_out_workshop(request: types.BBProfileRequest, accountId: str,
     #     stars = 999
     labor_force = await request.ctx.profile.get_stat("labor_force")
     labor_used = labor_force.get("laborUsed", 0)
-    if labor_force["lastInterval"] != await format_time(await get_current_12_hour_interval()):
+    if labor_force.get("lastInterval") != await format_time(await get_current_12_hour_interval()):
         labor_used = 0
     workshop_id = (await request.ctx.profile.find_item_by_template_id("HqBuilding:HQ_AncientFactory"))[0]
     workshop_level = (await request.ctx.profile.get_item_by_guid(workshop_id))["attributes"]["level"]

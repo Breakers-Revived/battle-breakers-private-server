@@ -27,7 +27,8 @@ wex_profile_generate_matches = sanic.Blueprint("wex_profile_generate_matches")
 @sanic_ext.validate(json=MCPValidation.GenerateMatches, query=MCPQueryValidation.MCPMultiplayer)
 @compress.compress()
 async def generate_matches(request: types.BBProfileRequest, accountId: str,
-                           body: MCPValidation.GenerateMatches) -> sanic.response.JSONResponse:
+                           body: MCPValidation.GenerateMatches,
+                           query: MCPQueryValidation.MCPMultiplayer) -> sanic.response.JSONResponse:
     """
     This endpoint is used to generate matches.
     :param request: The request object

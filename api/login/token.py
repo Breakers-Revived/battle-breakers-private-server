@@ -12,7 +12,7 @@ import sanic
 
 from utils import types
 from utils.utils import authorized as auth, generate_authorisation_eg1, bcrypt_hash, create_account, bcrypt_check, \
-    username_pattern
+    account_id_pattern
 
 from utils.sanic_gzip import Compress
 
@@ -38,7 +38,7 @@ async def login_token_route(request: types.BBRequest) -> sanic.response.JSONResp
         username = request.json.get("username")[:32]
         password = request.json.get("password")
         if len(username) > 24:
-            if not username_pattern.match(username):
+            if not account_id_pattern.match(username):
                 raise sanic.exceptions.InvalidUsage("Invalid username",
                                                     context={"errorMessage": "This account ID is invalid"})
             else:

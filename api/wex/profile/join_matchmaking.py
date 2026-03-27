@@ -27,7 +27,8 @@ wex_profile_join_matchmaking = sanic.Blueprint("wex_profile_join_matchmaking")
 @sanic_ext.validate(json=MCPValidation.JoinMatchmaking, query=MCPQueryValidation.MCPMultiplayer)
 @compress.compress()
 async def join_matchmaking(request: types.BBProfileRequest, accountId: str,
-                           body: MCPValidation.JoinMatchmaking) -> sanic.response.JSONResponse:
+                           body: MCPValidation.JoinMatchmaking,
+                           query: MCPQueryValidation.MCPMultiplayer) -> sanic.response.JSONResponse:
     """
     This endpoint is used to join matchmaking.
     :param request: The request object

@@ -13,7 +13,7 @@ from pymongo.asynchronous.database import AsyncDatabase
 import sanic
 import sanic.log
 
-from utils.enums import FriendStatus
+from utils.enums import FriendStatus, ProfileType
 from utils.exceptions import errors
 from utils.profile_system import PlayerProfile
 from utils.utils import format_time
@@ -188,6 +188,7 @@ class PlayerFriends:
             request.app.ctx.profiles[friendId]: PlayerProfile = await PlayerProfile.init_profile(friendId)
         await request.app.ctx.profiles[friendId].add_friend_instance(request, self.account_id,
                                                                      FriendStatus.FRIEND)
+        await request.app.ctx.profiles[friendId].flush_changes(ProfileType.FRIENDS)
         for friend in self.friends["incoming"]:
             if friend["accountId"] == friendId:
                 self.friends["friends"].append({

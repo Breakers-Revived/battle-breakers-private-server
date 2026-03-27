@@ -33,6 +33,24 @@ def UUIDString(v: str) -> str:
         raise ValueError('Invalid UUID string')
     return v
 
+def UUIDStringOptional(v: str) -> str:
+    """
+    Validates a UUID string if present
+
+    :param v: The UUID string
+    :return: The UUID string
+    :raises ValueError: If the UUID string is invalid
+    """
+    if not isinstance(v, str):
+        raise ValueError('UUIDString must be a string')
+    if v == '':
+        return v
+    try:
+        uuid.UUID(v)
+    except ValueError:
+        raise ValueError('Invalid UUID string')
+    return v
+
 def CharacterTemplateId(v: str) -> str:
     """
     Validates the Character Template ID
@@ -240,8 +258,8 @@ class MCPValidation:
         """
         manifestVersion: Optional[str]
         levelId: str
-        partyMembers: list[dict[str, str | Annotated[str, AfterValidator(UUIDString)]]]
-        friendInstanceId: Optional[Annotated[str, AfterValidator(UUIDString)]]
+        partyMembers: list[dict[str, str | Annotated[str, AfterValidator(UUIDStringOptional)]]]
+        friendInstanceId: Optional[Annotated[str, AfterValidator(UUIDStringOptional)]]
 
     class BulkImproveHeroes(pydantic.BaseModel):
         """
@@ -421,12 +439,12 @@ class MCPValidation:
         claimDepth: int
         claimedItems: list[dict[str, str | int]]
         seenCharacters: list
-        postBattleResults: dict[str, dict[str, int] | list[Annotated[str, AfterValidator(UUIDString)]] | list[
+        postBattleResults: dict[str, dict[str, int] | list[Annotated[str, AfterValidator(UUIDStringOptional)]] | list[
             Annotated[str, AfterValidator(CharacterTemplateId)]]]
         battleMetaData: str = None
         dailyQuestZoneType: int
         partyItemId: str
-        bShouldGiveBonus: bool
+        bShouldGiveBonus: bool = None
 
     class FoilHero(pydantic.BaseModel):
         """
@@ -479,8 +497,8 @@ class MCPValidation:
         """
         manifestVersion: str
         levelId: str
-        partyMembers: list[dict[str, str | Annotated[str, AfterValidator(UUIDString)]]]
-        friendInstanceId: Annotated[str, AfterValidator(UUIDString)]
+        partyMembers: list[dict[str, str | Annotated[str, AfterValidator(UUIDStringOptional)]]]
+        friendInstanceId: Annotated[str, AfterValidator(UUIDStringOptional)]
         ltmId: str = None
         normalMode: bool
         blitzMode: bool
@@ -537,7 +555,7 @@ class MCPValidation:
         """
         heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
-        gearArmorItemId: Annotated[str, AfterValidator(UUIDString)]
+        gearArmorItemId: Annotated[str, AfterValidator(UUIDStringOptional)]
 
     class ModifyHeroGear(pydantic.BaseModel):
         """
@@ -550,7 +568,7 @@ class MCPValidation:
         """
         heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
-        gearHeroItemId: Annotated[str, AfterValidator(UUIDString)]
+        gearHeroItemId: Annotated[str, AfterValidator(UUIDStringOptional)]
 
     class ModifyHeroWeapon(pydantic.BaseModel):
         """
@@ -563,7 +581,7 @@ class MCPValidation:
         """
         heroItemId: Annotated[str, AfterValidator(UUIDString)]
         bIsInPit: bool
-        gearWeaponItemId: Annotated[str, AfterValidator(UUIDString)]
+        gearWeaponItemId: Annotated[str, AfterValidator(UUIDStringOptional)]
 
     class OpenGiftBox(pydantic.BaseModel):
         """
@@ -887,7 +905,7 @@ class MCPValidation:
         Attributes:
             friendInstanceId: The friend instance id
         """
-        friendInstanceId: Annotated[str, AfterValidator(UUIDString)]
+        friendInstanceId: Annotated[str, AfterValidator(UUIDStringOptional)]
 
     class UpdateMonsterPitPower(pydantic.BaseModel):
         """

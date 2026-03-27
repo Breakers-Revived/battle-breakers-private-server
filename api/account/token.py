@@ -16,7 +16,7 @@ from utils.enums import AuthClient
 from utils.exceptions import errors
 from utils.profile_system import PlayerProfile
 from utils.utils import (authorized as auth, oauth_response, parse_eg1, create_account, verify_google_token,
-                         oauth_client_response, bcrypt_check, format_time, username_pattern)
+                         oauth_client_response, bcrypt_check, format_time, account_id_pattern)
 
 from utils.sanic_gzip import Compress
 
@@ -158,7 +158,7 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                     raise errors.com.epicgames.account.invalid_account_credentials()
                 if not (4 < len(request.form.get('password')) < 64):
                     raise errors.com.epicgames.account.invalid_account_credentials()
-                if not username_pattern.match(request.form.get('username')):
+                if not account_id_pattern.match(request.form.get('username')):
                     raise errors.com.epicgames.account.invalid_account_credentials()
                 # TODO: implement better signup system
                 username = re.escape(request.form.get('username').strip())

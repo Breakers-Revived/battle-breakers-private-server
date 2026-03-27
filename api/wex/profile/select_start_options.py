@@ -16,7 +16,7 @@ from utils.exceptions import errors
 from utils.friend_system import PlayerFriends
 from utils.profile_system import PlayerProfile
 from utils.enums import ProfileType
-from utils.utils import authorized as auth, normalise_string, format_time, extract_version_info, username_pattern
+from utils.utils import authorized as auth, normalise_string, format_time, extract_version_info, account_id_pattern
 from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
@@ -45,11 +45,11 @@ async def select_start_options(request: types.BBProfileRequest, accountId: str,
     if await request.ctx.profile.get_stat("has_started"):
         raise errors.com.epicgames.world_explorers.service_not_required(errorMessage="Already started game")
     username = request_body.get("displayName")
-    if not username_pattern.match(username):
-        raise errors.com.epicgames.world_explorers.name_invalid()
-    if username < 3:
+    # if not account_id_pattern.match(username):
+    #     raise errors.com.epicgames.world_explorers.name_invalid()
+    if len(username) < 3:
         raise errors.com.epicgames.world_explorers.name_too_short()
-    if username > 24:
+    if len(username) > 24:
         raise errors.com.epicgames.world_explorers.name_too_long()
     await request.ctx.profile.modify_stat("has_started", True)
     await request.ctx.profile.modify_stat("starter_hero",

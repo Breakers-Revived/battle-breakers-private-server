@@ -27,7 +27,8 @@ wex_profile_generate_match_with_friend = sanic.Blueprint("wex_profile_generate_m
 @sanic_ext.validate(json=MCPValidation.GenerateMatchWithFriend, query=MCPQueryValidation.MCPMultiplayer)
 @compress.compress()
 async def generate_match_with_friend(request: types.BBProfileRequest, accountId: str,
-                                     body: MCPValidation.GenerateMatchWithFriend) -> sanic.response.JSONResponse:
+                                     body: MCPValidation.GenerateMatchWithFriend,
+                                     query: MCPQueryValidation.MCPMultiplayer) -> sanic.response.JSONResponse:
     """
     This endpoint is used to spar with a friend.
     :param request: The request object
