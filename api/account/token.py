@@ -8,6 +8,7 @@ Handles the token requests
 """
 import base64
 import re
+import urllib.parse
 
 import sanic
 
@@ -16,8 +17,7 @@ from utils.enums import AuthClient
 from utils.exceptions import errors
 from utils.profile_system import PlayerProfile
 from utils.utils import (authorized as auth, oauth_response, parse_eg1, create_account, verify_google_token,
-                         oauth_client_response, bcrypt_check, format_time, account_id_pattern,
-                         existing_display_name_pattern)
+                         oauth_client_response, bcrypt_check, format_time, existing_display_name_pattern)
 
 from utils.sanic_gzip import Compress
 
@@ -154,11 +154,10 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                 else:
                     raise errors.com.epicgames.account.auth_token.invalid_refresh_token()
             case 'password':  # backwards compatibility for old clients
-                if not (1 <= len(request.form.get('username').split('@')[0].strip()) < 24) or not (4 < len(request.form.get('password')) < 64) or not existing_display_name_pattern.match(request.form.get('username').strip()):
+                username = urllib.parse.unquote(request.form.get('username')).strip().split("@")[0]
+                if not (1 <= len(username) < 24) or not (4 < len(request.form.get('password')) < 64) or not existing_display_name_pattern.match(username):
                     raise errors.com.epicgames.account.invalid_account_credentials()
-                username = re.escape(request.form.get('username').strip())
-                if username.endswith('@') or username.endswith('@.'):
-                    username = username.rsplit('@', 1)[0]
+                username = re.escape(username)
                 account_data: dict = await request.app.ctx.db["accounts"].find_one(
                     {"displayName": {"$regex": f"^{username}$", "$options": "i"}},
                     {"_id": 1, "displayName": 1, "extra.pwhash": 1})
