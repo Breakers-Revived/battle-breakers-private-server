@@ -16,7 +16,8 @@ from utils.exceptions import errors
 from utils.friend_system import PlayerFriends
 from utils.profile_system import PlayerProfile
 from utils.enums import ProfileType
-from utils.utils import authorized as auth, normalise_string, format_time, extract_version_info, account_id_pattern
+from utils.utils import authorized as auth, normalise_string, format_time, extract_version_info, account_id_pattern, \
+    new_display_name_pattern
 from utils.validation import MCPValidation, MCPQueryValidation
 
 from utils.sanic_gzip import Compress
@@ -44,9 +45,9 @@ async def select_start_options(request: types.BBProfileRequest, accountId: str,
     request_body = body.model_dump()
     if await request.ctx.profile.get_stat("has_started"):
         raise errors.com.epicgames.world_explorers.service_not_required(errorMessage="Already started game")
-    username = request_body.get("displayName")
-    # if not account_id_pattern.match(username):
-    #     raise errors.com.epicgames.world_explorers.name_invalid()
+    username = request_body.get("displayName", "").strip()
+    if not new_display_name_pattern.match(username):
+        raise errors.com.epicgames.world_explorers.name_invalid()
     if len(username) < 3:
         raise errors.com.epicgames.world_explorers.name_too_short()
     if len(username) > 24:
@@ -105,7 +106,7 @@ async def select_start_options(request: types.BBProfileRequest, accountId: str,
                                           await normalise_string(request_body.get("displayName")))
     await request.app.ctx.db["accounts"].update_one(
         {"_id": accountId},
-        {"$set": {"displayName": request_body.get("displayName")}}
+        {"$set": {"displayName": request_body.get("displayName").strip()}}
     )
     await request.ctx.profile.modify_stat("suggestion_timeout",
                                           await format_time(

@@ -16,7 +16,8 @@ from utils.enums import AuthClient
 from utils.exceptions import errors
 from utils.profile_system import PlayerProfile
 from utils.utils import (authorized as auth, oauth_response, parse_eg1, create_account, verify_google_token,
-                         oauth_client_response, bcrypt_check, format_time, account_id_pattern)
+                         oauth_client_response, bcrypt_check, format_time, account_id_pattern,
+                         existing_display_name_pattern)
 
 from utils.sanic_gzip import Compress
 
@@ -153,24 +154,14 @@ async def oauth_route(request: types.BBRequest) -> sanic.response.JSONResponse:
                 else:
                     raise errors.com.epicgames.account.auth_token.invalid_refresh_token()
             case 'password':  # backwards compatibility for old clients
-                # TODO: support display name and email login
-                if not (3 < len(request.form.get('username').split('@')[0].strip()) < 24):
+                if not (1 <= len(request.form.get('username').split('@')[0].strip()) < 24) or not (4 < len(request.form.get('password')) < 64) or not existing_display_name_pattern.match(request.form.get('username').strip()):
                     raise errors.com.epicgames.account.invalid_account_credentials()
-                if not (4 < len(request.form.get('password')) < 64):
-                    raise errors.com.epicgames.account.invalid_account_credentials()
-                if not account_id_pattern.match(request.form.get('username')):
-                    raise errors.com.epicgames.account.invalid_account_credentials()
-                # TODO: implement better signup system
                 username = re.escape(request.form.get('username').strip())
                 if username.endswith('@') or username.endswith('@.'):
                     username = username.rsplit('@', 1)[0]
                 account_data: dict = await request.app.ctx.db["accounts"].find_one(
-                    {"displayName": {"$regex": f"^{username}$",
-                                     "$options": "i"}}, {
-                        "_id": 1,
-                        "displayName": 1,
-                        "extra.pwhash": 1
-                    })
+                    {"displayName": {"$regex": f"^{username}$", "$options": "i"}},
+                    {"_id": 1, "displayName": 1, "extra.pwhash": 1})
                 if account_data is None:
                     raise errors.com.epicgames.account.account_not_found(
                         request.form.get('username').split("@")[0].strip())

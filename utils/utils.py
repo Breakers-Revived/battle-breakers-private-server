@@ -46,6 +46,8 @@ private_key = None
 public_key = None
 mongo_check_pattern = re.compile(r'^[a-zA-Z0-9_-]+$')
 account_id_pattern = re.compile(r"[0-9a-f]{12}4[0-9a-f]{3}[89ab][0-9a-f]{15}", re.IGNORECASE)
+new_display_name_pattern = re.compile(r"^(?!.*([. \-_])\1+)[A-Z0-9\u00A1-\uFFFF](?:[. \-_A-Z0-9\u00A1-\uFFFF]*[A-Z0-9\u00A1-\uFFFF])?$", re.IGNORECASE)
+existing_display_name_pattern = re.compile(r"^(?!.*([. \-_])\1+)^[^ \-._][. \-_A-Z\u00a1-\uffff0-9]+$", re.IGNORECASE)
 level_id_pattern = re.compile(r".*\.D\d")
 mine_level_pattern = re.compile(r"Level\.Mine\.Map[1-4]\.D[1-4]")
 
@@ -666,11 +668,11 @@ async def get_account_id_from_display_name(database: AsyncDatabase, display_name
     :param display_name: The display name to get the account id for
     :return: The account id
     """
-    sanic.log.logger.debug("Getting account id from display name")
+    sanic.log.logger.debug(f"Getting account id from display name {display_name}")
+    if not existing_display_name_pattern.match(display_name):
+        raise errors.com.epicgames.bad_request(errorMessage="Invalid display name")
     existing_account = await database["accounts"].find_one(
-        {"displayName": {"$regex": f"^{re.escape(display_name)}$", "$options": "i"}},
-        {"_id": 1}
-    )
+        {"displayName": {"$regex": f"^{re.escape(display_name)}$", "$options": "i"}}, {"_id": 1})
     sanic.log.logger.debug(f"Existing account id: {existing_account}")
     return existing_account.get("_id") if existing_account else None
 

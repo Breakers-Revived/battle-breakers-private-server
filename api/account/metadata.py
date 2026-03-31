@@ -93,6 +93,9 @@ async def set_metadata(request: types.BBRequest, accountId: str) -> sanic.respon
     key = validate_mongo_key(raw_key)
     if not isinstance(raw_value, (str, int, float, bool, type(None))):
         raise errors.com.epicgames.bad_request(errorMessage="Metadata value must be a valid type")
+    key = key[:64]
+    if isinstance(raw_value, str):
+        raw_value = raw_value[:256]
     account["metadata"][key] = raw_value
     await request.app.ctx.db["accounts"].update_one(
         {"_id": accountId},
