@@ -213,11 +213,11 @@ class MCPValidation:
         """
         levelItemId: Annotated[str, AfterValidator(UUIDString)]
         # These don't get sent when abandoning a level from another device in an old version
-        depthCompleted: Optional[int]
+        depthCompleted: Optional[int] = None
         # These don't get sent by old clients
-        levelElement: Optional[str]
-        postBattleResults: Optional[dict[str, dict[str, int] | list[Annotated[str, AfterValidator(UUIDString)]] | list[Annotated[str, AfterValidator(CharacterTemplateId)]]]]
-        dailyQuestZoneType: Optional[int]
+        levelElement: Optional[str] = None
+        postBattleResults: Optional[dict[str, dict[str, int] | list[Annotated[str, AfterValidator(UUIDString)]] | list[Annotated[str, AfterValidator(CharacterTemplateId)]]]] = None
+        dailyQuestZoneType: Optional[int] = None
 
     class AddEpicFriend(pydantic.BaseModel):
         """
@@ -402,8 +402,8 @@ class MCPValidation:
             friendInstanceId: The friend instance id to unfriend
             friendInstanceIds: The list of friend instance ids to unfriend
         """
-        friendInstanceId: Annotated[str, AfterValidator(UUIDString)] | None
-        friendInstanceIds: Annotated[str, AfterValidator(UUIDString)] | None
+        friendInstanceId: Optional[Annotated[str, AfterValidator(UUIDString)]] = None
+        friendInstanceIds: Optional[Annotated[str, AfterValidator(UUIDString)]] = None
 
     class EvolveHero(pydantic.BaseModel):
         """
@@ -435,16 +435,17 @@ class MCPValidation:
             bShouldGiveBonus: If the player should get a bonus
         """
         levelItemId: Annotated[str, AfterValidator(UUIDString)]
-        levelElement: str
+        levelElement: Optional[str] = None
         claimDepth: int
         claimedItems: list[dict[str, str | int]]
         seenCharacters: list
-        postBattleResults: dict[str, dict[str, int] | list[Annotated[str, AfterValidator(UUIDStringOptional)]] | list[
-            Annotated[str, AfterValidator(CharacterTemplateId)]]]
-        battleMetaData: str = None
-        dailyQuestZoneType: int
-        partyItemId: str
-        bShouldGiveBonus: bool = None
+        postBattleResults: Optional[
+            dict[str, dict[str, int] | list[Annotated[str, AfterValidator(UUIDStringOptional)]] | list[
+                Annotated[str, AfterValidator(CharacterTemplateId)]]]] = None
+        battleMetaData: Optional[str] = None
+        dailyQuestZoneType: Optional[int] = None
+        partyItemId: Optional[str] = None
+        bShouldGiveBonus: Optional[bool] = None
 
     class FoilHero(pydantic.BaseModel):
         """
@@ -497,12 +498,14 @@ class MCPValidation:
         """
         manifestVersion: str
         levelId: str
-        partyMembers: list[dict[str, str | Annotated[str, AfterValidator(UUIDStringOptional)]]]
+        partyId: Optional[Annotated[str, AfterValidator(UUIDStringOptional)]] = None
+        commanderId: Optional[Annotated[str, AfterValidator(UUIDStringOptional)]] = None
+        partyMembers: Optional[list[dict[str, str | Annotated[str, AfterValidator(UUIDStringOptional)]]]] = None
         friendInstanceId: Annotated[str, AfterValidator(UUIDStringOptional)]
-        ltmId: str = None
-        normalMode: bool
-        blitzMode: bool
-        teamPower: int
+        ltmId: Optional[str] = None
+        normalMode: Optional[bool] = None
+        blitzMode: Optional[bool] = None
+        teamPower: Optional[int] = None
 
     class JoinMatchmaking(pydantic.BaseModel):
         """
@@ -647,8 +650,9 @@ class MCPValidation:
         purchaseQuantity: int
         currency: str
         currencySubType: str
-        expectedTotalPrice: int
-        gameContext: str
+        expectedPrice: Optional[int] = None
+        expectedTotalPrice: Optional[int] = None
+        gameContext: Optional[str] = None
 
     class QueryProfile(pydantic.BaseModel):
         """
@@ -695,8 +699,8 @@ class MCPValidation:
             friendInstanceId: The friend instance id to unfriend
             friendInstanceIds: The list of friend instance ids to unfriend
         """
-        friendInstanceId: Annotated[str, AfterValidator(UUIDString)] | None
-        friendInstanceIds: Annotated[str, AfterValidator(UUIDString)] | None
+        friendInstanceId: Optional[Annotated[str, AfterValidator(UUIDString)]] = None
+        friendInstanceIds: Optional[Annotated[str, AfterValidator(UUIDString)]] = None
 
     class RemoveFromMonsterPit(pydantic.BaseModel):
         """
@@ -993,7 +997,7 @@ class MCPQueryValidation:
             rvn: The client's current profile revision
         """
         profileId: Annotated[str, AfterValidator(ProfileLevels)]
-        rvn: int | None
+        rvn: Optional[int] = -1
 
     class MCPFriends(pydantic.BaseModel):
         """
@@ -1004,7 +1008,7 @@ class MCPQueryValidation:
             rvn: The client's current profile revision
         """
         profileId: Annotated[str, AfterValidator(ProfileFriends)]
-        rvn: int | None
+        rvn: Optional[int] = -1
 
     class MCPMonsterpit(pydantic.BaseModel):
         """
@@ -1015,7 +1019,7 @@ class MCPQueryValidation:
             rvn: The client's current profile revision
         """
         profileId: Annotated[str, AfterValidator(ProfileMonsterpit)]
-        rvn: int | None
+        rvn: Optional[int] = -1
 
     class MCPProfile0(pydantic.BaseModel):
         """
@@ -1026,7 +1030,7 @@ class MCPQueryValidation:
             rvn: The client's current profile revision
         """
         profileId: Annotated[str, AfterValidator(ProfileProfile0)]
-        rvn: int | None
+        rvn: Optional[int] = -1
 
     class MCPProfile0Monsterpit(pydantic.BaseModel):
         """
@@ -1037,7 +1041,7 @@ class MCPQueryValidation:
             rvn: The client's current profile revision
         """
         profileId: Annotated[str, AfterValidator(ProfileProfile0MonsterPit)]
-        rvn: int | None
+        rvn: Optional[int] = -1
 
     class MCPMultiplayer(pydantic.BaseModel):
         """
@@ -1048,7 +1052,7 @@ class MCPQueryValidation:
             rvn: The client's current profile revision
         """
         profileId: Annotated[str, AfterValidator(ProfileMultiplayer)]
-        rvn: int | None
+        rvn: Optional[int] = -1
 
     class MCPAnyProfile(pydantic.BaseModel):
         """
@@ -1059,4 +1063,4 @@ class MCPQueryValidation:
             rvn: The client's current profile revision
         """
         profileId: Annotated[str, AfterValidator(ProfileAny)]
-        rvn: int | None
+        rvn: Optional[int] = -1
