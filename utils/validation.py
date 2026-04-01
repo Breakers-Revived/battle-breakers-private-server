@@ -501,9 +501,9 @@ class MCPValidation:
         manifestVersion: str
         levelId: str
         partyId: Optional[Annotated[str, AfterValidator(UUIDStringOptional)]] = None
-        commanderId: Optional[Annotated[str, AfterValidator(UUIDStringOptional)]] = None
+        commanderId: Optional[Annotated[str, AfterValidator(UUIDStringOptional)]] = ""
         partyMembers: Optional[list[dict[str, str | Annotated[str, AfterValidator(UUIDStringOptional)]]]] = None
-        friendInstanceId: Annotated[str, AfterValidator(UUIDStringOptional)]
+        friendInstanceId: Annotated[str, AfterValidator(UUIDStringOptional)] = ""
         ltmId: Optional[str] = None
         normalMode: Optional[bool] = None
         blitzMode: Optional[bool] = None

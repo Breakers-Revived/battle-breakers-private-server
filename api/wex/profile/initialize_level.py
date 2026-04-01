@@ -11,6 +11,7 @@ import uuid
 
 import sanic
 import sanic_ext
+import sanic.log
 
 from utils import types
 from utils.exceptions import errors
@@ -245,16 +246,19 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str,
         # Backwards compatability for old clients
         party_members = []
         party_instance = await request.ctx.profile.get_item_by_guid(request_body.get("partyId"))
-        for character_id in party_instance.get("attributes").get("character_ids"):
-            if party_instance.get("attributes").get("commander_index") == party_instance.get("attributes").get(
-                    "character_ids").index(character_id):
+        sanic.log.logger.debug(f"Determining party members for level initialization for level {level_id} with party instance {party_instance}")
+        character_ids = party_instance.get("attributes").get("character_ids", [])
+        commander_index = party_instance.get("attributes").get("commander_index")
+        friend_index = party_instance.get("attributes").get("friend_index")
+        for idx, character_id in enumerate(character_ids):
+            if commander_index == idx:
                 party_members.append({
                     "heroType": "LocalCommander",
                     "heroItemId": character_id
                 })
-            elif party_instance.get("attributes").get("friend_index") == party_instance.get("attributes").get(
-                    "character_ids").index(character_id):
+            elif friend_index == idx:
                 if request_body.get("friendInstanceId") == "" and request_body.get("commanderId") == "":
+                    sanic.log.logger.debug(f"No friend or commander specified for level initialization for level {level_id}, defaulting to default commander for party member with character id {character_id}")
                     party_members.append({
                         "heroType": "DefaultCommander",
                         "heroItemId": ""
@@ -280,6 +284,7 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str,
                     "heroItemId": character_id
                 })
     friend_instance_id = request_body.get("friendInstanceId")
+    sanic.log.logger.debug(f"Processing party members for level initialization for level {level_id} with party members {party_members} and friend instance id {friend_instance_id}")
     for party_member in party_members:
         if party_member.get("heroType") in ["FriendHero", "FriendCommander"]:
             friend_snapshot_data = await request.ctx.profile.get_item_by_guid(
@@ -354,6 +359,7 @@ async def initialize_level(request: types.BBProfileRequest, accountId: str,
                     "foilLevel": 0
                 })
         elif party_member.get("heroType") == "DefaultCommander":
+            sanic.log.logger.debug(f"Adding default commander to level notification for level {level_id} with commander {level_info.get('DefaultFriendCommander', {}).get('AssetPathName')}")
             if str(level_info.get("DefaultFriendCommander", {}).get("AssetPathName")) != "None":
                 level_notification["heroInfo"].append({
                     "itemId": str(uuid.uuid4()),
