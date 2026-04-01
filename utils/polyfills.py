@@ -16,11 +16,12 @@ async def profile_polyfill(response_data: dict, client_version: int) -> dict:
     :param client_version: The version of the client making the request
     :return: The modified response data
     """
-    # for client < 1.1, the onboarding level counts as a completed level, and the game cant be played further without this level counting
-    if client_version < 3296093:
-        if response_data.get("profileId") == "profile0":
-            if response_data["profileChanges"].get("profile", {}).get("stats", {}).get("num_levels_completed"):
-                response_data["profileChanges"]["profile"]["stats"]["num_levels_completed"] = min(
-                    response_data["profileChanges"]["profile"]["stats"]["num_levels_completed"] + 1, 999)
+    # TODO: hide/replace final level loot that only exists in newer versions to prevent crashes
+    # for client <= 1.2, the onboarding level counts as a completed level, and the game cant be played further without this level counting
+    if client_version < 3571999:
+        if response_data.get("profileId") == "profile0" and response_data.get("profileChanges", [])[0].get("changeType") == "fullProfileUpdate":
+            if response_data["profileChanges"][0].get("profile", {}).get("stats", {}).get("attributes", {}).get("num_levels_completed") is not None:
+                response_data["profileChanges"][0]["profile"]["stats"]["attributes"]["num_levels_completed"] = min(
+                    response_data["profileChanges"][0]["profile"]["stats"]["attributes"]["num_levels_completed"] + 1, 999)
                 sanic.log.logger.debug(f"Applied onboarding level polyfill for client version {client_version}")
     return response_data

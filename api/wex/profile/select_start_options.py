@@ -388,6 +388,13 @@ async def select_start_options(request: types.BBProfileRequest, accountId: str,
             "dynamicWorldLevel": -1
         }
     ], ProfileType.LEVELS)
+    await request.ctx.profile.add_item({
+        "templateId": "WorldUnlock:Level",
+        "attributes": {
+            "levelId": "Level.ForestOfMixedEmotions.Map0A.D1"
+        },
+        "quantity": 1
+    }, profile_id=ProfileType.LEVELS)
     return sanic.response.json(
         await request.ctx.profile.construct_response(request.ctx.profile_id, request.ctx.rvn,
                                                      request.ctx.profile_revisions,
