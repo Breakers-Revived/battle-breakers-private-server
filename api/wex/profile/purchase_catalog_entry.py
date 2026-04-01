@@ -56,7 +56,7 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
     # Check if the expected price matches the actual price for the currency and currency subtype
     expected_price = request_body.get("expectedTotalPrice")
     if expected_price is None:
-        expected_price = request_body.get("expectedPrice", 0)
+        expected_price = request_body.get("expectedPrice", 0) * request_body.get("purchaseQuantity")
     currency = request_body.get("currency")
     currency_subtype = request_body.get("currencySubType", "")
     for price in offer.prices:

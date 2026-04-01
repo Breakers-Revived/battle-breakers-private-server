@@ -293,7 +293,9 @@ class MCPValidation:
         Attributes:
             perks: The list of perks
         """
-        perks: list[dict[str, Annotated[str, AfterValidator(UUIDString)] | int]]
+        perks: Optional[list[dict[str, Annotated[str, AfterValidator(UUIDString)] | int]]] = None
+        rewardItemId: Optional[Annotated[str, AfterValidator(UUIDString)]] = None
+        choiceIdx: Optional[int] = 0
 
     class ClaimComeBackReward(pydantic.BaseModel):
         """
@@ -536,7 +538,7 @@ class MCPValidation:
         Attributes:
             itemId: The item UUID
         """
-        itemId: Annotated[str, AfterValidator(UUIDString)]
+        heroItemId: Annotated[str, AfterValidator(UUIDString)]
 
     class MarkItemSeen(pydantic.BaseModel):
         """
@@ -754,7 +756,7 @@ class MCPValidation:
         """
         characterTemplateId: Annotated[str, AfterValidator(CharacterTemplateId)]
         displayName: str
-        affiliateId: str
+        affiliateId: Optional[str] = ""
 
     class SellGear(pydantic.BaseModel):
         """
@@ -927,7 +929,7 @@ class MCPValidation:
             partyInstance: The party instance
         """
         partyItemId: Annotated[str, AfterValidator(UUIDString)]
-        partyInstance: dict[str, list[Annotated[str, AfterValidator(UUIDString)]] | int | str]
+        partyInstance: dict[str, list[Annotated[str, AfterValidator(UUIDStringOptional)]] | int | str]
 
     class UpgradeBuilding(pydantic.BaseModel):
         """
