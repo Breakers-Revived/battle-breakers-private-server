@@ -22,7 +22,8 @@ from utils.custom_serialiser import custom_serialise
 from utils.enums import ProfileType, FriendStatus
 from utils.exceptions import errors
 from utils.polyfills import profile_polyfill
-from utils.utils import format_time, read_file_cached, process_choices, get_event_currency
+from utils.utils import format_time, read_file_cached, process_choices, get_event_currency, get_path_from_template_id, \
+    load_datatable
 
 MCPTypes: UnionType = str | int | float | list | dict | bool
 
@@ -837,6 +838,30 @@ class PlayerProfile:
                 item: dict = await self.get_item_by_guid(item_guid, profile_id)
                 await self.change_item_quantity(item_guid, item["quantity"] + quantity, profile_id)
                 return item_guid
+        if attributes is None:
+            item_type = template_id.split(":")[0]
+            match item_type:
+                case "Character":
+                    return await self.grant_hero(template_id, quantity=quantity, profile_id=profile_id)
+                case "Gear":
+                    item_path = (await get_path_from_template_id(template_id))
+                    gear_data = (await load_datatable(item_path.replace("res/battle-breakers-data/WorldExplorers/", "").replace(".json", "").replace("\\", "/")))[0]["Properties"]
+                    attributes = {
+                        "is_new": True,
+                        "is_disabled": False,
+                        "hero_item_id": "",
+                        "extra_affixes": [],
+                        "rarity": gear_data.get("Rarity", "EWExpRarity::Common")[13:]
+                    }
+                case "Party":
+                    if template_id == "Party:Instance":
+                        attributes = {
+                            "commander_index": 0,
+                            "date_created": await format_time(),
+                            "character_ids": [],
+                            "friend_index": 5,
+                            "party_icon": "None"
+                        }
         if unique and quantity > 1:
             item_ids: list[str] = []
             for _ in range(quantity):
