@@ -80,7 +80,7 @@ async def item_ratings(request: types.BBRequest, accountId: str, templateId: str
         "myRating": my_rating,
         "overallRatings": {
             "ratingsKey": rating_key.replace("_", "."),
-            "discussUrl": "https://discord.gg/stw-dailies-757765475823517851",
+            "discussUrl": "https://discord.gg/3Hpv72hvvx",
             "ratings": ratings
         }
     })
@@ -157,7 +157,7 @@ async def set_item_rating(request: types.BBRequest, accountId: str, templateId: 
         "myRating": rating_data,
         "overallRatings": {
             "ratingsKey": rating_key.replace("_", "."),
-            "discussUrl": "https://discord.gg/stw-dailies-757765475823517851",
+            "discussUrl": "https://discord.gg/3Hpv72hvvx",
             "ratings": ratings
         }
     })

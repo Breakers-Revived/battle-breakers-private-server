@@ -1,4 +1,4 @@
-<br />
+<br xmlns="http://www.w3.org/1999/html"/>
 <div align=center>
     <a id="back-to-top"></a>
     <div align="center">
@@ -14,15 +14,15 @@ ___
 ## About The Game
 
 Battle Breakers was a cartoon-themed Hero collector, Turn-Based, and Action RPG game developed by Chair Entertainment
-and Epic Games in 2014-2019. Released in beta in 2016 and launched in 2019, the game was since shut down at the end
+and Epic Games in 2014-2020. Released in beta in 2016 and launched in 2019, the game was since shut down at the end
 of 2022.
 
 ## About This Project
 
 This project is a **complete reimplementation** of every Epic Games backend service required to run and play the game
-(AKA: Private Server, Server Emulator, Game Server, etc.). It is designed to be a complete standalone replacement for the original
-game servers, in addition to all other services the game contacts, allowing the game to be played as it was when it was live.
-It strives to be as complete and accurate as possible, to preserve the game and its legacy. It aims to be **fully
+(AKA: Private Server, Server Emulator, Game Server, etc.). It is designed to be a complete standalone replacement for
+the original game servers, in addition to all other services the game contacts, allowing the game to be played as it was
+when it was live. It aims to be as accurate as possible, to preserve the game and its legacy. It aims to be **fully
 compatible** with all versions of the game, on all platforms, from the 2017 beta to the final release.
 
 [This project](https://github.com/dippyshere/battle-breakers-private-server) would not have been possible
@@ -33,11 +33,31 @@ game knowledge of the [Battle Breakers community](https://discord.gg/3Hpv72hvvx)
 
 ## Project Goals
 
-- [x] **Fully Compatible**: The server should be able to support all versions of the game, from the 2017 beta to the
-  final release.
-- [ ] **Stable and Secure**: The server should be stable and secure.
-- [ ] **Complete and Accurate**: The server should be as complete and accurate as possible, implementing all features
-  and services used by the game.
+- [x] **Fully Compatible**: The server supports all versions of the game, from the 2017 beta to the final release.
+- [ ] **Complete and Accurate**: The server should be as accurate as possible, implementing all features and services
+  used by the game, with accurate drop rates, loot data, level layouts, and more.
+
+## Current Status
+
+**Still in development**
+
+All of the core services used by the game clients are implemented and functional. A majority of in-game MCP operations
+are completed. A few core operations like InitializeLevel and FinalizeLevel only have data for implemented for some
+early levels so far. Many of the rotational content services are currently frozen at the last week of December, 2022.
+See the [Features](#features) section below for more details.
+
+You can view current progress on data capture and implementation for levels and loot in
+this [spreadsheet](https://docs.google.com/spreadsheets/d/1QcX3ybw7Q06p3uFIwJLM0JfnhRLC61YK2W29SQqm5bk/edit?usp=sharing)
+
+Frontend services like login/register are implemented, but they are not fully feature complete yet. Other frontend
+services like profile importing, custom profile creation, etc are not implemented yet.
+
+While the server is mostly functional and playable, I don't recommend trying to play the game just yet, until more of
+the core level and loot data is captured and implemented. Once everything is completed, you'll be able to download any
+client version, and connect to a hosted server on https://breakersrevived.dippygames.com, or host your own server.
+
+You can bother me in our [Discord server](https://discord.gg/3Hpv72hvvx) for status updates, questions, or if you want
+to help with data capture
 
 ## Features
 
@@ -53,7 +73,7 @@ These are the services that the game clients use, and their current implementati
 | Affiliate Service       | Handles looking up Support-A-Creator codes                                           |   ✅    |                                                                                                        |
 | Battle Breakers CDN     | Serves cooked game PAKs and manifests                                                |   ✅    |                                                                                                        |
 | Catalog Service         | Handles looking up data about the game's catalog, including IAPs and other offers    |   ✅    |                                                                                                        |
-| Data router Service     | Collects and sends analytics data, specifically technical performance and engagement |   ✅    | Breakers revived does not process or collect any of this data                                          |
+| Data router Service     | Collects and sends analytics data, specifically technical performance and engagement |   ✅    | Breakers Revived discards this data, and does not store/process it                                     |
 | Entitlement Service     | Manages entitlements and rewards                                                     |   ✅    |                                                                                                        |
 | EULA Tracking Service   | Tracks EULA acceptance                                                               |   ✅    |                                                                                                        |
 | Friends Service         | Manages friends and friend requests                                                  |   ✅    |                                                                                                        |
@@ -102,8 +122,7 @@ These are the various MCP operations that the game clients use, and their curren
 | BuyBackFromMonsterPit           | Buys back a hero from the monster pit                                                                                           |   ✅    |                                                                                                                                                                                                              |
 | CashOutWorkshop                 | Caches out collected stars -> gold at the workshop                                                                              |   ✅    |                                                                                                                                                                                                              |
 | ClaimAccountReward              | Claims an account perk reward                                                                                                   |   ✅    |                                                                                                                                                                                                              |
-| ClaimComeBackReward             | Claims the come back reward                                                                                                     |   ❌    | This was a legacy event that is no longer active                                                                                                                                                             |
-| ClaimEventRewards               | Claims Battle pass rewards                                                                                                      |   ❌    |                                                                                                                                                                                                              |
+| ClaimEventRewards               | Claims Battle pass rewards                                                                                                      |   ✅    |                                                                                                                                                                                                              |
 | ClaimGiftPoints                 | Claims friend gift points                                                                                                       |   ❌    | Unfortunately the data required for this operation was lost. Please get in touch if you may have the relevant data OR can assist with SDK dumping a **32-bit** UE 4.25 title                                 |
 | ClaimLoginReward                | Claims the daily login reward                                                                                                   |   ✅    |                                                                                                                                                                                                              |
 | ClaimNotificationOptInReward    | Claims the notification opt-in reward                                                                                           |   ✅    |                                                                                                                                                                                                              |
@@ -119,7 +138,7 @@ These are the various MCP operations that the game clients use, and their curren
 | GenerateDailyQuests             | Refreshes and generates daily quests, and reports friend gifts received                                                         |   ❌    | The friend gift component of this operation is not functional as the required data was lost. Please get in touch if you may have the relevant data OR can assist with SDK dumping a **32-bit** UE 4.25 title |
 | GenerateMatchWithFriend         | Generates a spar match with a friend                                                                                            |   ⏳    |                                                                                                                                                                                                              |
 | GenerateMatches                 | Used by the early asynchronous PvP system                                                                                       |   ❌    |                                                                                                                                                                                                              |
-| InitalizeLevel                  | Initializes a level                                                                                                             |   ⏳    | This operation requires data about the kinds of enemies, loot, rooms and Battle pass XP present in each level and difficulty to be collected for accuracy                                                    |
+| InitalizeLevel                  | Initializes a level                                                                                                             |   ⏳    | This operation requires data about the kinds of enemies, loot, rooms and Battle pass XP present in each level and difficulty to be collected for accuracy. See [more](#Current-Status)                       |
 | JoinMatchmaking                 | Used by the current asynchronous PvP system. Refreshes and generates upcoming PvP matches                                       |   ❌    |                                                                                                                                                                                                              |
 | LevelUpHero                     | Levels up a hero                                                                                                                |   ✅    |                                                                                                                                                                                                              |
 | MarkHeroSeen                    | Marks a hero as seen                                                                                                            |   ✅    | This is a legacy operation that was replaced by MarkItemSeen in newer clients                                                                                                                                |
@@ -131,7 +150,7 @@ These are the various MCP operations that the game clients use, and their curren
 | OpenHeroChest                   | Opens a skybreaker pick                                                                                                         |   ✅    |                                                                                                                                                                                                              |
 | PickHeroChest                   | Selects a skybreaker pick to open                                                                                               |   ✅    |                                                                                                                                                                                                              |
 | PromoteHero                     | Promotes a hero                                                                                                                 |   ✅    |                                                                                                                                                                                                              |
-| PurchaseCatalogEntry            | Purchases an item, or redeems an offer                                                                                          |   ❌    |                                                                                                                                                                                                              |
+| PurchaseCatalogEntry            | Purchases an item, or redeems an offer                                                                                          |   ⏳    |                                                                                                                                                                                                              |
 | QueryProfile                    | Returns the up-to-date version of the specified profile                                                                         |   ✅    |                                                                                                                                                                                                              |
 | Reconcile                       | Refreshes the status of the player's friends, determining whether friends have upgraded from legacy WEX friends to Epic friends |   ✅    |                                                                                                                                                                                                              |
 | RedeemToken                     | Redeems a token for an item                                                                                                     |   ✅    |                                                                                                                                                                                                              |
@@ -167,10 +186,10 @@ These are the various MCP operations that the game clients use, and their curren
 | VerifyRealMoneyPurchase         | Verifies a real money transaction, fulfilling purchased rewards                                                                 |   ✅    | It is not possible to make RMT purchases on the server, and so RMT offers will not be fulfilled at this time                                                                                                 |
 
 Totals:
-- ✅: 57 (79%)
-- ⏳: 4 (5%)
-- ❌: 11 (15%)
-- Total: 72
+- ✅: 58 (82%)
+- ⏳: 5 (7%)
+- ❌: 8 (11%)
+- Total: 71
 
 </details>
 
@@ -179,6 +198,7 @@ Totals:
 ### Prerequisites
 
 - [Python 3.11+](https://www.python.org/downloads/)
+- [UV](https://docs.astral.sh/uv/getting-started/installation/) (recommended) or pip
 - [MongoDB](https://www.mongodb.com/try/download/community)
 
 ### Installation
@@ -186,17 +206,20 @@ Totals:
 1. Clone the repository
 
     ```sh
-    git clone --recurse-submodules https://github.com/dippyshere/battle-breakers-private-server.git
+    git clone --recurse-submodules https://github.com/dippyshere/battle-breakers-private-server.git --branch development
     cd battle-breakers-private-server
     ```
 
-2. Install the required packages
+2. Install [UV](https://docs.astral.sh/uv/getting-started/installation/)
+   and [MongoDB](https://www.mongodb.com/try/download/community)
+
+3. Install the required packages
 
     ```sh
-    pip install --upgrade -r requirements.txt
+    uv sync
     ```
 
-3. Start the MongoDB server
+4. Start the MongoDB server
 
    (Windows)
     ```cmd
@@ -205,38 +228,63 @@ Totals:
 
    (Linux)
     ```bash
-    sudo systemctl start mongodb
+    sudo systemctl start mongod
     ```
 
-   > [!NOTE]
-   > Depending on your MongoDB installation you may need to use `mongod` instead of `mongodb`.
-   
    (macOS)
     ```shell
     brew services start mongodb-community
     ```
 
-4. Start the server
+5. Start the server
 
     ```sh
     sanic main:app
     ```
-5. Configure the game to connect to your server
+6. Configure the game to connect to your server
+
+<details>
+   <summary>Windows</summary>
+    Detailed instructions will be added soon, but you will need to create and modify an Engine.ini and Game.ini in
+    <kbd>%localappdata%\WorldExplorers\Saved\Config\WindowsNoEditor</kbd> to configure the game to use HTTP and point to your server.
+</details>
+
+<details>
+   <summary>Android</summary>
+    Detailed instructions will be added soon, but depending on your client version, you can either create and modify 
+    an Engine.ini and Game.ini in 
+    <kbd>/storage/emulated/0/Android/data/com.chairentertainment.BattleBreakers/files/Saved/Config/Android</kbd>,
+    <kbd>/sdcard/UE4Game/WorldExplorers/Saved/Config/Android</kbd>, or <kbd>/data/data/com.chairentertainment.BattleBreakers/files/Saved/Config/Android</kbd> to configure the game to use HTTP and point to your server.
+    <br><br>Alternatively, you can use our fork of <a href="https://github.com/Breakers-Revived/Sinum-BattleBreakers" target="_blank">Sinum</a>.
+</details>
+
+<details>
+    <summary>iOS</summary>
+    Detailed instructions will be added soon, but you will need to create and modify an Engine.ini and Game.ini in
+    <kbd>/var/mobile/Containers/Data/Application/[UUID]/Documents/Saved/Config/iOS</kbd> to configure the game to use HTTP and point to your server. 
+    <br>You can access this directory on a jailbroken device using Filza, or you can dump and patch your client to enable iTunes file sharing, and use the built in Files app.
+    <br><br>On recent iOS versions, you will also need to modify Engine.ini to use the older fallback audio system, and 
+    bundle + relink libicu64 to the client binary to avoid crashes due to changes in iOS.
+    <br><br>Alternatively, you can use our fork of <a href="https://github.com/Breakers-Revived/Sinum-BattleBreakers" target="_blank">Sinum</a>.
+    <br><br>If you are using the patched IPA, everything is already preconfigured, and you can override the server URL by
+    creating an api_url.txt with [protocol]://[server_address]:[server_port] in the Battle Breakers documents directory.
+</details>
 
 ## Contributing
 
 Any contributions you make are **greatly appreciated**. Please read the [CONTRIBUTING.md](.github/CONTRIBUTING.md) file for more
-details.
+details. If you are unsure where to start with contributing, check out some of the contributions you can
+make [without needing to write code](.github/CONTRIBUTING.md#non-code-contributions).
 
 ## Contact
 
 If you have any questions, suggestions, or would like to get back into a Battle Breakers community, please join the
 [Discord server](https://discord.gg/3Hpv72hvvx)! You can also contact me directly via the Discord server
-(dippy is not here).
+(dippyisnothere).
 
 ## Licence
 
-This project is licenced under the Breakers Revived License (BRL) - see the [LICENSE](LICENSE) file for details.
+This project is currently licenced under the Breakers Revived License (BRL) - see the [LICENSE](LICENSE) file for details.
 
 ## Support & Community
 
