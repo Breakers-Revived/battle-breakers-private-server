@@ -25,7 +25,7 @@ from utils.polyfills import profile_polyfill
 from utils.utils import format_time, read_file_cached, process_choices, get_event_currency, get_path_from_template_id, \
     load_datatable
 
-MCPTypes: UnionType = str | int | float | list | dict | bool
+MCPTypes: UnionType = type(str | int | float | list | dict | bool)
 
 
 class MCPItem:
@@ -623,7 +623,7 @@ class PlayerProfile:
         """
         return getattr(self, f"_{profile_id.value}")
 
-    async def get_item_by_guid(self, guid: str, profile_id: ProfileType = ProfileType.PROFILE0) -> dict:
+    async def get_item_by_guid(self, guid: str | list, profile_id: ProfileType = ProfileType.PROFILE0) -> dict:
         """
         Get the item by the GUID
         :param profile_id: The profile ID to get
@@ -951,6 +951,14 @@ class PlayerProfile:
         """
         sanic.log.logger.debug(
             f"Consuming {quantity}x {template_id} from profile {profile_id.value} for account {self.account_id}")
+        if template_id == "Currency:MtxGiveaway":
+            item_guids: list = await self.find_item_by_template_id(template_id, profile_id)
+            if not item_guids:
+                raise errors.com.epicgames.modules.gameplayutils.recipe_failed(
+                    errorMessage=f"Item with template {template_id} not found")
+            item_guid: str = item_guids[0]
+            await self.consume_mtx(quantity)
+            return item_guid
         profile_changes: list = getattr(self, f"{profile_id.value}_changes", [])
         for change in profile_changes:
             if change["changeType"] == "itemAdded" and change["item"]["templateId"] == template_id:
@@ -1143,6 +1151,177 @@ class PlayerProfile:
                             "quantity": item_quantity
                         })
         return items
+
+    async def get_total_mtx(self) -> int:
+        """
+        Get the total amount of mtx gems in the profile
+        :return: The total amount of MTX
+        """
+        sanic.log.logger.debug(f"Getting total MTX quantities for account {self.account_id}")
+        mtx_giveaway_id = await self.find_item_by_template_id("Currency:MtxGiveaway")
+        mtx_purchase_bonus_id = await self.find_item_by_template_id("Currency:MtxPurchaseBonus")
+        mtx_purchased_id = await self.find_item_by_template_id("Currency:MtxPurchased")
+        mtx_giveaway = 0
+        mtx_purchase_bonus = 0
+        mtx_purchased = 0
+        if mtx_giveaway_id:
+            mtx_giveaway = (await self.get_item_by_guid(mtx_giveaway_id))["quantity"]
+        if mtx_purchase_bonus_id:
+            mtx_purchase_bonus = (await self.get_item_by_guid(mtx_purchase_bonus_id))["quantity"]
+        if mtx_purchased_id:
+            mtx_purchased = (await self.get_item_by_guid(mtx_purchased_id))["quantity"]
+        # check pending changes for any changes to these items and modify the amounts accordingly
+        profile_changes: list = getattr(self, f"{ProfileType.PROFILE0.value}_changes", [])
+        for change in profile_changes:
+            if change["changeType"] == "itemAdded" and change["item"]["templateId"] == "Currency:MtxGiveaway":
+                mtx_giveaway += change["item"]["quantity"]
+            elif change["changeType"] == "itemAdded" and change["item"]["templateId"] == "Currency:MtxPurchaseBonus":
+                mtx_purchase_bonus += change["item"]["quantity"]
+            elif change["changeType"] == "itemAdded" and change["item"]["templateId"] == "Currency:MtxPurchased":
+                mtx_purchased += change["item"]["quantity"]
+            elif change["changeType"] == "itemQuantityChanged":
+                item = await self.get_item_by_guid(change["itemId"])
+                if item["templateId"] == "Currency:MtxGiveaway":
+                    mtx_giveaway += change["quantity"]
+                elif item["templateId"] == "Currency:MtxPurchaseBonus":
+                    mtx_purchase_bonus += change["quantity"]
+                elif item["templateId"] == "Currency:MtxPurchased":
+                    mtx_purchased += change["quantity"]
+        sanic.log.logger.debug(f"Total MTX for account {self.account_id}: {mtx_giveaway} giveaway, {mtx_purchase_bonus} purchase bonus, {mtx_purchased} purchased")
+        return mtx_giveaway + mtx_purchase_bonus + mtx_purchased
+
+    async def consume_mtx(self, quantity: int) -> None:
+        """
+        Consume the specified quantity of mtx gems from the profile, prioritising giveaway, then purchase bonus, then purchased mtx
+        :param quantity: The quantity of MTX to consume
+        :raise errors.com.epicgames.world_explorers.bad_request: If the quantity to consume is greater than the total mtx available
+        :return: None
+        """
+        sanic.log.logger.debug(f"Consuming {quantity} MTX for account {self.account_id}")
+        total_mtx = await self.get_total_mtx()
+        if quantity > total_mtx:
+            raise errors.com.epicgames.world_explorers.bad_request(
+                errorMessage=f"Cannot consume {quantity} MTX as only {total_mtx} is available")
+        remaining_quantity = quantity
+        profile_changes: list = getattr(self, f"{ProfileType.PROFILE0.value}_changes", [])
+        for change in profile_changes:
+            if remaining_quantity <= 0:
+                break
+            if change["changeType"] == "itemAdded" and change["item"]["templateId"] == "Currency:MtxGiveaway":
+                if change["item"]["quantity"] <= remaining_quantity:
+                    remaining_quantity -= change["item"]["quantity"]
+                    sanic.log.logger.debug(f"Consumed {change['item']['quantity']} MTX from pending itemAdded giveaway for account {self.account_id}")
+                    profile_changes.remove(change)
+                    sanic.log.logger.debug(f"Removed pending itemAdded giveaway as quantity reached 0 for account {self.account_id}")
+                else:
+                    change["item"]["quantity"] -= remaining_quantity
+                    sanic.log.logger.debug(f"Consumed {remaining_quantity} MTX from pending itemAdded giveaway for account {self.account_id}")
+                    remaining_quantity = 0
+            elif change["changeType"] == "itemQuantityChanged":
+                item = await self.get_item_by_guid(change["itemId"])
+                if item["templateId"] == "Currency:MtxGiveaway":
+                    if change["quantity"] <= remaining_quantity:
+                        remaining_quantity -= change["quantity"]
+                        sanic.log.logger.debug(f"Consumed {change['quantity']} MTX from pending itemQuantityChanged giveaway for account {self.account_id}")
+                        profile_changes.remove(change)
+                        await self.remove_item(change["itemId"])
+                        sanic.log.logger.debug(f"Removed pending itemQuantityChanged giveaway as quantity reached 0 for account {self.account_id}")
+                    else:
+                        change["quantity"] -= remaining_quantity
+                        sanic.log.logger.debug(f"Consumed {remaining_quantity} MTX from pending itemQuantityChanged giveaway for account {self.account_id}")
+                        remaining_quantity = 0
+        if remaining_quantity > 0:
+            mtx_giveaway_id = await self.find_item_by_template_id("Currency:MtxGiveaway")
+            if mtx_giveaway_id:
+                mtx_giveaway = (await self.get_item_by_guid(mtx_giveaway_id))["quantity"]
+                if mtx_giveaway <= remaining_quantity:
+                    remaining_quantity -= mtx_giveaway
+                    sanic.log.logger.debug(f"Consumed {mtx_giveaway} MTX from giveaway for account {self.account_id}")
+                    await self.remove_item(mtx_giveaway_id)
+                    sanic.log.logger.debug(f"Removed giveaway as quantity reached 0 for account {self.account_id}")
+                else:
+                    await self.change_item_quantity(mtx_giveaway_id, mtx_giveaway - remaining_quantity)
+                    sanic.log.logger.debug(f"Consumed {remaining_quantity} MTX from giveaway for account {self.account_id}")
+                    remaining_quantity = 0
+        for change in profile_changes:
+            if remaining_quantity <= 0:
+                break
+            if change["changeType"] == "itemAdded" and change["item"]["templateId"] == "Currency:MtxPurchaseBonus":
+                if change["item"]["quantity"] <= remaining_quantity:
+                    remaining_quantity -= change["item"]["quantity"]
+                    sanic.log.logger.debug(f"Consumed {change['item']['quantity']} MTX from pending itemAdded purchase bonus for account {self.account_id}")
+                    profile_changes.remove(change)
+                    sanic.log.logger.debug(f"Removed pending itemAdded purchase bonus as quantity reached 0 for account {self.account_id}")
+                else:
+                    change["item"]["quantity"] -= remaining_quantity
+                    sanic.log.logger.debug(f"Consumed {remaining_quantity} MTX from pending itemAdded purchase bonus for account {self.account_id}")
+                    remaining_quantity = 0
+            elif change["changeType"] == "itemQuantityChanged":
+                item = await self.get_item_by_guid(change["itemId"])
+                if item["templateId"] == "Currency:MtxPurchaseBonus":
+                    if change["quantity"] <= remaining_quantity:
+                        remaining_quantity -= change["quantity"]
+                        sanic.log.logger.debug(f"Consumed {change['quantity']} MTX from pending itemQuantityChanged purchase bonus for account {self.account_id}")
+                        profile_changes.remove(change)
+                        await self.remove_item(change["itemId"])
+                        sanic.log.logger.debug(f"Removed pending itemQuantityChanged purchase bonus as quantity reached 0 for account {self.account_id}")
+                    else:
+                        change["quantity"] -= remaining_quantity
+                        sanic.log.logger.debug(f"Consumed {remaining_quantity} MTX from pending itemQuantityChanged purchase bonus for account {self.account_id}")
+                        remaining_quantity = 0
+        if remaining_quantity > 0:
+            mtx_purchase_bonus_id = await self.find_item_by_template_id("Currency:MtxPurchaseBonus")
+            if mtx_purchase_bonus_id:
+                mtx_purchase_bonus = (await self.get_item_by_guid(mtx_purchase_bonus_id))["quantity"]
+                if mtx_purchase_bonus <= remaining_quantity:
+                    remaining_quantity -= mtx_purchase_bonus
+                    sanic.log.logger.debug(f"Consumed {mtx_purchase_bonus} MTX from purchase bonus for account {self.account_id}")
+                    await self.remove_item(mtx_purchase_bonus_id)
+                    sanic.log.logger.debug(f"Removed purchase bonus as quantity reached 0 for account {self.account_id}")
+                else:
+                    await self.change_item_quantity(mtx_purchase_bonus_id, mtx_purchase_bonus - remaining_quantity)
+                    sanic.log.logger.debug(f"Consumed {remaining_quantity} MTX from purchase bonus for account {self.account_id}")
+                    remaining_quantity = 0
+        for change in profile_changes:
+            if remaining_quantity <= 0:
+                break
+            if change["changeType"] == "itemAdded" and change["item"]["templateId"] == "Currency:MtxPurchased":
+                if change["item"]["quantity"] <= remaining_quantity:
+                    remaining_quantity -= change["item"]["quantity"]
+                    sanic.log.logger.debug(f"Consumed {change['item']['quantity']} MTX from pending itemAdded purchased for account {self.account_id}")
+                    profile_changes.remove(change)
+                    sanic.log.logger.debug(f"Removed pending itemAdded purchased as quantity reached 0 for account {self.account_id}")
+                else:
+                    change["item"]["quantity"] -= remaining_quantity
+                    sanic.log.logger.debug(f"Consumed {remaining_quantity} MTX from pending itemAdded purchased for account {self.account_id}")
+                    remaining_quantity = 0
+            elif change["changeType"] == "itemQuantityChanged":
+                item = await self.get_item_by_guid(change["itemId"])
+                if item["templateId"] == "Currency:MtxPurchased":
+                    if change["quantity"] <= remaining_quantity:
+                        remaining_quantity -= change["quantity"]
+                        sanic.log.logger.debug(f"Consumed {change['quantity']} MTX from pending itemQuantityChanged purchased for account {self.account_id}")
+                        profile_changes.remove(change)
+                        await self.remove_item(change["itemId"])
+                        sanic.log.logger.debug(f"Removed pending itemQuantityChanged purchased as quantity reached 0 for account {self.account_id}")
+                    else:
+                        change["quantity"] -= remaining_quantity
+                        sanic.log.logger.debug(f"Consumed {remaining_quantity} MTX from pending itemQuantityChanged purchased for account {self.account_id}")
+                        remaining_quantity = 0
+        if remaining_quantity > 0:
+            mtx_purchased_id = await self.find_item_by_template_id("Currency:MtxPurchased")
+            if mtx_purchased_id:
+                mtx_purchased = (await self.get_item_by_guid(mtx_purchased_id))["quantity"]
+                if mtx_purchased <= remaining_quantity:
+                    remaining_quantity -= mtx_purchased
+                    sanic.log.logger.debug(f"Consumed {mtx_purchased} MTX from purchased for account {self.account_id}")
+                    await self.remove_item(mtx_purchased_id)
+                    sanic.log.logger.debug(f"Removed purchased as quantity reached 0 for account {self.account_id}")
+                else:
+                    await self.change_item_quantity(mtx_purchased_id, mtx_purchased - remaining_quantity)
+                    sanic.log.logger.debug(f"Consumed {remaining_quantity} MTX from purchased for account {self.account_id}")
+                    remaining_quantity = 0
+        sanic.log.logger.debug(f"Finished consuming {quantity} MTX for account {self.account_id}")
 
     async def add_notifications(self, notification: dict, profile_id: ProfileType = ProfileType.PROFILE0) -> list[dict]:
         """

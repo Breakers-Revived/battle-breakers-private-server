@@ -1001,8 +1001,6 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str,
     except ValueError:
         difficulty = 1
     await request.ctx.profile.remove_item(request_body.get("levelItemId"), request.ctx.profile_id)
-    mtx_item_id = (await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway"))[0]
-    mtx_quantity = (await request.ctx.profile.get_item_by_guid(mtx_item_id))["quantity"]
     for unlocked_level_guids in (await request.ctx.profile.find_item_by_template_id("WorldUnlock:Level",
                                                                                     request.ctx.profile_id)):
         level_item = await request.ctx.profile.get_item_by_guid(unlocked_level_guids, request.ctx.profile_id)
@@ -1021,12 +1019,11 @@ async def blitz_level(request: types.BBProfileRequest, accountId: str,
             "tierGroupName": "Level.FirstInstance",
             "items": [{
                 "itemType": "Currency:MtxGiveaway",
-                "itemGuid": mtx_item_id,
+                "itemGuid": await request.ctx.profile.grant_item("Currency:MtxGiveaway", 20),
                 "itemProfile": "profile0",
                 "quantity": 20
             }]
         })
-        await request.ctx.profile.change_item_quantity(mtx_item_id, mtx_quantity + 20)
     await request.ctx.profile.modify_stat("last_played_level", level_id, profile_id=request.ctx.profile_id)
     await request.ctx.profile.modify_stat("last_used_friend_id", request_body.get("friendInstanceId"),
                                           profile_id=request.ctx.profile_id)

@@ -73,10 +73,6 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
             offer.prices[0]["saleExpiration"].replace("Z", "+00:00")) < datetime.datetime.now(datetime.UTC):
         raise errors.com.epicgames.modules.gamesubcatalog.catalog_out_of_date(offer_id)
     # Check if the offer can be afforded
-    mtx_giveaway_id = await request.ctx.profile.find_item_by_template_id("Currency:MtxGiveaway")
-    mtx_giveaway = 0
-    if mtx_giveaway_id:
-        mtx_giveaway = (await request.ctx.profile.get_item_by_guid(mtx_giveaway_id))["quantity"]
     match currency:
         case "GameItem":
             currency_id = await request.ctx.profile.find_item_by_template_id(currency_subtype)
@@ -86,15 +82,7 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
             if currency_item["quantity"] < expected_price != 0:
                 raise errors.com.epicgames.modules.gamesubcatalog.cannot_afford_purchase(offer_id)
         case "MtxCurrency":
-            mtx_purchase_bonus_id = await request.ctx.profile.find_item_by_template_id("Currency:MtxPurchaseBonus")
-            mtx_purchased_id = await request.ctx.profile.find_item_by_template_id("Currency:MtxPurchased")
-            mtx_purchase_bonus = 0
-            mtx_purchased = 0
-            if mtx_purchase_bonus_id:
-                mtx_purchase_bonus = (await request.ctx.profile.get_item_by_guid(mtx_purchase_bonus_id))["quantity"]
-            if mtx_purchased_id:
-                mtx_purchased = (await request.ctx.profile.get_item_by_guid(mtx_purchased_id))["quantity"]
-            total_mtx = mtx_giveaway + mtx_purchase_bonus + mtx_purchased
+            total_mtx = await request.ctx.profile.get_total_mtx()
             if total_mtx < expected_price:
                 raise errors.com.epicgames.modules.gamesubcatalog.cannot_afford_purchase(offer_id)
         case "Other":
@@ -369,9 +357,9 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
                         "quantity": 1
                     })
             else:
-                if item_grant["templateId"] == "Currency:MtxGiveaway":
-                    mtx_giveaway += item_grant.get("quantity", 1)
-                item_id = await request.ctx.profile.grant_item(item_grant["templateId"], item_grant.get("quantity", 1))
+                item_id = await request.ctx.profile.grant_item(item_grant["templateId"],
+                                                               item_grant.get("quantity", 1) * request_body.get(
+                                                                   "purchaseQuantity"))
                 items.append({
                     "itemType": item_grant["templateId"],
                     "itemGuid": item_id,
@@ -394,45 +382,10 @@ async def purchase_catalog_entry(request: types.BBProfileRequest, accountId: str
             else:
                 await request.ctx.profile.change_item_quantity(currency_id, currency_item["quantity"] - expected_price)
         case "MtxCurrency":
-            mtx_purchase_bonus_id = await request.ctx.profile.find_item_by_template_id("Currency:MtxPurchaseBonus")
-            mtx_purchased_id = await request.ctx.profile.find_item_by_template_id("Currency:MtxPurchased")
-            mtx_purchase_bonus = 0
-            mtx_purchased = 0
-            if mtx_purchase_bonus_id:
-                mtx_purchase_bonus = (await request.ctx.profile.get_item_by_guid(mtx_purchase_bonus_id))["quantity"]
-            if mtx_purchased_id:
-                mtx_purchased = (await request.ctx.profile.get_item_by_guid(mtx_purchased_id))["quantity"]
-            total_mtx = mtx_giveaway + mtx_purchase_bonus + mtx_purchased
+            total_mtx = await request.ctx.profile.get_total_mtx()
             if total_mtx < expected_price:
                 raise errors.com.epicgames.modules.gamesubcatalog.cannot_afford_purchase(offer_id)
-            mtx_to_deduct = expected_price
-            if mtx_giveaway >= mtx_to_deduct:
-                if mtx_giveaway - mtx_to_deduct == 0:
-                    await request.ctx.profile.remove_item(mtx_giveaway_id)
-                else:
-                    await request.ctx.profile.change_item_quantity(mtx_giveaway_id, mtx_giveaway - mtx_to_deduct)
-                mtx_to_deduct = 0
-            else:
-                mtx_to_deduct -= mtx_giveaway
-                if mtx_giveaway_id:
-                    await request.ctx.profile.remove_item(mtx_giveaway_id)
-            if 0 < mtx_to_deduct <= mtx_purchase_bonus:
-                if mtx_purchase_bonus - mtx_to_deduct == 0:
-                    await request.ctx.profile.remove_item(mtx_purchase_bonus_id)
-                else:
-                    await request.ctx.profile.change_item_quantity(mtx_purchase_bonus_id,
-                                                                   mtx_purchase_bonus - mtx_to_deduct)
-                mtx_to_deduct = 0
-            elif mtx_to_deduct > 0:
-                mtx_to_deduct -= mtx_purchase_bonus
-                if mtx_purchase_bonus_id:
-                    await request.ctx.profile.remove_item(mtx_purchase_bonus_id)
-            if 0 < mtx_to_deduct <= mtx_purchased:
-                if mtx_purchased - mtx_to_deduct == 0:
-                    await request.ctx.profile.remove_item(mtx_purchased_id)
-                else:
-                    await request.ctx.profile.change_item_quantity(mtx_purchased_id, mtx_purchased - mtx_to_deduct)
-                mtx_to_deduct = 0
+            await request.ctx.profile.consume_mtx(expected_price)
         case "Other":
             if currency_subtype == "LaborPoints":
                 labor_force = await request.ctx.profile.get_stat("labor_force")

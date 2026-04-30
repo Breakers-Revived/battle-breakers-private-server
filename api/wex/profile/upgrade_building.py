@@ -58,7 +58,7 @@ async def upgrade_building(request: types.BBProfileRequest, accountId: str,
         sanic.log.logger.debug(f"Cost: {item['Count']} {item_template_id}")
     if promotion_table.get("MtxCost") is not None:
         # TODO: enforce account level
-        await request.ctx.profile.consume_item("Currency:MtxGiveaway", promotion_table["MtxCost"])
+        await request.ctx.profile.consume_mtx(promotion_table["MtxCost"])
     await request.ctx.profile.change_item_attribute(request_body.get("buildingItemId"), "level",
                                                     building_item["attributes"]["level"] + 1, request.ctx.profile_id)
     sanic.log.logger.debug(
